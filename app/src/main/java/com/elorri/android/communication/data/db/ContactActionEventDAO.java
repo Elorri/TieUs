@@ -18,13 +18,13 @@ import java.util.ArrayList;
  */
 public class ContactActionEventDAO {
 
-    private static final int UNMANAGED_PEOPLE = 0;
-    private static final int DELAY_PEOPLE = 1;
-    private static final int TODAY_PEOPLE = 2;
-    private static final int TODAY_DONE_PEOPLE = 3;
-    private static final int NEXT_PEOPLE = 4;
+    public static final int UNMANAGED_PEOPLE = 0;
+    public static final int DELAY_PEOPLE = 1;
+    public static final int TODAY_PEOPLE = 2;
+    public static final int TODAY_DONE_PEOPLE = 3;
+    public static final int NEXT_PEOPLE = 4;
 
-    public static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "SELECT * from "
+    private static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "SELECT * from "
             + CommunicationContract.ActionEntry.NAME + " inner join (select * from"
             + CommunicationContract.EventEntry.NAME + " inner join "
             + CommunicationContract.ContactEntry.NAME + " on "
@@ -32,6 +32,50 @@ public class ContactActionEventDAO {
             + CommunicationContract.ContactEntry._ID + ") as ec on "
             + CommunicationContract.ActionEntry._ID + "= ec."
             + CommunicationContract.EventEntry.COLUMN_ACTION_ID;
+
+    private static String SELECT_UNMANAGED_PEOPLE="select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from "
+            +CommunicationContract.ContactEntry.NAME+" minus select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from ("
+            +JOINT_TABLE_CONTACT_ACTION_EVENT+")";
+
+    private static String SELECT_DELAY_PEOPLE="select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from ("
+            +JOINT_TABLE_CONTACT_ACTION_EVENT+") where "
+            +CommunicationContract.EventEntry.COLUMN_TIME_START+"< ? and "
+            +CommunicationContract.EventEntry.COLUMN_TIME_END+" is null";
+
+
+    private static String SELECT_TODAY_PEOPLE="select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from ("
+            +JOINT_TABLE_CONTACT_ACTION_EVENT+") where "
+            +CommunicationContract.EventEntry.COLUMN_TIME_START+" between ? and ? and "
+            +CommunicationContract.EventEntry.COLUMN_TIME_END+" is null";
+
+    private static String SELECT_TODAY_DONE_PEOPLE="select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from ("
+            +JOINT_TABLE_CONTACT_ACTION_EVENT+") where "
+            +CommunicationContract.EventEntry.COLUMN_TIME_START+" between ? and ? and "
+            +CommunicationContract.EventEntry.COLUMN_TIME_END+" is not null";
+
+
+    private static String SELECT_NEXT_PEOPLE="select "
+            +CommunicationContract.ContactEntry._ID+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID1+", "
+            +CommunicationContract.ContactEntry.COLUMN_GOOGLE_PLUS_ID2+" from ("
+            +JOINT_TABLE_CONTACT_ACTION_EVENT+") where "
+            +CommunicationContract.EventEntry.COLUMN_TIME_START+" > ? and "
+            +CommunicationContract.EventEntry.COLUMN_TIME_END+" is null";
 
 
     public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,

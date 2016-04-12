@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.elorri.android.communication.BoardAdapter;
-import com.elorri.android.communication.R;
 import com.elorri.android.communication.Tools;
 import com.elorri.android.communication.data.db.ContactActionEventDAO;
 
@@ -53,17 +52,16 @@ public class CommunicationProvider extends ContentProvider {
             case PAGE_BOARD:
                 ArrayList<Integer> viewTypes = new ArrayList<>();
                 ArrayList<Cursor> cursors = new ArrayList();
-                int cursorType=ContactActionEventDAO.UNMANAGED_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db,
-                        viewTypes));
-                title=getContext().getResources().getString(R.string.delay);
-                cursors.add(ContactActionEventDAO.getCursorDelayedPeople(title, db, viewTypes));
-                title=getContext().getResources().getString(R.string.today);
-                cursors.add(ContactActionEventDAO.getCursorTodayPeople(title, db, viewTypes));
-                title=getContext().getResources().getString(R.string.done);
-                cursors.add(ContactActionEventDAO.getCursorDoneTodayPeople(title, db, viewTypes));
-                title=getContext().getResources().getString(R.string.next);
-                cursors.add(ContactActionEventDAO.getCursorNextPeople(title, db, viewTypes));
+                int cursorType = ContactActionEventDAO.UNMANAGED_PEOPLE;
+                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
+                cursorType = ContactActionEventDAO.DELAY_PEOPLE;
+                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
+                cursorType = ContactActionEventDAO.TODAY_PEOPLE;
+                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
+                cursorType = ContactActionEventDAO.TODAY_DONE_PEOPLE;
+                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
+                cursorType = ContactActionEventDAO.NEXT_PEOPLE;
+                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
                 BoardAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
                 cursor = new MergeCursor(Tools.convertToArrayCursors(cursors));
                 break;
