@@ -1,11 +1,19 @@
 package com.elorri.android.communication.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
  * Created by Elorri on 11/04/2016.
  */
 public class CommunicationContract {
+
+    private static String PATH_BOARD="board";
+
+    public static final String CONTENT_AUTHORITY = "com.elorri.android.communication";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final Uri URI_PAGE_BOARD = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOARD).build();
+
 
 
     public static class ContactEntry implements BaseColumns{

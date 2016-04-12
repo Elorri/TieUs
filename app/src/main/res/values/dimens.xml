@@ -17,7 +17,9 @@
     <dimen name="spacing_medium">24dp</dimen>
     <dimen name="spacing_large">32dp</dimen>
     <dimen name="spacing_xlarge">40dp</dimen>
-    <dimen name="spacing_xxlarge">60dp</dimen>
+    <dimen name="spacing_xxlarge">72dp</dimen>
     <dimen name="spacing_xxxlarge">90dp</dimen>
     <dimen name="spacing_xxxxlarge">120dp</dimen>
+    <dimen name="icon_width">40dp</dimen>
+    <dimen name="icon_height">40dp</dimen>
 </resources>
