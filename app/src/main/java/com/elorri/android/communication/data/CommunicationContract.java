@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  */
 public class CommunicationContract {
 
-    private static String PATH_BOARD="board";
+    public static String PATH_BOARD="board";
 
     public static final String CONTENT_AUTHORITY = "com.elorri.android.communication";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
@@ -31,6 +31,7 @@ public class CommunicationContract {
 
     public static class EventEntry implements BaseColumns{
         public static final String NAME = "event";
+        public static final String COLUMN_CONTACT_ID = "contact_id";
         public static final String COLUMN_ACTION_ID = "action_id";
         public static final String COLUMN_TIME_START = "time_start";
         public static final String COLUMN_TIME_END= "time_end";

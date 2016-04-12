@@ -1,6 +1,9 @@
 package com.elorri.android.communication;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.os.Looper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,5 +44,39 @@ public class Tools {
             e.printStackTrace();
         }
         return listOfLines;
+    }
+
+    public static String thread() {
+        if (Looper.getMainLooper().getThread() == Thread.currentThread())
+            return "ThreadUI";
+        else return "Background";
+    }
+
+
+    public static Cursor[] convertToArrayCursors(ArrayList<Cursor> cursorsList) {
+        Cursor[] cursors = new Cursor[cursorsList.size()];
+        int i = 0;
+        for (Cursor cursor : cursorsList) {
+            cursors[i] = cursor;
+            i++;
+        }
+        return cursors;
+    }
+
+    public static int[] convertToArrayViewTypes(ArrayList<Integer> viewTypesList) {
+        int[] viewTypes = new int[viewTypesList.size()];
+        int i = 0;
+        for (int viewType : viewTypesList) {
+            viewTypes[i] = viewType;
+            i++;
+        }
+        return viewTypes;
+    }
+
+    public static Cursor getOneLineCursor(String id) {
+        String[] cursor_columns = {"_id"};
+        MatrixCursor cursor = new MatrixCursor(cursor_columns);
+        cursor.addRow(new Object[]{id});
+        return cursor;
     }
 }

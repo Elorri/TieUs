@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -16,8 +15,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     public static final int VIEW_TITLE = 0;
     public static final int VIEW_UNMANAGED_PEOPLE = 1;
-    public static final int VIEW_UNDONE_EVENT = 2;
-    public static final int VIEW_DONE_EVENT = 3;
+    public static final int VIEW_UNDONE_PEOPLE = 2;
+    public static final int VIEW_DONE_PEOPLE = 3;
+    public static int[] viewTypes;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,12 +39,12 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 case VIEW_UNMANAGED_PEOPLE: {
                     break;
                 }
-                case VIEW_UNDONE_EVENT: {
+                case VIEW_UNDONE_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     break;
                 }
-                case VIEW_DONE_EVENT: {
+                case VIEW_DONE_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     actionIcon = (ImageView) view.findViewById(R.id.action_icon);
@@ -76,14 +76,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 viewHolder = new ViewHolder(view, VIEW_UNMANAGED_PEOPLE);
                 break;
             }
-            case VIEW_UNDONE_EVENT: {
+            case VIEW_UNDONE_PEOPLE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_undone_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_UNDONE_EVENT);
+                viewHolder = new ViewHolder(view, VIEW_UNDONE_PEOPLE);
                 break;
             }
-            case VIEW_DONE_EVENT: {
+            case VIEW_DONE_PEOPLE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_DONE_EVENT);
+                viewHolder = new ViewHolder(view, VIEW_DONE_PEOPLE);
                 break;
             }
         }
@@ -102,10 +102,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 //holder.title.setText(mCursor.getString(MealProvider.MATRIX_ID_VALUE));
                 break;
             }
-            case VIEW_UNDONE_EVENT: {
+            case VIEW_UNDONE_PEOPLE: {
                 break;
             }
-            case VIEW_DONE_EVENT: {
+            case VIEW_DONE_PEOPLE: {
                 break;
             }
         }

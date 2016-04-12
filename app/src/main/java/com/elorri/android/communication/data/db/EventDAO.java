@@ -7,7 +7,7 @@ import com.elorri.android.communication.data.CommunicationContract;
  */
 public class EventDAO {
 
-    public static final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE "
+    public static final String CREATE = "CREATE TABLE "
             + CommunicationContract.EventEntry.NAME +
             "(" + CommunicationContract.EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CommunicationContract.EventEntry.COLUMN_ACTION_ID + " INTEGER,"

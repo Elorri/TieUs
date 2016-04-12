@@ -8,14 +8,14 @@ import com.elorri.android.communication.data.CommunicationContract;
 public class ActionDAO {
 
 
-    public static  final String SQL_CREATE_ACTION_TABLE = "CREATE TABLE "
+    public static  final String CREATE = "CREATE TABLE "
             + CommunicationContract.ActionEntry.NAME +
             "(" + CommunicationContract.ActionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + CommunicationContract.ActionEntry.COLUMN_NAME + " TEXT)";
 
 
 
-    public static final String QUERY_INSERT = "INSERT INTO "
+    public static final String INSERT = "INSERT INTO "
             + CommunicationContract.ActionEntry.NAME
             + " ("
             + CommunicationContract.ActionEntry._ID + ", "

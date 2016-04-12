@@ -21,6 +21,7 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "communication.db";
     private final Context mContext;
+    private static CommunicationDbHelper instance = null;
 
 
     public CommunicationDbHelper(Context context) {
@@ -28,16 +29,21 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
         mContext = context;
     }
 
+    public static CommunicationDbHelper instance(Context context) {
+        if (instance == null) instance = new CommunicationDbHelper(context);
+        return instance;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
 
-        sqLiteDatabase.execSQL(ContactDAO.SQL_CREATE_CONTACT_TABLE);
-        sqLiteDatabase.execSQL(ActionDAO.SQL_CREATE_ACTION_TABLE);
-        sqLiteDatabase.execSQL(EventDAO.SQL_CREATE_EVENT_TABLE);
+        sqLiteDatabase.execSQL(ContactDAO.CREATE);
+        sqLiteDatabase.execSQL(ActionDAO.CREATE);
+        sqLiteDatabase.execSQL(EventDAO.CREATE);
 
-        insert(sqLiteDatabase, ActionDAO.QUERY_INSERT, R.raw.actions);
+        insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
         Log.e("Communication", "Inserts done");
     }
 
