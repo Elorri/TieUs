@@ -4,17 +4,12 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.elorri.android.communication.BoardAdapter;
-import com.elorri.android.communication.Tools;
-import com.elorri.android.communication.data.db.ContactActionEventDAO;
-
-import java.util.ArrayList;
+import com.elorri.android.communication.extra.Tools;
 
 /**
  * Created by Elorri on 12/04/2016.
@@ -22,6 +17,8 @@ import java.util.ArrayList;
 public class CommunicationProvider extends ContentProvider {
 
     static final int PAGE_BOARD = 100; //will match content://com.elorri.android.communication/board/
+
+    static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -33,37 +30,38 @@ public class CommunicationProvider extends ContentProvider {
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(CommunicationContract.CONTENT_AUTHORITY, CommunicationContract.PATH_BOARD, PAGE_BOARD);
+        matcher.addURI(CommunicationContract.CONTENT_AUTHORITY, CommunicationContract.PATH_CONTACT, TABLE_CONTACT);
         return matcher;
     }
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = CommunicationDbHelper.instance(getContext());
+        mOpenHelper = new CommunicationDbHelper(getContext());
         return true;
     }
 
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] + "thread " + Tools.thread());
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "thread " + Tools.thread());
         Cursor cursor = null;
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
             case PAGE_BOARD:
-                ArrayList<Integer> viewTypes = new ArrayList<>();
-                ArrayList<Cursor> cursors = new ArrayList();
-                int cursorType = ContactActionEventDAO.UNMANAGED_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
-                cursorType = ContactActionEventDAO.DELAY_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
-                cursorType = ContactActionEventDAO.TODAY_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
-                cursorType = ContactActionEventDAO.TODAY_DONE_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
-                cursorType = ContactActionEventDAO.NEXT_PEOPLE;
-                cursors.add(ContactActionEventDAO.getWrappedCursor(getContext(), cursorType, db, viewTypes));
-                BoardAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
-                cursor = new MergeCursor(Tools.convertToArrayCursors(cursors));
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "PAGE_BOARD uri" + uri);
+                cursor = PageBoardQuery.getCursor(getContext(), db);
+                break;
+            case TABLE_CONTACT:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri" + uri);
+                cursor = mOpenHelper.getReadableDatabase().query(
+                        CommunicationContract.ContactEntry.NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -81,7 +79,23 @@ public class CommunicationProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        Uri returnUri;
+        switch (match) {
+            case TABLE_CONTACT: {
+                long _id = db.insert(CommunicationContract.ContactEntry.NAME, null, values);
+                if (_id > 0)
+                    returnUri = CommunicationContract.ContactEntry.buildContactUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnUri;
     }
 
     @Override

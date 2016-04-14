@@ -1,4 +1,4 @@
-package com.elorri.android.communication.data.db;
+package com.elorri.android.communication.db;
 
 import com.elorri.android.communication.data.CommunicationContract;
 
@@ -11,7 +11,7 @@ public class ActionDAO {
     public static  final String CREATE = "CREATE TABLE "
             + CommunicationContract.ActionEntry.NAME +
             "(" + CommunicationContract.ActionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + CommunicationContract.ActionEntry.COLUMN_NAME + " TEXT)";
+            + CommunicationContract.ActionEntry.COLUMN_NAME + " TEXT NOT NULL)";
 
 
 

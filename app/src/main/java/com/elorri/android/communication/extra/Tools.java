@@ -1,8 +1,9 @@
-package com.elorri.android.communication;
+package com.elorri.android.communication.extra;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.os.Build;
 import android.os.Looper;
 
 import java.io.BufferedReader;
@@ -79,4 +80,10 @@ public class Tools {
         cursor.addRow(new Object[]{id});
         return cursor;
     }
+
+    public static boolean hasHoneycomb() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+
 }

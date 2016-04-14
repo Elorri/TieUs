@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.elorri.android.communication.R;
-import com.elorri.android.communication.Tools;
-import com.elorri.android.communication.data.db.ActionDAO;
-import com.elorri.android.communication.data.db.ContactDAO;
-import com.elorri.android.communication.data.db.EventDAO;
+import com.elorri.android.communication.extra.Tools;
+import com.elorri.android.communication.db.ActionDAO;
+import com.elorri.android.communication.db.ContactDAO;
+import com.elorri.android.communication.db.EventDAO;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -29,11 +29,6 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
         mContext = context;
     }
 
-    public static CommunicationDbHelper instance(Context context) {
-        if (instance == null) instance = new CommunicationDbHelper(context);
-        return instance;
-    }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -43,7 +38,9 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(ActionDAO.CREATE);
         sqLiteDatabase.execSQL(EventDAO.CREATE);
 
+        insert(sqLiteDatabase, ContactDAO.INSERT, R.raw.contacts);
         insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
+        insert(sqLiteDatabase, EventDAO.INSERT, R.raw.events);
         Log.e("Communication", "Inserts done");
     }
 

@@ -53,7 +53,7 @@
         tools:text="24h thank you note"/>
 
     <TextView
-        android:id="@+id/due_date"
+        android:id="@+id/done_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action"
