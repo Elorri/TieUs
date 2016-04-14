@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
+            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
             Cursor androidCursor = getApplicationContext().getContentResolver().query(
                     AndroidDAO.ContactQuery.CONTENT_URI,
                     AndroidDAO.ContactQuery.PROJECTION,
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 while (androidCursor.moveToNext()) {
                     androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
                     androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
+                              Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
+                            ""+androidContactId+" "+androidLookUpKey);
 
                     localCursor = getApplicationContext().getContentResolver().query(
                             CommunicationContract.ContactEntry.CONTENT_URI,
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         if (localCursor.getCount() == 0) {
+                            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
                             getApplicationContext().getContentResolver().insert(
                                     CommunicationContract.ContactEntry.CONTENT_URI,
                                     ContactDAO.getContentValues(androidCursor));

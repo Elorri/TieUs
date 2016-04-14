@@ -38,7 +38,6 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(ActionDAO.CREATE);
         sqLiteDatabase.execSQL(EventDAO.CREATE);
 
-        insert(sqLiteDatabase, ContactDAO.INSERT, R.raw.contacts);
         insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
         insert(sqLiteDatabase, EventDAO.INSERT, R.raw.events);
         Log.e("Communication", "Inserts done");

@@ -85,9 +85,10 @@ public class CommunicationProvider extends ContentProvider {
         switch (match) {
             case TABLE_CONTACT: {
                 long _id = db.insert(CommunicationContract.ContactEntry.NAME, null, values);
-                if (_id > 0)
+                if (_id > 0) {
                     returnUri = CommunicationContract.ContactEntry.buildContactUri(_id);
-                else
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
+                } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
