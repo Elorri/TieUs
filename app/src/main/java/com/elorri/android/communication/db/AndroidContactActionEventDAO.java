@@ -6,9 +6,11 @@ import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.elorri.android.communication.data.CommunicationContract;
 import com.elorri.android.communication.extra.CursorUtils;
+import com.elorri.android.communication.extra.Tools;
 
 /**
  * Created by Elorri on 13/04/2016.
@@ -16,7 +18,7 @@ import com.elorri.android.communication.extra.CursorUtils;
 public class AndroidContactActionEventDAO {
 
     public interface TitleQuery {
-        int COL_TITLE=0;
+        int COL_TITLE = 0;
     }
 
     public interface UnmanagedPeopleQuery {
@@ -73,8 +75,10 @@ public class AndroidContactActionEventDAO {
      * @return
      */
     public static Cursor getCursor(Context context, int cursorType, SQLiteDatabase db) {
-        String[] cursor_columns = CursorUtils.addCursorColumnsNames(ContactActionEventDAO.getCursorColumns
-                (cursorType), CommunicationContract.ContactEntry.VIEW_CONTACT_NAME);
+        String[] cursor_columns = CursorUtils.addCursorColumnsNames(ContactActionEventDAO.getCursorColumns(cursorType),
+                CommunicationContract.ContactEntry.VIEW_CONTACT_NAME);
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "cursorType " +
+                "" + cursorType + "" + CommunicationContract.ContactEntry.VIEW_CONTACT_NAME);
         MatrixCursor cursor = new MatrixCursor(cursor_columns);
         Uri uri;
         Cursor contactCursor;
@@ -83,12 +87,17 @@ public class AndroidContactActionEventDAO {
         while (appCursor.moveToNext()) {
             // Creates a contact lookup Uri from contact ID and lookup_key
             uri = ContactsContract.Contacts.getLookupUri(
-                    appCursor.getLong(AndroidDAO.ContactQuery.COL_ID),
-                    appCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
+                    appCursor.getLong(ContactActionEventDAO.COL_ANDROID_CONTACT_ID),
+                    appCursor.getString(ContactActionEventDAO.COL_ANDROID_CONTACT_LOOKUP_KEY));
+
             contactCursor = context.getContentResolver().query(uri, AndroidDAO.ContactQuery.PROJECTION, null, null, null);
-            if (contactCursor.moveToFirst())
+            if (contactCursor != null && contactCursor.moveToFirst()) {
                 contactName = contactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME);
-            cursor.addRow(CursorUtils.addCursorColumnsValues(appCursor, contactName));
+                cursor.addRow(CursorUtils.addCursorColumnsValues(appCursor, contactName));
+                Tools.printArray(cursor_columns);
+                Tools.printArray(CursorUtils.addCursorColumnsValues(appCursor,
+                        contactName));
+            }
         }
         return cursor;
     }

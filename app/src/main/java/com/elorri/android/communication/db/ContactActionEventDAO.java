@@ -54,7 +54,9 @@ public class ContactActionEventDAO {
             + CommunicationContract.ActionEntry.NAME + "."
             + CommunicationContract.ActionEntry._ID;
 
-
+  public static final int COL_ID = 0;
+    public static final int COL_ANDROID_CONTACT_ID = 1;
+    public static final int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
 
 
     public interface UnmanagedPeopleQuery {
@@ -89,7 +91,9 @@ public class ContactActionEventDAO {
         String SELECT_DELAY_PEOPLE = "select "
                 + CommunicationContract.EventEntry.COLUMN_CONTACT_ID + ", "
                 + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " from ("
+                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY +  ", "
+                + CommunicationContract.ActionEntry.VIEW_ACTION_NAME + ", "
+                + CommunicationContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + "< ? and "
                 + CommunicationContract.EventEntry.COLUMN_TIME_END + " is null";
@@ -107,7 +111,8 @@ public class ContactActionEventDAO {
         String SELECT_TODAY_PEOPLE = "select "
                 + CommunicationContract.EventEntry.COLUMN_CONTACT_ID + ", "
                 + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY +  ", "
+                + CommunicationContract.ActionEntry.VIEW_ACTION_NAME + ", "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
@@ -126,7 +131,8 @@ public class ContactActionEventDAO {
         String SELECT_TODAY_DONE_PEOPLE = "select "
                 + CommunicationContract.EventEntry.COLUMN_CONTACT_ID + ", "
                 + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY +  ", "
+                + CommunicationContract.ActionEntry.VIEW_ACTION_NAME + ", "
                 + CommunicationContract.EventEntry.COLUMN_TIME_END + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
@@ -146,7 +152,8 @@ public class ContactActionEventDAO {
         String SELECT_NEXT_PEOPLE = "select "
                 + CommunicationContract.EventEntry.COLUMN_CONTACT_ID + ", "
                 + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY +  ", "
+                + CommunicationContract.ActionEntry.VIEW_ACTION_NAME + ", "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + CommunicationContract.EventEntry.COLUMN_TIME_START + " > ? and "

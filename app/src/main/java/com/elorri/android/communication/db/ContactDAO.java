@@ -38,14 +38,12 @@ public class ContactDAO {
         };
     }
 
-    public static ContentValues getContentValues(Cursor cursorContacts) {
+    public static ContentValues getContentValues(Cursor androidContactCursor) {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(CommunicationContract.ContactEntry._ID,
-                    cursorContacts.getString(ContactQuery.COL_ID));
             contentValues.put(CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                    cursorContacts.getString(ContactQuery.COL_ANDROID_ID));
+                    androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));
             contentValues.put(CommunicationContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                    cursorContacts.getString(ContactQuery.COL_ANDROID_LOOKUP_KEY));
+                    androidContactCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
             return contentValues;
 
     }

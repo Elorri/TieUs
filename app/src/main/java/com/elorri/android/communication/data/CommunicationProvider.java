@@ -48,11 +48,11 @@ public class CommunicationProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
             case PAGE_BOARD:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "PAGE_BOARD uri" + uri);
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "PAGE_BOARD uri " + uri);
                 cursor = PageBoardQuery.getCursor(getContext(), db);
                 break;
             case TABLE_CONTACT:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri" + uri);
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         CommunicationContract.ContactEntry.NAME,
                         projection,

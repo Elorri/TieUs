@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Looper;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,4 +87,11 @@ public class Tools {
     }
 
 
+    public static void printArray(String[] array) {
+        String arrayString="";
+        for(String item:array){
+            arrayString+=item+",";
+        }
+        Log.e("Communication", ""+arrayString);
+    }
 }

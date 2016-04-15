@@ -18,9 +18,9 @@ public class CursorUtils {
         return columns;
     }
 
-    public static Object[] addCursorColumnsValues(Cursor appCursorOldValues, String... newValues) {
+    public static String[] addCursorColumnsValues(Cursor appCursorOldValues, String... newValues) {
         int columnsCount = appCursorOldValues.getColumnCount()+newValues.length;
-        Object[] values=new Object[columnsCount];
+        String[] values=new String[columnsCount];
         int i;
         for (i = 0; i < appCursorOldValues.getColumnCount(); i++)
             values[i] = appCursorOldValues.getString(i);
