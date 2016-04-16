@@ -1,5 +1,6 @@
 package com.elorri.android.friendforcast;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private void syncContacts() {
         SyncContactsTask syncContactsTask = new SyncContactsTask();
         syncContactsTask.execute();
+    }
+
+    public void onContactClicked() {
+        startActivity(new Intent(this, DetailActivity.class));
     }
 
     public class PageAdapter extends FragmentStatePagerAdapter {

@@ -27,10 +27,16 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public static int[] viewTypes;
 
     private Cursor mCursor;
+    private Callback mCallback;
 
-    public BoardAdapter(Cursor cursor) {
+    public BoardAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
+        mCallback=callback;
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+    }
+
+    interface Callback{
+        void onContactClicked();
     }
 
 
@@ -45,9 +51,12 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         //public ImageView actionIcon;
         public ImageView emoIcon;
 
+        public View mView;
+
 
         public ViewHolder(View view, int viewType) {
             super(view);
+            this.mView=view;
             avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
             avatar = (ImageView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.contact_name);
@@ -150,6 +159,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                         .UnmanagedPeopleQuery.COL_CONTACT_NAME));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .UnmanagedPeopleQuery.COL_EMOICON_ID));
+                setOnClickListener(holder.mView);
                 break;
             }
             case VIEW_DELAY_PEOPLE: {
@@ -159,6 +169,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
+                setOnClickListener(holder.mView);
                 break;
             }
             case VIEW_TODAY_PEOPLE: {
@@ -168,6 +179,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
+                setOnClickListener(holder.mView);
                 break;
             }
             case VIEW_TODAY_DONE_PEOPLE: {
@@ -177,6 +189,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
+                setOnClickListener(holder.mView);
                 break;
             }
             case VIEW_NEXT_PEOPLE: {
@@ -186,10 +199,20 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
+                setOnClickListener(holder.mView);
                 break;
             }
         }
 
+    }
+
+    private void setOnClickListener(View mView) {
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onContactClicked();
+            }
+        });
     }
 
     private void setAvatarBgColor(ViewHolder holder) {

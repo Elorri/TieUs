@@ -21,7 +21,7 @@ import com.elorri.android.friendforcast.data.PageBoardQuery;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> , BoardAdapter.Callback{
 
     private BoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -41,7 +41,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new BoardAdapter(null);
+        mAdapter = new BoardAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }
@@ -76,5 +76,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onLoaderReset(Loader<Cursor> loader) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
         mRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public void onContactClicked() {
+        ((MainActivity)getActivity()).onContactClicked();
     }
 }
