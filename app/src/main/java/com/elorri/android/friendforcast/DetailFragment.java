@@ -15,10 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elorri.android.friendforcast.data.PageDetailQuery;
+import com.elorri.android.friendforcast.data.DetailQuery;
+import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopImageView;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -37,7 +37,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-         ImageView avatar=(ImageView) view.findViewById(R.id.avatar);
+        DynamicHeightGradientTopImageView avatar=(DynamicHeightGradientTopImageView) view.findViewById(R.id.avatar);
          FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
          TextView contactName= (TextView) view.findViewById(R.id.contact_name);
 
@@ -53,7 +53,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(PageDetailQuery.LOADER_ID, null, this);
+        getLoaderManager().initLoader(DetailQuery.LOADER_ID, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 

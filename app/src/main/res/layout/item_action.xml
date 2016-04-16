@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_normal"
+   android:layout_marginLeft="50dp">
+
+
+    <TextView
+        android:id="@+id/action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/emo_icon_width"
+        android:layout_marginRight="@dimen/emo_icon_width"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="24h thank you note"/>
+
+    <ImageView
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action"
+        android:src="@drawable/ic_schedule_black_24dp"
+        android:tint="@color/secondary_dark_text"/>
+
+    <TextView
+        android:id="@+id/time_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/clock"
+        android:layout_below="@id/action"
+        android:layout_marginEnd="@dimen/emo_icon_width"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/emo_icon_width"
+        android:layout_toEndOf="@id/clock"
+        android:layout_toRightOf="@id/clock"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/spacing_small"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="30 sept."/>
+
+
+</RelativeLayout>

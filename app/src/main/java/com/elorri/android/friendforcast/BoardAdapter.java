@@ -215,7 +215,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 int adapterPosition = holder.getAdapterPosition();
                 mCursor.moveToPosition(adapterPosition);
                 int contactId=mCursor.getInt(ContactActionEventDAO.PeopleQuery.COL_ID);
-                Uri uri= FriendForecastContract.ContactEntry.buildContactDetailUri(contactId);
+                Uri uri= FriendForecastContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri);
             }
         });

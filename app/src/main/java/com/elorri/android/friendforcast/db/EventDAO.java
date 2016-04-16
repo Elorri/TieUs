@@ -8,19 +8,19 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 public class EventDAO {
 
     public static final String CREATE = "CREATE TABLE "
-            + FriendForecastContract.EventEntry.NAME +
-            "(" + FriendForecastContract.EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-            + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventEntry.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventEntry.COLUMN_TIME_START + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventEntry.COLUMN_TIME_END + " INTEGER)";
+            + FriendForecastContract.EventTable.NAME +
+            "(" + FriendForecastContract.EventTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+            + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventTable.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventTable.COLUMN_TIME_START + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventTable.COLUMN_TIME_END + " INTEGER)";
 
         public static final String INSERT = "INSERT INTO "
-                + FriendForecastContract.EventEntry.NAME + " ("
-                + FriendForecastContract.EventEntry._ID + ", "
-                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID+", "
-                + FriendForecastContract.EventEntry.COLUMN_ACTION_ID+", "
-                + FriendForecastContract.EventEntry.COLUMN_TIME_START+", "
-                + FriendForecastContract.EventEntry.COLUMN_TIME_END+") "
+                + FriendForecastContract.EventTable.NAME + " ("
+                + FriendForecastContract.EventTable._ID + ", "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID+", "
+                + FriendForecastContract.EventTable.COLUMN_ACTION_ID+", "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START+", "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END+") "
                 + "VALUES (?, ?, ?, ?, ?)";
 }

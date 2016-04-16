@@ -16,9 +16,11 @@ import com.elorri.android.friendforcast.extra.Tools;
  */
 public class FriendForecastProvider extends ContentProvider {
 
-    static final int PAGE_BOARD = 100; //will match content://com.elorri.android.communication/board/
+    static final int DATA_BOARD = 100; //content://com.elorri.android.communication/board/
+    static final int DATA_DETAIL = 101; //content://com.elorri.android.communication/detail/
 
     static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
+
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -29,8 +31,12 @@ public class FriendForecastProvider extends ContentProvider {
         // found.  The code passed into the constructor represents the code to return for the root
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.PATH_BOARD, PAGE_BOARD);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.PATH_CONTACT, TABLE_CONTACT);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.BoardData.PATH_BOARD, DATA_BOARD);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.DetailData.PATH_DETAIL+"/#", DATA_DETAIL);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ContactTable
+                .PATH_CONTACT, TABLE_CONTACT);
         return matcher;
     }
 
@@ -47,14 +53,19 @@ public class FriendForecastProvider extends ContentProvider {
         Cursor cursor = null;
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
-            case PAGE_BOARD:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "PAGE_BOARD uri " + uri);
-                cursor = PageBoardQuery.getCursor(getContext(), db);
+            case DATA_BOARD:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD uri " + uri);
+                cursor = BoardQuery.getCursor(getContext(), db);
+                break;
+            case DATA_DETAIL:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
+                String contactId=FriendForecastContract.DetailData.getContactIdFromUri(uri);
+                cursor = DetailQuery.getCursor(db, contactId);
                 break;
             case TABLE_CONTACT:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendForecastContract.ContactEntry.NAME,
+                        FriendForecastContract.ContactTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -84,9 +95,9 @@ public class FriendForecastProvider extends ContentProvider {
         Uri returnUri;
         switch (match) {
             case TABLE_CONTACT: {
-                long _id = db.insert(FriendForecastContract.ContactEntry.NAME, null, values);
+                long _id = db.insert(FriendForecastContract.ContactTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.ContactEntry.buildContactDetailUri(_id);
+                    returnUri = FriendForecastContract.ContactTable.buildContactUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);

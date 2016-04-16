@@ -51,9 +51,9 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
         // It does NOT depend on the version number for your application.
         // If you want to update the schema without wiping data, commenting out the next 2 lines
         // should be your top priority before modifying this method.
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ContactEntry.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ActionEntry.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.EventEntry.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ContactTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ActionTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.EventTable.NAME);
         onCreate(sqLiteDatabase);
     }
 

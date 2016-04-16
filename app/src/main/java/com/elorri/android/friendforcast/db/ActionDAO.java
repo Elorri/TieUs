@@ -8,17 +8,21 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 public class ActionDAO {
 
 
+
+
     public static  final String CREATE = "CREATE TABLE "
-            + FriendForecastContract.ActionEntry.NAME +
-            "(" + FriendForecastContract.ActionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FriendForecastContract.ActionEntry.COLUMN_NAME + " TEXT NOT NULL)";
+            + FriendForecastContract.ActionTable.NAME +
+            "(" + FriendForecastContract.ActionTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + FriendForecastContract.ActionTable.COLUMN_NAME + " TEXT NOT NULL)";
 
 
 
     public static final String INSERT = "INSERT INTO "
-            + FriendForecastContract.ActionEntry.NAME
+            + FriendForecastContract.ActionTable.NAME
             + " ("
-            + FriendForecastContract.ActionEntry._ID + ", "
-            + FriendForecastContract.ActionEntry.COLUMN_NAME
+            + FriendForecastContract.ActionTable._ID + ", "
+            + FriendForecastContract.ActionTable.COLUMN_NAME
             + ") " + "VALUES (?, ?)";
+
+
 }

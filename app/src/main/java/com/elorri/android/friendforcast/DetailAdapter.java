@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
+
 /**
  * Created by Elorri on 16/04/2016.
  */
@@ -28,8 +31,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView action;
+
         public ImageView emoIcon;
+        public TextView action;
+        public TextView timeStart;
 
         public View mView;
 
@@ -45,6 +50,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 }
                 case VIEW_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
+                    timeStart = (TextView) view.findViewById(R.id.time_start);
                     break;
                 }
             }
@@ -59,12 +65,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         View view;
         switch (viewType) {
             case VIEW_EMOICON: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
+                        parent, false);
                 viewHolder = new ViewHolder(view, VIEW_EMOICON);
                 break;
             }
             case VIEW_ACTION: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_unmanaged_people, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
+                        parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION);
                 break;
             }
@@ -79,11 +87,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_EMOICON: {
-                //holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TitleQuery.COL_TITLE));
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactDAO.ContactQuery.EMOICON_BY_ID));
                 break;
             }
             case VIEW_ACTION: {
-                //holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TitleQuery.COL_TITLE));
+                holder.action.setText(mCursor.getString(ContactActionEventDAO
+                        .ActionByContactIdQuery.COL_ACTION_NAME));
+                holder.timeStart.setText(mCursor.getString(ContactActionEventDAO
+                        .ActionByContactIdQuery.COL_TIME_START));
                 break;
             }
         }

@@ -3,24 +3,44 @@ package com.elorri.android.friendforcast.data;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by Elorri on 11/04/2016.
  */
 public class FriendForecastContract {
 
-    //Pages paths
-    public static String PATH_BOARD = "board";
-
-    //Tables paths
-    public static String PATH_CONTACT = "contact";
-
     public static final String CONTENT_AUTHORITY = "com.elorri.android.friendforcast";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final Uri URI_PAGE_BOARD = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOARD).build();
+
+    public static class BoardData{
+        // DATA_BOARD  content://com.elorri.android.communication/board/
+        public static String PATH_BOARD = "board";
+        public static final Uri URI_PAGE_BOARD = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOARD).build();
+    }
+
+    public static class DetailData{
+        //DATA_DETAIL content://com.elorri.android.communication/detail/
+        public static String PATH_DETAIL = "detail";
+
+        public static Uri buildDetailUri(long id) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_DETAIL)
+                    .appendEncodedPath(String.valueOf(id))
+                    .build();
+        }
+
+        public static String getContactIdFromUri(Uri uri) {
+            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + "contactId" +
+                    uri.getPathSegments().get(1));
+            return uri.getPathSegments().get(1);
+        }
+    }
 
 
-    public static class ContactEntry implements BaseColumns {
+
+    public static class ContactTable implements BaseColumns {
+        public static String PATH_CONTACT = "contact";
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT).build();
 
         public static final String NAME = "contact";
@@ -29,13 +49,13 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_EMOICON_ID = "emoicon";
 
-        public static Uri buildContactDetailUri(long id) {
+        public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
 
 
-    public static class ActionEntry implements BaseColumns {
+    public static class ActionTable implements BaseColumns {
         public static final String NAME = "action";
         public static final String COLUMN_NAME = "name";
         public static final String VIEW_ACTION_ID = "action_id";
@@ -43,7 +63,7 @@ public class FriendForecastContract {
     }
 
 
-    public static class EventEntry implements BaseColumns {
+    public static class EventTable implements BaseColumns {
         public static final String NAME = "event";
         public static final String COLUMN_CONTACT_ID = "contact_id";
         public static final String COLUMN_ACTION_ID = "action_id";

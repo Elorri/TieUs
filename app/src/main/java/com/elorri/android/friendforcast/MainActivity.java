@@ -119,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
                             ""+androidContactId+" "+androidLookUpKey);
 
                     localCursor = getApplicationContext().getContentResolver().query(
-                            FriendForecastContract.ContactEntry.CONTENT_URI,
+                            FriendForecastContract.ContactTable.CONTENT_URI,
                             ContactDAO.ContactQuery.PROJECTION,
-                            FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + "=? and "
-                                    + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
+                            FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "=? and "
+                                    + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
                             new String[]{androidContactId, androidLookUpKey},
                             null
                     );
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         if (localCursor.getCount() == 0) {
                             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
                             getApplicationContext().getContentResolver().insert(
-                                    FriendForecastContract.ContactEntry.CONTENT_URI,
+                                    FriendForecastContract.ContactTable.CONTENT_URI,
                                     ContactDAO.getContentValuesInsert(androidCursor, R.drawable.ic_sentiment_neutral_black_24dp));
                         }
                     } finally {
