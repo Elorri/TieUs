@@ -2,6 +2,7 @@ package com.elorri.android.friendforcast;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.data.FriendCastContract;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 
@@ -57,8 +58,10 @@ public class MainActivity extends AppCompatActivity {
         syncContactsTask.execute();
     }
 
-    public void onContactClicked() {
-        startActivity(new Intent(this, DetailActivity.class));
+    public void onContactClicked(Uri uri) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     public class PageAdapter extends FragmentStatePagerAdapter {
@@ -116,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
                             ""+androidContactId+" "+androidLookUpKey);
 
                     localCursor = getApplicationContext().getContentResolver().query(
-                            FriendCastContract.ContactEntry.CONTENT_URI,
+                            FriendForecastContract.ContactEntry.CONTENT_URI,
                             ContactDAO.ContactQuery.PROJECTION,
-                            FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + "=? and "
-                                    + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
+                            FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + "=? and "
+                                    + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
                             new String[]{androidContactId, androidLookUpKey},
                             null
                     );
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         if (localCursor.getCount() == 0) {
                             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
                             getApplicationContext().getContentResolver().insert(
-                                    FriendCastContract.ContactEntry.CONTENT_URI,
+                                    FriendForecastContract.ContactEntry.CONTENT_URI,
                                     ContactDAO.getContentValuesInsert(androidCursor, R.drawable.ic_sentiment_neutral_black_24dp));
                         }
                     } finally {

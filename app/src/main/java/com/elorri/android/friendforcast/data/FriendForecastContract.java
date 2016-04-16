@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class FriendCastContract {
+public class FriendForecastContract {
 
     //Pages paths
     public static String PATH_BOARD = "board";
@@ -29,7 +29,7 @@ public class FriendCastContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_EMOICON_ID = "emoicon";
 
-        public static Uri buildContactUri(long id) {
+        public static Uri buildContactDetailUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }

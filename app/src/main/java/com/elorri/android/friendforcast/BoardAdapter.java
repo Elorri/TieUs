@@ -1,6 +1,7 @@
 package com.elorri.android.friendforcast;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 
 /**
@@ -36,7 +38,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     interface Callback{
-        void onContactClicked();
+        void onContactClicked(Uri uri);
     }
 
 
@@ -159,7 +161,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                         .UnmanagedPeopleQuery.COL_CONTACT_NAME));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .UnmanagedPeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder.mView);
+                setOnClickListener(holder);
                 break;
             }
             case VIEW_DELAY_PEOPLE: {
@@ -169,7 +171,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder.mView);
+                setOnClickListener(holder);
                 break;
             }
             case VIEW_TODAY_PEOPLE: {
@@ -179,7 +181,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder.mView);
+                setOnClickListener(holder);
                 break;
             }
             case VIEW_TODAY_DONE_PEOPLE: {
@@ -189,7 +191,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder.mView);
+                setOnClickListener(holder);
                 break;
             }
             case VIEW_NEXT_PEOPLE: {
@@ -199,18 +201,22 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder.mView);
+                setOnClickListener(holder);
                 break;
             }
         }
 
     }
 
-    private void setOnClickListener(View mView) {
-        mView.setOnClickListener(new View.OnClickListener() {
+    private void setOnClickListener(final ViewHolder holder) {
+        holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onContactClicked();
+                int adapterPosition = holder.getAdapterPosition();
+                mCursor.moveToPosition(adapterPosition);
+                int contactId=mCursor.getInt(ContactActionEventDAO.PeopleQuery.COL_ID);
+                Uri uri= FriendForecastContract.ContactEntry.buildContactDetailUri(contactId);
+                mCallback.onContactClicked(uri);
             }
         });
     }

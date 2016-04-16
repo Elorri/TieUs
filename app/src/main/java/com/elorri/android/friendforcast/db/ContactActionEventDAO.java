@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.data.FriendCastContract;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 /**
  * Created by Elorri on 12/04/2016.
@@ -19,46 +19,52 @@ public class ContactActionEventDAO {
 
 
     private static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "select "
-            + FriendCastContract.EventEntry.VIEW_EVENT_ID + ", "
-            + FriendCastContract.EventEntry.COLUMN_ACTION_ID + ", "
-            + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-            + FriendCastContract.ActionEntry.NAME + "."
-            + FriendCastContract.ActionEntry.COLUMN_NAME + " as "
-            + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
-            + FriendCastContract.EventEntry.COLUMN_TIME_START + ", "
-            + FriendCastContract.EventEntry.COLUMN_TIME_END + ", "
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-            + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + " from (select "
-            + FriendCastContract.EventEntry.NAME + "."
-            + FriendCastContract.EventEntry._ID + " as "
-            + FriendCastContract.EventEntry.VIEW_EVENT_ID + ", "
-            + FriendCastContract.EventEntry.NAME + "."
-            + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-            + FriendCastContract.EventEntry.NAME + "."
-            + FriendCastContract.EventEntry.COLUMN_ACTION_ID + ", "
-            + FriendCastContract.EventEntry.NAME + "."
-            + FriendCastContract.EventEntry.COLUMN_TIME_START + ", "
-            + FriendCastContract.EventEntry.NAME + "."
-            + FriendCastContract.EventEntry.COLUMN_TIME_END + ", "
-            + FriendCastContract.ContactEntry.NAME + "."
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendCastContract.ContactEntry.NAME + "."
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-            + FriendCastContract.ContactEntry.NAME + "."
-            + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-            + FriendCastContract.ContactEntry.NAME + "."
-            + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + " from "
-            + FriendCastContract.EventEntry.NAME + " inner join "
-            + FriendCastContract.ContactEntry.NAME + " on "
-            + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + "="
-            + FriendCastContract.ContactEntry.NAME + "."
-            + FriendCastContract.ContactEntry._ID + ") as ec inner join "
-            + FriendCastContract.ActionEntry.NAME + " on ec."
-            + FriendCastContract.EventEntry.COLUMN_ACTION_ID + "="
-            + FriendCastContract.ActionEntry.NAME + "."
-            + FriendCastContract.ActionEntry._ID;
+            + FriendForecastContract.EventEntry.VIEW_EVENT_ID + ", "
+            + FriendForecastContract.EventEntry.COLUMN_ACTION_ID + ", "
+            + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+            + FriendForecastContract.ActionEntry.NAME + "."
+            + FriendForecastContract.ActionEntry.COLUMN_NAME + " as "
+            + FriendForecastContract.ActionEntry.VIEW_ACTION_NAME + ", "
+            + FriendForecastContract.EventEntry.COLUMN_TIME_START + ", "
+            + FriendForecastContract.EventEntry.COLUMN_TIME_END + ", "
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+            + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + " from (select "
+            + FriendForecastContract.EventEntry.NAME + "."
+            + FriendForecastContract.EventEntry._ID + " as "
+            + FriendForecastContract.EventEntry.VIEW_EVENT_ID + ", "
+            + FriendForecastContract.EventEntry.NAME + "."
+            + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+            + FriendForecastContract.EventEntry.NAME + "."
+            + FriendForecastContract.EventEntry.COLUMN_ACTION_ID + ", "
+            + FriendForecastContract.EventEntry.NAME + "."
+            + FriendForecastContract.EventEntry.COLUMN_TIME_START + ", "
+            + FriendForecastContract.EventEntry.NAME + "."
+            + FriendForecastContract.EventEntry.COLUMN_TIME_END + ", "
+            + FriendForecastContract.ContactEntry.NAME + "."
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+            + FriendForecastContract.ContactEntry.NAME + "."
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+            + FriendForecastContract.ContactEntry.NAME + "."
+            + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+            + FriendForecastContract.ContactEntry.NAME + "."
+            + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + " from "
+            + FriendForecastContract.EventEntry.NAME + " inner join "
+            + FriendForecastContract.ContactEntry.NAME + " on "
+            + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + "="
+            + FriendForecastContract.ContactEntry.NAME + "."
+            + FriendForecastContract.ContactEntry._ID + ") as ec inner join "
+            + FriendForecastContract.ActionEntry.NAME + " on ec."
+            + FriendForecastContract.EventEntry.COLUMN_ACTION_ID + "="
+            + FriendForecastContract.ActionEntry.NAME + "."
+            + FriendForecastContract.ActionEntry._ID;
+
+    public interface PeopleQuery {
+        int COL_ID = 0;
+        int COL_ANDROID_CONTACT_ID = 1;
+        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
+    }
 
 
     public interface TitleQuery {
@@ -66,43 +72,36 @@ public class ContactActionEventDAO {
     }
 
 
-    public interface UnmanagedPeopleQuery {
+    public interface UnmanagedPeopleQuery extends PeopleQuery{
 
-        int COL_ID = 0;
-        int COL_ANDROID_CONTACT_ID = 1;
-        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
         int COL_CONTACT_NAME = 3;
         int COL_EMOICON_ID = 4;
 
 
         String[] PROJECTION = {
-                FriendCastContract.ContactEntry._ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
-                FriendCastContract.ContactEntry.COLUMN_EMOICON_ID
+                FriendForecastContract.ContactEntry._ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID
         };
 
         String SELECT_UNMANAGED_PEOPLE = "select "
-                + FriendCastContract.ContactEntry._ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                 + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + " from "
-                + FriendCastContract.ContactEntry.NAME + " except select "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + " from ("
+                + FriendForecastContract.ContactEntry._ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                 + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + " from "
+                + FriendForecastContract.ContactEntry.NAME + " except select "
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ")";
     }
 
-    public interface DelayPeopleQuery {
-
-        int COL_ID = 0;
-        int COL_ANDROID_CONTACT_ID = 1;
-        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
+    public interface DelayPeopleQuery extends PeopleQuery{
         int COL_CONTACT_NAME = 3;
         int COL_EMOICON_ID = 4;
         int COL_ACTION = 5;
@@ -110,33 +109,30 @@ public class ContactActionEventDAO {
 
 
         String[] PROJECTION = {
-                FriendCastContract.ContactEntry._ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
-                FriendCastContract.ContactEntry.COLUMN_EMOICON_ID,
-                FriendCastContract.ActionEntry.VIEW_ACTION_NAME,
-                FriendCastContract.EventEntry.COLUMN_TIME_START
+                FriendForecastContract.ContactEntry._ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID,
+                FriendForecastContract.ActionEntry.VIEW_ACTION_NAME,
+                FriendForecastContract.EventEntry.COLUMN_TIME_START
         };
 
         String SELECT_DELAY_PEOPLE = "select "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
-                + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
+                + FriendForecastContract.ActionEntry.VIEW_ACTION_NAME + ", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + "< ? and "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + "< ? and "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END + " is null";
     }
 
-    public interface TodayPeopleQuery {
+    public interface TodayPeopleQuery extends PeopleQuery{
 
-        int COL_ID = 0;
-        int COL_ANDROID_CONTACT_ID = 1;
-        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
         int COL_CONTACT_NAME = 3;
         int COL_EMOICON_ID = 4;
         int COL_ACTION = 5;
@@ -144,34 +140,30 @@ public class ContactActionEventDAO {
 
 
         String[] PROJECTION = {
-                FriendCastContract.ContactEntry._ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
-                FriendCastContract.ContactEntry.COLUMN_EMOICON_ID,
-                FriendCastContract.ActionEntry.VIEW_ACTION_NAME,
-                FriendCastContract.EventEntry.COLUMN_TIME_START
+                FriendForecastContract.ContactEntry._ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID,
+                FriendForecastContract.ActionEntry.VIEW_ACTION_NAME,
+                FriendForecastContract.EventEntry.COLUMN_TIME_START
         };
 
         String SELECT_TODAY_PEOPLE = "select "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
-                + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
+                + FriendForecastContract.ActionEntry.VIEW_ACTION_NAME + ", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END + " is null";
     }
 
-    public interface TodayDonePeopleQuery {
+    public interface TodayDonePeopleQuery extends PeopleQuery{
 
-
-        int COL_ID = 0;
-        int COL_ANDROID_CONTACT_ID = 1;
-        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
         int COL_CONTACT_NAME = 3;
         int COL_EMOICON_ID = 4;
         int COL_ACTION = 5;
@@ -179,33 +171,31 @@ public class ContactActionEventDAO {
 
 
         String[] PROJECTION = {
-                FriendCastContract.ContactEntry._ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
-                FriendCastContract.ContactEntry.COLUMN_EMOICON_ID,
-                FriendCastContract.ActionEntry.VIEW_ACTION_NAME,
-                FriendCastContract.EventEntry.COLUMN_TIME_END
+                FriendForecastContract.ContactEntry._ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID,
+                FriendForecastContract.ActionEntry.VIEW_ACTION_NAME,
+                FriendForecastContract.EventEntry.COLUMN_TIME_END
         };
 
         String SELECT_TODAY_DONE_PEOPLE = "select "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
-                + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END + " from ("
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
+                + FriendForecastContract.ActionEntry.VIEW_ACTION_NAME + ", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END + " is not null";
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " between ? and ? and "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END + " is not null";
     }
 
-    public interface NextPeopleQuery {
+    public interface NextPeopleQuery extends PeopleQuery{
 
-        int COL_ID = 0;
-        int COL_ANDROID_CONTACT_ID = 1;
-        int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
+
         int COL_CONTACT_NAME = 3;
         int COL_EMOICON_ID = 4;
         int COL_ACTION = 5;
@@ -214,26 +204,26 @@ public class ContactActionEventDAO {
 
 
         String[] PROJECTION = {
-                FriendCastContract.ContactEntry._ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
-                FriendCastContract.ContactEntry.COLUMN_EMOICON_ID,
-                FriendCastContract.ActionEntry.VIEW_ACTION_NAME,
-                FriendCastContract.EventEntry.COLUMN_TIME_START
+                FriendForecastContract.ContactEntry._ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID,
+                FriendForecastContract.ActionEntry.VIEW_ACTION_NAME,
+                FriendForecastContract.EventEntry.COLUMN_TIME_START
         };
 
         String SELECT_NEXT_PEOPLE = "select "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
-                + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
+                + FriendForecastContract.ActionEntry.VIEW_ACTION_NAME + ", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START + " > ? and "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START + " > ? and "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END + " is null";
     }
 
 

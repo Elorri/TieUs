@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.elorri.android.friendforcast.data.FriendCastContract;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.data.PageBoardQuery;
 
 /**
@@ -57,7 +57,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
-        Uri uri = FriendCastContract.URI_PAGE_BOARD;
+        Uri uri = FriendForecastContract.URI_PAGE_BOARD;
         return new CursorLoader(getActivity(),
                 uri,
                 null,
@@ -79,7 +79,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public void onContactClicked() {
-        ((MainActivity)getActivity()).onContactClicked();
+    public void onContactClicked(Uri uri) {
+        ((MainActivity)getActivity()).onContactClicked(uri);
     }
 }

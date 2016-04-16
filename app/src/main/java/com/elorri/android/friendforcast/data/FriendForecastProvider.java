@@ -14,7 +14,7 @@ import com.elorri.android.friendforcast.extra.Tools;
 /**
  * Created by Elorri on 12/04/2016.
  */
-public class CommunicationProvider extends ContentProvider {
+public class FriendForecastProvider extends ContentProvider {
 
     static final int PAGE_BOARD = 100; //will match content://com.elorri.android.communication/board/
 
@@ -22,21 +22,21 @@ public class CommunicationProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    private CommunicationDbHelper mOpenHelper;
+    private FriendForecastDbHelper mOpenHelper;
 
     static UriMatcher buildUriMatcher() {
         // All paths added to the UriMatcher have a corresponding code to return when a match is
         // found.  The code passed into the constructor represents the code to return for the root
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(FriendCastContract.CONTENT_AUTHORITY, FriendCastContract.PATH_BOARD, PAGE_BOARD);
-        matcher.addURI(FriendCastContract.CONTENT_AUTHORITY, FriendCastContract.PATH_CONTACT, TABLE_CONTACT);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.PATH_BOARD, PAGE_BOARD);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.PATH_CONTACT, TABLE_CONTACT);
         return matcher;
     }
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new CommunicationDbHelper(getContext());
+        mOpenHelper = new FriendForecastDbHelper(getContext());
         return true;
     }
 
@@ -54,7 +54,7 @@ public class CommunicationProvider extends ContentProvider {
             case TABLE_CONTACT:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendCastContract.ContactEntry.NAME,
+                        FriendForecastContract.ContactEntry.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -84,9 +84,9 @@ public class CommunicationProvider extends ContentProvider {
         Uri returnUri;
         switch (match) {
             case TABLE_CONTACT: {
-                long _id = db.insert(FriendCastContract.ContactEntry.NAME, null, values);
+                long _id = db.insert(FriendForecastContract.ContactEntry.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendCastContract.ContactEntry.buildContactUri(_id);
+                    returnUri = FriendForecastContract.ContactEntry.buildContactDetailUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);

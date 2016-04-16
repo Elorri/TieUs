@@ -1,6 +1,6 @@
 package com.elorri.android.friendforcast.db;
 
-import com.elorri.android.friendforcast.data.FriendCastContract;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -8,19 +8,19 @@ import com.elorri.android.friendforcast.data.FriendCastContract;
 public class EventDAO {
 
     public static final String CREATE = "CREATE TABLE "
-            + FriendCastContract.EventEntry.NAME +
-            "(" + FriendCastContract.EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-            + FriendCastContract.EventEntry.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
-            + FriendCastContract.EventEntry.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
-            + FriendCastContract.EventEntry.COLUMN_TIME_START + " INTEGER NOT NULL,"
-            + FriendCastContract.EventEntry.COLUMN_TIME_END + " INTEGER)";
+            + FriendForecastContract.EventEntry.NAME +
+            "(" + FriendForecastContract.EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+            + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventEntry.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventEntry.COLUMN_TIME_START + " INTEGER NOT NULL,"
+            + FriendForecastContract.EventEntry.COLUMN_TIME_END + " INTEGER)";
 
         public static final String INSERT = "INSERT INTO "
-                + FriendCastContract.EventEntry.NAME + " ("
-                + FriendCastContract.EventEntry._ID + ", "
-                + FriendCastContract.EventEntry.COLUMN_CONTACT_ID+", "
-                + FriendCastContract.EventEntry.COLUMN_ACTION_ID+", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_START+", "
-                + FriendCastContract.EventEntry.COLUMN_TIME_END+") "
+                + FriendForecastContract.EventEntry.NAME + " ("
+                + FriendForecastContract.EventEntry._ID + ", "
+                + FriendForecastContract.EventEntry.COLUMN_CONTACT_ID+", "
+                + FriendForecastContract.EventEntry.COLUMN_ACTION_ID+", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_START+", "
+                + FriendForecastContract.EventEntry.COLUMN_TIME_END+") "
                 + "VALUES (?, ?, ?, ?, ?)";
 }

@@ -14,17 +14,17 @@ import com.elorri.android.friendforcast.db.EventDAO;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class CommunicationDbHelper extends SQLiteOpenHelper {
+public class FriendForecastDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
 
     static final String DATABASE_NAME = "communication.db";
     private final Context mContext;
-    private static CommunicationDbHelper instance = null;
+    private static FriendForecastDbHelper instance = null;
 
 
-    public CommunicationDbHelper(Context context) {
+    public FriendForecastDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
@@ -51,9 +51,9 @@ public class CommunicationDbHelper extends SQLiteOpenHelper {
         // It does NOT depend on the version number for your application.
         // If you want to update the schema without wiping data, commenting out the next 2 lines
         // should be your top priority before modifying this method.
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendCastContract.ContactEntry.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendCastContract.ActionEntry.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendCastContract.EventEntry.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ContactEntry.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ActionEntry.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.EventEntry.NAME);
         onCreate(sqLiteDatabase);
     }
 
