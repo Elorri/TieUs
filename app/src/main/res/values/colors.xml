@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#AB47BC</color>
-    <color name="primaryDark">#8E24AA</color>
-    <color name="accent">#FF4081</color>
+
+
+    <!-- textures -->
+    <color name="primary">#009688</color>
+    <color name="primaryDark">#00796B</color>
+    <color name="primary_light">#80CBC4</color>
+    <color name="accent">#F50057</color>
+    <color name="secondaryLight">#ffbdbdbd</color>
+    <color name="secondaryDark">#ff616161</color>
 
     <!-- texts -->
     <color name="primary_light_text">#ffffff</color>
-    <color name="primary_dark_text">#263238</color>
+    <color name="primary_dark_text">#424242</color>
     <color name="secondary_dark_text">#727272</color>
 </resources>

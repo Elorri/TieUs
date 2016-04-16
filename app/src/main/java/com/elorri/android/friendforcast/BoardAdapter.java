@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 
 /**
@@ -33,7 +35,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public View divider;
         public ImageView avatar;
+        public FrameLayout avatarBg;
         public TextView contactName;
         public TextView action;
         public TextView dueDate;
@@ -41,14 +45,17 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         //public ImageView actionIcon;
         public ImageView emoIcon;
 
+
         public ViewHolder(View view, int viewType) {
             super(view);
+            avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
             avatar = (ImageView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.contact_name);
             emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
 
             switch (viewType) {
                 case VIEW_TITLE: {
+                    divider = view.findViewById(R.id.divider);
                     break;
                 }
                 case VIEW_UNMANAGED_PEOPLE: {
@@ -73,7 +80,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 case VIEW_NEXT_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
-                   // actionIcon = (ImageView) view.findViewById(R.id.action_icon);
+                    // actionIcon = (ImageView) view.findViewById(R.id.action_icon);
                     break;
                 }
             }
@@ -89,7 +96,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         switch (viewType) {
             case VIEW_TITLE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_UNMANAGED_PEOPLE);
+                viewHolder = new ViewHolder(view, VIEW_TITLE);
                 break;
             }
             case VIEW_UNMANAGED_PEOPLE: {
@@ -123,16 +130,22 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("position", Thread.currentThread().getStackTrace()[2] + "position " +
+                "" + position);
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_TITLE: {
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TITLE " +
+                        "position" + position);
+                int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
+                holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString
-                        (ContactActionEventDAO.TitleQuery.COL_TITLE).toUpperCase());
+                        (ContactActionEventDAO.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_UNMANAGED_PEOPLE: {
+                setAvatarBgColor(holder);
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO
                         .UnmanagedPeopleQuery.COL_CONTACT_NAME));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
@@ -140,39 +153,49 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case VIEW_DELAY_PEOPLE: {
+                setAvatarBgColor(holder);
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
-                        .UnmanagedPeopleQuery.COL_EMOICON_ID));
+                        .DelayPeopleQuery.COL_EMOICON_ID));
                 break;
             }
             case VIEW_TODAY_PEOPLE: {
+                setAvatarBgColor(holder);
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
-                        .UnmanagedPeopleQuery.COL_EMOICON_ID));
+                        .TodayPeopleQuery.COL_EMOICON_ID));
                 break;
             }
             case VIEW_TODAY_DONE_PEOPLE: {
+                setAvatarBgColor(holder);
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
-                        .UnmanagedPeopleQuery.COL_EMOICON_ID));
+                        .TodayDonePeopleQuery.COL_EMOICON_ID));
                 break;
             }
             case VIEW_NEXT_PEOPLE: {
+                setAvatarBgColor(holder);
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
-                        .UnmanagedPeopleQuery.COL_EMOICON_ID));
+                        .NextPeopleQuery.COL_EMOICON_ID));
                 break;
             }
         }
 
+    }
+
+    private void setAvatarBgColor(ViewHolder holder) {
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int randomColor = generator.getRandomColor();
+        holder.avatarBg.setBackgroundColor(randomColor);
     }
 
     @Override

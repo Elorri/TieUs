@@ -228,6 +228,7 @@ public class ContactActionEventDAO {
                 + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendCastContract.ContactEntry.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendCastContract.ContactEntry.COLUMN_EMOICON_ID + ", "
                 + FriendCastContract.ActionEntry.VIEW_ACTION_NAME + ", "
                 + FriendCastContract.EventEntry.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
