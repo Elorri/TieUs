@@ -1,4 +1,4 @@
-package com.elorri.android.communication;
+package com.elorri.android.friendforcast;
 
 import org.junit.Test;
 

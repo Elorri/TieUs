@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <ImageView
+            android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+            android:src="@drawable/art_clear"/>
+    </android.support.v7.widget.Toolbar>
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_below="@id/toolbar"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
 
         <android.support.v4.view.PagerTabStrip
@@ -26,9 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:background="@color/primary"
             android:paddingBottom="@dimen/spacing_normal"
             android:paddingTop="@dimen/spacing_normal"
-            android:background="@color/primary"
             android:textAppearance="@style/PagerTabStripText"/>
 
     </android.support.v4.view.ViewPager>

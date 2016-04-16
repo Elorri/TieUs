@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Communication</string>
+    <string name="app_name">Friends forcast</string>
     <string name="board_title">board</string>
     <string name="contacts_title">contacts</string>
     <string name="unmanaged_people">Unmanaged people</string>

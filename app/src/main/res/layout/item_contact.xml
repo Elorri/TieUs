@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="@dimen/icon_width"
-        android:layout_height="@dimen/icon_height"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
         android:layout_margin="@dimen/spacing_normal"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_person_black_24dp"
