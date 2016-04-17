@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.elorri.android.friendforcast.data.DetailQuery;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
@@ -75,7 +74,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         mAvatar = (DynamicHeightGradientTopAvatarView) view.findViewById(R.id.avatar);
         //view_no_avatar.setBackgroundResource(mThumbnail);
-        FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
+        //FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
