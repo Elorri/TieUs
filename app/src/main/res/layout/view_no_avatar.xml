@@ -5,8 +5,6 @@
     android:id="@+id/avatar_bg"
     android:layout_width="@dimen/avatar_bg_width"
     android:layout_height="@dimen/avatar_bg_height"
-    android:layout_centerVertical="true"
-    android:layout_marginRight="@dimen/spacing_normal"
     tools:background="@color/primary">
 
     <ImageView

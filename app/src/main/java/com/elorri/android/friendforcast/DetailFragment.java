@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.data.DetailQuery;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopImageView;
 
@@ -75,7 +74,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         mAvatar = (DynamicHeightGradientTopImageView) view.findViewById(R.id.avatar);
-        //avatar.setBackgroundResource(mThumbnail);
+        //view_no_avatar.setBackgroundResource(mThumbnail);
         FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
 
 
@@ -136,7 +135,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void setThumbnail(String uri) {
-        mAvatar.loadImage(uri);
+       // mAvatar.loadImage(uri);
 
     }
 

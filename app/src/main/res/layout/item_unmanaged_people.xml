@@ -9,9 +9,13 @@
     android:paddingRight="@dimen/spacing_normal"
     android:paddingTop="@dimen/spacing_small">
 
-    <include
+    <com.elorri.android.friendforcast.ui.AvatarView
         android:id="@+id/avatar"
-        layout="@layout/avatar"/>
+        android:layout_width="@dimen/avatar_bg_width"
+        android:layout_height="@dimen/avatar_bg_height"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_centerVertical="true"
+        tools:background="@color/secondaryLight"/>
 
     <ImageView
         android:id="@+id/emo_icon"

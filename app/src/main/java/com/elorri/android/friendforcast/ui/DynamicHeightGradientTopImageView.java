@@ -1,12 +1,10 @@
 package com.elorri.android.friendforcast.ui;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
 
 
@@ -43,22 +41,6 @@ public class DynamicHeightGradientTopImageView extends FrameLayout {
         setMeasuredDimension(measuredWidth, measuredHeight);
     }
 
-    public void setAspectRatio(float aspectRatio) {
-        mAspectRatio = aspectRatio;
-        requestLayout();
-    }
 
-
-    public void setImage(Bitmap bitmap) {
-        mThumbnailView.setImageBitmap(bitmap);
-    }
-
-    public void loadImage(Context context, String uri) {
-        Glide.with(context)
-                .load(uri)
-                .error(noImage)
-                .crossFade()
-                .into(mThumbnailView);
-    }
 }
 
