@@ -1,5 +1,6 @@
 package com.elorri.android.friendforcast;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 /**
@@ -29,14 +32,15 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     private Cursor mCursor;
     private Callback mCallback;
+    private Context mContext;
 
     public BoardAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
-        mCallback=callback;
+        mCallback = callback;
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
-    interface Callback{
+    interface Callback {
         void onContactClicked(Uri uri);
     }
 
@@ -56,7 +60,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         public ViewHolder(View view, int viewType) {
             super(view);
-            this.mView=view;
+            this.mView = view;
             avatar = (AvatarView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.contact_name);
             emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
@@ -99,36 +103,37 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     @Override
     public BoardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        mContext = parent.getContext();
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
             case VIEW_TITLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TITLE);
                 break;
             }
             case VIEW_UNMANAGED_PEOPLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_unmanaged_people, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_people, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_UNMANAGED_PEOPLE);
                 break;
             }
             case VIEW_DELAY_PEOPLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_undone_event, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_DELAY_PEOPLE);
                 break;
             }
             case VIEW_TODAY_PEOPLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_undone_event, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TODAY_PEOPLE);
                 break;
             }
             case VIEW_TODAY_DONE_PEOPLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_event, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_done_event, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TODAY_DONE_PEOPLE);
                 break;
             }
             case VIEW_NEXT_PEOPLE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_undone_event, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_NEXT_PEOPLE);
                 break;
             }
@@ -160,7 +165,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_ACTION));
-                holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START));
+                long dueDate = mCursor.getLong(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START);
+                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
+                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -169,7 +176,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_TODAY_PEOPLE: {
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_ACTION));
-                holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START));
+                long dueDate = mCursor.getLong(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START);
+                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
+                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -178,7 +187,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_ACTION));
-                holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END));
+                long dueDate = mCursor.getLong(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END);
+                holder.doneDate.setText(DateUtils.fromLongToString(dueDate,
+                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -187,7 +198,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_NEXT_PEOPLE: {
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_ACTION));
-                holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START));
+                long dueDate = mCursor.getLong(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START);
+                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
+                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);

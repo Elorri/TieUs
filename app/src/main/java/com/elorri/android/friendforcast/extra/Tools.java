@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by Elorri on 12/04/2016.
@@ -124,5 +125,16 @@ public class Tools {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return dp;
+    }
+
+    public static Locale getMostSuitableLocale() {
+        if ((Locale.getDefault().getLanguage().equals("fr"))
+                && (Locale.getDefault().getCountry().equals("FR")))
+            return Locale.getDefault(); //In my list of chosen Locale
+        if ((Locale.getDefault().getLanguage().equals("fr"))
+                && (Locale.getDefault().getCountry().equals("CA")))
+            return new Locale("fr", "FR");
+        return new Locale("en", "US"); //only locale Java guarantees is always available. In my
+        // list of chosen Locale
     }
 }

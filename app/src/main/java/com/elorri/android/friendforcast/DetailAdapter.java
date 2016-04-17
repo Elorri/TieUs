@@ -1,5 +1,6 @@
 package com.elorri.android.friendforcast;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Tools;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -23,6 +26,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     private Cursor mCursor;
     private Callback mCallback;
+    private Context mContext;
 
     interface Callback{
         void setTitle(String title);
@@ -67,6 +71,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public DetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mContext=parent.getContext();
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         ViewHolder viewHolder = null;
         View view;
@@ -104,8 +109,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case VIEW_ACTION: {
                 holder.action.setText(mCursor.getString(ContactActionEventDAO
                         .ActionByContactIdQuery.COL_ACTION_NAME));
-                holder.timeStart.setText(mCursor.getString(ContactActionEventDAO
-                        .ActionByContactIdQuery.COL_TIME_START));
+                long dueDateLong = mCursor.getLong(ContactActionEventDAO
+                        .ActionByContactIdQuery.COL_TIME_START);
+                holder.timeStart.setText(DateUtils.fromLongToString(dueDateLong,
+                        DateUtils.getFriendlyFormat(mContext, dueDateLong), Tools.getMostSuitableLocale()));
                 break;
             }
         }
