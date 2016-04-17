@@ -19,7 +19,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-            <com.elorri.android.friendforcast.ui.DynamicHeightGradientTopImageView
+            <com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView
                 android:id="@+id/avatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.elorri.android.friendforcast.data.DetailQuery;
-import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopImageView;
+import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -35,7 +35,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private String mContactTitle;
     private CollapsingToolbarLayout mCollapsingToolbar;
-    private DynamicHeightGradientTopImageView mAvatar;
+    private DynamicHeightGradientTopAvatarView mAvatar;
 
     @Nullable
     @Override
@@ -73,7 +73,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        mAvatar = (DynamicHeightGradientTopImageView) view.findViewById(R.id.avatar);
+        mAvatar = (DynamicHeightGradientTopAvatarView) view.findViewById(R.id.avatar);
         //view_no_avatar.setBackgroundResource(mThumbnail);
         FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
 
@@ -135,7 +135,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void setThumbnail(String uri) {
-       // mAvatar.loadImage(uri);
+        mAvatar.loadImage(uri);
 
     }
 

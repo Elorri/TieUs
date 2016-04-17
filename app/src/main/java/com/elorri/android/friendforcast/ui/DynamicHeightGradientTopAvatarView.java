@@ -22,9 +22,9 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.top_gradient_imageview, this);
-        FrameLayout thumbnail_container = (FrameLayout) findViewById(R.id.thumbnail_container);
+        FrameLayout thumbnailContainer = (FrameLayout) findViewById(R.id.thumbnail_container);
         mThumbnailView = new AvatarView(getContext());
-        thumbnail_container.addView(mThumbnailView);
+        thumbnailContainer.addView(mThumbnailView);
     }
 
     @Override
@@ -35,7 +35,6 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout {
 
         mThumbnailView.getLayoutParams().width = measuredWidth;
         mThumbnailView.getLayoutParams().height = measuredHeight;
-       // mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         setMeasuredDimension(measuredWidth, measuredHeight);
     }
