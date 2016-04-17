@@ -14,11 +14,16 @@ import com.elorri.android.friendforcast.R;
  */
 public class AvatarView extends FrameLayout {
 
+    public AvatarView(Context context) {
+        super(context);
+    }
+
     public AvatarView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public void loadImage(String uri) {
+        removeAllViews();
         if (uri == null) {
             inflate(getContext(), R.layout.view_no_avatar, this);
             ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
