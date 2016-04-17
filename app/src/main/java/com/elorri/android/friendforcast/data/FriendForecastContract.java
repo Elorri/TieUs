@@ -47,6 +47,7 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_ID = "android_contact_id";
         public static final String COLUMN_ANDROID_CONTACT_LOOKUP_KEY = "android_contact_lookup_key";
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
+        public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_EMOICON_ID = "emoicon";
 
         public static Uri buildContactUri(long id) {
@@ -58,7 +59,6 @@ public class FriendForecastContract {
     public static class ActionTable implements BaseColumns {
         public static final String NAME = "action";
         public static final String COLUMN_NAME = "name";
-        public static final String VIEW_ACTION_ID = "action_id";
         public static final String VIEW_ACTION_NAME = "action_name";
     }
 

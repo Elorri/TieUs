@@ -22,10 +22,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public static int[] viewTypes;
 
     private Cursor mCursor;
+    private Callback mCallback;
+
+    interface Callback{
+        void setTitle(String title);
+        void setThumbnail(String url);
+    }
 
 
-    public DetailAdapter(Cursor cursor) {
+    public DetailAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
+        mCallback=callback;
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
@@ -87,7 +94,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_EMOICON: {
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactDAO.ContactQuery.EMOICON_BY_ID));
+                mCallback.setTitle(mCursor.getString(ContactDAO.ContactQuery
+                        .COL_ANDROID_CONTACT_NAME));
+                mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery
+                        .COL_THUMBNAIL));
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID));
                 break;
             }
             case VIEW_ACTION: {

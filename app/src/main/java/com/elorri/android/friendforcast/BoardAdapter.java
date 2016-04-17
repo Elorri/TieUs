@@ -157,6 +157,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_UNMANAGED_PEOPLE: {
                 setAvatarBgColor(holder);
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_UNMANAGED_PEOPLE " +
+                        "thumbnail " + mCursor.getString(ContactActionEventDAO
+                        .PeopleQuery.COL_THUMBNAIL));
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO
                         .UnmanagedPeopleQuery.COL_CONTACT_NAME));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
@@ -166,6 +169,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_DELAY_PEOPLE: {
                 setAvatarBgColor(holder);
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_DELAY_PEOPLE " +
+                        "thumbnail " + mCursor.getString(ContactActionEventDAO
+                        .PeopleQuery.COL_THUMBNAIL));
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START));
@@ -176,6 +182,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_TODAY_PEOPLE: {
                 setAvatarBgColor(holder);
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TODAY_PEOPLE " +
+                        "thumbnail " + mCursor.getString(ContactActionEventDAO
+                        .PeopleQuery.COL_THUMBNAIL));
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START));
@@ -186,6 +195,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_TODAY_DONE_PEOPLE: {
                 setAvatarBgColor(holder);
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TODAY_DONE_PEOPLE " +
+                        "thumbnail " + mCursor.getString(ContactActionEventDAO
+                        .PeopleQuery.COL_THUMBNAIL));
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END));
@@ -196,6 +208,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_NEXT_PEOPLE: {
                 setAvatarBgColor(holder);
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_NEXT_PEOPLE " +
+                        "thumbnail " + mCursor.getString(ContactActionEventDAO
+                        .PeopleQuery.COL_THUMBNAIL));
                 holder.contactName.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_CONTACT_NAME));
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_ACTION));
                 holder.dueDate.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START));

@@ -40,6 +40,7 @@ public class ContactActionEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from (select "
             + FriendForecastContract.EventTable.NAME + "."
             + FriendForecastContract.EventTable._ID + " as "
@@ -59,6 +60,8 @@ public class ContactActionEventDAO {
             + FriendForecastContract.ContactTable.NAME + "."
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
             + FriendForecastContract.ContactTable.NAME + "."
+            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+            + FriendForecastContract.ContactTable.NAME + "."
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
             + FriendForecastContract.EventTable.NAME + " inner join "
             + FriendForecastContract.ContactTable.NAME + " on "
@@ -74,6 +77,9 @@ public class ContactActionEventDAO {
         int COL_ID = 0;
         int COL_ANDROID_CONTACT_ID = 1;
         int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
+        int COL_CONTACT_NAME = 3;
+        int COL_THUMBNAIL = 4;
+        int COL_EMOICON_ID = 5;
     }
 
 
@@ -84,8 +90,7 @@ public class ContactActionEventDAO {
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
 
-        int COL_CONTACT_NAME = 3;
-        int COL_EMOICON_ID = 4;
+
 
 
         String[] PROJECTION = {
@@ -93,6 +98,7 @@ public class ContactActionEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
         };
 
@@ -101,21 +107,21 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " except select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ")";
     }
 
     public interface DelayPeopleQuery extends PeopleQuery {
-        int COL_CONTACT_NAME = 3;
-        int COL_EMOICON_ID = 4;
-        int COL_ACTION = 5;
-        int COL_TIME_START = 6;
+        int COL_ACTION = 6;
+        int COL_TIME_START = 7;
 
 
         String[] PROJECTION = {
@@ -123,6 +129,7 @@ public class ContactActionEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
@@ -133,6 +140,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
@@ -143,10 +151,8 @@ public class ContactActionEventDAO {
 
     public interface TodayPeopleQuery extends PeopleQuery {
 
-        int COL_CONTACT_NAME = 3;
-        int COL_EMOICON_ID = 4;
-        int COL_ACTION = 5;
-        int COL_TIME_START = 6;
+        int COL_ACTION = 6;
+        int COL_TIME_START = 7;
 
 
         String[] PROJECTION = {
@@ -154,6 +160,7 @@ public class ContactActionEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
@@ -164,6 +171,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
@@ -174,10 +182,8 @@ public class ContactActionEventDAO {
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
 
-        int COL_CONTACT_NAME = 3;
-        int COL_EMOICON_ID = 4;
-        int COL_ACTION = 5;
-        int COL_TIME_END = 6;
+        int COL_ACTION = 6;
+        int COL_TIME_END = 7;
 
 
         String[] PROJECTION = {
@@ -185,6 +191,7 @@ public class ContactActionEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_END
@@ -195,6 +202,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " from ("
@@ -205,11 +213,8 @@ public class ContactActionEventDAO {
 
     public interface NextPeopleQuery extends PeopleQuery {
 
-
-        int COL_CONTACT_NAME = 3;
-        int COL_EMOICON_ID = 4;
-        int COL_ACTION = 5;
-        int COL_TIME_START = 6;
+        int COL_ACTION = 6;
+        int COL_TIME_START = 7;
 
 
         String[] PROJECTION = {
@@ -217,6 +222,7 @@ public class ContactActionEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
@@ -227,6 +233,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("

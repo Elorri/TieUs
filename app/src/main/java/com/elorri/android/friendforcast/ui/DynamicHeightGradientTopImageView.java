@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
 
 
@@ -50,6 +51,14 @@ public class DynamicHeightGradientTopImageView extends FrameLayout {
 
     public void setImage(Bitmap bitmap) {
         mThumbnailView.setImageBitmap(bitmap);
+    }
+
+    public void loadImage(Context context, String uri) {
+        Glide.with(context)
+                .load(uri)
+                .error(noImage)
+                .crossFade()
+                .into(mThumbnailView);
     }
 }
 

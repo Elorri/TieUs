@@ -9,24 +9,9 @@
     android:paddingRight="@dimen/spacing_normal"
     android:paddingTop="@dimen/spacing_small">
 
-    <FrameLayout
-        android:id="@+id/avatar_bg"
-        android:layout_width="@dimen/avatar_bg_width"
-        android:layout_height="@dimen/avatar_bg_height"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/spacing_normal"
-        android:background="@color/primary">
-
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/avatar_width"
-            android:layout_height="@dimen/avatar_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/spacing_normal"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_person_black_24dp"
-            android:tint="@color/secondary_dark_text"/>
-    </FrameLayout>
+    <include
+        android:id="@+id/avatar"
+        layout="@layout/avatar"/>
 
     <ImageView
         android:id="@+id/emo_icon"
@@ -35,8 +20,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
-        tools:background="@drawable/ic_sentiment_satisfied_black_24dp"
-        android:backgroundTint="@color/secondary_dark_text"/>
+        android:backgroundTint="@color/secondary_dark_text"
+        tools:background="@drawable/ic_sentiment_satisfied_black_24dp"/>
 
     <TextView
         android:id="@+id/contact_name"
@@ -45,8 +30,8 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/emo_icon_width"
         android:layout_marginRight="@dimen/emo_icon_width"
-        android:layout_toEndOf="@id/avatar_bg"
-        android:layout_toRightOf="@id/avatar_bg"
+        android:layout_toEndOf="@id/avatar"
+        android:layout_toRightOf="@id/avatar"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?android:textAppearanceLarge"

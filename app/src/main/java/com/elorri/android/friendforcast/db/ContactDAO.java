@@ -24,6 +24,7 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
+            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL)";
 
 
@@ -33,6 +34,7 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") "
             + "VALUES (?, ?, ?, ?, ?)";
 
@@ -43,7 +45,8 @@ public class ContactDAO {
         int COL_ANDROID_ID = 1;
         int COL_ANDROID_LOOKUP_KEY = 2;
         int COL_ANDROID_CONTACT_NAME = 3;
-        int EMOICON_BY_ID = 4;
+        int COL_THUMBNAIL = 4;
+        int COL_EMOICON_BY_ID = 5;
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
 
@@ -52,6 +55,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
         };
 
@@ -65,6 +69,8 @@ public class ContactDAO {
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID, emoiconId);
         return contentValues;
 

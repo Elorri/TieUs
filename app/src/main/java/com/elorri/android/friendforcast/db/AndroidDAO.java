@@ -18,10 +18,7 @@ public class AndroidDAO {
         int COL_ID = 0;
         int COL_LOOKUP_KEY = 1;
         int COL_CONTACT_NAME = 2;
-        int COL_PHOTO_THUMBNAIL_URI = 3;
-
-        // An identifier for the loader
-        int LOADER_ID = 0;
+        int COL_THUMBNAIL = 3;
 
         // A content URI for the Contacts table
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
