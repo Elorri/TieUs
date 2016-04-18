@@ -109,8 +109,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconRessource != R.drawable.ic_sentiment_satisfied_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
-                                    mAlertEmoDialog.cancel();
                                 }
+                                mAlertEmoDialog.cancel();
                             }
                         });
                         neutralItem.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +118,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconRessource != R.drawable.ic_sentiment_neutral_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
-                                    mAlertEmoDialog.cancel();
                                 }
+                                mAlertEmoDialog.cancel();
                             }
                         });
                         dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +127,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconRessource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
-                                    mAlertEmoDialog.cancel();
                                 }
+                                mAlertEmoDialog.cancel();
                             }
                         });
                         untrackedItem.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +136,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconRessource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_do_not_disturb_alt_black_48dp));
-                                    mAlertEmoDialog.cancel();
                                 }
+                                mAlertEmoDialog.cancel();
                             }
                         });
                         //Must be done before mAlertDialog.show() Let you customize only the main

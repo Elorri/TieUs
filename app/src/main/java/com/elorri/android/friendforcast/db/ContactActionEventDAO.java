@@ -111,16 +111,16 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
-                + FriendForecastContract.ContactTable.NAME + " except select "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " except select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+                + JOINT_TABLE_CONTACT_ACTION_EVENT + ")";
     }
 
     public interface UntrackedPeopleQuery extends PeopleQuery {
