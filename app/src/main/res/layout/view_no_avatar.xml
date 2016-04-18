@@ -9,6 +9,6 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/spacing_normal"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_person_black_24dp"
+        android:src="@drawable/ic_person_black_48dp"
         android:tint="@color/secondary_dark_text"/>
 </merge>

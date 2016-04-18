@@ -24,5 +24,19 @@ public class ActionDAO {
             + FriendForecastContract.ActionTable.COLUMN_NAME
             + ") " + "VALUES (?, ?)";
 
+    public interface ActionQuery {
 
+        int COL_ID = 0;
+        int COL_ACTION_NAME = 1;
+
+        String SELECTION = FriendForecastContract.ActionTable._ID + "=?";
+
+        String SORT_ORDER = FriendForecastContract.ActionTable.COLUMN_NAME + " asc";
+
+        String[] PROJECTION = {
+                FriendForecastContract.ActionTable._ID,
+                FriendForecastContract.ActionTable.COLUMN_NAME
+        };
+
+    }
 }

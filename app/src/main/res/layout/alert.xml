@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_normal">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="@string/select_action"
+        android:textAppearance="?android:textAppearanceLarge"/>
+
+    <FrameLayout
+        android:id="@+id/list_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/list_container"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/save_button"/>
+
+
+    <Button
+        android:id="@+id/dismiss_button"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_container"
+        android:layout_toLeftOf="@id/save_button"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/dismiss_button"
+        android:textColor="@color/secondary_dark_text"/>
+
+
+</RelativeLayout>

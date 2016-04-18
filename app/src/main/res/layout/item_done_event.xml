@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/secondary_dark_text"
-        tools:background="@drawable/ic_sentiment_satisfied_black_24dp"/>
+        tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
 
 
     <TextView

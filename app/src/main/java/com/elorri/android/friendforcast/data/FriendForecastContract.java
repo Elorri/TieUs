@@ -57,6 +57,9 @@ public class FriendForecastContract {
 
 
     public static class ActionTable implements BaseColumns {
+        public static String PATH_ACTION = "action";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTION).build();
+
         public static final String NAME = "action";
         public static final String COLUMN_NAME = "name";
         public static final String VIEW_ACTION_NAME = "action_name";
@@ -64,12 +67,19 @@ public class FriendForecastContract {
 
 
     public static class EventTable implements BaseColumns {
+        public static String PATH_EVENT = "event";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENT).build();
+
         public static final String NAME = "event";
         public static final String COLUMN_CONTACT_ID = "contact_id";
         public static final String COLUMN_ACTION_ID = "action_id";
         public static final String COLUMN_TIME_START = "time_start";
         public static final String COLUMN_TIME_END = "time_end";
         public static final String VIEW_EVENT_ID = "event_id";
+
+        public static Uri buildEventUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
 }

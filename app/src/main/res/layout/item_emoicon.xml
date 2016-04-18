@@ -8,7 +8,7 @@
         android:id="@+id/emo_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/ic_sentiment_satisfied_black_24dp"
+        android:background="@drawable/ic_sentiment_satisfied_black_48dp"
         android:orientation="vertical"
         android:scaleType="centerCrop"
         android:layout_margin="@dimen/spacing_normal"

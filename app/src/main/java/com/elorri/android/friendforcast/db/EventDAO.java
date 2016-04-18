@@ -1,5 +1,7 @@
 package com.elorri.android.friendforcast.db;
 
+import android.content.ContentValues;
+
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 /**
@@ -23,4 +25,14 @@ public class EventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START+", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END+") "
                 + "VALUES (?, ?, ?, ?, ?)";
+
+
+        public static ContentValues getContentValues(String contactId, String actionId, long date){
+                ContentValues values=new ContentValues();
+                values.put(FriendForecastContract.EventTable.COLUMN_CONTACT_ID, contactId);
+                values.put(FriendForecastContract.EventTable.COLUMN_ACTION_ID, actionId);
+                values.put(FriendForecastContract.EventTable.COLUMN_TIME_START, date);
+                return values;
+
+        }
 }

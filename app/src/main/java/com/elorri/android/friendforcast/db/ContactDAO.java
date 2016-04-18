@@ -39,6 +39,7 @@ public class ContactDAO {
             + "VALUES (?, ?, ?, ?, ?)";
 
 
+
     public interface ContactQuery {
 
         int COL_ID = 0;
@@ -74,6 +75,25 @@ public class ContactDAO {
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID, emoiconId);
         return contentValues;
 
+    }
+
+
+
+    public static ContentValues getContentValues(Cursor cursor) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FriendForecastContract.ContactTable._ID,
+                cursor.getString(ContactQuery.COL_ID));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                cursor.getString(ContactQuery.COL_ANDROID_ID));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                cursor.getString(ContactQuery.COL_ANDROID_LOOKUP_KEY));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                cursor.getString(ContactQuery.COL_ANDROID_CONTACT_NAME));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                cursor.getString(ContactQuery.COL_THUMBNAIL));
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                cursor.getString(ContactQuery.COL_EMOICON_BY_ID));
+        return contentValues;
     }
 
 

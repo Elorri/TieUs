@@ -131,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
                             getApplicationContext().getContentResolver().insert(
                                     FriendForecastContract.ContactTable.CONTENT_URI,
-                                    ContactDAO.getContentValuesInsert(androidCursor, R.drawable.ic_sentiment_neutral_black_24dp));
+                                    ContactDAO.getContentValuesInsert(androidCursor, R.drawable
+                                            .ic_sentiment_neutral_black_48dp));
                         }
                     } finally {
                         localCursor.close();

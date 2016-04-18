@@ -17,9 +17,11 @@ import com.elorri.android.friendforcast.extra.Tools;
 public class FriendForecastProvider extends ContentProvider {
 
     static final int DATA_BOARD = 100; //content://com.elorri.android.communication/board/
-    static final int DATA_DETAIL = 101; //content://com.elorri.android.communication/detail/
+    static final int DATA_DETAIL = 101; //content://com.elorri.android.communication/detail/15
 
     static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
+    static final int TABLE_ACTION = 501; //will match content://com.elorri.android.communication/action/
+    static final int TABLE_EVENT = 502; //will match content://com.elorri.android.communication/event/
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -34,9 +36,13 @@ public class FriendForecastProvider extends ContentProvider {
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
                 FriendForecastContract.BoardData.PATH_BOARD, DATA_BOARD);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.DetailData.PATH_DETAIL+"/#", DATA_DETAIL);
+                FriendForecastContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ContactTable
                 .PATH_CONTACT, TABLE_CONTACT);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ActionTable
+                .PATH_ACTION, TABLE_ACTION);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.EventTable
+                .PATH_EVENT, TABLE_EVENT);
         return matcher;
     }
 
@@ -59,13 +65,25 @@ public class FriendForecastProvider extends ContentProvider {
                 break;
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
-                String contactId=FriendForecastContract.DetailData.getContactIdFromUri(uri);
+                String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);
                 cursor = DetailQuery.getCursor(db, contactId);
                 break;
             case TABLE_CONTACT:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         FriendForecastContract.ContactTable.NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case TABLE_ACTION:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_ACTION uri " + uri);
+                cursor = mOpenHelper.getReadableDatabase().query(
+                        FriendForecastContract.ActionTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -103,6 +121,18 @@ public class FriendForecastProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
+            case TABLE_EVENT: {
+                //TODO add insertWithOnConflict wherevever possible
+                //TODO add table constrainst
+                //db.insertWithOnConflict(FriendForecastContract.EventTable.NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
+                long _id = db.insert(FriendForecastContract.EventTable.NAME, null, values);
+                if (_id > 0) {
+                    returnUri = FriendForecastContract.EventTable.buildEventUri(_id);
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
+                } else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -117,6 +147,22 @@ public class FriendForecastProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+
+        switch (match) {
+            case TABLE_CONTACT:
+                rowsUpdated = db.update(FriendForecastContract.ContactTable.NAME, values,
+                        selection,
+                        selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 }

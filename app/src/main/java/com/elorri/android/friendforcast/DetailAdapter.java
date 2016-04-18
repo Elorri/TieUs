@@ -1,15 +1,21 @@
 package com.elorri.android.friendforcast;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
@@ -27,16 +33,22 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private Cursor mCursor;
     private Callback mCallback;
     private Context mContext;
+    private AlertDialog mAlertEmoDialog;
+    private int mEmoIconRessource;
+    private String mContactId;
 
-    interface Callback{
+    interface Callback {
         void setTitle(String title);
+
         void setThumbnail(String url);
+
+        void updateFragment();
     }
 
 
     public DetailAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
-        mCallback=callback;
+        mCallback = callback;
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
@@ -71,7 +83,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public DetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext=parent.getContext();
+        mContext = parent.getContext();
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         ViewHolder viewHolder = null;
         View view;
@@ -79,6 +91,103 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case VIEW_EMOICON: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
                         parent, false);
+                view.setOnClickListener(new View.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        mAlertEmoDialog = builder.create();
+                        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout
+                                .emoicon_list, null);
+                        RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
+                        RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
+                        RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
+                        RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
+                        happyItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mEmoIconRessource != R.drawable.ic_sentiment_satisfied_black_48dp) {
+                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
+                                    mAlertEmoDialog.cancel();
+                                }
+                            }
+                        });
+                        neutralItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mEmoIconRessource != R.drawable.ic_sentiment_neutral_black_48dp) {
+                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
+                                    mAlertEmoDialog.cancel();
+                                }
+                            }
+                        });
+                        dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mEmoIconRessource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
+                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
+                                    mAlertEmoDialog.cancel();
+                                }
+                            }
+                        });
+                        untrackedItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mEmoIconRessource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
+                                    update(mContactId, String.valueOf(R.drawable.ic_do_not_disturb_alt_black_48dp));
+                                    mAlertEmoDialog.cancel();
+                                }
+                            }
+                        });
+                        //Must be done before mAlertDialog.show() Let you customize only the main
+                        // content, not the title and button
+                        //mAlertDialog.setView(listContainer);
+                        mAlertEmoDialog.show();
+                        //Must be done after mAlertDialog.show() Let you customize everything including
+                        // title and buttons.
+                        mAlertEmoDialog.setContentView(listContainer);
+                    }
+
+                    private void update(String contactId, String emoIconRessource) {
+                        UpdateContactTask updateContactTask = new UpdateContactTask();
+                        updateContactTask.execute(contactId, emoIconRessource);
+                    }
+
+                    class UpdateContactTask extends AsyncTask<String, Void, Void> {
+
+                        @Override
+                        protected Void doInBackground(String... params) {
+                            String contactId = params[0];
+                            String emoIconRessourceId = params[1];
+                            Cursor cursor = mContext.getContentResolver()
+                                    .query(FriendForecastContract.ContactTable.CONTENT_URI,
+                                            ContactDAO.ContactQuery.PROJECTION,
+                                            ContactDAO.ContactQuery.SELECTION,
+                                            new String[]{contactId},
+                                            null);
+                            cursor.moveToFirst();
+                            ContentValues contentvalues = ContactDAO.getContentValues(cursor);
+                            contentvalues = Tools.updateContactValues(contentvalues,
+                                    FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                                    emoIconRessourceId);
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
+                                    + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID));
+
+                            mContext.getContentResolver()
+                                    .update(FriendForecastContract.ContactTable.CONTENT_URI,
+                                            contentvalues,
+                                            ContactDAO.ContactQuery.SELECTION,
+                                            new String[]{contactId});
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            mCallback.updateFragment();
+                        }
+                    }
+                });
                 viewHolder = new ViewHolder(view, VIEW_EMOICON);
                 break;
             }
@@ -99,11 +208,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_EMOICON: {
+                mContactId = mCursor.getString(ContactDAO.ContactQuery
+                        .COL_ID);
                 mCallback.setTitle(mCursor.getString(ContactDAO.ContactQuery
                         .COL_ANDROID_CONTACT_NAME));
                 mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery
                         .COL_THUMBNAIL));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID));
+                mEmoIconRessource = mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID);
+                holder.emoIcon.setBackgroundResource(mEmoIconRessource);
                 break;
             }
             case VIEW_ACTION: {

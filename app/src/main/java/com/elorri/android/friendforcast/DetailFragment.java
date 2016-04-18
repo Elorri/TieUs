@@ -2,14 +2,18 @@ package com.elorri.android.friendforcast;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +22,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elorri.android.friendforcast.data.DetailQuery;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.db.ActionDAO;
+import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 
 /**
@@ -35,6 +49,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private String mContactTitle;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private DynamicHeightGradientTopAvatarView mAvatar;
+    private AlertDialog mAlertDialog;
 
     @Nullable
     @Override
@@ -47,24 +62,24 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mCollapsingToolbar.setTitle("");
 
         AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isCollapsed = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
-                    mCollapsingToolbar.setTitle(mContactTitle);
-                    isCollapsed = true;
-                } else if (isCollapsed) {
-                    mCollapsingToolbar.setTitle("");
-                    isCollapsed = false;
-                }
-            }
-        });
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            boolean isCollapsed = false;
+//            int scrollRange = -1;
+//
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                if (scrollRange == -1) {
+//                    scrollRange = appBarLayout.getTotalScrollRange();
+//                }
+//                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
+//                    mCollapsingToolbar.setTitle(mContactTitle);
+//                    isCollapsed = true;
+//                } else if (isCollapsed) {
+//                    mCollapsingToolbar.setTitle("");
+//                    isCollapsed = false;
+//                }
+//            }
+//        });
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -83,6 +98,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new DetailAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
+
+        FloatingActionButton shareFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
+        shareFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                mAlertDialog = builder.create();
+                FetchActionsTask actionsTask = new FetchActionsTask();
+                actionsTask.execute();
+            }
+        });
+
         return view;
     }
 
@@ -130,6 +157,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void setTitle(String title) {
         mContactTitle = title;
+        mCollapsingToolbar.setTitle(mContactTitle);
     }
 
     @Override
@@ -138,5 +166,104 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     }
 
+    @Override
+    public void updateFragment() {
+        getLoaderManager().restartLoader(DetailQuery.LOADER_ID, null, this);
+    }
 
+
+    private class FetchActionsTask extends AsyncTask<Void, Void, Cursor> {
+        private final String[] COLUMNS_TO_BE_BOUND = new String[]{
+                FriendForecastContract.ActionTable.COLUMN_NAME
+        };
+
+        private final int[] ITEMS_ID_TO_FILL = new int[]{
+                R.id.name
+        };
+
+        @Override
+        protected Cursor doInBackground(Void... params) {
+            return getContext().getContentResolver().query(FriendForecastContract.ActionTable
+                            .CONTENT_URI,
+                    ActionDAO.ActionQuery.PROJECTION,
+                    null,
+                    null,
+                    ActionDAO.ActionQuery.SORT_ORDER);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor result) {
+
+            if (result != null) {
+                SimpleCursorAdapter adapter =
+                        new SimpleCursorAdapter(getContext(),
+                                R.layout.simple_item,
+                                result,
+                                COLUMNS_TO_BE_BOUND,
+                                ITEMS_ID_TO_FILL,
+                                0);
+                RelativeLayout alertView = (RelativeLayout) View.inflate(getContext(), R.layout.alert, null);
+                ListView list = (ListView) View.inflate(getContext(), R.layout.alert_list, null);
+                final FrameLayout list_container = (FrameLayout) alertView.findViewById(R.id.list_container);
+                list_container.addView(list);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] + "");
+                        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                        final String actionId = cursor.getString(ActionDAO.ActionQuery.COL_ID);
+
+                        TextView messageAlertView = (TextView) View.inflate(getContext(),
+                                R.layout.alert_message, null);
+                        list_container.removeAllViews();
+                        list_container.addView(messageAlertView);
+                        final long date = 23566789l;
+
+
+                        Thread background = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                getContext().getContentResolver()
+                                        .insert(FriendForecastContract.EventTable.CONTENT_URI,
+                                                EventDAO.getContentValues(
+                                                        FriendForecastContract.DetailData.getContactIdFromUri(mUri),
+                                                        actionId,
+                                                        date));
+                            }
+                        });
+                        background.start();
+                        mAlertDialog.cancel();
+                        getLoaderManager().restartLoader(DetailQuery.LOADER_ID, null,
+                                DetailFragment.this);
+
+                    }
+                });
+                Button dismissButton = (Button) alertView.findViewById(R.id.dismiss_button);
+                Button saveButton = (Button) alertView.findViewById(R.id.save_button);
+                saveButton.setEnabled(false);
+                dismissButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAlertDialog.cancel();
+                    }
+                });
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), "yes", Toast
+                                .LENGTH_SHORT).show();
+                    }
+                });
+
+                list.setAdapter(adapter);
+                //Must be done before mAlertDialog.show() Let you customize only the main
+                // content, not the title and button
+                //mAlertDialog.setView(alertView);
+                mAlertDialog.show();
+                //Must be done after mAlertDialog.show() Let you customize everything including
+                // title and buttons.
+                mAlertDialog.setContentView(alertView);
+            }
+        }
+    }
 }
