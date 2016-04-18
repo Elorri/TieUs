@@ -5,6 +5,7 @@ import android.content.Context;
 import com.elorri.android.friendforcast.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,5 +42,23 @@ public class DateUtils {
             return DAY_MONTH_FORMAT;
         else
             return DATE_FORMAT;
+    }
+
+    /**
+     * This method convert a long representing an instant ex 2016-01-25 19:00:00 to the beginning
+     * of the day ex:2016-01-25 00:00:00
+     *
+     * @param dateInMillis
+     * @return long representing the start of the day
+     */
+    public static long setZero(long dateInMillis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateInMillis);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        return calendar.getTimeInMillis();
     }
 }

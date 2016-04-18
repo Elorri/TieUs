@@ -1,9 +1,11 @@
 package com.elorri.android.friendforcast;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,14 +29,17 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elorri.android.friendforcast.data.DetailQuery;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
+import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import java.util.Calendar;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -213,29 +218,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                         Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                         final String actionId = cursor.getString(ActionDAO.ActionQuery.COL_ID);
 
-                        TextView messageAlertView = (TextView) View.inflate(getContext(),
-                                R.layout.alert_message, null);
-                        list_container.removeAllViews();
-                        list_container.addView(messageAlertView);
-                        final long date = 23566789l;
-
-
-                        Thread background = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                getContext().getContentResolver()
-                                        .insert(FriendForecastContract.EventTable.CONTENT_URI,
-                                                EventDAO.getContentValues(
-                                                        FriendForecastContract.DetailData.getContactIdFromUri(mUri),
-                                                        actionId,
-                                                        date));
-                            }
-                        });
-                        background.start();
-                        mAlertDialog.cancel();
-                        getLoaderManager().restartLoader(DetailQuery.LOADER_ID, null,
-                                DetailFragment.this);
-
+                        final DateListener dateListener = new DateListener(actionId);
+                        Calendar now = Calendar.getInstance();
+                        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                                dateListener,
+                                now.get(Calendar.YEAR),
+                                now.get(Calendar.MONTH),
+                                now.get(Calendar.DAY_OF_MONTH)
+                        );
+                        dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
+                        dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
+                                .due_date));
+                        dpd.setOnDateSetListener(dateListener);
                     }
                 });
                 Button dismissButton = (Button) alertView.findViewById(R.id.dismiss_button);
@@ -265,5 +259,56 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 mAlertDialog.setContentView(alertView);
             }
         }
+
+        private class DateListener implements DatePickerDialog.OnDateSetListener {
+
+            private final String actionId;
+
+            public DateListener(String actionId){
+    this.actionId=actionId;
+}
+
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar startDateCal = Calendar.getInstance();
+                startDateCal.set(Calendar.YEAR, year);
+                startDateCal.set(Calendar.MONTH, monthOfYear);
+                startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                final long startDate = DateUtils.setZero(startDateCal.getTimeInMillis());
+
+
+                //Add action with date to table event
+                Thread background = new Thread(new Runnable() {
+                    Handler mHandler = new Handler();
+
+                    @Override
+                    public void run() {
+                        Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] +
+                                "background");
+                        getContext().getContentResolver()
+                                .insert(FriendForecastContract.EventTable.CONTENT_URI,
+                                        EventDAO.getContentValues(
+                                                FriendForecastContract.DetailData.getContactIdFromUri(mUri),
+                                                actionId,
+                                                startDate));
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("MealPlanner", Thread.currentThread().getStackTrace
+                                        ()[2] + "uiThread");
+                                mAlertDialog.cancel();
+                                getLoaderManager().restartLoader(DetailQuery.LOADER_ID, null,
+                                        DetailFragment.this);
+                                Log.e("MealPlanner", Thread.currentThread().getStackTrace
+                                        ()[2] + "uiThread");
+                            }
+                        });
+                    }
+                });
+                background.start();
+            }
+        }
     }
+
+
 }

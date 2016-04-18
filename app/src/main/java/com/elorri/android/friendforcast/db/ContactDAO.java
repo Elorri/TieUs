@@ -25,7 +25,9 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
-            + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL)";
+            + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL, "
+            + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE)";
 
 
     public static final String INSERT = "INSERT INTO "

@@ -15,4 +15,10 @@
     <string name="select_action">Select action</string>
     <string name="save_button">Save</string>
     <string name="dismiss_button">Dismiss</string>
+
+
+    <!-- Colors needed as strings -->
+    <string name="accent">#F50057</string>
+    <string name="due_date">Due date</string>
+
 </resources>

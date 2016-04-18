@@ -7,13 +7,11 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
  */
 public class ActionDAO {
 
-
-
-
     public static  final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ActionTable.NAME +
             "(" + FriendForecastContract.ActionTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FriendForecastContract.ActionTable.COLUMN_NAME + " TEXT NOT NULL)";
+            + FriendForecastContract.ActionTable.COLUMN_NAME + " TEXT NOT NULL, "
+            + "UNIQUE (" + FriendForecastContract.ActionTable.COLUMN_NAME + ") ON CONFLICT REPLACE)";
 
 
 
