@@ -27,6 +27,7 @@ public class ContactActionEventDAO {
     public static final int TODAY_DONE_PEOPLE = 3;
     public static final int NEXT_PEOPLE = 4;
     public static final int ACTION_BY_CONTACT_ID = 5;
+    public static final int UNTRACKED_PEOPLE = 6;
 
 
     private static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "select "
@@ -117,7 +118,33 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ")";
+                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+    }
+
+    public interface UntrackedPeopleQuery extends PeopleQuery {
+
+
+        String[] PROJECTION = {
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
+        };
+
+        String SELECT_UNTRACKED_PEOPLE = "select "
+                + FriendForecastContract.ContactTable._ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " = "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp;
     }
 
     public interface DelayPeopleQuery extends PeopleQuery {
@@ -147,7 +174,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp;
     }
 
     public interface TodayPeopleQuery extends PeopleQuery {
@@ -178,7 +207,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp;
     }
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
@@ -240,7 +271,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null";
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp;
     }
 
 
@@ -306,6 +339,11 @@ public class ContactActionEventDAO {
                 return db.rawQuery(NextPeopleQuery.SELECT_NEXT_PEOPLE, new String[]{String
                         .valueOf(tomorrow)});
             }
+            case UNTRACKED_PEOPLE: {
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
+                        "QUERY " + UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE);
+                return db.rawQuery(UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE, null);
+            }
             case ACTION_BY_CONTACT_ID: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID);
@@ -329,24 +367,28 @@ public class ContactActionEventDAO {
                                                 ArrayList<Integer> viewTypes, String contactId) {
 
         switch (cursorType) {
-            case ContactActionEventDAO.UNMANAGED_PEOPLE:
+            case UNMANAGED_PEOPLE:
                 return CursorUtils.setViewType(
-                        ContactActionEventDAO.getCursor(cursorType, db),
+                        getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_UNMANAGED_PEOPLE);
-            case ContactActionEventDAO.DELAY_PEOPLE:
-                return CursorUtils.setViewType(ContactActionEventDAO.getCursor(cursorType, db),
+            case DELAY_PEOPLE:
+                return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_DELAY_PEOPLE);
-            case ContactActionEventDAO.TODAY_PEOPLE:
-                return CursorUtils.setViewType(ContactActionEventDAO.getCursor(cursorType, db),
+            case TODAY_PEOPLE:
+                return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_TODAY_PEOPLE);
-            case ContactActionEventDAO.TODAY_DONE_PEOPLE:
-                return CursorUtils.setViewType(ContactActionEventDAO.getCursor(cursorType, db),
+            case TODAY_DONE_PEOPLE:
+                return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_TODAY_DONE_PEOPLE);
-            case ContactActionEventDAO.NEXT_PEOPLE:
-                return CursorUtils.setViewType(ContactActionEventDAO.getCursor(cursorType, db),
+            case NEXT_PEOPLE:
+                return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_NEXT_PEOPLE);
-            case ContactActionEventDAO.ACTION_BY_CONTACT_ID:
-                return CursorUtils.setViewType(ContactActionEventDAO.getCursor(cursorType, db,
+            case UNTRACKED_PEOPLE:
+                return CursorUtils.setViewType(
+                        getCursor(cursorType, db),
+                        viewTypes, BoardAdapter.VIEW_UNTRACKED_PEOPLE);
+            case ACTION_BY_CONTACT_ID:
+                return CursorUtils.setViewType(getCursor(cursorType, db,
                                 contactId),
                         viewTypes, DetailAdapter.VIEW_ACTION);
             default:
@@ -366,16 +408,18 @@ public class ContactActionEventDAO {
 
     private static String getCursorTitle(Context context, int cursorType) {
         switch (cursorType) {
-            case ContactActionEventDAO.UNMANAGED_PEOPLE:
+            case UNMANAGED_PEOPLE:
                 return context.getResources().getString(R.string.unmanaged_people);
-            case ContactActionEventDAO.DELAY_PEOPLE:
+            case DELAY_PEOPLE:
                 return context.getResources().getString(R.string.delay);
-            case ContactActionEventDAO.TODAY_PEOPLE:
+            case TODAY_PEOPLE:
                 return context.getResources().getString(R.string.today);
-            case ContactActionEventDAO.TODAY_DONE_PEOPLE:
+            case TODAY_DONE_PEOPLE:
                 return context.getResources().getString(R.string.done);
-            case ContactActionEventDAO.NEXT_PEOPLE:
+            case NEXT_PEOPLE:
                 return context.getResources().getString(R.string.next);
+            case UNTRACKED_PEOPLE:
+                return context.getResources().getString(R.string.untracked);
             default:
                 return null;
         }
