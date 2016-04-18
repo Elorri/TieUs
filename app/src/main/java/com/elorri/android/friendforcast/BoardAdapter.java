@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
@@ -33,20 +34,22 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Callback mCallback;
     private Context mContext;
 
+
     public BoardAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
         mCallback = callback;
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     interface Callback {
-        void onContactClicked(Uri uri);
+        void onContactClicked(Uri uri, int avatarColor);
     }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View divider;
         public AvatarView avatar;
+        private int avatarColor;
         public TextView contactName;
         public TextView action;
         public TextView dueDate;
@@ -101,7 +104,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public BoardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mContext = parent.getContext();
         ViewHolder viewHolder = null;
         View view;
@@ -207,11 +210,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     private void bindCommonViews(ViewHolder holder) {
-        Log.e("position", Thread.currentThread().getStackTrace()[2] + "" +
-                "thumbnail " + mCursor.getString(ContactActionEventDAO
-                .PeopleQuery.COL_THUMBNAIL));
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        holder.avatarColor = generator.getRandomColor();
+        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + holder.avatarColor);
         holder.avatar.loadImage(mCursor.getString(ContactActionEventDAO
-                .PeopleQuery.COL_THUMBNAIL));
+                .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
         holder.contactName.setText(mCursor.getString(ContactActionEventDAO
                 .PeopleQuery.COL_CONTACT_NAME));
         holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
@@ -226,7 +229,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 mCursor.moveToPosition(adapterPosition);
                 int contactId = mCursor.getInt(ContactActionEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
-                mCallback.onContactClicked(uri);
+                mCallback.onContactClicked(uri, holder.avatarColor);
             }
         });
     }
@@ -246,7 +249,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         return viewTypes[position];
     }
 }

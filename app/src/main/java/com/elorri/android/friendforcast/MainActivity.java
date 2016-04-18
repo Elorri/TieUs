@@ -17,6 +17,7 @@ import android.util.Log;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.ui.AvatarView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -58,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         syncContactsTask.execute();
     }
 
-    public void onContactClicked(Uri uri) {
+    public void onContactClicked(Uri uri, int avatarColor) {
         Intent intent = new Intent(this, DetailActivity.class);
+        if (avatarColor != 0)
+            intent.putExtra(AvatarView.RANDOM_COLOR, avatarColor);
         intent.setData(uri);
         startActivity(intent);
     }
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+            Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
             Cursor androidCursor = getApplicationContext().getContentResolver().query(
                     AndroidDAO.ContactQuery.CONTENT_URI,
                     AndroidDAO.ContactQuery.PROJECTION,
@@ -115,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 while (androidCursor.moveToNext()) {
                     androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
                     androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
-                              Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                            ""+androidContactId+" "+androidLookUpKey);
+                    Log.d("Communication", Thread.currentThread().getStackTrace()[2] +
+                            "" + androidContactId + " " + androidLookUpKey);
 
                     localCursor = getApplicationContext().getContentResolver().query(
                             FriendForecastContract.ContactTable.CONTENT_URI,

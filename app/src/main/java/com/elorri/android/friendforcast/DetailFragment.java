@@ -36,6 +36,7 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.ui.AvatarView;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -44,7 +45,8 @@ import java.util.Calendar;
 /**
  * Created by Elorri on 16/04/2016.
  */
-public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, DetailAdapter.Callback {
+public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        DetailAdapter.Callback {
 
     public static final String DETAIL_URI = "uri";
     private static Uri mUri;
@@ -55,6 +57,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private CollapsingToolbarLayout mCollapsingToolbar;
     private DynamicHeightGradientTopAvatarView mAvatar;
     private AlertDialog mAlertDialog;
+    private int mAvatarColor;
 
     @Nullable
     @Override
@@ -62,29 +65,35 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        mAvatarColor = getArguments().getInt(AvatarView.RANDOM_COLOR);
+        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + mAvatarColor);
         mCollapsingToolbar =
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbar.setTitle("");
 
         AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            boolean isCollapsed = false;
-//            int scrollRange = -1;
-//
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                if (scrollRange == -1) {
-//                    scrollRange = appBarLayout.getTotalScrollRange();
-//                }
-//                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
-//                    mCollapsingToolbar.setTitle(mContactTitle);
-//                    isCollapsed = true;
-//                } else if (isCollapsed) {
-//                    mCollapsingToolbar.setTitle("");
-//                    isCollapsed = false;
-//                }
-//            }
-//        });
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isCollapsed = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
+                    mCollapsingToolbar.setTitle(mContactTitle);
+                    if (mAvatarColor != 0)
+                        mCollapsingToolbar.setContentScrimColor(mAvatarColor);
+                    else
+                        mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+                    isCollapsed = true;
+                } else if (isCollapsed) {
+                    mCollapsingToolbar.setTitle("");
+                    isCollapsed = false;
+                }
+            }
+        });
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -163,11 +172,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void setTitle(String title) {
         mContactTitle = title;
         mCollapsingToolbar.setTitle(mContactTitle);
+        if (mAvatarColor != 0)
+            mCollapsingToolbar.setContentScrimColor(mAvatarColor);
+        else
+            mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
     }
 
     @Override
     public void setThumbnail(String uri) {
-        mAvatar.loadImage(uri);
+        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + mAvatarColor);
+        mAvatar.loadImage(uri, mAvatarColor);
 
     }
 
@@ -264,9 +278,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
             private final String actionId;
 
-            public DateListener(String actionId){
-    this.actionId=actionId;
-}
+            public DateListener(String actionId) {
+                this.actionId = actionId;
+            }
 
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

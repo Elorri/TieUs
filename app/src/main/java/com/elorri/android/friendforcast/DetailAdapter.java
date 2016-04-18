@@ -237,7 +237,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     }
 
     public void swapCursor(Cursor data) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mCursor = data;
         notifyDataSetChanged();
     }

@@ -55,12 +55,14 @@ public class FriendForecastProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "thread " + Tools.thread());
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "thread " + Tools
+                .thread());
         Cursor cursor = null;
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
             case DATA_BOARD:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD uri " + uri);
+                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
+                        "uri " + uri);
                 cursor = BoardQuery.getCursor(getContext(), db);
                 break;
             case DATA_DETAIL:
@@ -69,7 +71,8 @@ public class FriendForecastProvider extends ContentProvider {
                 cursor = DetailQuery.getCursor(db, contactId);
                 break;
             case TABLE_CONTACT:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
+                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT" +
+                        " uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         FriendForecastContract.ContactTable.NAME,
                         projection,

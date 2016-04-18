@@ -263,7 +263,7 @@ public class ContactActionEventDAO {
     }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         return getCursor(cursorType, db, null);
     }
 

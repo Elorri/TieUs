@@ -40,8 +40,8 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout {
     }
 
 
-    public void loadImage(String uri) {
-        mThumbnailView.loadImage(uri);
+    public void loadImage(String uri, int color) {
+        mThumbnailView.loadImage(uri, color);
     }
 }
 

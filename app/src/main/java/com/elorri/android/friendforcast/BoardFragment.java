@@ -28,7 +28,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     public BoardFragment() {
         // Required empty public constructor
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
 
@@ -48,7 +48,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         getLoaderManager().initLoader(BoardQuery.LOADER_ID, null, this);
         super.onResume();
     }
@@ -56,7 +56,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         Uri uri = FriendForecastContract.BoardData.URI_PAGE_BOARD;
         return new CursorLoader(getActivity(),
                 uri,
@@ -68,18 +68,19 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2] + "data " + data.getCount());
+        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2] + "data " + data
+                .getCount());
         mAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
+        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
         mRecyclerView.setAdapter(null);
     }
 
     @Override
-    public void onContactClicked(Uri uri) {
-        ((MainActivity)getActivity()).onContactClicked(uri);
+    public void onContactClicked(Uri uri, int avatarColor) {
+        ((MainActivity)getActivity()).onContactClicked(uri, avatarColor);
     }
 }
