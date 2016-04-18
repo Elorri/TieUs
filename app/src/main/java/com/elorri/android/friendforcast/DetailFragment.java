@@ -66,7 +66,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         mAvatarColor = getArguments().getInt(AvatarView.RANDOM_COLOR);
-        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + mAvatarColor);
         mCollapsingToolbar =
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbar.setTitle("");
@@ -83,9 +82,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 }
                 if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
                     mCollapsingToolbar.setTitle(mContactTitle);
-                    if (mAvatarColor != 0)
-                        mCollapsingToolbar.setContentScrimColor(mAvatarColor);
-                    else
                         mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
                     isCollapsed = true;
                 } else if (isCollapsed) {
@@ -171,16 +167,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void setTitle(String title) {
         mContactTitle = title;
-        mCollapsingToolbar.setTitle(mContactTitle);
-        if (mAvatarColor != 0)
-            mCollapsingToolbar.setContentScrimColor(mAvatarColor);
-        else
-            mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
     }
 
     @Override
     public void setThumbnail(String uri) {
-        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + mAvatarColor);
         mAvatar.loadImage(uri, mAvatarColor);
 
     }

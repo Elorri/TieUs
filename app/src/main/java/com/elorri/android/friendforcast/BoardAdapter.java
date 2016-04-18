@@ -212,7 +212,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private void bindCommonViews(ViewHolder holder) {
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         holder.avatarColor = generator.getRandomColor();
-        Log.e("Color", Thread.currentThread().getStackTrace()[2] + "" + holder.avatarColor);
         holder.avatar.loadImage(mCursor.getString(ContactActionEventDAO
                 .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
         holder.contactName.setText(mCursor.getString(ContactActionEventDAO

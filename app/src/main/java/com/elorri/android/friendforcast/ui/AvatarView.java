@@ -2,7 +2,6 @@ package com.elorri.android.friendforcast.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -53,7 +52,6 @@ public class AvatarView extends FrameLayout {
             mRandomColor = color;
         }
 
-        Log.e("Color", Thread.currentThread().getStackTrace()[2]+""+mRandomColor);
 
         removeAllViews();
         if (uri == null) {
