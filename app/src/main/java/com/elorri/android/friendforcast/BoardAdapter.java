@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
-import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 /**
@@ -166,8 +165,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START);
-                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
-                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
+                holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -177,8 +175,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START);
-                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
-                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
+                holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -187,9 +184,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_ACTION));
-                long dueDate = mCursor.getLong(ContactActionEventDAO.TodayDonePeopleQuery.COL_TIME_END);
-                holder.doneDate.setText(DateUtils.fromLongToString(dueDate,
-                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
+                long doneDate = mCursor.getLong(ContactActionEventDAO.TodayDonePeopleQuery
+                        .COL_TIME_END);
+                holder.doneDate.setText(DateUtils.getFriendlyDateString(mContext, doneDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
@@ -199,8 +196,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 bindCommonViews(holder);
                 holder.action.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START);
-                holder.dueDate.setText(DateUtils.fromLongToString(dueDate,
-                        DateUtils.getFriendlyFormat(mContext, dueDate), Tools.getMostSuitableLocale()));
+                holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);

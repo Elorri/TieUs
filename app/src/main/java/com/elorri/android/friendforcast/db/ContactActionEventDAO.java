@@ -11,6 +11,7 @@ import com.elorri.android.friendforcast.DetailAdapter;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 
 import java.util.ArrayList;
@@ -71,7 +72,9 @@ public class ContactActionEventDAO {
             + FriendForecastContract.ActionTable.NAME + " on ec."
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + "="
             + FriendForecastContract.ActionTable.NAME + "."
-            + FriendForecastContract.ActionTable._ID;
+            + FriendForecastContract.ActionTable._ID + " order by "
+            + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " asc";
 
     public interface PeopleQuery {
         int COL_ID = 0;
@@ -89,8 +92,6 @@ public class ContactActionEventDAO {
 
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
-
-
 
 
         String[] PROJECTION = {
@@ -276,15 +277,15 @@ public class ContactActionEventDAO {
             case DELAY_PEOPLE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + DelayPeopleQuery.SELECT_DELAY_PEOPLE);
-                long now = System.currentTimeMillis();
+                long todayStart = DateUtils.todayStart();
                 return db.rawQuery(DelayPeopleQuery.SELECT_DELAY_PEOPLE, new String[]{String
-                        .valueOf(now)});
+                        .valueOf(todayStart)});
             }
             case TODAY_PEOPLE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + TodayPeopleQuery.SELECT_TODAY_PEOPLE);
-                long todayStart = System.currentTimeMillis();
-                long todayEnd = System.currentTimeMillis();
+                long todayStart = DateUtils.todayStart();
+                long todayEnd = DateUtils.tomorrowStart();
                 return db.rawQuery(TodayPeopleQuery.SELECT_TODAY_PEOPLE, new String[]{String
                         .valueOf(todayStart),
                         String.valueOf(todayEnd)});
@@ -292,8 +293,8 @@ public class ContactActionEventDAO {
             case TODAY_DONE_PEOPLE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + TodayDonePeopleQuery.SELECT_TODAY_DONE_PEOPLE);
-                long todayStart = System.currentTimeMillis();
-                long todayEnd = System.currentTimeMillis();
+                long todayStart = DateUtils.todayStart();
+                long todayEnd = DateUtils.tomorrowStart();
                 return db.rawQuery(TodayDonePeopleQuery.SELECT_TODAY_DONE_PEOPLE, new
                         String[]{String.valueOf
                         (todayStart), String.valueOf(todayEnd)});
@@ -301,7 +302,7 @@ public class ContactActionEventDAO {
             case NEXT_PEOPLE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + NextPeopleQuery.SELECT_NEXT_PEOPLE);
-                long tomorrow = System.currentTimeMillis();
+                long tomorrow = DateUtils.tomorrowStart();
                 return db.rawQuery(NextPeopleQuery.SELECT_NEXT_PEOPLE, new String[]{String
                         .valueOf(tomorrow)});
             }

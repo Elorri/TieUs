@@ -39,7 +39,6 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(EventDAO.CREATE);
 
         insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
-        insert(sqLiteDatabase, EventDAO.INSERT, R.raw.events);
         Log.e("Communication", "Inserts done");
     }
 

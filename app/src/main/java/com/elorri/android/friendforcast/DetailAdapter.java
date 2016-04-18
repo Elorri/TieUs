@@ -223,8 +223,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         .ActionByContactIdQuery.COL_ACTION_NAME));
                 long dueDateLong = mCursor.getLong(ContactActionEventDAO
                         .ActionByContactIdQuery.COL_TIME_START);
-                holder.timeStart.setText(DateUtils.fromLongToString(dueDateLong,
-                        DateUtils.getFriendlyFormat(mContext, dueDateLong), Tools.getMostSuitableLocale()));
+                holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
                 break;
             }
         }

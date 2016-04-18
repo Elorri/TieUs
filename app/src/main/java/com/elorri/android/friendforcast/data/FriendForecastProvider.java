@@ -122,9 +122,6 @@ public class FriendForecastProvider extends ContentProvider {
                 break;
             }
             case TABLE_EVENT: {
-                //TODO add insertWithOnConflict wherevever possible
-                //TODO add table constrainst
-                //db.insertWithOnConflict(FriendForecastContract.EventTable.NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
                 long _id = db.insert(FriendForecastContract.EventTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = FriendForecastContract.EventTable.buildEventUri(_id);

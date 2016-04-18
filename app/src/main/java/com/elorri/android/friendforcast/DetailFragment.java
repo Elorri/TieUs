@@ -274,7 +274,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 startDateCal.set(Calendar.YEAR, year);
                 startDateCal.set(Calendar.MONTH, monthOfYear);
                 startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                final long startDate = DateUtils.setZero(startDateCal.getTimeInMillis());
+                final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
 
 
                 //Add action with date to table event
