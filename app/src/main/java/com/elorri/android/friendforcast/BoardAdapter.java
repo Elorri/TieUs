@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 /**
@@ -22,13 +24,14 @@ import com.elorri.android.friendforcast.ui.AvatarView;
  */
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 
-    public static final int VIEW_TITLE = 0;
-    public static final int VIEW_UNMANAGED_PEOPLE = 1;
-    public static final int VIEW_DELAY_PEOPLE = 2;
-    public static final int VIEW_TODAY_PEOPLE = 3;
-    public static final int VIEW_TODAY_DONE_PEOPLE = 4;
-    public static final int VIEW_NEXT_PEOPLE = 5;
-    public static final int VIEW_UNTRACKED_PEOPLE = 6;
+    public static final int VIEW_FORECAST = 0;
+    public static final int VIEW_TITLE = 1;
+    public static final int VIEW_UNMANAGED_PEOPLE = 2;
+    public static final int VIEW_DELAY_PEOPLE = 3;
+    public static final int VIEW_TODAY_PEOPLE = 4;
+    public static final int VIEW_TODAY_DONE_PEOPLE = 5;
+    public static final int VIEW_NEXT_PEOPLE = 6;
+    public static final int VIEW_UNTRACKED_PEOPLE = 7;
     public static int[] viewTypes;
 
     private Cursor mCursor;
@@ -44,6 +47,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     interface Callback {
         void onContactClicked(Uri uri, int avatarColor);
+
+        void setForecast(int forecastRessourceId);
     }
 
 
@@ -73,9 +78,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                     divider = view.findViewById(R.id.divider);
                     break;
                 }
-                case VIEW_UNMANAGED_PEOPLE: {
-                    break;
-                }
                 case VIEW_DELAY_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
@@ -98,9 +100,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                     // actionIcon = (ImageView) view.findViewById(R.id.action_icon);
                     break;
                 }
-                case VIEW_UNTRACKED_PEOPLE: {
+                default:
                     break;
-                }
             }
         }
     }
@@ -148,6 +149,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 viewHolder = new ViewHolder(view, VIEW_UNTRACKED_PEOPLE);
                 break;
             }
+            default:
+                break;
         }
         return viewHolder;
     }
@@ -159,6 +162,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
+            case VIEW_FORECAST: {
+                float ratio = Float.valueOf(mCursor.getString(ContactDAO.RatioQuery.COL_RATIO));
+                mCallback.setForecast(Tools.getForecastRessourceId(ratio));
+                break;
+            }
             case VIEW_TITLE: {
                 Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TITLE " +
                         "position" + position);

@@ -49,6 +49,9 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_EMOICON_ID = "emoicon";
+        public static final String VIEW_PART = "part";
+        public static final String VIEW_TOTAL = "total";
+        public static final String VIEW_RATIO = "ratio";
 
         public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

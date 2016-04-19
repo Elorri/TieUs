@@ -10,6 +10,8 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.elorri.android.friendforcast.R;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,5 +144,16 @@ public class Tools {
     public static ContentValues updateContactValues(ContentValues contentvalues, String column, String value) {
         contentvalues.put(column, value);
         return contentvalues;
+    }
+
+    public static int getForecastRessourceId(float ratio) {
+        if (ratio >= 0 && ratio < 0.25)
+            return R.drawable.art_rain;
+        else if (ratio >= 0.25 && ratio < 0.5)
+            return R.drawable.art_clouds;
+        else if (ratio >= 0.5 && ratio < 0.75)
+            return R.drawable.art_light_clouds;
+        else
+            return R.drawable.art_clear;
     }
 }

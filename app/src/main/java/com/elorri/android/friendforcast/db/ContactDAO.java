@@ -64,6 +64,23 @@ public class ContactDAO {
 
     }
 
+    public interface RatioQuery {
+
+        int COL_RATIO = 0;
+
+        String SELECT_RATIO_EMOICONE = "select "
+                + FriendForecastContract.ContactTable.VIEW_PART + "/("
+                + FriendForecastContract.ContactTable.VIEW_TOTAL + "*1.0) as "
+                + FriendForecastContract.ContactTable.VIEW_RATIO + " from (select count("
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
+                + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
+                + FriendForecastContract.ContactTable.NAME + ") inner join (select count("
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
+                + FriendForecastContract.ContactTable.VIEW_PART + " from "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "=?";
+    }
+
     public static ContentValues getContentValuesInsert(Cursor androidContactCursor, int emoiconId) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
