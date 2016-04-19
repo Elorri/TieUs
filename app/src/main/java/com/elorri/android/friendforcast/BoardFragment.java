@@ -1,6 +1,7 @@
 package com.elorri.android.friendforcast;
 
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.elorri.android.friendforcast.data.BoardQuery;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
@@ -44,12 +46,17 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_board, container, false);
 
-        mCollapsingToolbar =
-                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
-        mCollapsingToolbar.setTitle("");
+        Typeface courgette = Typeface.createFromAsset(getContext().getAssets(), "courgette-regular.ttf");
+        final TextView titleTextView = (TextView) view.findViewById(R.id.title);
+        final TextView titleToolbarTextView = (TextView) view.findViewById(R.id.title_toolbar);
+        titleTextView.setTypeface(courgette);
+        titleToolbarTextView.setTypeface(courgette);
         final ImageView forecastToolbarImageView =
                 (ImageView) view.findViewById(R.id.forecast_toolbar);
 
+
+        mCollapsingToolbar =
+                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
 
         AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -62,13 +69,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    mCollapsingToolbar.setTitle(getResources().getString(R.string.app_name));
                     mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+                    titleToolbarTextView.setVisibility(View.VISIBLE);
                     forecastToolbarImageView.setVisibility(View.VISIBLE);
                     isCollapsed = true;
                 } else if (isCollapsed) {
                     mCollapsingToolbar.setTitle("");
                     isCollapsed = false;
+                    titleToolbarTextView.setVisibility(View.INVISIBLE);
                     forecastToolbarImageView.setVisibility(View.INVISIBLE);
                 }
             }
@@ -76,7 +84,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.app_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);

@@ -22,4 +22,10 @@
         <item name="android:textColor">@color/primary_light_text</item>
     </style>
 
+    <style name="AppTitle" >
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_xxlarge</item>
+    </style>
+
+
 </resources>

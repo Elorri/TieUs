@@ -8,6 +8,7 @@
     <dimen name="text_size_xlarge">20sp</dimen>
     <dimen name="text_size_xxlarge">24sp</dimen>
     <dimen name="text_size_xxxlarge">40sp</dimen>
+    <dimen name="text_size_xxxxlarge">56sp</dimen>
 
 
     <!-- Margin and padding -->
@@ -20,6 +21,7 @@
     <dimen name="spacing_xxlarge">72dp</dimen>
     <dimen name="spacing_xxxlarge">90dp</dimen>
     <dimen name="spacing_xxxxlarge">120dp</dimen>
+
 
     <!-- ui component -->
     <dimen name="avatar_width">40dp</dimen>
