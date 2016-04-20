@@ -91,7 +91,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             }
         });
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.app_bar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.elorri.android.friendforcast.BoardAdapter;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.Tools;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public abstract class BoardQuery {
     public static Cursor getCursor(Context context, SQLiteDatabase db) {
         ArrayList<Integer> viewTypes = new ArrayList<>();
         ArrayList<Cursor> cursors = new ArrayList();
+        cursors.add(CursorUtils.setViewType(ContactDAO.getCursor(ContactDAO.RATIO, db), viewTypes, BoardAdapter.VIEW_FORECAST));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.UNMANAGED_PEOPLE, db, viewTypes));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.DELAY_PEOPLE, db, viewTypes));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.TODAY_PEOPLE, db, viewTypes));

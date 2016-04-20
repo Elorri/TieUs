@@ -6,15 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +29,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private BoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private CollapsingToolbarLayout mCollapsingToolbar;
+    private ImageView mForecastImageView;
+    private ImageView mForecastToolbarImageView;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -48,19 +46,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
         Typeface courgette = Typeface.createFromAsset(getContext().getAssets(), "courgette-regular.ttf");
         final TextView titleTextView = (TextView) view.findViewById(R.id.title);
-        final TextView titleToolbarTextView = (TextView) view.findViewById(R.id.title_toolbar);
         titleTextView.setTypeface(courgette);
-        titleToolbarTextView.setTypeface(courgette);
-        final ImageView forecastToolbarImageView =
-                (ImageView) view.findViewById(R.id.forecast_toolbar);
+        mForecastImageView = (ImageView) view.findViewById(R.id.forecast);
+        mForecastToolbarImageView = (ImageView) view.findViewById(R.id.forecast_toolbar);
 
-
-        mCollapsingToolbar =
-                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
 
         AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isCollapsed = false;
             int scrollRange = -1;
 
             @Override
@@ -68,31 +60,21 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
-                if (scrollRange + verticalOffset == 0) {
-                    mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-                    titleToolbarTextView.setVisibility(View.VISIBLE);
-                    forecastToolbarImageView.setVisibility(View.VISIBLE);
-                    isCollapsed = true;
-                } else if (isCollapsed) {
-                    mCollapsingToolbar.setTitle("");
-                    isCollapsed = false;
-                    titleToolbarTextView.setVisibility(View.INVISIBLE);
-                    forecastToolbarImageView.setVisibility(View.INVISIBLE);
+                if (scrollRange + verticalOffset <= 0) {
+                    mForecastImageView.setVisibility(View.INVISIBLE);
+                    mForecastToolbarImageView.setVisibility(View.VISIBLE);
+                } else  {
+                    mForecastImageView.setVisibility(View.VISIBLE);
+                    mForecastToolbarImageView.setVisibility(View.INVISIBLE);
                 }
             }
         });
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.app_bar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BoardAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
-
 
         return view;
     }
@@ -138,6 +120,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void setForecast(int forecastRessourceId) {
-
+        mForecastImageView.setBackgroundResource(forecastRessourceId);
+        mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
     }
 }

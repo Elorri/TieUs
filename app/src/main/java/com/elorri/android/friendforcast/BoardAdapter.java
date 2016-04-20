@@ -114,6 +114,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
+            case VIEW_FORECAST: {
+                viewHolder = new ViewHolder(new View(parent.getContext()), VIEW_FORECAST);
+                break;
+            }
             case VIEW_TITLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TITLE);
@@ -170,7 +174,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case VIEW_TITLE: {
                 Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TITLE " +
                         "position" + position);
-                int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
+                int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString
                         (ContactActionEventDAO.TitleQuery.COL_TITLE));

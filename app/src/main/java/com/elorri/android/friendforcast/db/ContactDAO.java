@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.elorri.android.friendforcast.DetailAdapter;
+import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class ContactDAO {
 
     public static final int CONTACT_BY_ID = 0;
+    public static final int RATIO = 1;
 
     public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ContactTable.NAME +
@@ -78,7 +80,8 @@ public class ContactDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
                 + FriendForecastContract.ContactTable.VIEW_PART + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "=?";
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "="
+                + R.drawable.ic_sentiment_satisfied_black_48dp+")";
     }
 
     public static ContentValues getContentValuesInsert(Cursor androidContactCursor, int emoiconId) {
@@ -115,6 +118,18 @@ public class ContactDAO {
         return contentValues;
     }
 
+    public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
+        switch (cursorType) {
+             case RATIO: {
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
+                        "QUERY RATIO");
+                return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
+            }
+            default:
+                return null;
+        }
+    }
+
 
     public static Cursor getCursor(String contactId, int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
@@ -135,7 +150,7 @@ public class ContactDAO {
                                                 ArrayList<Integer> viewTypes, String contactId) {
 
         switch (cursorType) {
-            case ContactDAO.CONTACT_BY_ID:
+            case CONTACT_BY_ID:
                 return CursorUtils.setViewType(getCursor(contactId,cursorType, db),
                         viewTypes, DetailAdapter.VIEW_EMOICON);
             default:
