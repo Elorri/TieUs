@@ -84,7 +84,7 @@ public class ContactDAO {
                 + R.drawable.ic_sentiment_satisfied_black_48dp+")";
     }
 
-    public static ContentValues getContentValuesInsert(Cursor androidContactCursor, int emoiconId) {
+    public static ContentValues getContentValues(Cursor androidContactCursor, int emoiconId) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));

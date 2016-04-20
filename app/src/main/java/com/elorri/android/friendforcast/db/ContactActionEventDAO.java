@@ -107,8 +107,9 @@ public class ContactActionEventDAO {
         String SELECT_UNMANAGED_PEOPLE = "select "
                 + FriendForecastContract.ContactTable._ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
@@ -120,7 +121,8 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ")";
+                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") order by lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
     public interface UntrackedPeopleQuery extends PeopleQuery {
@@ -138,13 +140,15 @@ public class ContactActionEventDAO {
         String SELECT_UNTRACKED_PEOPLE = "select "
                 + FriendForecastContract.ContactTable._ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " = "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
     public interface DelayPeopleQuery extends PeopleQuery {
@@ -176,7 +180,8 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
     public interface TodayPeopleQuery extends PeopleQuery {
@@ -209,7 +214,8 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
@@ -240,7 +246,8 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null";
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START+" desc";
     }
 
     public interface NextPeopleQuery extends PeopleQuery {
@@ -273,7 +280,8 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp;
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
 
