@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/untracked_icon"
-        android:layout_width="@dimen/emo_icon_width"
-        android:layout_height="@dimen/emo_icon_height"
+        android:layout_width="@dimen/small_emo_icon_width"
+        android:layout_height="@dimen/small_emo_icon_width"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"

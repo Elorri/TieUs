@@ -39,4 +39,5 @@
 
     <!-- Translations -->
     <dimen name="fab_translation_z">12dp</dimen>
+    <dimen name="small_emo_icon_width">20dp</dimen>
 </resources>

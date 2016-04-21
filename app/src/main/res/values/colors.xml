@@ -9,11 +9,12 @@
     <color name="accent">#F50057</color>
     <color name="secondaryLight">#ffbdbdbd</color>
     <color name="secondaryDark">#ff616161</color>
-    <color name="black">#ff616161</color>
 
 
     <!-- texts -->
     <color name="primary_light_text">#ffffff</color>
     <color name="primary_dark_text">#424242</color>
-    <color name="secondary_dark_text">#000000</color>
+    <color name="secondary_dark_text">#727272</color>
+
+
 </resources>

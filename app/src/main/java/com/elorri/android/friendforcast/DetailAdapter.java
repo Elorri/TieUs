@@ -27,7 +27,10 @@ import com.elorri.android.friendforcast.extra.Tools;
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
 
     public static final int VIEW_EMOICON = 0;
-    public static final int VIEW_ACTION = 1;
+    public static final int VIEW_TITLE = 1;
+    public static final int VIEW_COMMUNICATION_VECTORS = 2;
+    public static final int VIEW_CONTACTS = 3;
+    public static final int VIEW_ACTION = 4;
     public static int[] viewTypes;
 
     private Cursor mCursor;
