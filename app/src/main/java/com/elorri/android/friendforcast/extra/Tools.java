@@ -156,4 +156,9 @@ public class Tools {
         else
             return R.drawable.art_clear;
     }
+
+
+    public static String toProperCase(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
 }

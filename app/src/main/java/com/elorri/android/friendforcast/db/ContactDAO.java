@@ -59,7 +59,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                "lower("+FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+")",
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
         };

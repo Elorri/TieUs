@@ -20,10 +20,8 @@ public class DetailQuery {
     public static Cursor getCursor(SQLiteDatabase db, String contactId) {
         ArrayList<Integer> viewTypes = new ArrayList<>();
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(ContactDAO.getCursorWithViewTypes(ContactDAO.CONTACT_BY_ID, db, viewTypes,
-                contactId));
-        cursors.add(ContactActionEventDAO.getCursorWithViewTypes(ContactActionEventDAO.ACTION_BY_CONTACT_ID, db,
-                viewTypes, contactId));
+        cursors.add(ContactDAO.getCursorWithViewTypes(ContactDAO.CONTACT_BY_ID, db, viewTypes, contactId));
+        cursors.add(ContactActionEventDAO.getCursorWithViewTypes(ContactActionEventDAO.ACTION_BY_CONTACT_ID, db, viewTypes, contactId));
         DetailAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }

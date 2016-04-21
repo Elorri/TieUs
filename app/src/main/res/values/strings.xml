@@ -22,5 +22,7 @@
     <string name="due_date">Due date</string>
     <string name="action_settings">Settings</string>
     <string name="action_sync">Synchronise</string>
+    <string name="social_network_untracked">Social Network (Untracked)</string>
+    <string name="social_network">Social Network</string>
 
 </resources>

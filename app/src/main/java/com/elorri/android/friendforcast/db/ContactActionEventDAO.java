@@ -27,7 +27,8 @@ public class ContactActionEventDAO {
     public static final int TODAY_DONE_PEOPLE = 3;
     public static final int NEXT_PEOPLE = 4;
     public static final int ACTION_BY_CONTACT_ID = 5;
-    public static final int UNTRACKED_PEOPLE = 6;
+    public static final int SOCIAL_NETWORK = 6;
+    public static final int UNTRACKED_PEOPLE = 7;
 
 
     private static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "select "
@@ -114,7 +115,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp + " except select "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_social_network + " except select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
@@ -122,6 +125,32 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_EVENT + ") order by lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
+    }
+
+    public interface SocialNetworkQuery extends PeopleQuery {
+
+
+        String[] PROJECTION = {
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
+        };
+
+        String SELECT_SOCIAL_NETWORK = "select "
+                + FriendForecastContract.ContactTable._ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " = "
+                + R.drawable.ic_social_network + " order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
@@ -170,8 +199,8 @@ public class ContactActionEventDAO {
         String SELECT_DELAY_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "), "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -180,7 +209,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_social_network + " order by "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
@@ -204,8 +235,8 @@ public class ContactActionEventDAO {
         String SELECT_TODAY_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "), "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -214,7 +245,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_social_network + " order by "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
@@ -238,8 +271,8 @@ public class ContactActionEventDAO {
         String SELECT_TODAY_DONE_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "), "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -270,8 +303,8 @@ public class ContactActionEventDAO {
         String SELECT_NEXT_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "), "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -280,7 +313,9 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by "
+                + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
+                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
+                + R.drawable.ic_social_network + " order by "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
     }
 
@@ -347,6 +382,11 @@ public class ContactActionEventDAO {
                 return db.rawQuery(NextPeopleQuery.SELECT_NEXT_PEOPLE, new String[]{String
                         .valueOf(tomorrow)});
             }
+            case SOCIAL_NETWORK: {
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
+                        "QUERY " + SocialNetworkQuery.SELECT_SOCIAL_NETWORK);
+                return db.rawQuery(SocialNetworkQuery.SELECT_SOCIAL_NETWORK, null);
+            }
             case UNTRACKED_PEOPLE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE);
@@ -391,6 +431,10 @@ public class ContactActionEventDAO {
             case NEXT_PEOPLE:
                 return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_NEXT_PEOPLE);
+            case SOCIAL_NETWORK:
+                return CursorUtils.setViewType(
+                        getCursor(cursorType, db),
+                        viewTypes, BoardAdapter.VIEW_SOCIAL_NETWORK);
             case UNTRACKED_PEOPLE:
                 return CursorUtils.setViewType(
                         getCursor(cursorType, db),
@@ -426,6 +470,8 @@ public class ContactActionEventDAO {
                 return context.getResources().getString(R.string.done);
             case NEXT_PEOPLE:
                 return context.getResources().getString(R.string.next);
+            case SOCIAL_NETWORK:
+                return context.getResources().getString(R.string.social_network);
             case UNTRACKED_PEOPLE:
                 return context.getResources().getString(R.string.untracked);
             default:

@@ -28,6 +28,7 @@ public abstract class BoardQuery {
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.TODAY_PEOPLE, db, viewTypes));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.TODAY_DONE_PEOPLE, db, viewTypes));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.NEXT_PEOPLE, db, viewTypes));
+        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.SOCIAL_NETWORK, db, viewTypes));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.UNTRACKED_PEOPLE, db, viewTypes));
         BoardAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));

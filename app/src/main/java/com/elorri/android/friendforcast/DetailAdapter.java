@@ -98,11 +98,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     public void onClick(View v) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                         mAlertEmoDialog = builder.create();
-                        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout
-                                .emoicon_list, null);
+                        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.emoicon_list, null);
                         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
                         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
                         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
+                        RelativeLayout socialNetwork = (RelativeLayout) listContainer.findViewById(R.id.social_network_item);
                         RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
                         happyItem.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -118,6 +118,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconRessource != R.drawable.ic_sentiment_neutral_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
+                                }
+                                mAlertEmoDialog.cancel();
+                            }
+                        });
+                        socialNetwork.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mEmoIconRessource != R.drawable.ic_social_network) {
+                                    update(mContactId, String.valueOf(R.drawable.ic_social_network));
                                 }
                                 mAlertEmoDialog.cancel();
                             }
@@ -208,12 +217,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_EMOICON: {
-                mContactId = mCursor.getString(ContactDAO.ContactQuery
-                        .COL_ID);
-                mCallback.setTitle(mCursor.getString(ContactDAO.ContactQuery
-                        .COL_ANDROID_CONTACT_NAME));
-                mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery
-                        .COL_THUMBNAIL));
+                mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
+                mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
+                mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
                 mEmoIconRessource = mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID);
                 holder.emoIcon.setBackgroundResource(mEmoIconRessource);
                 break;

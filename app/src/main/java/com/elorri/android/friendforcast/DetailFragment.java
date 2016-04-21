@@ -137,8 +137,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(DETAIL_URI);
-//            Log.e("Lifecycle", Thread.currentThread().getStackTrace()[2] + ": "+Utility.thread()+" : " +
-//                    " : DetailFragment.mDetailListView :  change state");
             if (mUri != null) {
                 cursorLoader = new CursorLoader(getActivity(),
                         mUri,
