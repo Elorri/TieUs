@@ -11,7 +11,6 @@ import com.elorri.android.friendforcast.extra.Tools;
 public class AndroidDAO {
 
 
-
     public interface ContactQuery {
 
         // Cursor Column identifiers
@@ -59,5 +58,42 @@ public class AndroidDAO {
 
     }
 
+    public interface ContactEmailQuery {
 
+        // Cursor Column identifiers
+        int COL_ID = 0;
+        int COL_LOOKUP_KEY = 1;
+        int COL_CONTACT_NAME = 2;
+
+        Uri CONTENT_URI = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
+        String SELECTION = ContactsContract.Data.CONTACT_ID + "=?";
+        //String SELECTION = ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?";
+
+
+        String[] PROJECTION = {
+                ContactsContract.Contacts._ID,
+                ContactsContract.CommonDataKinds.Email.DATA,
+                ContactsContract.CommonDataKinds.Email.TYPE
+        };
+
+    }
+
+
+    public interface ContactPhoneQuery {
+        // Cursor Column identifiers
+        int COL_ID = 0;
+        int COL_LOOKUP_KEY = 1;
+
+
+        Uri CONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        //String SELECTION = ContactsContract.Data.CONTACT_ID + "=?";
+        String SELECTION = ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?";
+
+
+        String[] PROJECTION = {
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+        };
+
+    }
 }

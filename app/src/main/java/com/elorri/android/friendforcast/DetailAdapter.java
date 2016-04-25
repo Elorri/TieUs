@@ -17,7 +17,9 @@ import android.widget.TextView;
 
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactContactsDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -28,16 +30,18 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     public static final int VIEW_EMOICON = 0;
     public static final int VIEW_TITLE = 1;
-    public static final int VIEW_COMMUNICATION_VECTORS = 2;
-    public static final int VIEW_CONTACTS = 3;
+    public static final int VIEW_VECTORS_OF_COMMUNICATION = 2;
+    public static final int VIEW_LIKED_CONTACTS = 3;
     public static final int VIEW_ACTION = 4;
+    public static final int VIEW_EMPTY_CURSOR = 5;
+
     public static int[] viewTypes;
 
     private Cursor mCursor;
     private Callback mCallback;
     private Context mContext;
     private AlertDialog mAlertEmoDialog;
-    private int mEmoIconRessource;
+    private int mEmoIconResource;
     private String mContactId;
 
     interface Callback {
@@ -58,9 +62,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public View divider;
+        public TextView contactName;
+
         public ImageView emoIcon;
         public TextView action;
         public TextView timeStart;
+        public TextView message;
+
+        public ImageView vectorId;
 
         public View mView;
 
@@ -74,9 +84,26 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
                     break;
                 }
+                case VIEW_TITLE: {
+                    divider = view.findViewById(R.id.divider);
+                    contactName = (TextView) view.findViewById(R.id.contact_name);
+                    break;
+                }
+                case VIEW_VECTORS_OF_COMMUNICATION: {
+                    vectorId = (ImageView) view.findViewById(R.id.vectorId);
+                    break;
+                }
+                case VIEW_LIKED_CONTACTS: {
+
+                    break;
+                }
                 case VIEW_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
                     timeStart = (TextView) view.findViewById(R.id.time_start);
+                    break;
+                }
+                case VIEW_EMPTY_CURSOR: {
+                    message = (TextView) view.findViewById(R.id.message);
                     break;
                 }
             }
@@ -110,7 +137,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         happyItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (mEmoIconRessource != R.drawable.ic_sentiment_satisfied_black_48dp) {
+                                if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
                                 }
                                 mAlertEmoDialog.cancel();
@@ -119,7 +146,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         neutralItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (mEmoIconRessource != R.drawable.ic_sentiment_neutral_black_48dp) {
+                                if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
                                 }
                                 mAlertEmoDialog.cancel();
@@ -128,7 +155,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         socialNetwork.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (mEmoIconRessource != R.drawable.ic_social_network) {
+                                if (mEmoIconResource != R.drawable.ic_social_network) {
                                     update(mContactId, String.valueOf(R.drawable.ic_social_network));
                                 }
                                 mAlertEmoDialog.cancel();
@@ -137,7 +164,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (mEmoIconRessource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
+                                if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
                                 }
                                 mAlertEmoDialog.cancel();
@@ -146,7 +173,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         untrackedItem.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (mEmoIconRessource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
+                                if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_do_not_disturb_alt_black_48dp));
                                 }
                                 mAlertEmoDialog.cancel();
@@ -203,10 +230,31 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, VIEW_EMOICON);
                 break;
             }
+            case VIEW_TITLE: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false);
+                viewHolder = new ViewHolder(view, VIEW_TITLE);
+                break;
+            }
+            case VIEW_VECTORS_OF_COMMUNICATION: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_vectors, parent, false);
+                viewHolder = new ViewHolder(view, VIEW_VECTORS_OF_COMMUNICATION);
+                break;
+            }
+            case VIEW_LIKED_CONTACTS: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
+                viewHolder = new ViewHolder(view, VIEW_LIKED_CONTACTS);
+                break;
+            }
             case VIEW_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION);
+                break;
+            }
+            case VIEW_EMPTY_CURSOR: {
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_cursor,
+                        parent, false);
+                viewHolder = new ViewHolder(view, VIEW_EMPTY_CURSOR);
                 break;
             }
         }
@@ -223,8 +271,28 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
                 mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
-                mEmoIconRessource = mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID);
-                holder.emoIcon.setBackgroundResource(mEmoIconRessource);
+                mEmoIconResource = mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID);
+                holder.emoIcon.setBackgroundResource(mEmoIconResource);
+                break;
+            }
+            case VIEW_TITLE: {
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TITLE " +
+                        "position" + position);
+                int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
+                holder.divider.setVisibility(visibility);
+                holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TitleQuery.COL_TITLE));
+                break;
+            }
+            case VIEW_VECTORS_OF_COMMUNICATION: {
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_VECTORS_OF_COMMUNICATION " +
+                        "position" + position);
+                holder.vectorId.setBackgroundResource(mCursor.getInt(ContactVectorsDAO.ContactVectorsQuery.COL_VECTOR_ID));
+                break;
+            }
+            case VIEW_LIKED_CONTACTS: {
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_LIKED_CONTACTS " +
+                        "position" + position);
+                holder.contactName.setText(mCursor.getString(ContactContactsDAO.ContactContactsQuery.COL_CONTACT_ID_2));
                 break;
             }
             case VIEW_ACTION: {
@@ -235,8 +303,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
                 break;
             }
+            case VIEW_EMPTY_CURSOR: {
+                //could be ContactVectorsDAO.ContactVectorsQuery.COL_ID) as well
+                holder.message.setText(mCursor.getString(ContactContactsDAO.ContactContactsQuery.COL_ID));
+                break;
+            }
         }
-
     }
 
     @Override

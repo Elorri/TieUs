@@ -174,8 +174,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_FORECAST: {
-                float ratio = Float.valueOf(mCursor.getString(ContactDAO.RatioQuery.COL_RATIO));
-                mCallback.setForecast(Tools.getForecastRessourceId(ratio));
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ratio "
+                        + mCursor.getString(ContactDAO.RatioQuery.COL_RATIO));
+                String cursorRatio = mCursor.getString(ContactDAO.RatioQuery.COL_RATIO);
+                if (cursorRatio != null) {
+                    float ratio = Float.valueOf(cursorRatio);
+                    mCallback.setForecast(Tools.getForecastRessourceId(ratio));
+                }
                 break;
             }
             case VIEW_TITLE: {

@@ -85,4 +85,31 @@ public class FriendForecastContract {
         }
     }
 
+    public static class ContactVectorsTable implements BaseColumns {
+        public static String PATH_CONTACT_VECTORS = "contact_vectors";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT_VECTORS).build();
+
+        public static final String NAME = "contact_vectors";
+        public static final String COLUMN_CONTACT_ID = "contact_id";
+        public static final String COLUMN_VECTOR_ID = "vector_id";
+
+        public static Uri buildContactUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+    
+
+    public static class ContactContactsTable implements BaseColumns {
+        public static String PATH_CONTACT_CONTACTS = "contact_contacts";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT_CONTACTS).build();
+
+        public static final String NAME = "contact_contacts";
+        public static final String COLUMN_CONTACT_ID_1 = "contact_id_1";
+        public static final String COLUMN_CONTACT_ID_2 = "contact_id_2";
+
+        public static Uri buildContactUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+
 }

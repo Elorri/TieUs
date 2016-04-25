@@ -9,6 +9,7 @@
     <color name="accent">#F50057</color>
     <color name="secondaryLight">#ffbdbdbd</color>
     <color name="secondaryDark">#ff616161</color>
+    <color name="secondaryXDark">#424242</color>
 
 
     <!-- texts -->

@@ -1,5 +1,6 @@
 package com.elorri.android.friendforcast;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import com.elorri.android.friendforcast.data.BoardQuery;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -49,6 +51,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO remove this when adding SyncAdapter
+        syncContacts();
+
+        Log.e("ff", Thread.currentThread().getStackTrace()[2] + "");
         setHasOptionsMenu(true);
     }
 
@@ -175,10 +181,12 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         protected Void doInBackground(Void... params) {
             Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
-            addOrUpdateAppContactsAccordingToAndroidContacts();
-            removeAppContactsAccordingToAndroidContacts();
+            //addOrUpdateAppContactsAccordingToAndroidContacts();
+            //removeAppContactsAccordingToAndroidContacts();
+            //addOrRemoveContactVectorsAccordingToAndroidContacts();
             return null;
         }
+
 
         /**
          * This function will remove the app database contacts in order to match the
@@ -197,7 +205,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             String appContactId;
             String androidContactId;
             String androidLookUpKey;
-            Cursor androidCursor=null;
+            Cursor androidCursor = null;
             try {
                 while (appCursor.moveToNext()) {
                     appContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ID);
@@ -224,7 +232,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "remove");
                             getContext().getContentResolver().delete(
                                     FriendForecastContract.ContactTable.CONTENT_URI,
-                                    FriendForecastContract.ContactTable._ID+"=?",
+                                    FriendForecastContract.ContactTable._ID + "=?",
                                     new String[]{appContactId});
                         }
 
@@ -255,7 +263,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
             String androidContactId;
             String androidLookUpKey;
-            Cursor localCursor=null;
+            Cursor localCursor = null;
             try {
                 while (androidCursor.moveToNext()) {
                     androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
@@ -303,6 +311,107 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                 androidCursor.close();
             }
         }
+
+        /**
+         * This function will add or update the app database contacts vectors of communication in
+         * order to match the device android database contacts
+         */
+        private void addOrRemoveContactVectorsAccordingToAndroidContacts() {
+            Log.e("ff", Thread.currentThread().getStackTrace()[2] + "");
+
+            //first we delete all contacts vectors
+            getContext().getContentResolver().delete(
+                    FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                    null,
+                    null);
+
+            //Query 1 : Select android contact ids
+            Cursor cursorContacts = getContext().getContentResolver().query(
+                    FriendForecastContract.ContactTable.CONTENT_URI,
+                    ContactDAO.ContactQuery.PROJECTION,
+                    null,
+                    null,
+                    null
+            );
+            while (cursorContacts.moveToNext()) {
+                String contactId = cursorContacts.getString(ContactDAO.ContactQuery.COL_ID);
+                String androidContactId = cursorContacts.getString(ContactDAO.ContactQuery.COL_ANDROID_ID);
+
+                Uri contactUri = Uri.withAppendedPath(
+                        ContactsContract.Contacts.CONTENT_URI, androidContactId).buildUpon().appendPath(
+                        ContactsContract.Contacts.Entity.CONTENT_DIRECTORY).build();
+
+                // Check if this contact has a phone number or email
+                final String[] PROJECTION = {
+                        ContactsContract.Contacts.Entity.RAW_CONTACT_ID,
+                        ContactsContract.Contacts.Entity.DATA1,
+                        ContactsContract.Contacts.Entity.DATA3,
+                        ContactsContract.Contacts.Entity.MIMETYPE};
+                String sortOrder = ContactsContract.Contacts.Entity.RAW_CONTACT_ID + " ASC";
+
+                Cursor cursorDetails = getContext().getContentResolver().query(
+                        contactUri,
+                        PROJECTION,
+                        null,
+                        null,
+                        sortOrder);
+                String email = null;
+                String phone = null;
+                String eventDate = null;
+                String eventLabel = null;
+                int mimeIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.MIMETYPE);
+                int dataIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA1);
+                while (cursorDetails.moveToNext()) {
+                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)) {
+                        email = cursorDetails.getString(dataIdx);
+                    }
+                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)) {
+                        phone = cursorDetails.getString(dataIdx);
+                    }
+                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)) {
+                        int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.CommonDataKinds.Event.LABEL);
+                        //This works too :
+                        //int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA3);
+                        eventDate = cursorDetails.getString(dataIdx);
+                        eventLabel = cursorDetails.getString(dataIdx2);
+                    }
+
+                    //Now we add any vectors found in the android contacts provider
+                    if (email != null) {
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "email " + contactId + " " + email);
+                        ContentValues emailVectorValues = ContactVectorsDAO.getContentValues
+                                (contactId, R.drawable.ic_mail_outline_black_24dp);
+
+                        getContext().getContentResolver().insert(
+                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                emailVectorValues);
+                    }
+                    if (phone != null) {
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "phone " + contactId + " " + phone);
+                        ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
+                                (contactId, R.drawable.ic_phone_black_24dp);
+
+                        getContext().getContentResolver().insert(
+                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                phoneVectorValues);
+                    }
+
+                    //TODO convert eventDate from 2016-05-20 to long and only add future events
+                    if (eventDate != null) {
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2]
+                                + "eventDate$ " + contactId + " " + eventDate + " " + eventLabel);
+                        ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
+                                (contactId, R.drawable.ic_event_black_24dp);
+
+                        getContext().getContentResolver().insert(
+                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                phoneVectorValues);
+                    }
+                }
+            }
+
+        }
+
 
         @Override
         protected void onPostExecute(Void aVoid) {

@@ -109,8 +109,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mAdapter = new DetailAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton shareFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
-        shareFab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
+        addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

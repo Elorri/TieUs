@@ -17,8 +17,10 @@ import java.util.ArrayList;
  */
 public class ContactDAO {
 
-    public static final int CONTACT_BY_ID = 0;
-    public static final int RATIO = 1;
+    public static final int RATIO = 0;
+    public static final int CONTACT_BY_ID = 1;
+
+
 
     public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ContactTable.NAME +
@@ -96,7 +98,6 @@ public class ContactDAO {
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID, emoiconId);
         return contentValues;
-
     }
 
 
@@ -121,8 +122,6 @@ public class ContactDAO {
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
              case RATIO: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY RATIO");
                 return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
             }
             default:
@@ -157,6 +156,9 @@ public class ContactDAO {
                 return null;
         }
     }
+
+
+
 
 
 }

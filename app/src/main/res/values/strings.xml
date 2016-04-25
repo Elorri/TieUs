@@ -24,5 +24,9 @@
     <string name="action_sync">Synchronise</string>
     <string name="social_network_untracked">Social Network (Untracked)</string>
     <string name="social_network">Social Network</string>
+    <string name="vectors_of_communication">Vectors of communication</string>
+    <string name="liked_contacts">People/Groups she may like</string>
+    <string name="no_liked_contacts">What people/groups she may like ?</string>
+    <string name="no_vectors_of_communication">What tools of communication she offers ?</string>
 
 </resources>

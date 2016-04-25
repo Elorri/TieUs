@@ -22,6 +22,7 @@ public class FriendForecastProvider extends ContentProvider {
     static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
     static final int TABLE_ACTION = 501; //will match content://com.elorri.android.communication/action/
     static final int TABLE_EVENT = 502; //will match content://com.elorri.android.communication/event/
+    static final int TABLE_CONTACT_VECTORS = 503; //will match content://com.elorri.android.communication/contact_vectors/
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -43,6 +44,8 @@ public class FriendForecastProvider extends ContentProvider {
                 .PATH_ACTION, TABLE_ACTION);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.EventTable
                 .PATH_EVENT, TABLE_EVENT);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract
+                .ContactVectorsTable.PATH_CONTACT_VECTORS, TABLE_CONTACT_VECTORS);
         return matcher;
     }
 
@@ -68,7 +71,7 @@ public class FriendForecastProvider extends ContentProvider {
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
                 String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);
-                cursor = DetailQuery.getCursor(db, contactId);
+                cursor = DetailQuery.getCursor(getContext(), db, contactId);
                 break;
             case TABLE_CONTACT:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT" +
@@ -133,6 +136,15 @@ public class FriendForecastProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
+            case TABLE_CONTACT_VECTORS: {
+                long _id = db.insert(FriendForecastContract.ContactVectorsTable.NAME, null, values);
+                if (_id > 0) {
+                    returnUri = FriendForecastContract.EventTable.buildEventUri(_id);
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT_VECTORS " + _id);
+                } else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -150,6 +162,10 @@ public class FriendForecastProvider extends ContentProvider {
         switch (match) {
             case TABLE_CONTACT:
                 rowsDeleted = db.delete(FriendForecastContract.ContactTable.NAME, selection, selectionArgs);
+                break;
+            case TABLE_CONTACT_VECTORS:
+                rowsDeleted = db.delete(FriendForecastContract.ContactVectorsTable.NAME, selection,
+                        selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
