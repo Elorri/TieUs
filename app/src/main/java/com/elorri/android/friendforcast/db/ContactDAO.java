@@ -21,7 +21,6 @@ public class ContactDAO {
     public static final int CONTACT_BY_ID = 1;
 
 
-
     public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ContactTable.NAME +
             "(" + FriendForecastContract.ContactTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -30,8 +29,13 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL, "
+            + FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED + " INTEGER NOT NULL, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE)";
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
+            + "CONSTRAINT " + FriendForecastContract.ContactTable.SOCIAL_NETWORK_CONSTRAINT + " check  ("
+            + FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED + " between "
+            + FriendForecastContract.ContactTable.SOCIAL_NETWORK_OFF_VALUE + " AND "
+            + FriendForecastContract.ContactTable.SOCIAL_NETWORK_ON_VALUE + ")); ";
 
 
     public static final String INSERT = "INSERT INTO "
@@ -45,7 +49,6 @@ public class ContactDAO {
             + "VALUES (?, ?, ?, ?, ?)";
 
 
-
     public interface ContactQuery {
 
         int COL_ID = 0;
@@ -54,6 +57,7 @@ public class ContactDAO {
         int COL_ANDROID_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
         int COL_EMOICON_BY_ID = 5;
+        int COL_SOCIAL_NETWORK_FILLED = 6;
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
 
@@ -61,10 +65,12 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                "lower("+FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+")",
+                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ")",
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED
         };
+
 
     }
 
@@ -83,7 +89,7 @@ public class ContactDAO {
                 + FriendForecastContract.ContactTable.VIEW_PART + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "="
-                + R.drawable.ic_sentiment_satisfied_black_48dp+")";
+                + R.drawable.ic_sentiment_satisfied_black_48dp + ")";
     }
 
     public static ContentValues getContentValues(Cursor androidContactCursor, int emoiconId) {
@@ -99,7 +105,6 @@ public class ContactDAO {
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID, emoiconId);
         return contentValues;
     }
-
 
 
     public static ContentValues getContentValues(Cursor cursor) {
@@ -121,7 +126,7 @@ public class ContactDAO {
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
-             case RATIO: {
+            case RATIO: {
                 return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
             }
             default:
@@ -145,20 +150,31 @@ public class ContactDAO {
     }
 
 
-    public static Cursor getCursorWithViewTypes( int cursorType, SQLiteDatabase db,
+    public static Cursor getCursorWithViewTypes(int cursorType, SQLiteDatabase db,
                                                 ArrayList<Integer> viewTypes, String contactId) {
 
         switch (cursorType) {
             case CONTACT_BY_ID:
-                return CursorUtils.setViewType(getCursor(contactId,cursorType, db),
+                return CursorUtils.setViewType(getCursor(contactId, cursorType, db),
                         viewTypes, DetailAdapter.VIEW_EMOICON);
             default:
                 return null;
         }
     }
 
-
-
+    public static boolean isUserAwareOfSocialNetworkAddFeature(SQLiteDatabase db, String contactId) {
+        Cursor cursor = db.query(FriendForecastContract.ContactTable.NAME,
+                ContactQuery.PROJECTION,
+                ContactQuery.SELECTION,
+                new String[]{contactId}, null, null, null);
+        try {
+            if (cursor.moveToFirst())
+                return cursor.getInt(ContactQuery.COL_SOCIAL_NETWORK_FILLED) == 1 ? true : false;
+        } finally {
+            cursor.close();
+        }
+        return false;
+    }
 
 
 }

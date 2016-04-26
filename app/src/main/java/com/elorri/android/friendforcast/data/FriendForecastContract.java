@@ -49,9 +49,14 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_EMOICON_ID = "emoicon";
+        public static final String COLUMN_SOCIAL_NETWORK_FILLED = "social_network_filled";
         public static final String VIEW_PART = "part";
         public static final String VIEW_TOTAL = "total";
         public static final String VIEW_RATIO = "ratio";
+
+        public static final String SOCIAL_NETWORK_ON_VALUE = "1";
+        public static final String SOCIAL_NETWORK_OFF_VALUE = "0";
+        public static final String SOCIAL_NETWORK_CONSTRAINT = "social_network_ck";
 
         public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -99,13 +104,14 @@ public class FriendForecastContract {
     }
     
 
-    public static class ContactContactsTable implements BaseColumns {
-        public static String PATH_CONTACT_CONTACTS = "contact_contacts";
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT_CONTACTS).build();
+    public static class ContactSocialNetworkTable implements BaseColumns {
+        public static String PATH_CONTACT_SOCIAL_NETWORK = "contact_social_networks";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT_SOCIAL_NETWORK).build();
 
         public static final String NAME = "contact_contacts";
         public static final String COLUMN_CONTACT_ID_1 = "contact_id_1";
         public static final String COLUMN_CONTACT_ID_2 = "contact_id_2";
+        public static final String COLUMN_THUMBNAIL = "thumbnail";
 
         public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

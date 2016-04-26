@@ -15,10 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
-import com.elorri.android.friendforcast.db.ContactContactsDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.ContactSocialNetworkDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -31,7 +32,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public static final int VIEW_EMOICON = 0;
     public static final int VIEW_TITLE = 1;
     public static final int VIEW_VECTORS_OF_COMMUNICATION = 2;
-    public static final int VIEW_LIKED_CONTACTS = 3;
+    public static final int VIEW_SOCIAL_NETWORKS = 3;
     public static final int VIEW_ACTION = 4;
     public static final int VIEW_EMPTY_CURSOR = 5;
 
@@ -70,7 +71,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public TextView timeStart;
         public TextView message;
 
-        public ImageView vectorId;
+        public ImageView vectorImageView;
 
         public View mView;
 
@@ -90,11 +91,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     break;
                 }
                 case VIEW_VECTORS_OF_COMMUNICATION: {
-                    vectorId = (ImageView) view.findViewById(R.id.vectorId);
+                    vectorImageView = (ImageView) view.findViewById(R.id.vectorId);
                     break;
                 }
-                case VIEW_LIKED_CONTACTS: {
-
+                case VIEW_SOCIAL_NETWORKS: {
+                    vectorImageView = (ImageView) view.findViewById(R.id.vectorId);
                     break;
                 }
                 case VIEW_ACTION: {
@@ -240,9 +241,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, VIEW_VECTORS_OF_COMMUNICATION);
                 break;
             }
-            case VIEW_LIKED_CONTACTS: {
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_LIKED_CONTACTS);
+            case VIEW_SOCIAL_NETWORKS: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_vectors, parent, false);
+                viewHolder = new ViewHolder(view, VIEW_SOCIAL_NETWORKS);
                 break;
             }
             case VIEW_ACTION: {
@@ -286,13 +287,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case VIEW_VECTORS_OF_COMMUNICATION: {
                 Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_VECTORS_OF_COMMUNICATION " +
                         "position" + position);
-                holder.vectorId.setBackgroundResource(mCursor.getInt(ContactVectorsDAO.ContactVectorsQuery.COL_VECTOR_ID));
+                holder.vectorImageView.setBackgroundResource(mCursor.getInt(ContactVectorsDAO.ContactVectorsQuery.COL_VECTOR_ID));
                 break;
             }
-            case VIEW_LIKED_CONTACTS: {
-                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_LIKED_CONTACTS " +
+            case VIEW_SOCIAL_NETWORKS: {
+                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_SOCIAL_NETWORKS " +
                         "position" + position);
-                holder.contactName.setText(mCursor.getString(ContactContactsDAO.ContactContactsQuery.COL_CONTACT_ID_2));
+                String uri = mCursor.getString(ContactSocialNetworkDAO.ContactSocialNetworksQuery.COL_THUMBNAIL);
+                Glide.with(mContext)
+                        .load(uri)
+                        .crossFade()
+                        .into(holder.vectorImageView);
                 break;
             }
             case VIEW_ACTION: {
@@ -305,7 +310,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
             case VIEW_EMPTY_CURSOR: {
                 //could be ContactVectorsDAO.ContactVectorsQuery.COL_ID) as well
-                holder.message.setText(mCursor.getString(ContactContactsDAO.ContactContactsQuery.COL_ID));
+                holder.message.setText(mCursor.getString(ContactSocialNetworkDAO.ContactSocialNetworksQuery.COL_ID));
                 break;
             }
         }

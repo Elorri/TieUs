@@ -1,7 +1,6 @@
 package com.elorri.android.friendforcast;
 
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,16 +22,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.elorri.android.friendforcast.data.DetailQuery;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ActionDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.ui.AvatarView;
@@ -59,6 +51,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private AlertDialog mAlertDialog;
     private int mAvatarColor;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,7 +75,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 }
                 if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
                     mCollapsingToolbar.setTitle(mContactTitle);
-                        mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+                    mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
                     isCollapsed = true;
                 } else if (isCollapsed) {
                     mCollapsingToolbar.setTitle("");
@@ -113,8 +106,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                mAlertDialog = builder.create();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                mAlertDialog = builder.create();
                 FetchActionsTask actionsTask = new FetchActionsTask();
                 actionsTask.execute();
             }
@@ -179,7 +172,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
 
-    private class FetchActionsTask extends AsyncTask<Void, Void, Cursor> {
+    private class FetchActionsTask extends AsyncTask<Void, Void, Boolean> {
         private final String[] COLUMNS_TO_BE_BOUND = new String[]{
                 FriendForecastContract.ActionTable.COLUMN_NAME
         };
@@ -189,76 +182,95 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         };
 
         @Override
-        protected Cursor doInBackground(Void... params) {
-            return getContext().getContentResolver().query(FriendForecastContract.ActionTable
+        protected Boolean doInBackground(Void... params) {
+            Cursor cursor = getContext().getContentResolver().query(FriendForecastContract
+                            .ContactTable
                             .CONTENT_URI,
-                    ActionDAO.ActionQuery.PROJECTION,
+                    ContactDAO.ContactQuery.PROJECTION,
                     null,
                     null,
-                    ActionDAO.ActionQuery.SORT_ORDER);
+                    null);
+            if (cursor.moveToFirst())
+                return cursor.getInt(ContactDAO.ContactQuery.COL_SOCIAL_NETWORK_FILLED) == 1 ?
+                        true : false;
+
+
+//            return getContext().getContentResolver().query(FriendForecastContract.ActionTable
+//                            .CONTENT_URI,
+//                    ActionDAO.ActionQuery.PROJECTION,
+//                    null,
+//                    null,
+//                    ActionDAO.ActionQuery.SORT_ORDER);
+            return false;
         }
 
         @Override
-        protected void onPostExecute(Cursor result) {
+        protected void onPostExecute(Boolean result) {
 
             if (result != null) {
-                SimpleCursorAdapter adapter =
-                        new SimpleCursorAdapter(getContext(),
-                                R.layout.simple_item,
-                                result,
-                                COLUMNS_TO_BE_BOUND,
-                                ITEMS_ID_TO_FILL,
-                                0);
-                RelativeLayout alertView = (RelativeLayout) View.inflate(getContext(), R.layout.alert, null);
-                ListView list = (ListView) View.inflate(getContext(), R.layout.alert_list, null);
-                final FrameLayout list_container = (FrameLayout) alertView.findViewById(R.id.list_container);
-                list_container.addView(list);
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
-                        Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] + "");
-                        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                        final String actionId = cursor.getString(ActionDAO.ActionQuery.COL_ID);
+                if (result)//user is aware of social Network Add Feature
+                    ((DetailActivity) getActivity()).startAddVectors(muri);
+                else
+                    ((DetailActivity) getActivity()).startAddActions();
 
-                        final DateListener dateListener = new DateListener(actionId);
-                        Calendar now = Calendar.getInstance();
-                        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                                dateListener,
-                                now.get(Calendar.YEAR),
-                                now.get(Calendar.MONTH),
-                                now.get(Calendar.DAY_OF_MONTH)
-                        );
-                        dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
-                        dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
-                                .due_date));
-                        dpd.setOnDateSetListener(dateListener);
-                    }
-                });
-                Button dismissButton = (Button) alertView.findViewById(R.id.dismiss_button);
-                Button saveButton = (Button) alertView.findViewById(R.id.save_button);
-                saveButton.setEnabled(false);
-                dismissButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAlertDialog.cancel();
-                    }
-                });
-                saveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getContext(), "yes", Toast
-                                .LENGTH_SHORT).show();
-                    }
-                });
 
-                list.setAdapter(adapter);
-                //Must be done before mAlertDialog.show() Let you customize only the main
-                // content, not the title and button
-                //mAlertDialog.setView(alertView);
-                mAlertDialog.show();
-                //Must be done after mAlertDialog.show() Let you customize everything including
-                // title and buttons.
-                mAlertDialog.setContentView(alertView);
+//                SimpleCursorAdapter adapter =
+//                        new SimpleCursorAdapter(getContext(),
+//                                R.layout.simple_item,
+//                                result,
+//                                COLUMNS_TO_BE_BOUND,
+//                                ITEMS_ID_TO_FILL,
+//                                0);
+//                RelativeLayout alertView = (RelativeLayout) View.inflate(getContext(), R.layout.alert, null);
+//                ListView list = (ListView) View.inflate(getContext(), R.layout.alert_list, null);
+//                final FrameLayout list_container = (FrameLayout) alertView.findViewById(R.id.list_container);
+//                list_container.addView(list);
+//                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
+//                        Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] + "");
+//                        Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+//                        final String actionId = cursor.getString(ActionDAO.ActionQuery.COL_ID);
+//
+//                        final DateListener dateListener = new DateListener(actionId);
+//                        Calendar now = Calendar.getInstance();
+//                        DatePickerDialog dpd = DatePickerDialog.newInstance(
+//                                dateListener,
+//                                now.get(Calendar.YEAR),
+//                                now.get(Calendar.MONTH),
+//                                now.get(Calendar.DAY_OF_MONTH)
+//                        );
+//                        dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
+//                        dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
+//                                .due_date));
+//                        dpd.setOnDateSetListener(dateListener);
+//                    }
+//                });
+//                Button dismissButton = (Button) alertView.findViewById(R.id.dismiss_button);
+//                Button saveButton = (Button) alertView.findViewById(R.id.save_button);
+//                saveButton.setEnabled(false);
+//                dismissButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mAlertDialog.cancel();
+//                    }
+//                });
+//                saveButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(getContext(), "yes", Toast
+//                                .LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//                list.setAdapter(adapter);
+//                //Must be done before mAlertDialog.show() Let you customize only the main
+//                // content, not the title and button
+//                //mAlertDialog.setView(alertView);
+//                mAlertDialog.show();
+//                //Must be done after mAlertDialog.show() Let you customize everything including
+//                // title and buttons.
+//                mAlertDialog.setContentView(alertView);
             }
         }
 

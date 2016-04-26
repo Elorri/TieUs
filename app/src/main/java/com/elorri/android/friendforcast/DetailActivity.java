@@ -2,14 +2,13 @@ package com.elorri.android.friendforcast;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 /**
  * Created by Elorri on 16/04/2016.
  */
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailFragment.Callback{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,5 +27,14 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.detail_fragment_container, fragment)
                     .commit();
         }
+    }
+
+
+    public void startAddVectors() {
+
+    }
+
+    public void startAddActions() {
+
     }
 }
