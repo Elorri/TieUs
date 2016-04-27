@@ -24,6 +24,8 @@ public class ActionDAO {
 
     public interface ActionQuery {
 
+     int LOADER_ID = 0;
+
         int COL_ID = 0;
         int COL_ACTION_NAME = 1;
 

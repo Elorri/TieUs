@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast.data;
+package com.elorri.android.friendforcast.extra;
 
 import android.database.Cursor;
 

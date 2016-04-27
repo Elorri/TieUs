@@ -66,12 +66,12 @@ public class FriendForecastProvider extends ContentProvider {
             case DATA_BOARD:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
                         "uri " + uri);
-                cursor = BoardQuery.getCursor(getContext(), db);
+                cursor = BoardData.getCursor(getContext(), db);
                 break;
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
                 String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);
-                cursor = DetailQuery.getCursor(getContext(), db, contactId);
+                cursor = DetailData.getCursor(getContext(), db, contactId);
                 break;
             case TABLE_CONTACT:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT" +

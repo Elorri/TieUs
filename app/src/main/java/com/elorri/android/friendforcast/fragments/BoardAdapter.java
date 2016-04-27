@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast;
+package com.elorri.android.friendforcast.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;

@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast;
+package com.elorri.android.friendforcast.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;

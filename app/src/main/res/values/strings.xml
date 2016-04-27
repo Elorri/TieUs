@@ -28,5 +28,6 @@
     <string name="liked_contacts">People/Groups she may like</string>
     <string name="no_liked_contacts">What people/groups she may like ?</string>
     <string name="no_vectors_of_communication">What tools of communication she offers ?</string>
+    <string name="next_actions">Next actions</string>
 
 </resources>

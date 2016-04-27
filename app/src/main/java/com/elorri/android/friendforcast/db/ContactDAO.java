@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.DetailAdapter;
+import com.elorri.android.friendforcast.fragments.DetailAdapter;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.CursorUtils;
+import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class ContactDAO {
         int COL_ANDROID_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
         int COL_EMOICON_BY_ID = 5;
-        int COL_SOCIAL_NETWORK_FILLED = 6;
+
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
 
@@ -67,8 +67,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ")",
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
         };
 
 
@@ -162,19 +161,7 @@ public class ContactDAO {
         }
     }
 
-    public static boolean isUserAwareOfSocialNetworkAddFeature(SQLiteDatabase db, String contactId) {
-        Cursor cursor = db.query(FriendForecastContract.ContactTable.NAME,
-                ContactQuery.PROJECTION,
-                ContactQuery.SELECTION,
-                new String[]{contactId}, null, null, null);
-        try {
-            if (cursor.moveToFirst())
-                return cursor.getInt(ContactQuery.COL_SOCIAL_NETWORK_FILLED) == 1 ? true : false;
-        } finally {
-            cursor.close();
-        }
-        return false;
-    }
+
 
 
 }

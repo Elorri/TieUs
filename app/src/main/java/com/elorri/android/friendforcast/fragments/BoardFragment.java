@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast;
+package com.elorri.android.friendforcast.fragments;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -27,7 +27,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elorri.android.friendforcast.data.BoardQuery;
+import com.elorri.android.friendforcast.activities.MainActivity;
+import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
@@ -127,7 +129,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
-        getLoaderManager().initLoader(BoardQuery.LOADER_ID, null, this);
+        getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
         super.onResume();
     }
 
@@ -416,7 +418,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            getLoaderManager().restartLoader(BoardQuery.LOADER_ID, null, BoardFragment.this);
+            getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
         }
     }
 }

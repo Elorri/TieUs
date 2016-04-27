@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.elorri.android.friendforcast.DetailAdapter;
+import com.elorri.android.friendforcast.fragments.DetailAdapter;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.CursorUtils;
+import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.extra.Tools;
 

@@ -12,18 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.elorri.android.friendforcast.MainActivity">
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".activities.DetailActivity"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".activities.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.SelectActionActivity"
+            android:parentActivityName=".activities.DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DetailActivity"/>
         </activity>
         <provider
             android:name=".data.FriendForecastProvider"

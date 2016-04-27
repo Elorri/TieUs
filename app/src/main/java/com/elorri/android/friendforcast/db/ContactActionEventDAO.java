@@ -6,10 +6,10 @@ import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.BoardAdapter;
-import com.elorri.android.friendforcast.DetailAdapter;
+import com.elorri.android.friendforcast.fragments.BoardAdapter;
+import com.elorri.android.friendforcast.fragments.DetailAdapter;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.CursorUtils;
+import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -458,6 +458,15 @@ public class ContactActionEventDAO {
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
+    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,
+                                          ArrayList<Integer> viewTypes, String contactId) {
+        ArrayList<Cursor> cursors = new ArrayList();
+        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
+        viewTypes.add(DetailAdapter.VIEW_TITLE);
+        cursors.add(getCursorWithViewTypes(cursorType, db, viewTypes, contactId));
+        return new MergeCursor(Tools.convertToArrayCursors(cursors));
+    }
+
     private static String getCursorTitle(Context context, int cursorType) {
         switch (cursorType) {
             case UNMANAGED_PEOPLE:
@@ -474,6 +483,8 @@ public class ContactActionEventDAO {
                 return context.getResources().getString(R.string.social_network);
             case UNTRACKED_PEOPLE:
                 return context.getResources().getString(R.string.untracked);
+            case ACTION_BY_CONTACT_ID:
+                return context.getResources().getString(R.string.next_actions);
             default:
                 return null;
         }

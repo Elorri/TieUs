@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast;
+package com.elorri.android.friendforcast.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.activities.DetailActivity;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 
