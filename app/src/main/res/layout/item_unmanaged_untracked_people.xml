@@ -28,7 +28,7 @@
         tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
 
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

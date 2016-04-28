@@ -18,6 +18,10 @@ import java.util.ArrayList;
  */
 public abstract class BoardData {
 
+    public interface TitleQuery {
+        int COL_TITLE = 0;
+    }
+
     public static final int LOADER_ID = 0;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db) {

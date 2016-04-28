@@ -13,13 +13,13 @@ public class FriendForecastContract {
     public static final String CONTENT_AUTHORITY = "com.elorri.android.friendforcast";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static class BoardData{
+    public static class BoardData {
         // DATA_BOARD  content://com.elorri.android.communication/board/
         public static String PATH_BOARD = "board";
         public static final Uri URI_PAGE_BOARD = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOARD).build();
     }
 
-    public static class DetailData{
+    public static class DetailData {
         //DATA_DETAIL content://com.elorri.android.communication/detail/
         public static String PATH_DETAIL = "detail";
 
@@ -37,6 +37,62 @@ public class FriendForecastContract {
         }
     }
 
+
+    public static class AddActionData {
+        public static String PATH_ADD_ACTION = "add_action";
+
+
+        // DATA_ADD_ACTION_SELECT_ACTION  content://com.elorri.android.communication/add_action/select_action
+        public static String PATH_SELECT_ACTION = "select_action";
+        public static final Uri URI_PAGE_ADD_ACTION_SELECT_ACTION = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ADD_ACTION)
+                .appendPath(PATH_SELECT_ACTION)
+                .build();
+
+
+        // DATA_ADD_ACTION_SELECT_VECTOR  content://com.elorri.android.communication/add_action/select_vector
+        public static String PATH_SELECT_VECTOR = "select_vector";
+        public static final Uri URI_PAGE_ADD_ACTION_SELECT_VECTOR = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ADD_ACTION)
+                .appendPath(PATH_SELECT_VECTOR)
+                .build();
+
+
+        // DATA_ADD_ACTION_SELECT_TEMPLATE  content://com.elorri.android.communication/add_action/select_template
+        public static String PATH_SELECT_TEMPLATE = "select_template";
+        public static final Uri URI_PAGE_ADD_ACTION_SELECT_TEMPLATE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ADD_ACTION)
+                .appendPath(PATH_SELECT_TEMPLATE)
+                .build();
+
+        // DATA_ADD_ACTION_VALIDATE  content://com.elorri.android.communication/add_action/validate
+        public static String PATH_VALIDATE = "validate";
+        public static final Uri URI_PAGE_ADD_ACTION_VALIDATE = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_ADD_ACTION)
+                .appendPath(PATH_VALIDATE)
+                .build();
+
+        public static String getActionIdFromSelectVectorUri(Uri uri) {
+        }
+
+        public static String getActionIdFromSelectTemplateUri(Uri uri) {
+        }
+
+        public static String getVectorIdFromSelectTemplateUri(Uri uri) {
+        }
+
+        public static String getActionIdFromSelectValidateUri(Uri uri) {
+        }
+
+        public static String getVectorIdFromSelectValidateUri(Uri uri) {
+        }
+
+        public static String getTemplateIdFromSelectValidateUri(Uri uri) {
+        }
+
+        public static String getTimeStartIdFromSelectValidateUri(Uri uri) {
+        }
+    }
 
 
     public static class ContactTable implements BaseColumns {
@@ -90,6 +146,17 @@ public class FriendForecastContract {
         }
     }
 
+    public static class VectorTable implements BaseColumns {
+        public static String PATH_VECTOR = "vector";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_VECTOR).build();
+
+        public static final String NAME = "vector";
+
+        public static final String COLUMN_NAME="name";
+        public static final String COLUMN_LOGO_ID ="logo";
+    }
+
+
     public static class ContactVectorsTable implements BaseColumns {
         public static String PATH_CONTACT_VECTORS = "contact_vectors";
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT_VECTORS).build();
@@ -102,7 +169,7 @@ public class FriendForecastContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
-    
+
 
     public static class ContactSocialNetworkTable implements BaseColumns {
         public static String PATH_CONTACT_SOCIAL_NETWORK = "contact_social_networks";
@@ -116,6 +183,18 @@ public class FriendForecastContract {
         public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+    }
+
+    public static class ActionVectorTemplatesTable implements BaseColumns {
+
+        public static String PATH_ACTION_VECTOR_TEMPLATES = "action_vector_templates";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTION_VECTOR_TEMPLATES).build();
+
+        public static final String NAME = "action_vector_templates";
+
+        public static final String COLUMN_ACTION_ID = "action_id";
+        public static final String COLUMN_VECTOR_ID = "vector_id";
+        public static final String COLUMN_VALUE ="value";
     }
 
 }

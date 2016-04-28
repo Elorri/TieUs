@@ -1,12 +1,11 @@
 package com.elorri.android.friendforcast.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.elorri.android.friendforcast.fragments.DetailFragment;
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.fragments.DetailFragment;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
 /**
@@ -34,9 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    public void startAddActions(Uri uri) {
-        Intent intent = new Intent(this, SelectActionActivity.class);
-        intent.setData(uri);
-        startActivity(intent);
+    public void startAddActions() {
+        startActivity(new Intent(this, AddActionActivity.class));
     }
 }

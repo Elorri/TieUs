@@ -18,6 +18,10 @@ public class FriendForecastProvider extends ContentProvider {
 
     static final int DATA_BOARD = 100; //content://com.elorri.android.communication/board/
     static final int DATA_DETAIL = 101; //content://com.elorri.android.communication/detail/15
+    static final int DATA_ADD_ACTION_SELECT_ACTION = 102; //content://com.elorri.android.communication/add_action/select_action
+    static final int DATA_ADD_ACTION_SELECT_VECTOR = 103; //content://com.elorri.android.communication/add_action/select_vector
+    static final int DATA_ADD_ACTION_SELECT_TEMPLATE = 104; //content://com.elorri.android.communication/add_action/select_template
+    static final int DATA_ADD_ACTION_VALIDATE = 105; //content://com.elorri.android.communication/add_action/validate
 
     static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
     static final int TABLE_ACTION = 501; //will match content://com.elorri.android.communication/action/
@@ -38,6 +42,22 @@ public class FriendForecastProvider extends ContentProvider {
                 FriendForecastContract.BoardData.PATH_BOARD, DATA_BOARD);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
                 FriendForecastContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
+                        + FriendForecastContract.AddActionData.PATH_SELECT_ACTION, DATA_ADD_ACTION_SELECT_ACTION);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
+                        + FriendForecastContract.AddActionData.PATH_SELECT_VECTOR,
+                DATA_ADD_ACTION_SELECT_VECTOR);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
+                        + FriendForecastContract.AddActionData.PATH_SELECT_TEMPLATE,
+                DATA_ADD_ACTION_SELECT_TEMPLATE);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
+                        + FriendForecastContract.AddActionData.PATH_VALIDATE,
+                DATA_ADD_ACTION_VALIDATE);
+
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ContactTable
                 .PATH_CONTACT, TABLE_CONTACT);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ActionTable
@@ -73,9 +93,35 @@ public class FriendForecastProvider extends ContentProvider {
                 String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);
                 cursor = DetailData.getCursor(getContext(), db, contactId);
                 break;
+            case DATA_ADD_ACTION_SELECT_ACTION:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_ACTION uri " + uri);
+                cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_ACTION,
+                        null, null, null, null);
+                break;
+            case DATA_ADD_ACTION_SELECT_VECTOR:{
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_VECTOR uri " + uri);
+                String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectVectorUri(uri);
+                cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_VECTOR,
+                        actionId, null, null, null);}
+                break;
+            case DATA_ADD_ACTION_SELECT_TEMPLATE:{
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_TEMPLATE uri " + uri);
+                String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectTemplateUri(uri);
+                String vectorId = FriendForecastContract.AddActionData.getVectorIdFromSelectTemplateUri(uri);
+                cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_TEMPLATE,
+                        actionId, vectorId, null, null);}
+                break;
+            case DATA_ADD_ACTION_VALIDATE:{
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_VALIDATE uri " + uri);
+                String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectValidateUri(uri);
+                String vectorId = FriendForecastContract.AddActionData.getVectorIdFromSelectValidateUri(uri);
+                String templateId = FriendForecastContract.AddActionData.getTemplateIdFromSelectValidateUri(uri);
+                String timeStart = FriendForecastContract.AddActionData.getTimeStartIdFromSelectValidateUri(uri);
+                cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_VALIDATE,
+                        actionId, vectorId, templateId, timeStart);}
+                break;
             case TABLE_CONTACT:
-                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT" +
-                        " uri " + uri);
+                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         FriendForecastContract.ContactTable.NAME,
                         projection,

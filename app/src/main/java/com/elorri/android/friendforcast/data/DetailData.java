@@ -18,6 +18,11 @@ import java.util.ArrayList;
  * Created by Elorri on 16/04/2016.
  */
 public class DetailData {
+
+    public interface TitleQuery {
+        int COL_TITLE = 0;
+    }
+
     public static final int LOADER_ID = 0;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, String contactId) {

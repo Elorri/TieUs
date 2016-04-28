@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
@@ -88,7 +89,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 }
                 case VIEW_TITLE: {
                     divider = view.findViewById(R.id.divider);
-                    contactName = (TextView) view.findViewById(R.id.contact_name);
+                    contactName = (TextView) view.findViewById(R.id.title);
                     break;
                 }
                 case VIEW_VECTORS_OF_COMMUNICATION: {
@@ -282,7 +283,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         "position" + position);
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
-                holder.contactName.setText(mCursor.getString(ContactActionEventDAO.TitleQuery.COL_TITLE));
+                holder.contactName.setText(mCursor.getString(DetailData.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_VECTORS_OF_COMMUNICATION: {

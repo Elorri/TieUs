@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
@@ -72,7 +73,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             super(view);
             this.mView = view;
             avatar = (AvatarView) view.findViewById(R.id.avatar);
-            contactName = (TextView) view.findViewById(R.id.contact_name);
+            contactName = (TextView) view.findViewById(R.id.title);
             emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
 
             switch (viewType) {
@@ -190,7 +191,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString
-                        (ContactActionEventDAO.TitleQuery.COL_TITLE));
+                        (BoardData.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_UNMANAGED_PEOPLE: {

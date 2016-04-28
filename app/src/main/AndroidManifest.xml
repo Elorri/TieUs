@@ -26,7 +26,7 @@
                 android:value=".activities.MainActivity"/>
         </activity>
         <activity
-            android:name=".activities.SelectActionActivity"
+            android:name=".activities.AddActionActivity"
             android:parentActivityName=".activities.DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

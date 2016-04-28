@@ -88,10 +88,6 @@ public class ContactActionEventDAO {
     }
 
 
-    public interface TitleQuery {
-        int COL_TITLE = 0;
-    }
-
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
 
@@ -396,7 +392,8 @@ public class ContactActionEventDAO {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY " + ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID);
                 //return db.rawQuery(ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID, null);
-                return db.query("(" + JOINT_TABLE_CONTACT_ACTION_EVENT + ")", ActionByContactIdQuery.PROJECTION,
+                return db.query("(" + JOINT_TABLE_CONTACT_ACTION_EVENT + ")",
+                        ActionByContactIdQuery.PROJECTION,
                         ActionByContactIdQuery.SELECTION,
                         new String[]{contactId}, null, null, null);
             }

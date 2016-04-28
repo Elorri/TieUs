@@ -21,7 +21,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
 
-    static final String DATABASE_NAME = "communication.db";
+    static final String DATABASE_NAME = "friends.db";
     private final Context mContext;
     private static FriendForecastDbHelper instance = null;
 

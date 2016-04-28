@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_normal">
+
+    <ImageView
+        android:id="@+id/vector_logo"
+        android:layout_width="@dimen/vector_size"
+        android:layout_height="@dimen/vector_size"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:src="@drawable/ic_mail_outline_black_24dp"
+        android:tint="@color/secondary_dark_text"/>
+
+
+    <ImageView
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_toRightOf="@id/vector_logo"
+        android:src="@drawable/ic_schedule_black_24dp"
+        android:tint="@color/secondary_dark_text"/>
+
+    <TextView
+        android:id="@+id/time_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/clock"
+        android:layout_marginEnd="@dimen/emo_icon_width"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/emo_icon_width"
+        android:layout_toEndOf="@id/clock"
+        android:layout_toRightOf="@id/clock"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/spacing_small"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="30 sept."/>
+
+    <TextView
+        android:id="@+id/action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clock"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_toRightOf="@id/vector_logo"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="24h thank you note"/>
+
+
+    <TextView
+        android:id="@+id/template"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="100"
+        android:textAppearance="?android:textAppearanceMedium"
+        tools:text="@string/lorem_ipsum"/>
+
+
+</RelativeLayout>

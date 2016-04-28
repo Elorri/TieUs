@@ -27,7 +27,7 @@
 
 
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/emo_icon_width"
@@ -45,7 +45,7 @@
         android:id="@+id/action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/contact_name"
+        android:layout_below="@id/title"
         android:layout_marginEnd="@dimen/emo_icon_width"
         android:layout_marginRight="@dimen/emo_icon_width"
         android:layout_toEndOf="@id/avatar"

@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.activities.DetailActivity;
 import com.elorri.android.friendforcast.data.DetailData;
-import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.ui.AvatarView;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 
@@ -100,8 +99,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((DetailActivity) getActivity()).startAddActions(
-                        FriendForecastContract.ActionTable.CONTENT_URI);
+                ((DetailActivity) getActivity()).startAddActions();
             }
         });
 

@@ -23,7 +23,7 @@ import com.elorri.android.friendforcast.activities.SelectTemplateActivity;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.EventDAO;
-import com.elorri.android.friendforcast.db.TemplateDAO;
+import com.elorri.android.friendforcast.db.ActionVectorTemplatesDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -56,18 +56,7 @@ public class SelectTemplateFragment  extends Fragment implements LoaderManager.L
             @Override
             public void onClick(View view) {
 
-                final DateListener dateListener = new DateListener(actionId);
-                Calendar now = Calendar.getInstance();
-                DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        dateListener,
-                        now.get(Calendar.YEAR),
-                        now.get(Calendar.MONTH),
-                        now.get(Calendar.DAY_OF_MONTH)
-                );
-                dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
-                dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
-                        .due_date));
-                dpd.setOnDateSetListener(dateListener);
+
 
                 ((SelectTemplateActivity) getActivity()).startSelectTemplateActivity();
             }
@@ -78,7 +67,7 @@ public class SelectTemplateFragment  extends Fragment implements LoaderManager.L
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(TemplateDAO.TemplateQuery.LOADER_ID, null, this);
+        getLoaderManager().initLoader(ActionVectorTemplatesDAO.ActionVectorTemplatesQuery.LOADER_ID, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -152,52 +141,5 @@ public class SelectTemplateFragment  extends Fragment implements LoaderManager.L
     }
 
 
-    private class DateListener implements DatePickerDialog.OnDateSetListener {
 
-        private final String actionId;
-
-        public DateListener(String actionId) {
-            this.actionId = actionId;
-        }
-
-        @Override
-        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-            Calendar startDateCal = Calendar.getInstance();
-            startDateCal.set(Calendar.YEAR, year);
-            startDateCal.set(Calendar.MONTH, monthOfYear);
-            startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
-
-
-            //Add action with date to table event
-            Thread background = new Thread(new Runnable() {
-                Handler mHandler = new Handler();
-
-                @Override
-                public void run() {
-                    Log.e("MealPlanner", Thread.currentThread().getStackTrace()[2] +
-                            "background");
-                    getContext().getContentResolver()
-                            .insert(FriendForecastContract.EventTable.CONTENT_URI,
-                                    EventDAO.getContentValues(
-                                            FriendForecastContract.DetailData.getContactIdFromUri(mUri),
-                                            actionId,
-                                            startDate));
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e("MealPlanner", Thread.currentThread().getStackTrace
-                                    ()[2] + "uiThread");
-                            mAlertDialog.cancel();
-                            getLoaderManager().restartLoader(DetailData.LOADER_ID, null,
-                                    DetailFragment.this);
-                            Log.e("MealPlanner", Thread.currentThread().getStackTrace
-                                    ()[2] + "uiThread");
-                        }
-                    });
-                }
-            });
-            background.start();
-        }
-    }
 }
