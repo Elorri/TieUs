@@ -32,7 +32,7 @@ import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
  */
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         DetailAdapter.Callback {
-    public static final String CONTACT_ID="contact_id";
+    public static final String CONTACT_ID = "contact_id";
     public static final String DETAIL_URI = "uri";
     private static Uri mUri;
     private RecyclerView mRecyclerView;
@@ -44,6 +44,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private FloatingActionButton mAddFab;
     private int mAvatarColor;
     private AppBarLayout mAppBarLayout;
+    private Cursor mData;
 
 
     @Nullable
@@ -84,7 +85,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
@@ -113,7 +113,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onResume() {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
+        if (mData != null) {
+            Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
+            getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
+        }
         super.onResume();
     }
 
@@ -141,6 +144,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Log.d("FF", "" + Thread.currentThread().getStackTrace()[2]);
         if (data != null && data.moveToFirst()) {
+            mData = data;
             mAdapter.swapCursor(data);
         }
         mAddFab.setOnClickListener(new View.OnClickListener() {

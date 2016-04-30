@@ -30,8 +30,11 @@ public class DetailData {
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(CursorUtils.setViewType(ContactDAO.getCursor(contactId,
                 ContactDAO.CONTACT_BY_ID, db), viewTypes, DetailAdapter.VIEW_EMOICON));
-        cursors.add(ContactVectorsDAO.getWrappedCursor(context, ContactVectorsDAO.VECTORS_OF_COMMUNICATION, db, viewTypes, contactId));
-//        cursors.add(ContactSocialNetworkDAO.getCursorWithViewTypes(context, ContactSocialNetworkDAO.SOCIAL_NETWORKS, db, viewTypes, contactId));
+        cursors.add(CursorUtils.setViewType(db.query(FriendForecastContract.ContactVectorsTable.NAME,
+                        ContactVectorsDAO.ContactVectorsQuery.PROJECTION,
+                        ContactVectorsDAO.ContactVectorsQuery.SELECTION,
+                        new String[]{contactId}, null, null, null),
+                viewTypes, DetailAdapter.VIEW_VECTORS_OF_COMMUNICATION));
         cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.ACTION_BY_CONTACT_ID,
                 db, viewTypes, contactId));
         DetailAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);

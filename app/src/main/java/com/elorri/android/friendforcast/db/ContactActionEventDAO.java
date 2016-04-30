@@ -327,6 +327,8 @@ public class ContactActionEventDAO {
                 FriendForecastContract.EventTable.COLUMN_TIME_START
         };
 
+        String SORT_ORDER=FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
+
         String SELECT_ACTION_BY_CONTACT_ID = "select "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
@@ -390,12 +392,14 @@ public class ContactActionEventDAO {
             }
             case ACTION_BY_CONTACT_ID: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID);
+                        "QUERY ACTION_BY_CONTACT_ID" + ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID);
                 //return db.rawQuery(ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID, null);
-                return db.query("(" + JOINT_TABLE_CONTACT_ACTION_EVENT + ")",
+                Cursor cursor=db.query("(" + JOINT_TABLE_CONTACT_ACTION_EVENT + ")",
                         ActionByContactIdQuery.PROJECTION,
                         ActionByContactIdQuery.SELECTION,
-                        new String[]{contactId}, null, null, null);
+                        new String[]{contactId}, null, null, ActionByContactIdQuery.SORT_ORDER);
+                Log.e("FF",Thread.currentThread().getStackTrace()[2]+""+cursor.getCount());
+                return cursor;
             }
             default:
                 return null;

@@ -2,17 +2,9 @@ package com.elorri.android.friendforcast.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.MergeCursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.elorri.android.friendforcast.fragments.DetailAdapter;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.extra.Tools;
-
-import java.util.ArrayList;
 
 /**
  * Created by Elorri on 21/04/2016.
@@ -51,14 +43,7 @@ public class ContactVectorsDAO {
     }
 
 
-    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,
-                                          ArrayList<Integer> viewTypes, String contactId) {
-        ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
-        viewTypes.add(DetailAdapter.VIEW_TITLE);
-        cursors.add(getCursorWithViewTypes(context, cursorType, db, viewTypes, contactId));
-        return new MergeCursor(Tools.convertToArrayCursors(cursors));
-    }
+
 
 
     private static String getCursorTitle(Context context, int cursorType) {
@@ -70,27 +55,7 @@ public class ContactVectorsDAO {
         }
     }
 
-    public static Cursor getCursorWithViewTypes(Context context, int cursorType, SQLiteDatabase db,
-                                                 ArrayList<Integer> viewTypes, String contactId) {
 
-        switch (cursorType) {
-            case VECTORS_OF_COMMUNICATION:
-                Cursor cursor=db.query(FriendForecastContract.ContactVectorsTable.NAME, ContactVectorsQuery
-                                .PROJECTION, ContactVectorsQuery.SELECTION,
-                        new String[]{contactId}, null, null, null);
-                if(cursor.getCount()==0){
-                    cursor=Tools.getOneLineCursor(context.getResources().getString(R.string
-                            .no_vectors_of_communication));
-                    cursor=CursorUtils.setViewType(cursor,
-                            viewTypes, DetailAdapter.VIEW_EMPTY_CURSOR);
-                }
-                cursor=CursorUtils.setViewType(cursor,
-                        viewTypes, DetailAdapter.VIEW_VECTORS_OF_COMMUNICATION);
-                return cursor;
-            default:
-                return null;
-        }
-    }
 
 
     public static ContentValues getContentValues(String contactId, int vectorResourcesId) {

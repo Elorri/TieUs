@@ -162,16 +162,18 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 int actionIdx = mCursor.getColumnIndex(FriendForecastContract.ActionTable.COLUMN_NAME);
                 int temptateIdx = mCursor.getColumnIndex(FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE);
                 int timeStartIdx = mCursor.getColumnIndex(FriendForecastContract.EventTable.COLUMN_TIME_START);
-                String actionId;
+                String actionName;
                 long timeStartLong;
-                if (actionIdx != -1){
-                    actionId=mCursor.getString(actionIdx);
-                    holder.action.setText(actionId);
-                    if (vectorIdx != -1){
+                if (actionIdx != -1) {
+                    actionName = mCursor.getString(actionIdx);
+                    holder.action.setText(actionName);
+                    if (vectorIdx != -1) {
                         holder.vectorLogo.setBackgroundResource(mCursor.getInt(vectorIdx));
                         if (temptateIdx != -1) {
                             holder.template.setText(mCursor.getString(temptateIdx));
-                            if (timeStartIdx != -1) {
+                            if (timeStartIdx != -1) {//All action fields are known. Add the event.
+                                String actionId = mCursor.getString(mCursor.getColumnIndex
+                                        (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
                                 timeStartLong = mCursor.getLong(timeStartIdx);
                                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
                                 mCallback.showFab(actionId, timeStartLong);
@@ -210,10 +212,10 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 //                        .load(mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID))
 //                        .crossFade()
 //                        .into(holder.imageView);
-                int ressourceId= mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+ressourceId);
+                int ressourceId = mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + ressourceId);
                 holder.imageView.setImageBitmap(BitmapFactory.decodeResource(mContext
-                        .getResources(),ressourceId));
+                        .getResources(), ressourceId));
                 //holder.imageView.setBackgroundResource(R.drawable.ic_mail_outline_black_24dp);
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +224,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         int adapterPosition = holder.getAdapterPosition();
                         mCursor.moveToPosition(adapterPosition);
                         final String vectorId = mCursor.getString(VectorDAO.VectorQuery.COL_ID);
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+vectorId);
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorId);
                         mCallback.setVectorId(vectorId);
                     }
                 });
@@ -239,7 +241,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         mCursor.moveToPosition(adapterPosition);
                         final String templateId = mCursor.getString
                                 (ActionVectorTemplatesDAO.ActionVectorTemplatesQuery.COL_ID);
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+templateId);
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + templateId);
                         mCallback.setTemplateId(templateId);
                     }
                 });
