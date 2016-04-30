@@ -1,11 +1,11 @@
 package com.elorri.android.friendforcast.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.fragments.AddActionFragment;
+import com.elorri.android.friendforcast.fragments.DetailFragment;
 
 /**
  * Created by Elorri on 26/04/2016.
@@ -18,11 +18,13 @@ public class AddActionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_action);
 
         if (savedInstanceState == null) {
-//            Bundle arguments = new Bundle();
+            Bundle arguments = new Bundle();
 //            arguments.putParcelable(AddActionFragment.SELECT_ACTION_URI, getIntent().getData());
+            arguments.putCharSequence(DetailFragment.CONTACT_ID, getIntent().getCharSequenceExtra
+                    (DetailFragment.CONTACT_ID));
 
             AddActionFragment fragment = new AddActionFragment();
-//            fragment.setArguments(arguments);
+            fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragment)
@@ -30,10 +32,5 @@ public class AddActionActivity extends AppCompatActivity {
         }
     }
 
-    public void startSelectVectorActivity(String actionId) {
-        Intent intent=new Intent(this, SelectVectorActivity.class);
-        intent.putExtra(ACTION_ID, actionId);
-        startActivity(intent);
 
-    }
 }

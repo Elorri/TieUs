@@ -43,20 +43,13 @@ public class FriendForecastProvider extends ContentProvider {
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
                 FriendForecastContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
-                        + FriendForecastContract.AddActionData.PATH_SELECT_ACTION, DATA_ADD_ACTION_SELECT_ACTION);
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION, DATA_ADD_ACTION_SELECT_ACTION);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
-                        + FriendForecastContract.AddActionData.PATH_SELECT_VECTOR,
-                DATA_ADD_ACTION_SELECT_VECTOR);
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/#", DATA_ADD_ACTION_SELECT_VECTOR);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
-                        + FriendForecastContract.AddActionData.PATH_SELECT_TEMPLATE,
-                DATA_ADD_ACTION_SELECT_TEMPLATE);
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/#/#", DATA_ADD_ACTION_SELECT_TEMPLATE);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/"
-                        + FriendForecastContract.AddActionData.PATH_VALIDATE,
-                DATA_ADD_ACTION_VALIDATE);
+                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/#/#/#/#", DATA_ADD_ACTION_VALIDATE);
 
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ContactTable
                 .PATH_CONTACT, TABLE_CONTACT);
@@ -98,28 +91,33 @@ public class FriendForecastProvider extends ContentProvider {
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_ACTION,
                         null, null, null, null);
                 break;
-            case DATA_ADD_ACTION_SELECT_VECTOR:{
+            case DATA_ADD_ACTION_SELECT_VECTOR: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_VECTOR uri " + uri);
                 String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectVectorUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_VECTOR,
-                        actionId, null, null, null);}
-                break;
-            case DATA_ADD_ACTION_SELECT_TEMPLATE:{
+                        actionId, null, null, null);
+            }
+            break;
+            case DATA_ADD_ACTION_SELECT_TEMPLATE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_TEMPLATE uri " + uri);
                 String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectTemplateUri(uri);
                 String vectorId = FriendForecastContract.AddActionData.getVectorIdFromSelectTemplateUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_TEMPLATE,
-                        actionId, vectorId, null, null);}
-                break;
-            case DATA_ADD_ACTION_VALIDATE:{
+                        actionId, vectorId, null, null);
+            }
+            break;
+            case DATA_ADD_ACTION_VALIDATE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_VALIDATE uri " + uri);
                 String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectValidateUri(uri);
                 String vectorId = FriendForecastContract.AddActionData.getVectorIdFromSelectValidateUri(uri);
                 String templateId = FriendForecastContract.AddActionData.getTemplateIdFromSelectValidateUri(uri);
                 String timeStart = FriendForecastContract.AddActionData.getTimeStartIdFromSelectValidateUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_VALIDATE,
-                        actionId, vectorId, templateId, timeStart);}
-                break;
+                        actionId, vectorId, templateId, timeStart);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursor.getCount()"
+                        +cursor.getCount());
+            }
+            break;
             case TABLE_CONTACT:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(

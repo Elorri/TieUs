@@ -58,7 +58,9 @@ public class ActionDAO {
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
         viewTypes.add(AddActionAdapter.VIEW_TITLE);
-        cursors.add(getCursorWithViewTypes(cursorType, db, viewTypes, null));
+        cursors.add(CursorUtils.setViewType(
+                getCursor(cursorType, db, null),
+                viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
@@ -73,24 +75,12 @@ public class ActionDAO {
 
     //TODO virer toutes les methodes getCursorWithViewTypes CursorUtils.setViewType est plus
     // explicite
-    public static Cursor getCursorWithViewTypes(int cursorType, SQLiteDatabase db,
-                                                ArrayList<Integer> viewTypes, String actionId) {
 
-        switch (cursorType) {
-            case ALL_ACTIONS:
-                return CursorUtils.setViewType(
-                        getCursor(cursorType, db, null),
-                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM);
-            default:
-                return null;
-        }
-    }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId) {
         switch (cursorType) {
             case ALL_ACTIONS: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + ActionQuery.PROJECTION);
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ALL_ACTIONS");
                 return db.query(FriendForecastContract.ActionTable.NAME,
                         ActionQuery.PROJECTION,
                         null,
@@ -100,8 +90,7 @@ public class ActionDAO {
                         ActionQuery.SORT_ORDER);
             }
             case ACTION_BY_ID: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + ActionQuery.PROJECTION);
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(FriendForecastContract.ActionTable.NAME,
                         ActionQuery.PROJECTION,
                         ActionQuery.SELECTION,

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +23,7 @@ import android.view.ViewGroup;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.activities.DetailActivity;
 import com.elorri.android.friendforcast.data.DetailData;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.ui.AvatarView;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 
@@ -32,7 +32,7 @@ import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
  */
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         DetailAdapter.Callback {
-
+    public static final String CONTACT_ID="contact_id";
     public static final String DETAIL_URI = "uri";
     private static Uri mUri;
     private RecyclerView mRecyclerView;
@@ -41,14 +41,15 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private String mContactTitle;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private DynamicHeightGradientTopAvatarView mAvatar;
-    private AlertDialog mAlertDialog;
+    private FloatingActionButton mAddFab;
     private int mAvatarColor;
+    private AppBarLayout mAppBarLayout;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         mAvatarColor = getArguments().getInt(AvatarView.RANDOM_COLOR);
@@ -56,26 +57,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbar.setTitle("");
 
-        AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isCollapsed = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
-                    mCollapsingToolbar.setTitle(mContactTitle);
-                    mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-                    isCollapsed = true;
-                } else if (isCollapsed) {
-                    mCollapsingToolbar.setTitle("");
-                    isCollapsed = false;
-                }
-            }
-        });
+        mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -95,26 +77,49 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mAdapter = new DetailAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton addFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
-        addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((DetailActivity) getActivity()).startAddActions();
-            }
-        });
+        mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
+
 
         return view;
     }
 
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         getLoaderManager().initLoader(DetailData.LOADER_ID, null, this);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isCollapsed = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
+                    mCollapsingToolbar.setTitle(mContactTitle);
+                    mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+                    isCollapsed = true;
+                } else if (isCollapsed) {
+                    mCollapsingToolbar.setTitle("");
+                    isCollapsed = false;
+                }
+            }
+        });
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
+        super.onResume();
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.d("FF", "" + Thread.currentThread().getStackTrace()[2]);
         CursorLoader cursorLoader = null;
 
         Bundle arguments = getArguments();
@@ -134,9 +139,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.d("FF", "" + Thread.currentThread().getStackTrace()[2]);
         if (data != null && data.moveToFirst()) {
             mAdapter.swapCursor(data);
         }
+        mAddFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String contactId = FriendForecastContract.DetailData.getContactIdFromUri(mUri);
+                ((DetailActivity) getActivity()).startAddActions(contactId);
+            }
+        });
     }
 
     @Override

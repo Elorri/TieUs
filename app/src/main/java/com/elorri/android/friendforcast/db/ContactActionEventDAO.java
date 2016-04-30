@@ -335,7 +335,7 @@ public class ContactActionEventDAO {
     }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         return getCursor(cursorType, db, null);
     }
 

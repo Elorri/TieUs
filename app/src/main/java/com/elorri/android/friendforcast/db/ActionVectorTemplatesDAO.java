@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
@@ -29,6 +30,15 @@ public class ActionVectorTemplatesDAO {
             + "UNIQUE (" + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VECTOR_ID + ", "
             + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE + ") ON CONFLICT REPLACE)";
+
+
+    public static final String INSERT = "INSERT INTO "
+            + FriendForecastContract.ActionVectorTemplatesTable.NAME + " ("
+            + FriendForecastContract.ActionVectorTemplatesTable._ID + ", "
+            + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_ACTION_ID + ","
+            + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VECTOR_ID + ", "
+            + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE + ") "
+            + "VALUES (?, ?, ?, ?)";
 
 
     public interface ActionVectorTemplatesQuery {
@@ -58,6 +68,7 @@ public class ActionVectorTemplatesDAO {
     //TODO remove all getWrappedCursor, getCursorTitle, getCursorWithViewTypes and only keep
     //TODO getOneLineCursor, Cursor.setViewType
     public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db, ArrayList<Integer> viewTypes, String actionId, String vectorId) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actionId " + actionId + "vectorId " + vectorId);
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
         viewTypes.add(AddActionAdapter.VIEW_TITLE);
@@ -80,7 +91,8 @@ public class ActionVectorTemplatesDAO {
             vectorId) {
         switch (cursorType) {
             case TEMPLATE_BY_ACTION_ID_VECTOR_ID: {
-                return db.query(FriendForecastContract.VectorTable.NAME,
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actionId " + actionId + "vectorId " + vectorId);
+                return db.query(FriendForecastContract.ActionVectorTemplatesTable.NAME,
                         ActionVectorTemplatesQuery.PROJECTION,
                         ActionVectorTemplatesQuery.SELECTION,
                         new String[]{actionId, vectorId},

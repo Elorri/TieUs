@@ -2,6 +2,7 @@ package com.elorri.android.friendforcast.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         void setVectorId(String vectorId);
 
         void setTemplateId(String templateId);
+
+        void showFab(String actionId, long timeStart);
     }
 
     public AddActionAdapter(Cursor cursor, Callback callback) {
@@ -70,6 +73,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
             switch (viewType) {
                 case VIEW_ACTION_RECAP: {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     vectorLogo = (ImageView) view.findViewById(R.id.vector_logo);
                     action = (TextView) view.findViewById(R.id.action);
                     timeStart = (TextView) view.findViewById(R.id.time_start);
@@ -77,19 +81,23 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     break;
                 }
                 case VIEW_TITLE: {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     divider = view.findViewById(R.id.divider);
                     title = (TextView) view.findViewById(R.id.title);
                     break;
                 }
                 case VIEW_ACTION_ITEM: {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     textView = (TextView) view.findViewById(R.id.textview);
                     break;
                 }
                 case VIEW_VECTOR_ITEM: {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     imageView = (ImageView) view.findViewById(R.id.imageview);
                     break;
                 }
                 case VIEW_TEMPLATE_ITEM: {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     textView = (TextView) view.findViewById(R.id.textview);
                     break;
                 }
@@ -105,30 +113,35 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         View view;
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action_recap,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION_RECAP);
                 break;
             }
             case VIEW_TITLE: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TITLE);
                 break;
             }
             case VIEW_ACTION_ITEM: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_textview,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION_ITEM);
                 break;
             }
             case VIEW_VECTOR_ITEM: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_imageview,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_VECTOR_ITEM);
                 break;
             }
             case VIEW_TEMPLATE_ITEM: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_textview,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_TEMPLATE_ITEM);
@@ -144,31 +157,40 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int vectorIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_LOGO_ID);
                 int actionIdx = mCursor.getColumnIndex(FriendForecastContract.ActionTable.COLUMN_NAME);
                 int temptateIdx = mCursor.getColumnIndex(FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE);
                 int timeStartIdx = mCursor.getColumnIndex(FriendForecastContract.EventTable.COLUMN_TIME_START);
-                if (vectorIdx != -1)
-                    holder.vectorLogo.setBackgroundResource(mCursor.getInt(vectorIdx));
-                if (actionIdx != -1)
-                    holder.action.setText(mCursor.getString(actionIdx));
-                if (temptateIdx != -1)
-                    holder.template.setText(mCursor.getString(temptateIdx));
-
-                if (timeStartIdx != -1){
-                    long timeStartLong = mCursor.getLong(timeStartIdx);
-                    holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
+                String actionId;
+                long timeStartLong;
+                if (actionIdx != -1){
+                    actionId=mCursor.getString(actionIdx);
+                    holder.action.setText(actionId);
+                    if (vectorIdx != -1){
+                        holder.vectorLogo.setBackgroundResource(mCursor.getInt(vectorIdx));
+                        if (temptateIdx != -1) {
+                            holder.template.setText(mCursor.getString(temptateIdx));
+                            if (timeStartIdx != -1) {
+                                timeStartLong = mCursor.getLong(timeStartIdx);
+                                holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
+                                mCallback.showFab(actionId, timeStartLong);
+                            }
+                        }
+                    }
                 }
                 break;
             }
             case VIEW_TITLE: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(AddActionData.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_ACTION_ITEM: {
-                holder.action.setText(mCursor.getString(ActionDAO.ActionQuery.COL_ACTION_NAME));
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                holder.textView.setText(mCursor.getString(ActionDAO.ActionQuery.COL_ACTION_NAME));
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -181,21 +203,34 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 break;
             }
             case VIEW_VECTOR_ITEM: {
-                holder.vectorLogo.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery
-                        .COL_RESSOURCE_ID));
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+//                holder.imageView.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery
+//                        .COL_RESSOURCE_ID));
+//                Glide.with(mContext)
+//                        .load(mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID))
+//                        .crossFade()
+//                        .into(holder.imageView);
+                int ressourceId= mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+ressourceId);
+                holder.imageView.setImageBitmap(BitmapFactory.decodeResource(mContext
+                        .getResources(),ressourceId));
+                //holder.imageView.setBackgroundResource(R.drawable.ic_mail_outline_black_24dp);
+
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
                         mCursor.moveToPosition(adapterPosition);
                         final String vectorId = mCursor.getString(VectorDAO.VectorQuery.COL_ID);
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+vectorId);
                         mCallback.setVectorId(vectorId);
                     }
                 });
                 break;
             }
             case VIEW_TEMPLATE_ITEM: {
-                holder.template.setText(mCursor.getString(ActionVectorTemplatesDAO
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                holder.textView.setText(mCursor.getString(ActionVectorTemplatesDAO
                         .ActionVectorTemplatesQuery.COL_VALUE));
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -204,6 +239,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         mCursor.moveToPosition(adapterPosition);
                         final String templateId = mCursor.getString
                                 (ActionVectorTemplatesDAO.ActionVectorTemplatesQuery.COL_ID);
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""+templateId);
                         mCallback.setTemplateId(templateId);
                     }
                 });
@@ -222,6 +258,12 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mCursor = data;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        return viewTypes[position];
     }
 
 }

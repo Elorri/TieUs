@@ -5,12 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.fragments.DetailAdapter;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-
-import java.util.ArrayList;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -29,13 +25,9 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL, "
-            + FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED + " INTEGER NOT NULL, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
-            + "CONSTRAINT " + FriendForecastContract.ContactTable.SOCIAL_NETWORK_CONSTRAINT + " check  ("
-            + FriendForecastContract.ContactTable.COLUMN_SOCIAL_NETWORK_FILLED + " between "
-            + FriendForecastContract.ContactTable.SOCIAL_NETWORK_OFF_VALUE + " AND "
-            + FriendForecastContract.ContactTable.SOCIAL_NETWORK_ON_VALUE + ")); ";
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON " +
+            "CONFLICT REPLACE)";
 
 
     public static final String INSERT = "INSERT INTO "
@@ -139,29 +131,13 @@ public class ContactDAO {
             case CONTACT_BY_ID: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY CONTACT_BY_ID");
-                return db.query(FriendForecastContract.ContactTable.NAME, ContactQuery
-                                .PROJECTION, ContactQuery.SELECTION,
+                return db.query(FriendForecastContract.ContactTable.NAME, ContactQuery.PROJECTION, ContactQuery.SELECTION,
                         new String[]{contactId}, null, null, null);
             }
             default:
                 return null;
         }
     }
-
-
-    public static Cursor getCursorWithViewTypes(int cursorType, SQLiteDatabase db,
-                                                ArrayList<Integer> viewTypes, String contactId) {
-
-        switch (cursorType) {
-            case CONTACT_BY_ID:
-                return CursorUtils.setViewType(getCursor(contactId, cursorType, db),
-                        viewTypes, DetailAdapter.VIEW_EMOICON);
-            default:
-                return null;
-        }
-    }
-
-
 
 
 }

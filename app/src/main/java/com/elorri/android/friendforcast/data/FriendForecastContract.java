@@ -42,55 +42,70 @@ public class FriendForecastContract {
         public static String PATH_ADD_ACTION = "add_action";
 
 
-        // DATA_ADD_ACTION_SELECT_ACTION  content://com.elorri.android.communication/add_action/select_action
-        public static String PATH_SELECT_ACTION = "select_action";
+        // DATA_ADD_ACTION_SELECT_ACTION  content://com.elorri.android.communication/add_action/
         public static final Uri URI_PAGE_ADD_ACTION_SELECT_ACTION = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_ADD_ACTION)
-                .appendPath(PATH_SELECT_ACTION)
                 .build();
 
 
-        // DATA_ADD_ACTION_SELECT_VECTOR  content://com.elorri.android.communication/add_action/select_vector
-        public static String PATH_SELECT_VECTOR = "select_vector";
-        public static final Uri URI_PAGE_ADD_ACTION_SELECT_VECTOR = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_ADD_ACTION)
-                .appendPath(PATH_SELECT_VECTOR)
-                .build();
+        // DATA_ADD_ACTION_SELECT_VECTOR  content://com.elorri.android.communication/add_action/15
+        public static Uri buildSelectVectorUri(String actionId) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_ADD_ACTION)
+                    .appendPath(actionId)
+                    .build();
+        }
 
 
-        // DATA_ADD_ACTION_SELECT_TEMPLATE  content://com.elorri.android.communication/add_action/select_template
-        public static String PATH_SELECT_TEMPLATE = "select_template";
-        public static final Uri URI_PAGE_ADD_ACTION_SELECT_TEMPLATE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_ADD_ACTION)
-                .appendPath(PATH_SELECT_TEMPLATE)
-                .build();
+        // DATA_ADD_ACTION_SELECT_TEMPLATE  content://com.elorri.android.communication/add_action/15/3
+        public static Uri buildSelectTemplateUri(String actionId, String vectorId) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_ADD_ACTION)
+                    .appendPath(actionId)
+                    .appendPath(vectorId)
+                    .build();
+        }
 
-        // DATA_ADD_ACTION_VALIDATE  content://com.elorri.android.communication/add_action/validate
-        public static String PATH_VALIDATE = "validate";
-        public static final Uri URI_PAGE_ADD_ACTION_VALIDATE = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_ADD_ACTION)
-                .appendPath(PATH_VALIDATE)
-                .build();
+        // DATA_ADD_ACTION_VALIDATE  content://com.elorri.android.communication/add_action/15/3/7/56789796
+        public static Uri buildValidateUri(String actionId, String vectorId, String templateId,
+                                           String timeStart) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_ADD_ACTION)
+                    .appendPath(actionId)
+                    .appendPath(vectorId)
+                    .appendPath(templateId)
+                    .appendPath(timeStart)
+                    .build();
+        }
+
+
 
         public static String getActionIdFromSelectVectorUri(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
 
         public static String getActionIdFromSelectTemplateUri(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
 
         public static String getVectorIdFromSelectTemplateUri(Uri uri) {
+            return uri.getPathSegments().get(2);
         }
 
         public static String getActionIdFromSelectValidateUri(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
 
         public static String getVectorIdFromSelectValidateUri(Uri uri) {
+            return uri.getPathSegments().get(2);
         }
 
         public static String getTemplateIdFromSelectValidateUri(Uri uri) {
+            return uri.getPathSegments().get(3);
         }
 
         public static String getTimeStartIdFromSelectValidateUri(Uri uri) {
+            return uri.getPathSegments().get(4);
         }
     }
 
@@ -105,14 +120,9 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_EMOICON_ID = "emoicon";
-        public static final String COLUMN_SOCIAL_NETWORK_FILLED = "social_network_filled";
         public static final String VIEW_PART = "part";
         public static final String VIEW_TOTAL = "total";
         public static final String VIEW_RATIO = "ratio";
-
-        public static final String SOCIAL_NETWORK_ON_VALUE = "1";
-        public static final String SOCIAL_NETWORK_OFF_VALUE = "0";
-        public static final String SOCIAL_NETWORK_CONSTRAINT = "social_network_ck";
 
         public static Uri buildContactUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -126,6 +136,7 @@ public class FriendForecastContract {
 
         public static final String NAME = "action";
         public static final String COLUMN_NAME = "name";
+        public static final String VIEW_ACTION_ID = "action_id";
         public static final String VIEW_ACTION_NAME = "action_name";
     }
 
@@ -154,6 +165,8 @@ public class FriendForecastContract {
 
         public static final String COLUMN_NAME="name";
         public static final String COLUMN_LOGO_ID ="logo";
+        public static final String VIEW_VECTOR_ID ="vector_id";
+
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.ActionVectorTemplatesDAO;
@@ -38,20 +39,28 @@ public class AddActionData {
         ArrayList<Cursor> cursors = new ArrayList();
         switch (cursorType) {
             case ACTION_SELECT_ACTION:
-                cursors.add(ActionDAO.getWrappedCursor(context, ActionDAO.ALL_ACTIONS, db, viewTypes));
+                cursors.add(CursorUtils.setViewType(
+                        ActionDAO.getCursor(ActionDAO.ALL_ACTIONS, db, null),
+                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
+                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 break;
 
             case ACTION_SELECT_VECTOR:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 cursors.add(getActionRecapCursor(ACTION_SELECT_VECTOR, db, viewTypes, actionId, null, null, null));
-                cursors.add(ActionDAO.getWrappedCursor(context, VectorDAO.ALL_VECTORS, db, viewTypes));
+                cursors.add(VectorDAO.getWrappedCursor(context, VectorDAO.ALL_VECTORS, db,
+                        viewTypes));
                 break;
 
             case ACTION_SELECT_TEMPLATE:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actionId " + actionId + "vectorId " + vectorId);
                 cursors.add(getActionRecapCursor(ACTION_SELECT_TEMPLATE, db, viewTypes, actionId, vectorId, null, null));
                 cursors.add(ActionVectorTemplatesDAO.getWrappedCursor(context,
                         ActionVectorTemplatesDAO.TEMPLATE_BY_ACTION_ID_VECTOR_ID, db, viewTypes,actionId, vectorId));
                 break;
             case ACTION_VALIDATE:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actionId " + actionId + "vectorId " + vectorId
+                        + "templateId " + templateId + "timeStart " + timeStart);
                 cursors.add(getActionRecapCursor(ACTION_VALIDATE, db, viewTypes, actionId, vectorId, templateId, timeStart));
                 break;
             default:
@@ -67,19 +76,23 @@ public class AddActionData {
                                                String templateId, String timeStart) {
         switch (actionSelectVector) {
             case ACTION_SELECT_VECTOR:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 return CursorUtils.setViewType(
                         ActionDAO.getCursor(ActionDAO.ACTION_BY_ID, db, actionId),
-                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM);
+                        viewTypes, AddActionAdapter.VIEW_ACTION_RECAP);
             case ACTION_SELECT_TEMPLATE:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 return CursorUtils.setViewType(
                         db.rawQuery(RecapQuery.SELECT_ACTION_RECAP_TEMPLATE,
                                 new String[]{actionId, vectorId}),
-                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM);
+                        viewTypes, AddActionAdapter.VIEW_ACTION_RECAP);
             case ACTION_VALIDATE:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2]+""+RecapQuery
+                        .SELECT_ACTION_RECAP_VALIDATE);
                 return CursorUtils.setViewType(
                         db.rawQuery(RecapQuery.SELECT_ACTION_RECAP_VALIDATE, new
-                                String[]{actionId, vectorId, templateId, timeStart}),
-                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM);
+                                String[]{timeStart, templateId, actionId, vectorId }),
+                        viewTypes, AddActionAdapter.VIEW_ACTION_RECAP);
         }
         return null;
     }
@@ -88,14 +101,16 @@ public class AddActionData {
 
 
         String SELECT_ACTION = "select "
-                + FriendForecastContract.ActionTable._ID + ", "
+                + FriendForecastContract.ActionTable._ID + " as "
+                + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + " from "
                 + FriendForecastContract.ActionTable.NAME + " where "
                 + FriendForecastContract.ActionTable._ID + "=?";
 
 
         String SELECT_VECTOR = "select "
-                + FriendForecastContract.VectorTable._ID + ", "
+                + FriendForecastContract.VectorTable._ID + " as "
+                + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
                 + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from "
                 + FriendForecastContract.VectorTable.NAME + " where "
                 + FriendForecastContract.VectorTable._ID + "=?";
@@ -107,16 +122,16 @@ public class AddActionData {
                 + FriendForecastContract.ActionVectorTemplatesTable._ID + "=?";
 
         String SELECT_ACTION_RECAP_TEMPLATE = "select "
-                + FriendForecastContract.ActionTable._ID + ", "
+                + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
-                + FriendForecastContract.VectorTable._ID + ", "
+                + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
                 + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from ("
                 + SELECT_ACTION + ") inner join (" + SELECT_VECTOR + ")";
 
         String SELECT_ACTION_RECAP_VALIDATE = "select "
-                + FriendForecastContract.ActionTable._ID + ", "
+                + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
-                + FriendForecastContract.VectorTable._ID + ", "
+                + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
                 + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + ", "
                 + FriendForecastContract.ActionVectorTemplatesTable._ID + ", "
                 + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE + ",? as "

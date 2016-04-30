@@ -12,6 +12,8 @@ import com.elorri.android.friendforcast.ui.AvatarView;
  * Created by Elorri on 16/04/2016.
  */
 public class DetailActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,9 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    public void startAddActions() {
-        startActivity(new Intent(this, AddActionActivity.class));
+    public void startAddActions(String contactId) {
+        Intent intent=new Intent(this, AddActionActivity.class);
+        intent.putExtra(DetailFragment.CONTACT_ID, contactId);
+        startActivity(intent);
     }
 }

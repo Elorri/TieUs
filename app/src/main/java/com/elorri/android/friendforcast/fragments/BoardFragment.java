@@ -27,8 +27,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elorri.android.friendforcast.activities.MainActivity;
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.activities.MainActivity;
 import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
@@ -54,7 +54,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
-        syncContacts();
+        //syncContacts();
 
         Log.e("ff", Thread.currentThread().getStackTrace()[2] + "");
         setHasOptionsMenu(true);
@@ -183,9 +183,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         protected Void doInBackground(Void... params) {
             Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
-            //addOrUpdateAppContactsAccordingToAndroidContacts();
-            //removeAppContactsAccordingToAndroidContacts();
-            //addOrRemoveContactVectorsAccordingToAndroidContacts();
+            addOrUpdateAppContactsAccordingToAndroidContacts();
+            removeAppContactsAccordingToAndroidContacts();
+            addOrRemoveContactVectorsAccordingToAndroidContacts();
             return null;
         }
 
@@ -306,11 +306,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         }
 
                     } finally {
-                        localCursor.close();
+                        if (localCursor != null)
+                            localCursor.close();
                     }
                 }
             } finally {
-                androidCursor.close();
+                if (androidCursor != null)
+                    androidCursor.close();
             }
         }
 
@@ -361,53 +363,57 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                 String phone = null;
                 String eventDate = null;
                 String eventLabel = null;
-                int mimeIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.MIMETYPE);
-                int dataIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA1);
-                while (cursorDetails.moveToNext()) {
-                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)) {
-                        email = cursorDetails.getString(dataIdx);
-                    }
-                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)) {
-                        phone = cursorDetails.getString(dataIdx);
-                    }
-                    if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)) {
-                        int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.CommonDataKinds.Event.LABEL);
-                        //This works too :
-                        //int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA3);
-                        eventDate = cursorDetails.getString(dataIdx);
-                        eventLabel = cursorDetails.getString(dataIdx2);
-                    }
+                int mimeIdx;
+                int dataIdx;
+                if (cursorDetails != null) {
+                    mimeIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.MIMETYPE);
+                    dataIdx = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA1);
+                    while (cursorDetails.moveToNext()) {
+                        if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)) {
+                            email = cursorDetails.getString(dataIdx);
+                        }
+                        if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)) {
+                            phone = cursorDetails.getString(dataIdx);
+                        }
+                        if (cursorDetails.getString(mimeIdx).equalsIgnoreCase(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)) {
+                            int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.CommonDataKinds.Event.LABEL);
+                            //This works too :
+                            //int dataIdx2 = cursorDetails.getColumnIndex(ContactsContract.Contacts.Entity.DATA3);
+                            eventDate = cursorDetails.getString(dataIdx);
+                            eventLabel = cursorDetails.getString(dataIdx2);
+                        }
 
-                    //Now we add any vectors found in the android contacts provider
-                    if (email != null) {
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "email " + contactId + " " + email);
-                        ContentValues emailVectorValues = ContactVectorsDAO.getContentValues
-                                (contactId, R.drawable.ic_mail_outline_black_24dp);
+                        //Now we add any vectors found in the android contacts provider
+                        if (email != null) {
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "email " + contactId + " " + email);
+                            ContentValues emailVectorValues = ContactVectorsDAO.getContentValues
+                                    (contactId, R.drawable.ic_mail_outline_black_24dp);
 
-                        getContext().getContentResolver().insert(
-                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
-                                emailVectorValues);
-                    }
-                    if (phone != null) {
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "phone " + contactId + " " + phone);
-                        ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
-                                (contactId, R.drawable.ic_phone_black_24dp);
+                            getContext().getContentResolver().insert(
+                                    FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                    emailVectorValues);
+                        }
+                        if (phone != null) {
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "phone " + contactId + " " + phone);
+                            ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
+                                    (contactId, R.drawable.ic_phone_black_24dp);
 
-                        getContext().getContentResolver().insert(
-                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
-                                phoneVectorValues);
-                    }
+                            getContext().getContentResolver().insert(
+                                    FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                    phoneVectorValues);
+                        }
 
-                    //TODO convert eventDate from 2016-05-20 to long and only add future events
-                    if (eventDate != null) {
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2]
-                                + "eventDate$ " + contactId + " " + eventDate + " " + eventLabel);
-                        ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
-                                (contactId, R.drawable.ic_event_black_24dp);
+                        //TODO convert eventDate from 2016-05-20 to long and only add future events
+                        if (eventDate != null) {
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2]
+                                    + "eventDate$ " + contactId + " " + eventDate + " " + eventLabel);
+                            ContentValues phoneVectorValues = ContactVectorsDAO.getContentValues
+                                    (contactId, R.drawable.ic_event_black_24dp);
 
-                        getContext().getContentResolver().insert(
-                                FriendForecastContract.ContactVectorsTable.CONTENT_URI,
-                                phoneVectorValues);
+                            getContext().getContentResolver().insert(
+                                    FriendForecastContract.ContactVectorsTable.CONTENT_URI,
+                                    phoneVectorValues);
+                        }
                     }
                 }
             }

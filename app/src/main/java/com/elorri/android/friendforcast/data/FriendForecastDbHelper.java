@@ -7,10 +7,12 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ActionDAO;
+import com.elorri.android.friendforcast.db.ActionVectorTemplatesDAO;
 import com.elorri.android.friendforcast.db.ContactSocialNetworkDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
+import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.Tools;
 
 /**
@@ -41,8 +43,13 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(EventDAO.CREATE);
         sqLiteDatabase.execSQL(ContactVectorsDAO.CREATE);
         sqLiteDatabase.execSQL(ContactSocialNetworkDAO.CREATE);
+        sqLiteDatabase.execSQL(VectorDAO.CREATE);
+        sqLiteDatabase.execSQL(ActionVectorTemplatesDAO.CREATE);
+
 
         insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
+        insert(sqLiteDatabase, VectorDAO.INSERT, R.raw.vectors);
+        insert(sqLiteDatabase, ActionVectorTemplatesDAO.INSERT, R.raw.action_vector_templates);
         Log.e("Communication", "Inserts done");
     }
 

@@ -9,7 +9,7 @@ import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.extra.Tools;
-import com.elorri.android.friendforcast.fragments.AddActionFragment;
+import com.elorri.android.friendforcast.fragments.AddActionAdapter;
 
 import java.util.ArrayList;
 
@@ -20,13 +20,20 @@ public class VectorDAO {
 
     public static final int ALL_VECTORS = 0;
 
-    public static  final String CREATE = "CREATE TABLE "
+    public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.VectorTable.NAME +
             "(" + FriendForecastContract.VectorTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + FriendForecastContract.VectorTable.COLUMN_NAME + " TEXT NOT NULL, "
             + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " TEXT NOT NULL, "
             + "UNIQUE (" + FriendForecastContract.VectorTable.COLUMN_NAME + ") ON CONFLICT REPLACE)";
 
+
+    public static final String INSERT = "INSERT INTO "
+            + FriendForecastContract.VectorTable.NAME + " ("
+            + FriendForecastContract.VectorTable._ID + ", "
+            + FriendForecastContract.VectorTable.COLUMN_NAME + ", "
+            + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + ") "
+            + "VALUES (?, ?, ?)";
 
 
     public interface VectorQuery {
@@ -54,8 +61,10 @@ public class VectorDAO {
                                           ArrayList<Integer> viewTypes) {
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
-        viewTypes.add(AddActionFragment.AddActionAdapter.VIEW_TITLE);
-        cursors.add(getCursorWithViewTypes(cursorType, db, viewTypes));
+        viewTypes.add(AddActionAdapter.VIEW_TITLE);
+        cursors.add(CursorUtils.setViewType(
+                getCursor(cursorType, db, null),
+                viewTypes, AddActionAdapter.VIEW_VECTOR_ITEM));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
@@ -68,18 +77,7 @@ public class VectorDAO {
         }
     }
 
-    public static Cursor getCursorWithViewTypes(int cursorType, SQLiteDatabase db,
-                                                ArrayList<Integer> viewTypes) {
 
-        switch (cursorType) {
-            case ALL_VECTORS:
-                return CursorUtils.setViewType(
-                        getCursor(cursorType, db, null),
-                        viewTypes, AddActionFragment.AddActionAdapter.VIEW_VECTOR_ITEM);
-            default:
-                return null;
-        }
-    }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId) {
         switch (cursorType) {

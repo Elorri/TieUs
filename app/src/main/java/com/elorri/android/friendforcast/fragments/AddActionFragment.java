@@ -3,8 +3,10 @@ package com.elorri.android.friendforcast.fragments;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -30,10 +33,11 @@ import java.util.LinkedList;
  */
 public class AddActionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AddActionAdapter.Callback {
 
-    public static final String SELECT_ACTION_URI = "uri";
 
     private static Uri mUri;
     private RecyclerView mRecyclerView;
+    private FloatingActionButton mSaveFab;
+
 
     //This variable will allow to choose the most suitable uri and display the correct data. It
     // will contain in order :
@@ -49,9 +53,10 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
-        View view = inflater.inflate(R.layout.fragment_select_action, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_action, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        mSaveFab = (FloatingActionButton) view.findViewById(R.id.save_fab);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -74,13 +79,15 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
                 mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_SELECT_ACTION;
                 break;
             case 1://We have the action, we ask for a vector
-                mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_SELECT_VECTOR;
+                mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get(0));
                 break;
             case 2://We have the action and vector, we ask for a template and dateStart
-                mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_SELECT_TEMPLATE;
+                mUri = FriendForecastContract.AddActionData.buildSelectTemplateUri(actionSteps.get(0),
+                        actionSteps.get(1));
                 break;
             case 4://We have the action, vector, template and dateStart we ask for validation
-                mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_VALIDATE;
+                mUri = FriendForecastContract.AddActionData.buildValidateUri(actionSteps.get(0),
+                        actionSteps.get(1), actionSteps.get(2), actionSteps.get(3));
                 break;
             default:
                 throw new IndexOutOfBoundsException();
@@ -138,6 +145,21 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
         dpd.setOnDateSetListener(dateListener);
     }
 
+    @Override
+    public void showFab(final String actionId, final long timeStart) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+        mSaveFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
+                AddActionTask addActionTask = new AddActionTask();
+                addActionTask.execute(contactId, actionId, String.valueOf(timeStart));
+            }
+        });
+        mSaveFab.setVisibility(View.VISIBLE);
+
+    }
+
     private class DateListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -148,8 +170,26 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
             startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
             actionSteps.add(String.valueOf(startDate));
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + startDate);
             AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
                     null, AddActionFragment.this);
+        }
+    }
+
+    private class AddActionTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            getContext().getContentResolver().insert(
+                    FriendForecastContract.EventTable.CONTENT_URI,
+                    EventDAO.getContentValues(params[0], params[1], Long.valueOf(params[2])));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getActivity().finish();
+            super.onPostExecute(aVoid);
         }
     }
 }
