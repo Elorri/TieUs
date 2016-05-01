@@ -1,6 +1,8 @@
 package com.elorri.android.friendforcast.fragments;
 
 import android.content.ContentValues;
+import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -34,6 +36,7 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
+import com.elorri.android.friendforcast.extra.Tools;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -55,8 +58,16 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
         //syncContacts();
+        for (ResolveInfo ri : Tools.getInstalledApps(getActivity().getPackageManager())) {
+            Log.e("ff", Thread.currentThread().getStackTrace()[2] + ""+ri.activityInfo.toString());
+            // to get drawable icon -->  ri.loadIcon(package_manager)
+        }
 
-        Log.e("ff", Thread.currentThread().getStackTrace()[2] + "");
+        for (PackageInfo pi : Tools.getInstalledPackages(getActivity().getPackageManager())) {
+            Log.e("ff", Thread.currentThread().getStackTrace()[2] + ""+pi.applicationInfo.toString());
+            // to get drawable icon -->  ri.loadIcon(package_manager)
+        }
+
         setHasOptionsMenu(true);
     }
 

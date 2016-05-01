@@ -15,7 +15,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -170,8 +170,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.e("position", Thread.currentThread().getStackTrace()[2] + "position " +
-                "" + position);
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
@@ -186,8 +184,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case VIEW_TITLE: {
-                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_TITLE " +
-                        "position" + position);
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString
@@ -201,41 +197,41 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
-                holder.action.setText(mCursor.getString(ContactActionEventDAO.DelayPeopleQuery.COL_ACTION));
-                long dueDate = mCursor.getLong(ContactActionEventDAO.DelayPeopleQuery.COL_TIME_START);
+                holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_ACTION));
+                long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
             }
             case VIEW_TODAY_PEOPLE: {
                 bindCommonViews(holder);
-                holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayPeopleQuery.COL_ACTION));
-                long dueDate = mCursor.getLong(ContactActionEventDAO.TodayPeopleQuery.COL_TIME_START);
+                holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION));
+                long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
             }
             case VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
-                holder.action.setText(mCursor.getString(ContactActionEventDAO.TodayDonePeopleQuery.COL_ACTION));
-                long doneDate = mCursor.getLong(ContactActionEventDAO.TodayDonePeopleQuery
+                holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayDonePeopleQuery.COL_ACTION));
+                long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
                         .COL_TIME_END);
                 holder.doneDate.setText(DateUtils.getFriendlyDateString(mContext, doneDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
             }
             case VIEW_NEXT_PEOPLE: {
                 bindCommonViews(holder);
-                holder.action.setText(mCursor.getString(ContactActionEventDAO.NextPeopleQuery.COL_ACTION));
-                long dueDate = mCursor.getLong(ContactActionEventDAO.NextPeopleQuery.COL_TIME_START);
+                holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_ACTION));
+                long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
+                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
@@ -257,11 +253,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private void bindCommonViews(ViewHolder holder) {
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         holder.avatarColor = generator.getRandomColor();
-        holder.avatar.loadImage(mCursor.getString(ContactActionEventDAO
+        holder.avatar.loadImage(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
-        holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionEventDAO
+        holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
-        holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionEventDAO
+        holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                 .PeopleQuery.COL_EMOICON_ID));
     }
 
@@ -271,7 +267,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             public void onClick(View v) {
                 int adapterPosition = holder.getAdapterPosition();
                 mCursor.moveToPosition(adapterPosition);
-                int contactId = mCursor.getInt(ContactActionEventDAO.PeopleQuery.COL_ID);
+                int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri, holder.avatarColor);
             }
@@ -286,14 +282,12 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public void swapCursor(Cursor data) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mCursor = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         return viewTypes[position];
     }
 }

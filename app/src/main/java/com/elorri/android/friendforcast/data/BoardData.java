@@ -6,7 +6,7 @@ import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.elorri.android.friendforcast.fragments.BoardAdapter;
-import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -28,19 +28,19 @@ public abstract class BoardData {
         ArrayList<Integer> viewTypes = new ArrayList<>();
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(CursorUtils.setViewType(ContactDAO.getCursor(ContactDAO.RATIO, db), viewTypes, BoardAdapter.VIEW_FORECAST));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.UNMANAGED_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.UNMANAGED_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.DELAY_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.DELAY_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.TODAY_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.TODAY_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.TODAY_DONE_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.TODAY_DONE_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.NEXT_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.NEXT_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.SOCIAL_NETWORK,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.SOCIAL_NETWORK,
                 db, viewTypes));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.UNTRACKED_PEOPLE,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.UNTRACKED_PEOPLE,
                 db, viewTypes));
         BoardAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));

@@ -46,7 +46,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
         void setTemplateId(String templateId);
 
-        void showFab(String actionId, long timeStart);
+        void showFab(String actionId, String vectorId, long timeStart);
     }
 
     public AddActionAdapter(Cursor cursor, Callback callback) {
@@ -59,6 +59,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
         public View divider;
         public ImageView vectorLogo;
+        public ImageView clock;
         public TextView action;
         public TextView timeStart;
         public TextView template;
@@ -75,6 +76,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 case VIEW_ACTION_RECAP: {
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     vectorLogo = (ImageView) view.findViewById(R.id.vector_logo);
+                    clock = (ImageView) view.findViewById(R.id.clock);
                     action = (TextView) view.findViewById(R.id.action);
                     timeStart = (TextView) view.findViewById(R.id.time_start);
                     template = (TextView) view.findViewById(R.id.template);
@@ -174,9 +176,13 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                             if (timeStartIdx != -1) {//All action fields are known. Add the event.
                                 String actionId = mCursor.getString(mCursor.getColumnIndex
                                         (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
+                                String vectorId = mCursor.getString(mCursor.getColumnIndex
+                                        (FriendForecastContract.VectorTable.VIEW_VECTOR_ID));
+                                holder.clock.setVisibility(View.VISIBLE);
+                                holder.clock.setBackgroundResource(R.drawable.ic_schedule_black_24dp);
                                 timeStartLong = mCursor.getLong(timeStartIdx);
                                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
-                                mCallback.showFab(actionId, timeStartLong);
+                                mCallback.showFab(actionId, vectorId, timeStartLong);
                             }
                         }
                     }

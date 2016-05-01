@@ -90,7 +90,7 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
                         actionSteps.get(1), actionSteps.get(2), actionSteps.get(3));
                 break;
             default:
-                throw new IndexOutOfBoundsException();
+                return null;
         }
 
         return new CursorLoader(getActivity(),
@@ -146,14 +146,14 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
-    public void showFab(final String actionId, final long timeStart) {
+    public void showFab(final String actionId, final String vectorId, final long timeStart) {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         mSaveFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
                 AddActionTask addActionTask = new AddActionTask();
-                addActionTask.execute(contactId, actionId, String.valueOf(timeStart));
+                addActionTask.execute(contactId, actionId, vectorId, String.valueOf(timeStart));
             }
         });
         mSaveFab.setVisibility(View.VISIBLE);
@@ -182,7 +182,8 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
         protected Void doInBackground(String... params) {
             getContext().getContentResolver().insert(
                     FriendForecastContract.EventTable.CONTENT_URI,
-                    EventDAO.getContentValues(params[0], params[1], Long.valueOf(params[2])));
+                    EventDAO.getContentValues(params[0], params[1], params[2], Long.valueOf
+                            (params[3])));
             return null;
         }
 

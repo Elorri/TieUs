@@ -2,6 +2,10 @@ package com.elorri.android.friendforcast.extra;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -160,5 +165,18 @@ public class Tools {
 
     public static String toProperCase(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+
+
+
+    public static List<ResolveInfo> getInstalledApps(PackageManager packageManager) {
+        final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        //intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.addCategory(Intent.CATEGORY_APP_MESSAGING);
+        return packageManager.queryIntentActivities(intent, 0);
+    }
+
+    public static List<PackageInfo> getInstalledPackages(PackageManager packageManager) {
+        return packageManager.getInstalledPackages(0);
     }
 }

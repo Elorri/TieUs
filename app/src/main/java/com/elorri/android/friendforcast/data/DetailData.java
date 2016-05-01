@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.extra.CursorUtils;
@@ -35,7 +35,7 @@ public class DetailData {
                         ContactVectorsDAO.ContactVectorsQuery.SELECTION,
                         new String[]{contactId}, null, null, null),
                 viewTypes, DetailAdapter.VIEW_VECTORS_OF_COMMUNICATION));
-        cursors.add(ContactActionEventDAO.getWrappedCursor(context, ContactActionEventDAO.ACTION_BY_CONTACT_ID,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
                 db, viewTypes, contactId));
         DetailAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));

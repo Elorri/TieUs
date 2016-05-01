@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by Elorri on 12/04/2016.
  */
-public class ContactActionEventDAO {
+public class ContactActionVectorEventDAO {
 
     public static final int UNMANAGED_PEOPLE = 0;
     public static final int DELAY_PEOPLE = 1;
@@ -31,10 +31,26 @@ public class ContactActionEventDAO {
     public static final int UNTRACKED_PEOPLE = 7;
 
 
-    private static final String JOINT_TABLE_CONTACT_ACTION_EVENT = "select "
+    private static final String JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT = "select "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+            + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + ", "
+            + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
+            + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+            + FriendForecastContract.EventTable.COLUMN_TIME_END + ", "
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+            + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
+            + FriendForecastContract.VectorTable.COLUMN_NAME + " as "
+            + FriendForecastContract.VectorTable.VIEW_VECTOR_NAME + ", "
+            + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from (select "
+            + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
+            + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
+            + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+            + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + ", "
             + FriendForecastContract.ActionTable.NAME + "."
             + FriendForecastContract.ActionTable.COLUMN_NAME + " as "
             + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -52,6 +68,8 @@ public class ContactActionEventDAO {
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
             + FriendForecastContract.EventTable.NAME + "."
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
+            + FriendForecastContract.EventTable.NAME + "."
+            + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + ", "
             + FriendForecastContract.EventTable.NAME + "."
             + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
             + FriendForecastContract.EventTable.NAME + "."
@@ -74,7 +92,11 @@ public class ContactActionEventDAO {
             + FriendForecastContract.ActionTable.NAME + " on ec."
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + "="
             + FriendForecastContract.ActionTable.NAME + "."
-            + FriendForecastContract.ActionTable._ID + " order by "
+            + FriendForecastContract.ActionTable._ID + ") as cae inner join "
+            + FriendForecastContract.VectorTable.NAME + " on cae."
+            + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + "="
+            + FriendForecastContract.VectorTable.NAME + "."
+            + FriendForecastContract.VectorTable._ID + " order by "
             + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " asc";
 
@@ -86,7 +108,6 @@ public class ContactActionEventDAO {
         int COL_THUMBNAIL = 4;
         int COL_EMOICON_ID = 5;
     }
-
 
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
@@ -106,7 +127,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
@@ -120,7 +141,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") order by lower("
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
@@ -141,7 +162,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
@@ -167,7 +188,7 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME+", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
@@ -201,14 +222,14 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_social_network + " order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
     }
 
     public interface TodayPeopleQuery extends PeopleQuery {
@@ -237,14 +258,14 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_social_network + " order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
     }
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
@@ -273,10 +294,10 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START+" desc";
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " desc";
     }
 
     public interface NextPeopleQuery extends PeopleQuery {
@@ -305,59 +326,56 @@ public class ContactActionEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") where "
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_social_network + " order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START+" asc";
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
     }
 
 
-    public interface ActionByContactIdQuery {
-        int COL_ACTION_NAME = 0;
-        int COL_TIME_START = 1;
+    public interface VectorActionByContactIdQuery {
+        int COL_VECTOR_LOGO_ID = 0;
+        int COL_ACTION_NAME = 1;
+        int COL_TIME_START = 2;
+
 
         String SELECTION = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
 
         String[] PROJECTION = {
+                FriendForecastContract.VectorTable.COLUMN_LOGO_ID,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
         };
 
-        String SORT_ORDER=FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
+        String SORT_ORDER = FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
 
         String SELECT_ACTION_BY_CONTACT_ID = "select "
+                + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_EVENT + ") order by "
+                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
     }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         return getCursor(cursorType, db, null);
     }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db, String contactId) {
         switch (cursorType) {
             case UNMANAGED_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + UnmanagedPeopleQuery.SELECT_UNMANAGED_PEOPLE);
                 return db.rawQuery(UnmanagedPeopleQuery.SELECT_UNMANAGED_PEOPLE, null);
             }
             case DELAY_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + DelayPeopleQuery.SELECT_DELAY_PEOPLE);
                 long todayStart = DateUtils.todayStart();
                 return db.rawQuery(DelayPeopleQuery.SELECT_DELAY_PEOPLE, new String[]{String
                         .valueOf(todayStart)});
             }
             case TODAY_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + TodayPeopleQuery.SELECT_TODAY_PEOPLE);
                 long todayStart = DateUtils.todayStart();
                 long todayEnd = DateUtils.tomorrowStart();
                 return db.rawQuery(TodayPeopleQuery.SELECT_TODAY_PEOPLE, new String[]{String
@@ -365,8 +383,6 @@ public class ContactActionEventDAO {
                         String.valueOf(todayEnd)});
             }
             case TODAY_DONE_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + TodayDonePeopleQuery.SELECT_TODAY_DONE_PEOPLE);
                 long todayStart = DateUtils.todayStart();
                 long todayEnd = DateUtils.tomorrowStart();
                 return db.rawQuery(TodayDonePeopleQuery.SELECT_TODAY_DONE_PEOPLE, new
@@ -381,24 +397,17 @@ public class ContactActionEventDAO {
                         .valueOf(tomorrow)});
             }
             case SOCIAL_NETWORK: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + SocialNetworkQuery.SELECT_SOCIAL_NETWORK);
                 return db.rawQuery(SocialNetworkQuery.SELECT_SOCIAL_NETWORK, null);
             }
             case UNTRACKED_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE);
                 return db.rawQuery(UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE, null);
             }
             case ACTION_BY_CONTACT_ID: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY ACTION_BY_CONTACT_ID" + ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID);
-                //return db.rawQuery(ActionByContactIdQuery.SELECT_ACTION_BY_CONTACT_ID, null);
-                Cursor cursor=db.query("(" + JOINT_TABLE_CONTACT_ACTION_EVENT + ")",
-                        ActionByContactIdQuery.PROJECTION,
-                        ActionByContactIdQuery.SELECTION,
-                        new String[]{contactId}, null, null, ActionByContactIdQuery.SORT_ORDER);
-                Log.e("FF",Thread.currentThread().getStackTrace()[2]+""+cursor.getCount());
+                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                        VectorActionByContactIdQuery.PROJECTION,
+                        VectorActionByContactIdQuery.SELECTION,
+                        new String[]{contactId}, null, null, VectorActionByContactIdQuery.SORT_ORDER);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
                 return cursor;
             }
             default:

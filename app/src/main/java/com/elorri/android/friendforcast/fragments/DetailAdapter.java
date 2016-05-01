@@ -19,9 +19,8 @@ import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ContactActionEventDAO;
+import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
-import com.elorri.android.friendforcast.db.ContactSocialNetworkDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -70,6 +69,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
         public ImageView emoIcon;
         public TextView action;
+        public ImageView actionVectorImageView;
         public TextView timeStart;
         public TextView message;
 
@@ -102,6 +102,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 }
                 case VIEW_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
+                    actionVectorImageView=(ImageView)view.findViewById(R.id.action_vector);
                     timeStart = (TextView) view.findViewById(R.id.time_start);
                     break;
                 }
@@ -303,10 +304,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case VIEW_ACTION: {
-                holder.action.setText(mCursor.getString(ContactActionEventDAO
-                        .ActionByContactIdQuery.COL_ACTION_NAME));
-                long dueDateLong = mCursor.getLong(ContactActionEventDAO
-                        .ActionByContactIdQuery.COL_TIME_START);
+                holder.actionVectorImageView.setBackgroundResource(
+                        mCursor.getInt(ContactActionVectorEventDAO
+                                .VectorActionByContactIdQuery.COL_VECTOR_LOGO_ID));
+                holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_ACTION_NAME));
+                long dueDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
                 break;
             }

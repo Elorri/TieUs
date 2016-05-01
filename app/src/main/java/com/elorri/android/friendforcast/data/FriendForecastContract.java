@@ -148,6 +148,7 @@ public class FriendForecastContract {
         public static final String NAME = "event";
         public static final String COLUMN_CONTACT_ID = "contact_id";
         public static final String COLUMN_ACTION_ID = "action_id";
+        public static final String COLUMN_VECTOR_ID = "vector_id";
         public static final String COLUMN_TIME_START = "time_start";
         public static final String COLUMN_TIME_END = "time_end";
         public static final String VIEW_EVENT_ID = "event_id";
@@ -166,6 +167,7 @@ public class FriendForecastContract {
         public static final String COLUMN_NAME="name";
         public static final String COLUMN_LOGO_ID ="logo";
         public static final String VIEW_VECTOR_ID ="vector_id";
+        public static final String VIEW_VECTOR_NAME ="vector_name";
 
     }
 
