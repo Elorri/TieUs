@@ -17,6 +17,14 @@
         tools:background="@color/secondaryLight"/>
 
     <ImageView
+        android:id="@+id/vectorIcon"
+        android:layout_width="@dimen/emo_icon_width"
+        android:layout_height="@dimen/emo_icon_height"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="45dp"
+        tools:background="@color/secondaryLight"/>
+
+    <ImageView
         android:id="@+id/emo_icon"
         android:layout_width="@dimen/emo_icon_width"
         android:layout_height="@dimen/emo_icon_height"

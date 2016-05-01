@@ -14,8 +14,6 @@
         android:layout_marginLeft="@dimen/spacing_small"
         tools:src="@drawable/ic_mail_outline_black_24dp"
         tools:tint="@color/secondary_dark_text"
-        android:backgroundTint="@color/secondary_dark_text"
-
         />
 
 
@@ -28,7 +26,6 @@
         tools:src="@drawable/ic_schedule_black_24dp"
         tools:tint="@color/secondary_dark_text"
         android:backgroundTint="@color/secondary_dark_text"
-android:visibility="gone"
        />
 
     <TextView
@@ -53,31 +50,13 @@ android:visibility="gone"
         android:id="@+id/action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/clock"
         android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_below="@id/time_start"
         android:layout_toRightOf="@id/vector_logo"
-        android:layout_centerVertical="true"
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
         android:maxLines="5"
         android:textAppearance="?android:textAppearanceMedium"
         tools:text="24h thank you note"/>
-
-
-    <TextView
-        android:id="@+id/template"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/vector_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-condensed"
-        android:maxLines="100"
-        android:textAppearance="?android:textAppearanceMedium"
-        tools:text="@string/lorem_ipsum"/>
-
 
 </RelativeLayout>

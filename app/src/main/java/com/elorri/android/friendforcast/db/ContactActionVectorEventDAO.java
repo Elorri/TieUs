@@ -45,7 +45,8 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
             + FriendForecastContract.VectorTable.COLUMN_NAME + " as "
             + FriendForecastContract.VectorTable.VIEW_VECTOR_NAME + ", "
-            + FriendForecastContract.VectorTable.COLUMN_DATA + " from (select "
+            + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+            + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from (select "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -106,20 +107,13 @@ public class ContactActionVectorEventDAO {
         int COL_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
         int COL_EMOICON_ID = 5;
+
     }
 
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
 
 
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
-        };
 
         String SELECT_UNMANAGED_PEOPLE = "select "
                 + FriendForecastContract.ContactTable._ID + ", "
@@ -144,31 +138,10 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
-    public interface SocialNetworkQuery extends PeopleQuery {
 
-
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
-        };
-
-    }
 
     public interface UntrackedPeopleQuery extends PeopleQuery {
 
-
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
-        };
 
         String SELECT_UNTRACKED_PEOPLE = "select "
                 + FriendForecastContract.ContactTable._ID + ", "
@@ -187,18 +160,10 @@ public class ContactActionVectorEventDAO {
     public interface DelayPeopleQuery extends PeopleQuery {
         int COL_ACTION = 6;
         int COL_TIME_START = 7;
+        int COL_VECTOR_DATA = 8;
+        int COL_VECTOR_MIMETYPE = 9;
 
 
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START
-        };
 
         String SELECT_DELAY_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -208,7 +173,9 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -223,18 +190,10 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION = 6;
         int COL_TIME_START = 7;
+        int COL_VECTOR_DATA = 8;
+        int COL_VECTOR_MIMETYPE = 9;
 
 
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START
-        };
 
         String SELECT_TODAY_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -244,7 +203,9 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -259,18 +220,10 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION = 6;
         int COL_TIME_END = 7;
+        int COL_VECTOR_DATA = 8;
+        int COL_VECTOR_MIMETYPE = 9;
 
 
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_END
-        };
 
         String SELECT_TODAY_DONE_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -280,7 +233,9 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " from ("
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null order by "
@@ -291,18 +246,9 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION = 6;
         int COL_TIME_START = 7;
+        int COL_VECTOR_DATA = 8;
+        int COL_VECTOR_MIMETYPE = 9;
 
-
-        String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START
-        };
 
         String SELECT_NEXT_PEOPLE = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -312,7 +258,9 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -326,26 +274,23 @@ public class ContactActionVectorEventDAO {
 
     public interface VectorActionByContactIdQuery {
         int COL_VECTOR_LOGO_ID = 0;
-        int COL_ACTION_NAME = 1;
-        int COL_TIME_START = 2;
+        int COL_VECTOR_MIMETYPE = 1;
+        int COL_ACTION_NAME = 2;
+        int COL_TIME_START = 3;
 
 
         String SELECTION = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
 
         String[] PROJECTION = {
                 FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
         };
 
         String SORT_ORDER = FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
 
-        String SELECT_ACTION_BY_CONTACT_ID = "select "
-                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
-                + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
+
     }
 
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {

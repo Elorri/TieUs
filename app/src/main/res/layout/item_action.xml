@@ -14,8 +14,6 @@
         android:layout_marginLeft="@dimen/spacing_small"
         tools:src="@drawable/ic_mail_outline_black_24dp"
         tools:tint="@color/secondary_dark_text"
-        android:backgroundTint="@color/secondary_dark_text"
-
         />
 
 

@@ -13,8 +13,10 @@ import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -168,7 +170,6 @@ public class Tools {
     }
 
 
-
     public static List<ResolveInfo> getInstalledApps(PackageManager packageManager) {
         final Intent intent = new Intent(Intent.ACTION_MAIN, null);
         //intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -181,10 +182,26 @@ public class Tools {
     }
 
     public static boolean isPackageASocialNetworkVector(Context context, String packageName) {
-        if(packageName.equals(context.getString(R.string.vector_package_gmail)))return true;
-        if(packageName.equals(context.getString(R.string.vector_package_google_plus)))return true;
-        if(packageName.equals(context.getString(R.string.vector_package_linkedin)))return true;
-        if(packageName.equals(context.getString(R.string.vector_package_facebook)))return true;
+        if (packageName.equals(context.getString(R.string.vector_package_gmail))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_google_plus))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_linkedin))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_facebook))) return true;
         return false;
+    }
+
+    public static void setVectorBackground(Context context, ImageView vectorLogo,
+                                           String mimetype, String data) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
+        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+            vectorLogo.setBackgroundResource(Integer.valueOf(data));
+        } else
+            try {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                vectorLogo.setBackground(context.getPackageManager().getApplicationIcon(
+                        data));
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
     }
 }

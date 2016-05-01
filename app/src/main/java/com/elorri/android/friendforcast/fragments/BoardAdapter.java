@@ -62,7 +62,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView action;
         public TextView dueDate;
         public TextView doneDate;
-        //public ImageView actionIcon;
+        public ImageView vectorIcon;
         public ImageView emoIcon;
 
         public View mView;
@@ -83,23 +83,25 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 case VIEW_DELAY_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
+                    vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
                 case VIEW_TODAY_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
+                    vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
                 case VIEW_TODAY_DONE_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     doneDate = (TextView) view.findViewById(R.id.done_date);
-                    //actionIcon = (ImageView) view.findViewById(R.id.action_icon);
+                    vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
                 case VIEW_NEXT_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
-                    // actionIcon = (ImageView) view.findViewById(R.id.action_icon);
+                    vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
                 default:
@@ -190,6 +192,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
+                Tools.setVectorBackground(mContext, holder.vectorIcon,
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
@@ -200,6 +205,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_TODAY_PEOPLE: {
                 bindCommonViews(holder);
+                Tools.setVectorBackground(mContext, holder.vectorIcon,
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
@@ -210,6 +218,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
+                Tools.setVectorBackground(mContext, holder.vectorIcon,
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayDonePeopleQuery.COL_ACTION));
                 long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
                         .COL_TIME_END);
@@ -221,6 +232,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case VIEW_NEXT_PEOPLE: {
                 bindCommonViews(holder);
+                Tools.setVectorBackground(mContext, holder.vectorIcon,
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));

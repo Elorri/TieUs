@@ -273,9 +273,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case VIEW_ACTION: {
-                holder.actionVectorImageView.setBackgroundResource(
-                        mCursor.getInt(ContactActionVectorEventDAO
-                                .VectorActionByContactIdQuery.COL_VECTOR_LOGO_ID));
+                Tools.setVectorBackground(mContext, holder.actionVectorImageView,
+                        mCursor.getString(ContactActionVectorEventDAO
+                                .VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO
+                                .VectorActionByContactIdQuery.COL_VECTOR_LOGO_ID)
+                        );
+//                holder.actionVectorImageView.setBackgroundResource(
+//                        mCursor.getInt(ContactActionVectorEventDAO
+//                                .VectorActionByContactIdQuery.COL_VECTOR_LOGO_ID));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_ACTION_NAME));
                 long dueDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));

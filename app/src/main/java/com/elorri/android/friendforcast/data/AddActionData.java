@@ -85,6 +85,13 @@ public class AddActionData {
 
     public interface RecapQuery {
 
+        int COL_ACTION_ID = 0;
+        int COL_ACTION_NAME = 1;
+        int COL_VECTOR_ID = 2;
+        int COL_VECTOR_NAME = 3;
+        int COL_VECTOR_DATA = 4;
+        int COL_VECTOR_MIMETYPE = 5;
+        int COL_TIMESTART = 6;
 
         String SELECT_ACTION = "select "
                 + FriendForecastContract.ActionTable._ID + " as "
@@ -97,7 +104,8 @@ public class AddActionData {
         String SELECT_VECTOR = "select "
                 + FriendForecastContract.VectorTable._ID + " as "
                 + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_DATA + " from "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from "
                 + FriendForecastContract.VectorTable.NAME + " where "
                 + FriendForecastContract.VectorTable._ID + "=?";
 
@@ -106,11 +114,10 @@ public class AddActionData {
                 + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
                 + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_DATA + ", ? as "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
+                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", ? as "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
                 + SELECT_ACTION + ") inner join (" + SELECT_VECTOR + ")";
-
-
 
     }
 

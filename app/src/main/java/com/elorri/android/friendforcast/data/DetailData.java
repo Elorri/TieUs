@@ -35,7 +35,8 @@ public class DetailData {
                         ContactVectorsDAO.ContactVectorsQuery.SELECTION,
                         new String[]{contactId}, null, null, null),
                 viewTypes, DetailAdapter.VIEW_VECTORS_OF_COMMUNICATION));
-        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
+        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context,
+                ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
                 db, viewTypes, contactId));
         DetailAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));

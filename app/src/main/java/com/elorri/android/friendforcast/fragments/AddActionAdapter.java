@@ -1,7 +1,6 @@
 package com.elorri.android.friendforcast.fragments;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +16,7 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Tools;
 
 /**
  * Created by Elorri on 28/04/2016.
@@ -59,7 +59,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         public ImageView clock;
         public TextView action;
         public TextView timeStart;
-        public TextView template;
         public TextView title;
         public TextView textView;
         public ImageView imageView;
@@ -77,7 +76,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     clock = (ImageView) view.findViewById(R.id.clock);
                     action = (TextView) view.findViewById(R.id.action);
                     timeStart = (TextView) view.findViewById(R.id.time_start);
-                    template = (TextView) view.findViewById(R.id.template);
                     break;
                 }
                 case VIEW_TITLE: {
@@ -156,7 +154,14 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     actionName = mCursor.getString(actionIdx);
                     holder.action.setText(actionName);
                     if (vectorIdx != -1) {
-                        holder.vectorLogo.setBackgroundResource(mCursor.getInt(vectorIdx));
+                        int mimetypeIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_MIMETYPE);
+
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" +
+                                mCursor.getString(mimetypeIdx) +
+                                " " + mCursor.getString(vectorIdx));
+                        Tools.setVectorBackground(mContext, holder.vectorLogo,
+                                mCursor.getString(mimetypeIdx),
+                                mCursor.getString(vectorIdx));
                         if (timeStartIdx != -1) {//All action fields are known. Add the event.
                             String actionId = mCursor.getString(mCursor.getColumnIndex
                                     (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
@@ -167,7 +172,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                             timeStartLong = mCursor.getLong(timeStartIdx);
                             holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
                             mCallback.showFab(actionId, vectorId, timeStartLong);
-
                         }
                     }
                 }
@@ -197,17 +201,11 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             case VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.imageView.setBackground(null);
-                if (mCursor.getString(VectorDAO.VectorQuery.COL_MIMETYPE)
-                        .equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
-                    holder.imageView.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery.COL_DATA));
-                } else
-                    try {
-                        holder.imageView.setBackground(
-                                mContext.getPackageManager().getApplicationIcon(
-                                        mCursor.getString(VectorDAO.VectorQuery.COL_DATA)));
-                    } catch (PackageManager.NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                Tools.setVectorBackground(mContext, holder.imageView, mCursor.getString(
+                                VectorDAO.VectorQuery.COL_MIMETYPE),
+                        mCursor.getString(VectorDAO.VectorQuery.COL_DATA)
+                );
+
                 holder.label.setText(mCursor.getString(VectorDAO.VectorQuery.COL_VECTOR_NAME));
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -223,6 +221,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             }
         }
     }
+
 
     @Override
     public int getItemCount() {
