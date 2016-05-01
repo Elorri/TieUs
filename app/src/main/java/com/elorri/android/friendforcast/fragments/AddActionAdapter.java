@@ -1,8 +1,8 @@
 package com.elorri.android.friendforcast.fragments;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,6 +66,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         public TextView title;
         public TextView textView;
         public ImageView imageView;
+        public TextView label;
         public View mView;
 
         public ViewHolder(View view, int viewType) {
@@ -96,6 +97,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 case VIEW_VECTOR_ITEM: {
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     imageView = (ImageView) view.findViewById(R.id.imageview);
+                    label = (TextView) view.findViewById(R.id.label);
                     break;
                 }
                 case VIEW_TEMPLATE_ITEM: {
@@ -137,7 +139,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             }
             case VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_imageview,
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_imageview_label,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_VECTOR_ITEM);
                 break;
@@ -160,7 +162,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                int vectorIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_LOGO_ID);
+                int vectorIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_DATA);
                 int actionIdx = mCursor.getColumnIndex(FriendForecastContract.ActionTable.COLUMN_NAME);
                 int temptateIdx = mCursor.getColumnIndex(FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE);
                 int timeStartIdx = mCursor.getColumnIndex(FriendForecastContract.EventTable.COLUMN_TIME_START);
@@ -212,17 +214,24 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             }
             case VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-//                holder.imageView.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery
-//                        .COL_RESSOURCE_ID));
-//                Glide.with(mContext)
-//                        .load(mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID))
-//                        .crossFade()
-//                        .into(holder.imageView);
-                int ressourceId = mCursor.getInt(VectorDAO.VectorQuery.COL_RESSOURCE_ID);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + ressourceId);
-                holder.imageView.setImageBitmap(BitmapFactory.decodeResource(mContext
-                        .getResources(), ressourceId));
-                //holder.imageView.setBackgroundResource(R.drawable.ic_mail_outline_black_24dp);
+                holder.imageView.setBackground(null);
+                if (mCursor.getString(VectorDAO.VectorQuery
+                        .COL_MIMETYPE).equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+                    holder.imageView.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery.COL_DATA));
+                } else
+                    try {
+                        holder.imageView.setBackground(
+                                mContext.getPackageManager().getApplicationIcon(
+                                        mCursor.getString(VectorDAO.VectorQuery.COL_DATA)));
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                holder.label.setText(mCursor.getString(VectorDAO.VectorQuery.COL_VECTOR_NAME));
+
+//                int ressourceId = mCursor.getInt(VectorDAO.VectorQuery.COL_DATA);
+//                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + ressourceId);
+//                holder.imageView.setImageBitmap(BitmapFactory.decodeResource(mContext
+//                        .getResources(), ressourceId));
 
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override

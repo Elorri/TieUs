@@ -27,8 +27,7 @@ public class ContactActionVectorEventDAO {
     public static final int TODAY_DONE_PEOPLE = 3;
     public static final int NEXT_PEOPLE = 4;
     public static final int ACTION_BY_CONTACT_ID = 5;
-    public static final int SOCIAL_NETWORK = 6;
-    public static final int UNTRACKED_PEOPLE = 7;
+    public static final int UNTRACKED_PEOPLE = 6;
 
 
     private static final String JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT = "select "
@@ -46,7 +45,7 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
             + FriendForecastContract.VectorTable.COLUMN_NAME + " as "
             + FriendForecastContract.VectorTable.VIEW_VECTOR_NAME + ", "
-            + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from (select "
+            + FriendForecastContract.VectorTable.COLUMN_DATA + " from (select "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -157,18 +156,6 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
         };
 
-        String SELECT_SOCIAL_NETWORK = "select "
-                + FriendForecastContract.ContactTable._ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " from "
-                + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " = "
-                + R.drawable.ic_social_network + " order by lower("
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
     public interface UntrackedPeopleQuery extends PeopleQuery {
@@ -346,7 +333,7 @@ public class ContactActionVectorEventDAO {
         String SELECTION = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
 
         String[] PROJECTION = {
-                FriendForecastContract.VectorTable.COLUMN_LOGO_ID,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START
         };
@@ -354,7 +341,7 @@ public class ContactActionVectorEventDAO {
         String SORT_ORDER = FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
 
         String SELECT_ACTION_BY_CONTACT_ID = "select "
-                + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by "
@@ -395,9 +382,6 @@ public class ContactActionVectorEventDAO {
                 long tomorrow = DateUtils.tomorrowStart();
                 return db.rawQuery(NextPeopleQuery.SELECT_NEXT_PEOPLE, new String[]{String
                         .valueOf(tomorrow)});
-            }
-            case SOCIAL_NETWORK: {
-                return db.rawQuery(SocialNetworkQuery.SELECT_SOCIAL_NETWORK, null);
             }
             case UNTRACKED_PEOPLE: {
                 return db.rawQuery(UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE, null);
@@ -441,10 +425,6 @@ public class ContactActionVectorEventDAO {
             case NEXT_PEOPLE:
                 return CursorUtils.setViewType(getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_NEXT_PEOPLE);
-            case SOCIAL_NETWORK:
-                return CursorUtils.setViewType(
-                        getCursor(cursorType, db),
-                        viewTypes, BoardAdapter.VIEW_SOCIAL_NETWORK);
             case UNTRACKED_PEOPLE:
                 return CursorUtils.setViewType(
                         getCursor(cursorType, db),
@@ -489,8 +469,6 @@ public class ContactActionVectorEventDAO {
                 return context.getResources().getString(R.string.done);
             case NEXT_PEOPLE:
                 return context.getResources().getString(R.string.next);
-            case SOCIAL_NETWORK:
-                return context.getResources().getString(R.string.social_network);
             case UNTRACKED_PEOPLE:
                 return context.getResources().getString(R.string.untracked);
             case ACTION_BY_CONTACT_ID:

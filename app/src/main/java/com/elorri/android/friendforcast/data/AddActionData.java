@@ -111,7 +111,7 @@ public class AddActionData {
         String SELECT_VECTOR = "select "
                 + FriendForecastContract.VectorTable._ID + " as "
                 + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + " from "
                 + FriendForecastContract.VectorTable.NAME + " where "
                 + FriendForecastContract.VectorTable._ID + "=?";
 
@@ -125,14 +125,14 @@ public class AddActionData {
                 + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
                 + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + " from ("
+                + FriendForecastContract.VectorTable.COLUMN_DATA + " from ("
                 + SELECT_ACTION + ") inner join (" + SELECT_VECTOR + ")";
 
         String SELECT_ACTION_RECAP_VALIDATE = "select "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
                 + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
                 + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_LOGO_ID + ", "
+                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.ActionVectorTemplatesTable._ID + ", "
                 + FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE + ",? as "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " from ("

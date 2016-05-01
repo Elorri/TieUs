@@ -165,10 +165,20 @@ public class FriendForecastContract {
         public static final String NAME = "vector";
 
         public static final String COLUMN_NAME="name";
-        public static final String COLUMN_LOGO_ID ="logo";
+        public static final String COLUMN_DATA ="data";
+
+        //This column will contain the ressourceId or the package name
+        public static final String COLUMN_MIMETYPE ="mimetype";
+
         public static final String VIEW_VECTOR_ID ="vector_id";
         public static final String VIEW_VECTOR_NAME ="vector_name";
+        public static final String MIMETYPE_VALUE_RESSOURCE ="ressourceId";
+        public static final String MIMETYPE_VALUE_PACKAGE ="package";
 
+
+        public static Uri buildVectorUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
 
@@ -180,9 +190,11 @@ public class FriendForecastContract {
         public static final String COLUMN_CONTACT_ID = "contact_id";
         public static final String COLUMN_VECTOR_ID = "vector_id";
 
-        public static Uri buildContactUri(long id) {
+
+        public static Uri buildContactVectorsUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
     }
 
 

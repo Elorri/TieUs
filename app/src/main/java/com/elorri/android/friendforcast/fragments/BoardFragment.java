@@ -2,7 +2,6 @@ package com.elorri.android.friendforcast.fragments;
 
 import android.content.ContentValues;
 import android.content.pm.PackageInfo;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -36,6 +35,7 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.AndroidDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
+import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.Tools;
 
 /**
@@ -57,17 +57,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
-        //syncContacts();
-        for (ResolveInfo ri : Tools.getInstalledApps(getActivity().getPackageManager())) {
-            Log.e("ff", Thread.currentThread().getStackTrace()[2] + ""+ri.activityInfo.toString());
-            // to get drawable icon -->  ri.loadIcon(package_manager)
-        }
-
-        for (PackageInfo pi : Tools.getInstalledPackages(getActivity().getPackageManager())) {
-            Log.e("ff", Thread.currentThread().getStackTrace()[2] + ""+pi.applicationInfo.toString());
-            // to get drawable icon -->  ri.loadIcon(package_manager)
-        }
-
+        syncContacts();
         setHasOptionsMenu(true);
     }
 
@@ -196,7 +186,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
             addOrUpdateAppContactsAccordingToAndroidContacts();
             removeAppContactsAccordingToAndroidContacts();
+            addOrRemoveVectorsAccordingToAndroidAppsInstalled();
             addOrRemoveContactVectorsAccordingToAndroidContacts();
+
             return null;
         }
 
@@ -437,5 +429,60 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             super.onPostExecute(aVoid);
             getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
         }
+    }
+
+    private void addOrRemoveVectorsAccordingToAndroidAppsInstalled() {
+        //first we delete all contacts vectors
+        getContext().getContentResolver().delete(
+                FriendForecastContract.VectorTable.CONTENT_URI,
+                null,
+                null);
+
+        //Add email vector
+        ContentValues emailVectorValues = VectorDAO.getContentValues(
+                getResources().getString(R.string.mail),
+                String.valueOf(R.drawable.ic_mail_outline_black_24dp),
+                FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
+        getContext().getContentResolver().insert(
+                FriendForecastContract.VectorTable.CONTENT_URI,
+                emailVectorValues);
+
+
+        //Add phone vector
+        ContentValues phoneVectorValues = VectorDAO.getContentValues(
+                getResources().getString(R.string.phone),
+                String.valueOf(R.drawable.ic_phone_black_24dp),
+                FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
+        getContext().getContentResolver().insert(
+                FriendForecastContract.VectorTable.CONTENT_URI,
+                phoneVectorValues);
+
+        //Add event vector
+        ContentValues eventVectorValues = VectorDAO.getContentValues(
+                getResources().getString(R.string.event),
+                String.valueOf(R.drawable.ic_event_black_24dp),
+                FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
+        getContext().getContentResolver().insert(
+                FriendForecastContract.VectorTable.CONTENT_URI,
+                eventVectorValues);
+
+
+        //Add others vectors available on user phone
+        String vectorName;
+        String packageName;
+        for (PackageInfo pi : Tools.getInstalledPackages(getActivity().getPackageManager())) {
+            packageName = pi.applicationInfo.packageName;
+
+            //check if this package is a social network that can be used as a vector of communication
+            if (Tools.isPackageASocialNetworkVector(getContext(),packageName)) {
+                vectorName = pi.applicationInfo.loadLabel(getActivity().getPackageManager()).toString();
+                ContentValues values = VectorDAO.getContentValues(vectorName, packageName,
+                        FriendForecastContract.VectorTable.MIMETYPE_VALUE_PACKAGE);
+                getContext().getContentResolver().insert(
+                        FriendForecastContract.VectorTable.CONTENT_URI,
+                        values);
+            }
+        }
+
     }
 }

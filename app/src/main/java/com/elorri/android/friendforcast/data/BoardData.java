@@ -38,8 +38,6 @@ public abstract class BoardData {
                 db, viewTypes));
         cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.NEXT_PEOPLE,
                 db, viewTypes));
-        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.SOCIAL_NETWORK,
-                db, viewTypes));
         cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context, ContactActionVectorEventDAO.UNTRACKED_PEOPLE,
                 db, viewTypes));
         BoardAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);

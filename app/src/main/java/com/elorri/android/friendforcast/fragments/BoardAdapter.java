@@ -33,8 +33,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public static final int VIEW_TODAY_PEOPLE = 4;
     public static final int VIEW_TODAY_DONE_PEOPLE = 5;
     public static final int VIEW_NEXT_PEOPLE = 6;
-    public static final int VIEW_SOCIAL_NETWORK = 7;
-    public static final int VIEW_UNTRACKED_PEOPLE = 8;
+    public static final int VIEW_UNTRACKED_PEOPLE = 7;
     public static int[] viewTypes;
 
     private Cursor mCursor;
@@ -151,12 +150,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 viewHolder = new ViewHolder(view, VIEW_NEXT_PEOPLE);
                 break;
             }
-            case VIEW_SOCIAL_NETWORK: {
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_social_network, parent,
-                        false);
-                viewHolder = new ViewHolder(view, VIEW_SOCIAL_NETWORK);
-                break;
-            }
             case VIEW_UNTRACKED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
                 viewHolder = new ViewHolder(view, VIEW_UNTRACKED_PEOPLE);
@@ -233,11 +226,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
-                setOnClickListener(holder);
-                break;
-            }
-            case VIEW_SOCIAL_NETWORK: {
-                bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
             }

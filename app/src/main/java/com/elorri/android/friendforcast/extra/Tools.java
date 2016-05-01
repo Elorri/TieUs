@@ -179,4 +179,12 @@ public class Tools {
     public static List<PackageInfo> getInstalledPackages(PackageManager packageManager) {
         return packageManager.getInstalledPackages(0);
     }
+
+    public static boolean isPackageASocialNetworkVector(Context context, String packageName) {
+        if(packageName.equals(context.getString(R.string.vector_package_gmail)))return true;
+        if(packageName.equals(context.getString(R.string.vector_package_google_plus)))return true;
+        if(packageName.equals(context.getString(R.string.vector_package_linkedin)))return true;
+        if(packageName.equals(context.getString(R.string.vector_package_facebook)))return true;
+        return false;
+    }
 }

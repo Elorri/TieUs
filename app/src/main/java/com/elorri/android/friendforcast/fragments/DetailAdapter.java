@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
@@ -33,9 +32,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public static final int VIEW_EMOICON = 0;
     public static final int VIEW_TITLE = 1;
     public static final int VIEW_VECTORS_OF_COMMUNICATION = 2;
-    public static final int VIEW_SOCIAL_NETWORKS = 3;
-    public static final int VIEW_ACTION = 4;
-    public static final int VIEW_EMPTY_CURSOR = 5;
+    public static final int VIEW_ACTION = 3;
+    public static final int VIEW_EMPTY_CURSOR = 4;
 
     public static int[] viewTypes;
 
@@ -96,10 +94,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     vectorImageView = (ImageView) view.findViewById(R.id.vectorId);
                     break;
                 }
-                case VIEW_SOCIAL_NETWORKS: {
-                    vectorImageView = (ImageView) view.findViewById(R.id.vectorId);
-                    break;
-                }
                 case VIEW_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
                     actionVectorImageView=(ImageView)view.findViewById(R.id.action_vector);
@@ -136,7 +130,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
                         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
                         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
-                        RelativeLayout socialNetwork = (RelativeLayout) listContainer.findViewById(R.id.social_network_item);
                         RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
                         happyItem.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -152,15 +145,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             public void onClick(View v) {
                                 if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp) {
                                     update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
-                                }
-                                mAlertEmoDialog.cancel();
-                            }
-                        });
-                        socialNetwork.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mEmoIconResource != R.drawable.ic_social_network) {
-                                    update(mContactId, String.valueOf(R.drawable.ic_social_network));
                                 }
                                 mAlertEmoDialog.cancel();
                             }
@@ -244,11 +228,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, VIEW_VECTORS_OF_COMMUNICATION);
                 break;
             }
-            case VIEW_SOCIAL_NETWORKS: {
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_vectors, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_SOCIAL_NETWORKS);
-                break;
-            }
             case VIEW_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
@@ -293,16 +272,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.vectorImageView.setBackgroundResource(mCursor.getInt(ContactVectorsDAO.ContactVectorsQuery.COL_VECTOR_ID));
                 break;
             }
-            case VIEW_SOCIAL_NETWORKS: {
-                Log.e("position", Thread.currentThread().getStackTrace()[2] + "VIEW_SOCIAL_NETWORKS " +
-                        "position" + position);
-                String uri = mCursor.getString(ContactSocialNetworkDAO.ContactSocialNetworksQuery.COL_THUMBNAIL);
-                Glide.with(mContext)
-                        .load(uri)
-                        .crossFade()
-                        .into(holder.vectorImageView);
-                break;
-            }
             case VIEW_ACTION: {
                 holder.actionVectorImageView.setBackgroundResource(
                         mCursor.getInt(ContactActionVectorEventDAO
@@ -312,9 +281,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
                 break;
             }
-            case VIEW_EMPTY_CURSOR: {
-                //could be ContactVectorsDAO.ContactVectorsQuery.COL_ID) as well
-                holder.message.setText(mCursor.getString(ContactSocialNetworkDAO.ContactSocialNetworksQuery.COL_ID));
+            case VIEW_EMPTY_CURSOR: {//TODO remove this empty cursor
+                holder.message.setText(mCursor.getString(ContactVectorsDAO.ContactVectorsQuery.COL_ID));
                 break;
             }
         }

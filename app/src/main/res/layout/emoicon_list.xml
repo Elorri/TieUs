@@ -103,39 +103,6 @@
             android:textAppearance="?android:textAppearanceLarge"           />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/social_network_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal">
-
-        <android.support.v4.widget.Space
-            android:id="@+id/social_network_center"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"  />
-
-        <ImageView
-            android:id="@+id/social_network"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_toLeftOf="@id/social_network_center"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:background="@drawable/ic_social_network"
-            android:backgroundTint="@android:color/black"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_toRightOf="@id/social_network"
-            android:text="@string/social_network_untracked"
-            android:textAppearance="?android:textAppearanceLarge"           />
-    </RelativeLayout>
-    <RelativeLayout
         android:id="@+id/untracked_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
