@@ -43,8 +43,7 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
     // will contain in order :
     // no data -> uri : URI_PAGE_ADD_ACTION_SELECT_ACTION
     // actionId -> uri : URI_PAGE_ADD_ACTION_SELECT_VECTOR
-    // actionId, vectorId -> uri : URI_PAGE_ADD_ACTION_SELECT_TEMPLATE
-    // actionId, vectorId, templateId, timeStart -> uri : URI_PAGE_ADD_ACTION_VALIDATE
+    // actionId, vectorId, timeStart -> uri : URI_PAGE_ADD_ACTION_VALIDATE
     private LinkedList<String> actionSteps = new LinkedList<>();
 
     private AddActionAdapter mAdapter;
@@ -78,16 +77,12 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
             case 0: //We ask the user to select an action
                 mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_SELECT_ACTION;
                 break;
-            case 1://We have the action, we ask for a vector
+            case 1://We have the action, we ask for a vector and a dateStart
                 mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get(0));
                 break;
-            case 2://We have the action and vector, we ask for a template and dateStart
-                mUri = FriendForecastContract.AddActionData.buildSelectTemplateUri(actionSteps.get(0),
-                        actionSteps.get(1));
-                break;
-            case 4://We have the action, vector, template and dateStart we ask for validation
+            case 3://We have the action, vector, and dateStart we ask for validation
                 mUri = FriendForecastContract.AddActionData.buildValidateUri(actionSteps.get(0),
-                        actionSteps.get(1), actionSteps.get(2), actionSteps.get(3));
+                        actionSteps.get(1), actionSteps.get(2));
                 break;
             default:
                 return null;
@@ -123,13 +118,6 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void setVectorId(String vectorId) {
         actionSteps.add(vectorId);
-        getLoaderManager().restartLoader(AddActionData.LOADER_ID, null, this);
-
-    }
-
-    @Override
-    public void setTemplateId(String templateId) {
-        actionSteps.add(templateId);
 
         final DateListener dateListener = new DateListener();
         Calendar now = Calendar.getInstance();
@@ -143,7 +131,9 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
         dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
                 .due_date));
         dpd.setOnDateSetListener(dateListener);
+
     }
+
 
     @Override
     public void showFab(final String actionId, final String vectorId, final long timeStart) {

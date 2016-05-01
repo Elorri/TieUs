@@ -57,7 +57,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
-        syncContacts();
+        //syncContacts();
         setHasOptionsMenu(true);
     }
 

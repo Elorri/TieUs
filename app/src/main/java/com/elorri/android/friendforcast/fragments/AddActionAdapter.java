@@ -15,7 +15,6 @@ import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ActionDAO;
-import com.elorri.android.friendforcast.db.ActionVectorTemplatesDAO;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 
@@ -30,7 +29,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     public static final int VIEW_TITLE = 1;
     public static final int VIEW_ACTION_ITEM = 2;
     public static final int VIEW_VECTOR_ITEM = 3;
-    public static final int VIEW_TEMPLATE_ITEM = 4;
+
 
     public static int[] viewTypes;
 
@@ -43,8 +42,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         void setActionId(String actionId);
 
         void setVectorId(String vectorId);
-
-        void setTemplateId(String templateId);
 
         void showFab(String actionId, String vectorId, long timeStart);
     }
@@ -100,11 +97,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     label = (TextView) view.findViewById(R.id.label);
                     break;
                 }
-                case VIEW_TEMPLATE_ITEM: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                    textView = (TextView) view.findViewById(R.id.textview);
-                    break;
-                }
             }
         }
     }
@@ -144,13 +136,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 viewHolder = new ViewHolder(view, VIEW_VECTOR_ITEM);
                 break;
             }
-            case VIEW_TEMPLATE_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_textview,
-                        parent, false);
-                viewHolder = new ViewHolder(view, VIEW_TEMPLATE_ITEM);
-                break;
-            }
         }
         return viewHolder;
     }
@@ -164,7 +149,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int vectorIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_DATA);
                 int actionIdx = mCursor.getColumnIndex(FriendForecastContract.ActionTable.COLUMN_NAME);
-                int temptateIdx = mCursor.getColumnIndex(FriendForecastContract.ActionVectorTemplatesTable.COLUMN_VALUE);
                 int timeStartIdx = mCursor.getColumnIndex(FriendForecastContract.EventTable.COLUMN_TIME_START);
                 String actionName;
                 long timeStartLong;
@@ -173,19 +157,17 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     holder.action.setText(actionName);
                     if (vectorIdx != -1) {
                         holder.vectorLogo.setBackgroundResource(mCursor.getInt(vectorIdx));
-                        if (temptateIdx != -1) {
-                            holder.template.setText(mCursor.getString(temptateIdx));
-                            if (timeStartIdx != -1) {//All action fields are known. Add the event.
-                                String actionId = mCursor.getString(mCursor.getColumnIndex
-                                        (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
-                                String vectorId = mCursor.getString(mCursor.getColumnIndex
-                                        (FriendForecastContract.VectorTable.VIEW_VECTOR_ID));
-                                holder.clock.setVisibility(View.VISIBLE);
-                                holder.clock.setBackgroundResource(R.drawable.ic_schedule_black_24dp);
-                                timeStartLong = mCursor.getLong(timeStartIdx);
-                                holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
-                                mCallback.showFab(actionId, vectorId, timeStartLong);
-                            }
+                        if (timeStartIdx != -1) {//All action fields are known. Add the event.
+                            String actionId = mCursor.getString(mCursor.getColumnIndex
+                                    (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
+                            String vectorId = mCursor.getString(mCursor.getColumnIndex
+                                    (FriendForecastContract.VectorTable.VIEW_VECTOR_ID));
+                            holder.clock.setVisibility(View.VISIBLE);
+                            holder.clock.setBackgroundResource(R.drawable.ic_schedule_black_24dp);
+                            timeStartLong = mCursor.getLong(timeStartIdx);
+                            holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
+                            mCallback.showFab(actionId, vectorId, timeStartLong);
+
                         }
                     }
                 }
@@ -215,8 +197,8 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             case VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.imageView.setBackground(null);
-                if (mCursor.getString(VectorDAO.VectorQuery
-                        .COL_MIMETYPE).equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+                if (mCursor.getString(VectorDAO.VectorQuery.COL_MIMETYPE)
+                        .equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
                     holder.imageView.setBackgroundResource(mCursor.getInt(VectorDAO.VectorQuery.COL_DATA));
                 } else
                     try {
@@ -227,12 +209,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         e.printStackTrace();
                     }
                 holder.label.setText(mCursor.getString(VectorDAO.VectorQuery.COL_VECTOR_NAME));
-
-//                int ressourceId = mCursor.getInt(VectorDAO.VectorQuery.COL_DATA);
-//                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + ressourceId);
-//                holder.imageView.setImageBitmap(BitmapFactory.decodeResource(mContext
-//                        .getResources(), ressourceId));
-
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -241,23 +217,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         final String vectorId = mCursor.getString(VectorDAO.VectorQuery.COL_ID);
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorId);
                         mCallback.setVectorId(vectorId);
-                    }
-                });
-                break;
-            }
-            case VIEW_TEMPLATE_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                holder.textView.setText(mCursor.getString(ActionVectorTemplatesDAO
-                        .ActionVectorTemplatesQuery.COL_VALUE));
-                holder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int adapterPosition = holder.getAdapterPosition();
-                        mCursor.moveToPosition(adapterPosition);
-                        final String templateId = mCursor.getString
-                                (ActionVectorTemplatesDAO.ActionVectorTemplatesQuery.COL_ID);
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + templateId);
-                        mCallback.setTemplateId(templateId);
                     }
                 });
                 break;

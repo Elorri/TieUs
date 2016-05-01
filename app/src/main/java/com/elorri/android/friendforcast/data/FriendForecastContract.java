@@ -57,27 +57,16 @@ public class FriendForecastContract {
         }
 
 
-        // DATA_ADD_ACTION_SELECT_TEMPLATE  content://com.elorri.android.communication/add_action/15/3
-        public static Uri buildSelectTemplateUri(String actionId, String vectorId) {
-            return BASE_CONTENT_URI.buildUpon()
-                    .appendPath(PATH_ADD_ACTION)
-                    .appendPath(actionId)
-                    .appendPath(vectorId)
-                    .build();
-        }
-
-        // DATA_ADD_ACTION_VALIDATE  content://com.elorri.android.communication/add_action/15/3/7/56789796
-        public static Uri buildValidateUri(String actionId, String vectorId, String templateId,
+        // DATA_ADD_ACTION_VALIDATE  content://com.elorri.android.communication/add_action/15/3/56789796
+        public static Uri buildValidateUri(String actionId, String vectorId,
                                            String timeStart) {
             return BASE_CONTENT_URI.buildUpon()
                     .appendPath(PATH_ADD_ACTION)
                     .appendPath(actionId)
                     .appendPath(vectorId)
-                    .appendPath(templateId)
                     .appendPath(timeStart)
                     .build();
         }
-
 
 
         public static String getActionIdFromSelectVectorUri(Uri uri) {
@@ -100,12 +89,9 @@ public class FriendForecastContract {
             return uri.getPathSegments().get(2);
         }
 
-        public static String getTemplateIdFromSelectValidateUri(Uri uri) {
-            return uri.getPathSegments().get(3);
-        }
 
         public static String getTimeStartIdFromSelectValidateUri(Uri uri) {
-            return uri.getPathSegments().get(4);
+            return uri.getPathSegments().get(3);
         }
     }
 
@@ -164,16 +150,16 @@ public class FriendForecastContract {
 
         public static final String NAME = "vector";
 
-        public static final String COLUMN_NAME="name";
-        public static final String COLUMN_DATA ="data";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DATA = "data";
 
         //This column will contain the ressourceId or the package name
-        public static final String COLUMN_MIMETYPE ="mimetype";
+        public static final String COLUMN_MIMETYPE = "mimetype";
 
-        public static final String VIEW_VECTOR_ID ="vector_id";
-        public static final String VIEW_VECTOR_NAME ="vector_name";
-        public static final String MIMETYPE_VALUE_RESSOURCE ="ressourceId";
-        public static final String MIMETYPE_VALUE_PACKAGE ="package";
+        public static final String VIEW_VECTOR_ID = "vector_id";
+        public static final String VIEW_VECTOR_NAME = "vector_name";
+        public static final String MIMETYPE_VALUE_RESSOURCE = "ressourceId";
+        public static final String MIMETYPE_VALUE_PACKAGE = "package";
 
 
         public static Uri buildVectorUri(long id) {
@@ -212,16 +198,6 @@ public class FriendForecastContract {
         }
     }
 
-    public static class ActionVectorTemplatesTable implements BaseColumns {
 
-        public static String PATH_ACTION_VECTOR_TEMPLATES = "action_vector_templates";
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTION_VECTOR_TEMPLATES).build();
-
-        public static final String NAME = "action_vector_templates";
-
-        public static final String COLUMN_ACTION_ID = "action_id";
-        public static final String COLUMN_VECTOR_ID = "vector_id";
-        public static final String COLUMN_VALUE ="value";
-    }
 
 }
