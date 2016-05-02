@@ -11,6 +11,7 @@
         android:layout_width="@dimen/vector_size"
         android:layout_height="@dimen/vector_size"
         android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_small"
         tools:src="@drawable/ic_mail_outline_black_24dp"
         tools:tint="@color/secondary_dark_text"
@@ -23,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_normal"
         android:layout_toRightOf="@id/action_vector"
-        android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
-        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxLines="10"
         android:textAppearance="?android:textAppearanceMedium"
         tools:text="24h thank you note"/>
 

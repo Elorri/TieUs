@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.activities.DetailActivity;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.ui.AvatarView;
@@ -113,6 +112,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onResume() {
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         if (mData != null) {
             Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
             getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
@@ -151,7 +151,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             @Override
             public void onClick(View view) {
                 String contactId = FriendForecastContract.DetailData.getContactIdFromUri(mUri);
-                ((DetailActivity) getActivity()).startAddActions(contactId);
+                //((DetailActivity) getActivity()).startAddActions(contactId);
+
+                Bundle arguments = new Bundle();
+                arguments.putCharSequence(DetailFragment.CONTACT_ID, contactId);
+                AddActionFragment fragment = new AddActionFragment();
+                fragment.setArguments(arguments);
+                fragment.show(getFragmentManager(), getResources().getString(R.string.action_add));
             }
         });
     }

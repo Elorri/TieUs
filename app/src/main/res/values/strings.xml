@@ -7,7 +7,7 @@
     <string name="today">Today</string>
     <string name="done">Done today</string>
     <string name="next">Next</string>
-    <string name="action_add">add</string>
+    <string name="action_add">Add action</string>
     <string name="happy">Happy</string>
     <string name="neutral">Neutral</string>
     <string name="unsatisfied">Dissatisfied</string>

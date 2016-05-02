@@ -5,9 +5,14 @@
     android:id="@+id/textview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/spacing_small"
+    android:paddingLeft="@dimen/spacing_normal"
+    android:paddingRight="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small"
+    android:fontFamily="sans-serif-condensed"
     android:gravity="left"
     tools:text="Introduce yourself"
-    android:padding="@dimen/spacing_small"
+    android:ellipsize="end"
+    android:maxLines="10"
     android:textAppearance="?android:textAppearanceMedium">
 </TextView>

@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elorri.android.friendforcast.R;
+import com.elorri.android.friendforcast.activities.DetailActivity;
 import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.EventDAO;
@@ -31,7 +32,8 @@ import java.util.LinkedList;
 /**
  * Created by Elorri on 26/04/2016.
  */
-public class AddActionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, AddActionAdapter.Callback {
+public class AddActionFragment extends DialogFragment implements LoaderManager
+        .LoaderCallbacks<Cursor>, AddActionAdapter.Callback {
 
 
     private static Uri mUri;
@@ -61,7 +63,7 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new AddActionAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
-
+        getDialog().setTitle(getResources().getString(R.string.action_add));
         return view;
     }
 
@@ -179,7 +181,10 @@ public class AddActionFragment extends Fragment implements LoaderManager.LoaderC
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            getActivity().finish();
+            //getActivity().finish();
+            getDialog().cancel();
+            getActivity().getSupportFragmentManager().findFragmentByTag
+                    (DetailActivity.DETAIL_FRAGMENT).onResume();
             super.onPostExecute(aVoid);
         }
     }

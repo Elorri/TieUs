@@ -159,6 +159,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" +
                                 mCursor.getString(mimetypeIdx) +
                                 " " + mCursor.getString(vectorIdx));
+                        holder.vectorLogo.setVisibility(View.VISIBLE);
                         Tools.setVectorBackground(mContext, holder.vectorLogo,
                                 mCursor.getString(mimetypeIdx),
                                 mCursor.getString(vectorIdx));

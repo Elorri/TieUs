@@ -14,6 +14,8 @@ import com.elorri.android.friendforcast.ui.AvatarView;
 public class DetailActivity extends AppCompatActivity {
 
 
+    public static final String DETAIL_FRAGMENT="detail_fragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
             fragment.setArguments(arguments);
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_fragment_container, fragment)
+                    .add(R.id.detail_fragment_container, fragment, DETAIL_FRAGMENT)
                     .commit();
         }
     }
