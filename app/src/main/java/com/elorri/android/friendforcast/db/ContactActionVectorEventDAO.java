@@ -393,14 +393,7 @@ public class ContactActionVectorEventDAO {
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
-    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,
-                                          ArrayList<Integer> viewTypes, String contactId) {
-        ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
-        viewTypes.add(DetailAdapter.VIEW_TITLE);
-        cursors.add(getCursorWithViewTypes(cursorType, db, viewTypes, contactId));
-        return new MergeCursor(Tools.convertToArrayCursors(cursors));
-    }
+
 
     private static String getCursorTitle(Context context, int cursorType) {
         switch (cursorType) {

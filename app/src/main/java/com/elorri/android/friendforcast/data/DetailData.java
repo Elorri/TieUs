@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
-import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.extra.CursorUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.fragments.DetailAdapter;
@@ -30,16 +30,22 @@ public class DetailData {
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(CursorUtils.setViewType(ContactDAO.getCursor(contactId,
                 ContactDAO.CONTACT_BY_ID, db), viewTypes, DetailAdapter.VIEW_EMOICON));
-        cursors.add(CursorUtils.setViewType(db.query(FriendForecastContract.ContactVectorsTable.NAME,
-                        ContactVectorsDAO.ContactVectorsQuery.PROJECTION,
-                        ContactVectorsDAO.ContactVectorsQuery.SELECTION,
-                        new String[]{contactId}, null, null, null),
-                viewTypes, DetailAdapter.VIEW_VECTORS_OF_COMMUNICATION));
-        cursors.add(ContactActionVectorEventDAO.getWrappedCursor(context,
-                ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
-                db, viewTypes, contactId));
+        cursors.add(getActionsCursor(context, db, viewTypes, contactId));
         DetailAdapter.viewTypes = Tools.convertToArrayViewTypes(viewTypes);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
+    }
+
+    private static Cursor getActionsCursor(Context context, SQLiteDatabase db, ArrayList<Integer>
+            viewTypes, String contactId) {
+        Cursor cursor = ContactActionVectorEventDAO.getCursorWithViewTypes(
+                ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
+                db, viewTypes, contactId);
+        if (cursor.getCount() == 0)
+            cursor = CursorUtils.setViewType(
+                    Tools.getOneLineCursor(context.getResources().getString(R.string.select_action)),
+                    viewTypes,
+                    DetailAdapter.VIEW_EMPTY_CURSOR);
+        return cursor;
     }
 
 }

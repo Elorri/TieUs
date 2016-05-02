@@ -38,9 +38,7 @@ public class AddActionData {
         ArrayList<Cursor> cursors = new ArrayList();
         switch (cursorType) {
             case ACTION_SELECT_ACTION:
-                cursors.add(CursorUtils.setViewType(
-                        ActionDAO.getCursor(ActionDAO.ALL_ACTIONS, db, null),
-                        viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
+                cursors.add(ActionDAO.getCursorActionsWithTitle(db, viewTypes));
                 Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 break;
 
@@ -70,7 +68,7 @@ public class AddActionData {
             case ACTION_SELECT_VECTOR:
                 Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
                 return CursorUtils.setViewType(
-                        ActionDAO.getCursor(ActionDAO.ACTION_BY_ID, db, actionId),
+                        ActionDAO.getCursor(ActionDAO.ACTION_BY_ID, db, actionId, null),
                         viewTypes, AddActionAdapter.VIEW_ACTION_RECAP);
             case ACTION_VALIDATE:
                 Log.e("FF", Thread.currentThread().getStackTrace()[2]+""+RecapQuery
@@ -85,13 +83,6 @@ public class AddActionData {
 
     public interface RecapQuery {
 
-        int COL_ACTION_ID = 0;
-        int COL_ACTION_NAME = 1;
-        int COL_VECTOR_ID = 2;
-        int COL_VECTOR_NAME = 3;
-        int COL_VECTOR_DATA = 4;
-        int COL_VECTOR_MIMETYPE = 5;
-        int COL_TIMESTART = 6;
 
         String SELECT_ACTION = "select "
                 + FriendForecastContract.ActionTable._ID + " as "

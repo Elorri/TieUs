@@ -179,7 +179,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             }
             case VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
+                int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(AddActionData.TitleQuery.COL_TITLE));
                 break;

@@ -5,10 +5,9 @@
     android:id="@+id/textview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="sans-serif-condensed"
     android:paddingLeft="@dimen/spacing_small"
     android:gravity="left"
     tools:text="Introduce yourself"
-    android:padding="@dimen/spacing_normal"
+    android:padding="@dimen/spacing_small"
     android:textAppearance="?android:textAppearanceMedium">
 </TextView>

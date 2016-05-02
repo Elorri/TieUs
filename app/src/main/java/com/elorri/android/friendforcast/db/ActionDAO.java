@@ -21,34 +21,79 @@ public class ActionDAO {
 
     public static final int ALL_ACTIONS = 0;
     public static final int ACTION_BY_ID = 1;
+    public static final int ACTIONS_TITLES = 2;
 
     public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ActionTable.NAME +
             "(" + FriendForecastContract.ActionTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + FriendForecastContract.ActionTable.COLUMN_TITLE + " TEXT NOT NULL, "
             + FriendForecastContract.ActionTable.COLUMN_NAME + " TEXT NOT NULL, "
-            + "UNIQUE (" + FriendForecastContract.ActionTable.COLUMN_NAME + ") ON CONFLICT REPLACE)";
+            + FriendForecastContract.ActionTable.COLUMN_SORT_ORDER + " INTEGER NOT NULL, "
+            + "UNIQUE (" + FriendForecastContract.ActionTable.COLUMN_TITLE + ", "
+            + FriendForecastContract.ActionTable.COLUMN_NAME + ") ON CONFLICT REPLACE)";
 
 
     public static final String INSERT = "INSERT INTO "
             + FriendForecastContract.ActionTable.NAME
             + " ("
             + FriendForecastContract.ActionTable._ID + ", "
-            + FriendForecastContract.ActionTable.COLUMN_NAME
-            + ") " + "VALUES (?, ?)";
+            + FriendForecastContract.ActionTable.COLUMN_TITLE + ", "
+            + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
+            + FriendForecastContract.ActionTable.COLUMN_SORT_ORDER
+            + ") " + "VALUES (?, ?, ?, ?)";
+
+    public static Cursor getCursorActionsWithTitle(
+            SQLiteDatabase db, ArrayList<Integer> viewTypes) {
+        ArrayList<Cursor> cursors = new ArrayList();
+
+        Cursor cursorTitles = db.query(true, FriendForecastContract.ActionTable.NAME,
+                DistinctActionTitleQuery.PROJECTION,
+                null, null, null, null, DistinctActionTitleQuery.SORT_ORDER, null);
+        while (cursorTitles.moveToNext()) {
+            String title=cursorTitles.getString(DistinctActionTitleQuery.COL_ACTION_TITLE);
+            cursors.add(Tools.getOneLineCursor(title));
+            viewTypes.add(AddActionAdapter.VIEW_TITLE);
+            cursors.add(CursorUtils.setViewType(
+                    ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, title),
+                    viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
+        }
+        return new MergeCursor(Tools.convertToArrayCursors(cursors));
+    }
 
     public interface ActionQuery {
 
         int COL_ID = 0;
-        int COL_ACTION_NAME = 1;
+        int COL_ACTION_TITLE = 1;
+        int COL_ACTION_NAME = 2;
+        int COL_ACTION_SORT_ORDER = 3;
 
-        String SELECTION = FriendForecastContract.ActionTable._ID + "=?";
+        String SELECTION_BY_ACTION_ID = FriendForecastContract.ActionTable._ID + "=?";
+        String SELECTION_BY_TITLE = FriendForecastContract.ActionTable.COLUMN_TITLE + "=?";
 
-        String SORT_ORDER = FriendForecastContract.ActionTable.COLUMN_NAME + " asc";
+        String SORT_ORDER = FriendForecastContract.ActionTable.COLUMN_SORT_ORDER + " asc";
 
         String[] PROJECTION = {
                 FriendForecastContract.ActionTable._ID,
-                FriendForecastContract.ActionTable.COLUMN_NAME
+                FriendForecastContract.ActionTable.COLUMN_TITLE,
+                FriendForecastContract.ActionTable.COLUMN_NAME,
+                FriendForecastContract.ActionTable.COLUMN_SORT_ORDER
         };
+
+    }
+
+    public interface DistinctActionTitleQuery {
+
+        int COL_ACTION_TITLE = 0;
+
+        String[] PROJECTION = {FriendForecastContract.ActionTable.COLUMN_TITLE};
+
+        String SELECTION = FriendForecastContract.ActionTable._ID + "=?";
+
+        String SORT_ORDER = FriendForecastContract.ActionTable.COLUMN_SORT_ORDER + " asc";
+
+        String SELECT_TITLE = "select distinct"
+                + FriendForecastContract.ActionTable.COLUMN_TITLE + " from "
+                + FriendForecastContract.ActionTable.NAME;
 
     }
 
@@ -59,7 +104,7 @@ public class ActionDAO {
         cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
         viewTypes.add(AddActionAdapter.VIEW_TITLE);
         cursors.add(CursorUtils.setViewType(
-                getCursor(cursorType, db, null),
+                getCursor(cursorType, db, null, null),
                 viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -77,7 +122,8 @@ public class ActionDAO {
     // explicite
 
 
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId) {
+    public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId, String
+            title) {
         switch (cursorType) {
             case ALL_ACTIONS: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ALL_ACTIONS");
@@ -93,8 +139,18 @@ public class ActionDAO {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(FriendForecastContract.ActionTable.NAME,
                         ActionQuery.PROJECTION,
-                        ActionQuery.SELECTION,
+                        ActionQuery.SELECTION_BY_ACTION_ID,
                         new String[]{actionId},
+                        null,
+                        null,
+                        ActionQuery.SORT_ORDER);
+            }
+            case ACTIONS_TITLES: {
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
+                return db.query(FriendForecastContract.ActionTable.NAME,
+                        ActionQuery.PROJECTION,
+                        ActionQuery.SELECTION_BY_TITLE,
+                        new String[]{title},
                         null,
                         null,
                         ActionQuery.SORT_ORDER);
