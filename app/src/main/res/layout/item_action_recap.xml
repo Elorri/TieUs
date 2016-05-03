@@ -31,7 +31,7 @@
        />
 
     <TextView
-        android:id="@+id/time_start"
+        android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/clock"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_below="@id/time_start"
+        android:layout_below="@id/time"
         android:layout_toRightOf="@id/vector_logo"
         android:fontFamily="sans-serif-condensed"
         android:ellipsize="end"

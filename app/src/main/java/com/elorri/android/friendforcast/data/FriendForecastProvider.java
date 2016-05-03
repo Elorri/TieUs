@@ -236,6 +236,11 @@ public class FriendForecastProvider extends ContentProvider {
                         selection,
                         selectionArgs);
                 break;
+            case TABLE_EVENT:
+                rowsUpdated = db.update(FriendForecastContract.EventTable.NAME, values,
+                        selection,
+                        selectionArgs);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

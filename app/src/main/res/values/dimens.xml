@@ -41,4 +41,5 @@
     <dimen name="fab_translation_z">12dp</dimen>
     <dimen name="small_emo_icon_width">20dp</dimen>
     <dimen name="vector_size">50dp</dimen>
+    <dimen name="ok_width">50dp</dimen>
 </resources>

@@ -10,5 +10,5 @@
         android:layout_margin="@dimen/spacing_normal"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_person_black_48dp"
-        android:tint="@color/secondary_dark_text"/>
+        android:tint="@color/educate_person_background"/>
 </merge>

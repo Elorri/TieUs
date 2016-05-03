@@ -10,8 +10,8 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_reset_help_messages"
         android:orderInCategory="200"
-        android:title="@string/action_settings"
+        android:title="@string/action_reset_help_messages"
         app:showAsAction="never"/>
 </menu>

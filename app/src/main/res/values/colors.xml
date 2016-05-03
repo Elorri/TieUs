@@ -10,12 +10,14 @@
     <color name="secondaryLight">#ffbdbdbd</color>
     <color name="secondaryDark">#ff616161</color>
     <color name="secondaryXDark">#424242</color>
+    <color name="educate_person_background">#455A64</color>
 
 
     <!-- texts -->
     <color name="primary_light_text">#ffffff</color>
     <color name="primary_dark_text">#424242</color>
     <color name="secondary_dark_text">#727272</color>
+    <color name="educate_text">#90A4AE</color>
 
 
 </resources>

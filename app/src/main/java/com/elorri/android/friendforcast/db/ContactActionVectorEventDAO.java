@@ -26,8 +26,10 @@ public class ContactActionVectorEventDAO {
     public static final int TODAY_PEOPLE = 2;
     public static final int TODAY_DONE_PEOPLE = 3;
     public static final int NEXT_PEOPLE = 4;
-    public static final int ACTION_BY_CONTACT_ID = 5;
-    public static final int UNTRACKED_PEOPLE = 6;
+    public static final int NEXT_ACTION_BY_CONTACT_ID = 5;
+    public static final int DONE_ACTION_BY_CONTACT_ID = 6;
+    public static final int ACTION_BY_CONTACT_ID = 7;
+    public static final int UNTRACKED_PEOPLE = 8;
 
 
     private static final String JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT = "select "
@@ -273,22 +275,31 @@ public class ContactActionVectorEventDAO {
 
 
     public interface VectorActionByContactIdQuery {
-        int COL_VECTOR_LOGO_ID = 0;
-        int COL_VECTOR_MIMETYPE = 1;
-        int COL_ACTION_NAME = 2;
-        int COL_TIME_START = 3;
+        int COL_EVENT_ID = 0;
+        int COL_VECTOR_LOGO_ID = 1;
+        int COL_VECTOR_MIMETYPE = 2;
+        int COL_ACTION_NAME = 3;
+        int COL_TIME_START = 4;
+        int COL_TIME_END = 5;
 
+        String SELECTION_ALL = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
+        String SELECTION_UNDONE = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                +FriendForecastContract.EventTable.COLUMN_TIME_END+" is null";
+        String SELECTION_DONE = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                +FriendForecastContract.EventTable.COLUMN_TIME_END+" is not null";
 
-        String SELECTION = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
+        String SORT_ORDER_UNDONE=FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
+        String SORT_ORDER_DONE=FriendForecastContract.EventTable.COLUMN_TIME_END+" desc";
 
         String[] PROJECTION = {
+                FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.EventTable.COLUMN_TIME_END
         };
 
-        String SORT_ORDER = FriendForecastContract.EventTable.COLUMN_TIME_START + " asc";
 
 
     }
@@ -334,8 +345,26 @@ public class ContactActionVectorEventDAO {
             case ACTION_BY_CONTACT_ID: {
                 Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
                         VectorActionByContactIdQuery.PROJECTION,
-                        VectorActionByContactIdQuery.SELECTION,
-                        new String[]{contactId}, null, null, VectorActionByContactIdQuery.SORT_ORDER);
+                        VectorActionByContactIdQuery.SELECTION_ALL,
+                        new String[]{contactId}, null, null, null);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
+                return cursor;
+            }
+            case NEXT_ACTION_BY_CONTACT_ID: {
+                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                        VectorActionByContactIdQuery.PROJECTION,
+                        VectorActionByContactIdQuery.SELECTION_UNDONE,
+                        new String[]{contactId}, null, null, VectorActionByContactIdQuery
+                                .SORT_ORDER_UNDONE);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
+                return cursor;
+            }
+            case DONE_ACTION_BY_CONTACT_ID: {
+                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                        VectorActionByContactIdQuery.PROJECTION,
+                        VectorActionByContactIdQuery.SELECTION_DONE,
+                        new String[]{contactId}, null, null, VectorActionByContactIdQuery
+                                .SORT_ORDER_DONE);
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
                 return cursor;
             }
@@ -374,10 +403,14 @@ public class ContactActionVectorEventDAO {
                 return CursorUtils.setViewType(
                         getCursor(cursorType, db),
                         viewTypes, BoardAdapter.VIEW_UNTRACKED_PEOPLE);
-            case ACTION_BY_CONTACT_ID:
+            case NEXT_ACTION_BY_CONTACT_ID:
                 return CursorUtils.setViewType(getCursor(cursorType, db,
                                 contactId),
-                        viewTypes, DetailAdapter.VIEW_ACTION);
+                        viewTypes, DetailAdapter.VIEW_NEXT_ACTION);
+            case DONE_ACTION_BY_CONTACT_ID:
+                return CursorUtils.setViewType(getCursor(cursorType, db,
+                                contactId),
+                        viewTypes, DetailAdapter.VIEW_DONE_ACTION);
             default:
                 return null;
         }
@@ -409,7 +442,7 @@ public class ContactActionVectorEventDAO {
                 return context.getResources().getString(R.string.next);
             case UNTRACKED_PEOPLE:
                 return context.getResources().getString(R.string.untracked);
-            case ACTION_BY_CONTACT_ID:
+            case NEXT_ACTION_BY_CONTACT_ID:
                 return context.getResources().getString(R.string.next_actions);
             default:
                 return null;

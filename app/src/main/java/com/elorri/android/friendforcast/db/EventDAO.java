@@ -53,6 +53,11 @@ public class EventDAO {
         values.put(FriendForecastContract.EventTable.COLUMN_VECTOR_ID, vectorId);
         values.put(FriendForecastContract.EventTable.COLUMN_TIME_START, date);
         return values;
+    }
 
+    public static ContentValues getContentValues(Long timeEnd) {
+        ContentValues values = new ContentValues();
+        values.put(FriendForecastContract.EventTable.COLUMN_TIME_END, timeEnd);
+        return values;
     }
 }

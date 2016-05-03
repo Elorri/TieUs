@@ -75,7 +75,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     vectorLogo = (ImageView) view.findViewById(R.id.vector_logo);
                     clock = (ImageView) view.findViewById(R.id.clock);
                     action = (TextView) view.findViewById(R.id.action);
-                    timeStart = (TextView) view.findViewById(R.id.time_start);
+                    timeStart = (TextView) view.findViewById(R.id.time);
                     break;
                 }
                 case VIEW_TITLE: {

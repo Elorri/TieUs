@@ -51,7 +51,7 @@ public class AddActionData {
 
             case ACTION_VALIDATE:
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actionId " + actionId + "vectorId " + vectorId
-                         + "timeStart " + timeStart);
+                         + "time " + timeStart);
                 cursors.add(getActionRecapCursor(ACTION_VALIDATE, db, viewTypes, actionId, vectorId, timeStart));
                 break;
             default:

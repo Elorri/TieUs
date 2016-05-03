@@ -17,7 +17,7 @@ public class DateUtils {
     public static final String DAY_OF_WEEK_FORMAT = "EEEE";
     public static final String DAY_MONTH_FORMAT = "dd MMMM";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
-    public static final String HOURS_MINUTES_FORMAT_ = "HH:mm:ss";
+    public static final String HOURS_MINUTES_FORMAT = "HH:mm:ss";
     public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd'T'hh:mm:ss'Z'";
 
     /**
@@ -51,6 +51,12 @@ public class DateUtils {
             return context.getResources().getString(R.string.today);
         else
             return fromLongToString(date, getFriendlyFormat(date), Tools.getMostSuitableLocale());
+    }
+
+    public static String getFriendlyDateTimeString(Context context, long date) {
+        return context.getResources().getString(R.string.completed,
+                getFriendlyDateString(context, date),
+                fromLongToString(date, HOURS_MINUTES_FORMAT, Tools.getMostSuitableLocale()));
     }
 
     private static long nextYearStart() {
@@ -94,7 +100,7 @@ public class DateUtils {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ap " + fromLongToString
                 (calendar.getTimeInMillis(),
-                TIMESTAMP_FORMAT, Tools.getMostSuitableLocale()));
+                        TIMESTAMP_FORMAT, Tools.getMostSuitableLocale()));
         return calendar.getTimeInMillis();
     }
 

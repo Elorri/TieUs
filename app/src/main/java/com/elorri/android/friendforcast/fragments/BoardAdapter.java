@@ -224,7 +224,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayDonePeopleQuery.COL_ACTION));
                 long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
                         .COL_TIME_END);
-                holder.doneDate.setText(DateUtils.getFriendlyDateString(mContext, doneDate));
+                holder.doneDate.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDate));
                 holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);

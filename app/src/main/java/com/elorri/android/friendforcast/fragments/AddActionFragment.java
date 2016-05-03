@@ -45,7 +45,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     // will contain in order :
     // no data -> uri : URI_PAGE_ADD_ACTION_SELECT_ACTION
     // actionId -> uri : URI_PAGE_ADD_ACTION_SELECT_VECTOR
-    // actionId, vectorId, timeStart -> uri : URI_PAGE_ADD_ACTION_VALIDATE
+    // actionId, vectorId, time -> uri : URI_PAGE_ADD_ACTION_VALIDATE
     private LinkedList<String> actionSteps = new LinkedList<>();
 
     private AddActionAdapter mAdapter;

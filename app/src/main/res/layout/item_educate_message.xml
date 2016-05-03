@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_normal"
+    android:background="@color/educate_person_background">
+    <TextView
+        android:id="@+id/ok"
+        android:layout_width="@dimen/ok_width"
+        android:layout_height="@dimen/ok_width"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/ok"
+        android:background="@drawable/oval_shape"/>
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/ok_width"
+        android:layout_marginRight="@dimen/ok_width"
+        android:fontFamily="sans-serif-narrow"
+        android:padding="@dimen/spacing_small"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_medium"
+        tools:text="@string/mark_action_as_done"/>
+
+</RelativeLayout>

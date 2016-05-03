@@ -67,7 +67,7 @@ public class AndroidDAO {
 
         Uri CONTENT_URI = ContactsContract.CommonDataKinds.Email.CONTENT_URI;
         String SELECTION = ContactsContract.Data.CONTACT_ID + "=?";
-        //String SELECTION = ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?";
+        //String SELECTION_UNDONE = ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?";
 
 
         String[] PROJECTION = {
@@ -86,7 +86,7 @@ public class AndroidDAO {
 
 
         Uri CONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        //String SELECTION = ContactsContract.Data.CONTACT_ID + "=?";
+        //String SELECTION_UNDONE = ContactsContract.Data.CONTACT_ID + "=?";
         String SELECTION = ContactsContract.CommonDataKinds.Email.CONTACT_ID + "=?";
 
 
