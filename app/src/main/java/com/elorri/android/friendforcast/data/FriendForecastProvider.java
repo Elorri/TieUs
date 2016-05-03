@@ -214,6 +214,9 @@ public class FriendForecastProvider extends ContentProvider {
                 rowsDeleted = db.delete(FriendForecastContract.ContactVectorsTable.NAME, selection,
                         selectionArgs);
                 break;
+            case TABLE_EVENT:
+                rowsDeleted = db.delete(FriendForecastContract.EventTable.NAME, selection, selectionArgs);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,30 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private AlertDialog mAlertEmoDialog;
     private int mEmoIconResource;
     private String mContactId;
+
+    public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack=new ItemTouchHelper
+            .SimpleCallback(
+            ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+            int position=viewHolder.getAdapterPosition();
+            int viewType = getItemViewType(position);
+            if ((viewType == DetailAdapter.VIEW_NEXT_ACTION) || (viewType == DetailAdapter
+                    .VIEW_DONE_ACTION)) {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                mCursor.moveToPosition(position);
+                DeleteActionTask deleteActionTask = new DeleteActionTask();
+                deleteActionTask.execute(mCursor.getString(ContactActionVectorEventDAO
+                        .VectorActionByContactIdQuery.COL_EVENT_ID));
+            }
+        }
+    };
 
     interface Callback {
         void setTitle(String title);
@@ -379,6 +404,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         return viewTypes[position];
     }
 
+
+
+
     private class MarkActionAsCompletedTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -420,6 +448,28 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             Toast.makeText(mContext,
                     mContext.getResources().getString(R.string.action_uncompleted),
                     Toast.LENGTH_LONG).show();
+            mCallback.updateFragment();
+        }
+    }
+
+
+    private class DeleteActionTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String eventId = params[0];
+            mContext.getContentResolver().delete(
+                    FriendForecastContract.EventTable.CONTENT_URI,
+                     FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+            );
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(mContext,
+                    mContext.getResources().getString(R.string.action_deleted),
+                    Toast.LENGTH_SHORT).show();
             mCallback.updateFragment();
         }
     }

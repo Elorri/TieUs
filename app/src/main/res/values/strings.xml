@@ -41,6 +41,7 @@
 
     <string name="action_completed">Action completed</string>
     <string name="action_uncompleted">Action uncompleted</string>
+    <string name="action_deleted">Action deleted</string>
     <string name="done_actions">Done actions</string>
     <string name="completed"><xliff:g >%1$s</xliff:g> at <xliff:g >%2$s</xliff:g></string>
     <string name="pref_mark_action_feature_status_key" translatable="false">mark_action_feature_status</string>
