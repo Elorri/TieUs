@@ -151,7 +151,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @Override
     public DetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
@@ -393,14 +392,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     }
 
     public void swapCursor(Cursor data) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mCursor = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         return viewTypes[position];
     }
 

@@ -41,14 +41,17 @@ import com.elorri.android.friendforcast.extra.Tools;
  */
 public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, BoardAdapter.Callback {
 
+    private static final String SELECTED_KEY = "selected_position";
+
     private BoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private ImageView mForecastImageView;
     private ImageView mForecastToolbarImageView;
+    private int mPosition = -1;
 
     public BoardFragment() {
         // Required empty public constructor
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     @Override
@@ -62,7 +65,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_board, container, false);
 
         Typeface courgette = Typeface.createFromAsset(getContext().getAssets(), "courgette-regular.ttf");
@@ -102,6 +105,11 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter = new BoardAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
 
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        }
         return view;
     }
 
@@ -127,15 +135,15 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
-        super.onResume();
+        super.onActivityCreated(savedInstanceState);
     }
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         Uri uri = FriendForecastContract.BoardData.URI_PAGE_BOARD;
         return new CursorLoader(getActivity(),
                 uri,
@@ -147,14 +155,19 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2] + "data " + data
-                .getCount());
         mAdapter.swapCursor(data);
+        mPosition = mAdapter.getSelectedItemPosition();
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+        // If we don't need to restart the loader, and there's a desired position to restore
+        // to, do so now.
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        mRecyclerView.smoothScrollToPosition(mPosition);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
         mRecyclerView.setAdapter(null);
     }
 
@@ -181,7 +194,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
         @Override
         protected Void doInBackground(Void... params) {
-            Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
+            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
             addOrUpdateAppContactsAccordingToAndroidContacts();
             removeAppContactsAccordingToAndroidContacts();
             addOrRemoveVectorsAccordingToAndroidAppsInstalled();
@@ -214,7 +227,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     appContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ID);
                     androidContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_ID);
                     androidLookUpKey = appCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_LOOKUP_KEY);
-                    Log.d("Communication", Thread.currentThread().getStackTrace()[2] +
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                             "" + androidContactId + " " + androidLookUpKey);
 
                     try {
@@ -271,7 +284,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                 while (androidCursor.moveToNext()) {
                     androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
                     androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
-                    Log.d("Communication", Thread.currentThread().getStackTrace()[2] +
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                             "" + androidContactId + " " + androidLookUpKey);
 
                     try {
@@ -472,7 +485,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             packageName = pi.applicationInfo.packageName;
 
             //check if this package is a social network that can be used as a vector of communication
-            if (Tools.isPackageASocialNetworkVector(getContext(),packageName)) {
+            if (Tools.isPackageASocialNetworkVector(getContext(), packageName)) {
                 vectorName = pi.applicationInfo.loadLabel(getActivity().getPackageManager()).toString();
                 ContentValues values = VectorDAO.getContentValues(vectorName, packageName,
                         FriendForecastContract.VectorTable.MIMETYPE_VALUE_PACKAGE);
@@ -482,5 +495,18 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         }
 
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, the currently selected list item needs to be saved.
+        // When no item is selected, mPosition will be set to INVALID_POSITION -1,
+        // so check for that before storing.
+
+        mPosition = mRecyclerView.getVerticalScrollbarPosition();
+        outState.putInt(SELECTED_KEY, mPosition);
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        super.onSaveInstanceState(outState);
     }
 }

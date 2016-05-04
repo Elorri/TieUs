@@ -347,7 +347,6 @@ public class ContactActionVectorEventDAO {
                         VectorActionByContactIdQuery.PROJECTION,
                         VectorActionByContactIdQuery.SELECTION_ALL,
                         new String[]{contactId}, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
                 return cursor;
             }
             case NEXT_ACTION_BY_CONTACT_ID: {
@@ -356,7 +355,6 @@ public class ContactActionVectorEventDAO {
                         VectorActionByContactIdQuery.SELECTION_UNDONE,
                         new String[]{contactId}, null, null, VectorActionByContactIdQuery
                                 .SORT_ORDER_UNDONE);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
                 return cursor;
             }
             case DONE_ACTION_BY_CONTACT_ID: {

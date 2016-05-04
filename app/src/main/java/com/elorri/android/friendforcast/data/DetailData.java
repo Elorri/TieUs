@@ -54,14 +54,12 @@ public class DetailData {
 
     private static Cursor getNextActionsWrappedCursor(Context context, String title, SQLiteDatabase db,
                                                       ArrayList<Integer> viewTypes, String contactId) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         Cursor doneActionCursor = ContactActionVectorEventDAO.getCursor(
                 ContactActionVectorEventDAO.DONE_ACTION_BY_CONTACT_ID,
                 db, contactId);
         //if no actions done are registered, we display no title at all. No next action title and
         // no done action title. We only dispay the list of next actions.
         if (doneActionCursor.getCount() == 0) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             return getNextActionsCursor(context, db, viewTypes, contactId);
         }
 

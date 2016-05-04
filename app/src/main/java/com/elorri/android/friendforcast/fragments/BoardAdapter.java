@@ -39,12 +39,17 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Cursor mCursor;
     private Callback mCallback;
     private Context mContext;
+    private int mPosition;
 
 
     public BoardAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
         mCallback = callback;
         Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
+    }
+
+    public int getSelectedItemPosition() {
+        return mPosition;
     }
 
     interface Callback {
@@ -113,7 +118,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public BoardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mContext = parent.getContext();
         ViewHolder viewHolder = null;
         View view;
@@ -267,8 +271,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int adapterPosition = holder.getAdapterPosition();
-                mCursor.moveToPosition(adapterPosition);
+                mPosition = holder.getAdapterPosition();
+                mCursor.moveToPosition(mPosition);
                 int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri, holder.avatarColor);
