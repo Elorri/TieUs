@@ -133,6 +133,18 @@ public class FriendForecastProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
+            case TABLE_VECTOR:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_VECTOR uri " + uri);
+                cursor = mOpenHelper.getReadableDatabase().query(
+                        FriendForecastContract.VectorTable.NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
