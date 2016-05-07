@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.data.Projections;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,20 +79,12 @@ public class Tools {
         return cursors;
     }
 
-    public static int[] convertToArrayViewTypes(ArrayList<Integer> viewTypesList) {
-        int[] viewTypes = new int[viewTypesList.size()];
-        int i = 0;
-        for (int viewType : viewTypesList) {
-            viewTypes[i] = viewType;
-            i++;
-        }
-        return viewTypes;
-    }
 
-    public static Cursor getOneLineCursor(String id) {
-        String[] cursor_columns = {"_id"};
+
+    public static Cursor getOneLineCursor(String id, int projectionType) {
+        String[] cursor_columns = {"_id", Projections.COLUMN_PROJECTION_TYPE};
         MatrixCursor cursor = new MatrixCursor(cursor_columns);
-        cursor.addRow(new Object[]{id});
+        cursor.addRow(new Object[]{id, projectionType});
         return cursor;
     }
 

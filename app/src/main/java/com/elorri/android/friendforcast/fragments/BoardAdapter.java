@@ -15,6 +15,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
@@ -26,15 +27,6 @@ import com.elorri.android.friendforcast.ui.AvatarView;
  */
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 
-    public static final int VIEW_FORECAST = 0;
-    public static final int VIEW_TITLE = 1;
-    public static final int VIEW_UNMANAGED_PEOPLE = 2;
-    public static final int VIEW_DELAY_PEOPLE = 3;
-    public static final int VIEW_TODAY_PEOPLE = 4;
-    public static final int VIEW_TODAY_DONE_PEOPLE = 5;
-    public static final int VIEW_NEXT_PEOPLE = 6;
-    public static final int VIEW_UNTRACKED_PEOPLE = 7;
-    public static int[] viewTypes;
 
     private Cursor mCursor;
     private Callback mCallback;
@@ -81,29 +73,29 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
 
             switch (viewType) {
-                case VIEW_TITLE: {
+                case Projections.VIEW_TITLE: {
                     divider = view.findViewById(R.id.divider);
                     break;
                 }
-                case VIEW_DELAY_PEOPLE: {
+                case Projections.VIEW_DELAY_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
-                case VIEW_TODAY_PEOPLE: {
+                case Projections.VIEW_TODAY_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
-                case VIEW_TODAY_DONE_PEOPLE: {
+                case Projections.VIEW_TODAY_DONE_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     doneDate = (TextView) view.findViewById(R.id.done_date);
                     vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
                     break;
                 }
-                case VIEW_NEXT_PEOPLE: {
+                case Projections.VIEW_NEXT_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
@@ -122,43 +114,43 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
-            case VIEW_FORECAST: {
-                viewHolder = new ViewHolder(new View(parent.getContext()), VIEW_FORECAST);
+            case Projections.VIEW_FORECAST: {
+                viewHolder = new ViewHolder(new View(parent.getContext()), Projections.VIEW_FORECAST);
                 break;
             }
-            case VIEW_TITLE: {
+            case Projections.VIEW_TITLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_title, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_TITLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_TITLE);
                 break;
             }
-            case VIEW_UNMANAGED_PEOPLE: {
+            case Projections.VIEW_UNMANAGED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_UNMANAGED_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_UNMANAGED_PEOPLE);
                 break;
             }
-            case VIEW_DELAY_PEOPLE: {
+            case Projections.VIEW_DELAY_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_DELAY_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_DELAY_PEOPLE);
                 break;
             }
-            case VIEW_TODAY_PEOPLE: {
+            case Projections.VIEW_TODAY_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_TODAY_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_TODAY_PEOPLE);
                 break;
             }
-            case VIEW_TODAY_DONE_PEOPLE: {
+            case Projections.VIEW_TODAY_DONE_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_done_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_TODAY_DONE_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_TODAY_DONE_PEOPLE);
                 break;
             }
-            case VIEW_NEXT_PEOPLE: {
+            case Projections.VIEW_NEXT_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_NEXT_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_NEXT_PEOPLE);
                 break;
             }
-            case VIEW_UNTRACKED_PEOPLE: {
+            case Projections.VIEW_UNTRACKED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
-                viewHolder = new ViewHolder(view, VIEW_UNTRACKED_PEOPLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_UNTRACKED_PEOPLE);
                 break;
             }
             default:
@@ -172,7 +164,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case VIEW_FORECAST: {
+            case Projections.VIEW_FORECAST: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ratio "
                         + mCursor.getString(ContactDAO.RatioQuery.COL_RATIO));
                 String cursorRatio = mCursor.getString(ContactDAO.RatioQuery.COL_RATIO);
@@ -182,19 +174,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 }
                 break;
             }
-            case VIEW_TITLE: {
+            case Projections.VIEW_TITLE: {
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString
                         (BoardData.TitleQuery.COL_TITLE));
                 break;
             }
-            case VIEW_UNMANAGED_PEOPLE: {
+            case Projections.VIEW_UNMANAGED_PEOPLE: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
             }
-            case VIEW_DELAY_PEOPLE: {
+            case Projections.VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
@@ -207,7 +199,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 setOnClickListener(holder);
                 break;
             }
-            case VIEW_TODAY_PEOPLE: {
+            case Projections.VIEW_TODAY_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
@@ -220,7 +212,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 setOnClickListener(holder);
                 break;
             }
-            case VIEW_TODAY_DONE_PEOPLE: {
+            case Projections.VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
@@ -234,7 +226,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 setOnClickListener(holder);
                 break;
             }
-            case VIEW_NEXT_PEOPLE: {
+            case Projections.VIEW_NEXT_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
@@ -247,7 +239,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 setOnClickListener(holder);
                 break;
             }
-            case VIEW_UNTRACKED_PEOPLE: {
+            case Projections.VIEW_UNTRACKED_PEOPLE: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
@@ -294,6 +286,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        return viewTypes[position];
+        mCursor.moveToPosition(position);
+        int viewtype=mCursor.getInt(mCursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"position "+position);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"viewtype "+viewtype);
+        return viewtype;
     }
 }

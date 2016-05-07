@@ -61,7 +61,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new AddActionAdapter(null, this);
+        mAdapter = new AddActionAdapter(null, this,actionSteps.size());
         mRecyclerView.setAdapter(mAdapter);
         getDialog().setTitle(getResources().getString(R.string.action_add));
         return view;
@@ -114,6 +114,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     @Override
     public void setActionId(String actionId) {
         actionSteps.add(actionId);
+        mAdapter.updateActionStepSize(actionSteps.size());
         getLoaderManager().restartLoader(AddActionData.LOADER_ID, null, this);
     }
 

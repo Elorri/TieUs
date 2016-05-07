@@ -7,13 +7,14 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.data.Projections;
 
 /**
  * Created by Elorri on 11/04/2016.
  */
 public class ContactDAO {
 
-    public static final int RATIO = 0;
+
     public static final int CONTACT_BY_ID = 1;
 
 
@@ -30,17 +31,6 @@ public class ContactDAO {
             "CONFLICT REPLACE)";
 
 
-    public static final String INSERT = "INSERT INTO "
-            + FriendForecastContract.ContactTable.NAME + " ("
-            + FriendForecastContract.ContactTable._ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
-            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-            + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") "
-            + "VALUES (?, ?, ?, ?, ?)";
-
-
     public interface ContactQuery {
 
         int COL_ID = 0;
@@ -49,6 +39,7 @@ public class ContactDAO {
         int COL_ANDROID_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
         int COL_EMOICON_BY_ID = 5;
+        int COL_PROJECTION_TYPE = 6;
 
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
@@ -59,7 +50,8 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ")",
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                Projections.VIEW_EMOICON + " as " + Projections.COLUMN_PROJECTION_TYPE
         };
 
 
@@ -68,11 +60,14 @@ public class ContactDAO {
     public interface RatioQuery {
 
         int COL_RATIO = 0;
+        int COL_PROJECTION_TYPE = 1;
 
         String SELECT_RATIO_EMOICONE = "select "
                 + FriendForecastContract.ContactTable.VIEW_PART + "/("
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + "*1.0) as "
-                + FriendForecastContract.ContactTable.VIEW_RATIO + " from (select count("
+                + FriendForecastContract.ContactTable.VIEW_RATIO + ", "
+                + Projections.VIEW_FORECAST + " as "
+                + Projections.COLUMN_PROJECTION_TYPE + " from (select count("
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
                 + FriendForecastContract.ContactTable.NAME + ") inner join (select count("
@@ -115,14 +110,8 @@ public class ContactDAO {
         return contentValues;
     }
 
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        switch (cursorType) {
-            case RATIO: {
-                return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
-            }
-            default:
-                return null;
-        }
+    public static Cursor getCursor(SQLiteDatabase db) {
+        return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
     }
 
 

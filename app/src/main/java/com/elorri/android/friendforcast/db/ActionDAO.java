@@ -8,9 +8,8 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.extra.CursorUtils;
+import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.extra.Tools;
-import com.elorri.android.friendforcast.fragments.AddActionAdapter;
 
 import java.util.ArrayList;
 
@@ -42,20 +41,20 @@ public class ActionDAO {
             + FriendForecastContract.ActionTable.COLUMN_SORT_ORDER
             + ") " + "VALUES (?, ?, ?, ?)";
 
-    public static Cursor getCursorActionsWithTitle(
-            SQLiteDatabase db, ArrayList<Integer> viewTypes) {
+    public static Cursor getCursorActionsWithTitle(SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
 
         Cursor cursorTitles = db.query(true, FriendForecastContract.ActionTable.NAME,
                 DistinctActionTitleQuery.PROJECTION,
                 null, null, null, null, DistinctActionTitleQuery.SORT_ORDER, null);
-        while (cursorTitles.moveToNext()) {
-            String title=cursorTitles.getString(DistinctActionTitleQuery.COL_ACTION_TITLE);
-            cursors.add(Tools.getOneLineCursor(title));
-            viewTypes.add(AddActionAdapter.VIEW_TITLE);
-            cursors.add(CursorUtils.setViewType(
-                    ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, title),
-                    viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
+        try {
+            while (cursorTitles.moveToNext()) {
+                String title = cursorTitles.getString(DistinctActionTitleQuery.COL_ACTION_TITLE);
+                cursors.add(Tools.getOneLineCursor(title, Projections.VIEW_TITLE));
+                cursors.add(ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, title));
+            }
+        } finally {
+            if (cursorTitles != null) cursorTitles.close();
         }
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -66,6 +65,7 @@ public class ActionDAO {
         int COL_ACTION_TITLE = 1;
         int COL_ACTION_NAME = 2;
         int COL_ACTION_SORT_ORDER = 3;
+        int COL_PROJECTION_TYPE = 4;
 
         String SELECTION_BY_ACTION_ID = FriendForecastContract.ActionTable._ID + "=?";
         String SELECTION_BY_TITLE = FriendForecastContract.ActionTable.COLUMN_TITLE + "=?";
@@ -76,7 +76,8 @@ public class ActionDAO {
                 FriendForecastContract.ActionTable._ID,
                 FriendForecastContract.ActionTable.COLUMN_TITLE,
                 FriendForecastContract.ActionTable.COLUMN_NAME,
-                FriendForecastContract.ActionTable.COLUMN_SORT_ORDER
+                FriendForecastContract.ActionTable.COLUMN_SORT_ORDER,
+                Projections.VIEW_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
         };
 
     }
@@ -97,17 +98,6 @@ public class ActionDAO {
 
     }
 
-
-    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,
-                                          ArrayList<Integer> viewTypes) {
-        ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
-        viewTypes.add(AddActionAdapter.VIEW_TITLE);
-        cursors.add(CursorUtils.setViewType(
-                getCursor(cursorType, db, null, null),
-                viewTypes, AddActionAdapter.VIEW_ACTION_ITEM));
-        return new MergeCursor(Tools.convertToArrayCursors(cursors));
-    }
 
     private static String getCursorTitle(Context context, int cursorType) {
         switch (cursorType) {

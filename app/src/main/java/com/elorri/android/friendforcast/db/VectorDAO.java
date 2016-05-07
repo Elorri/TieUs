@@ -8,9 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.extra.CursorUtils;
+import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.extra.Tools;
-import com.elorri.android.friendforcast.fragments.AddActionAdapter;
 
 import java.util.ArrayList;
 
@@ -41,6 +40,7 @@ public class VectorDAO {
         int COL_VECTOR_NAME = 1;
         int COL_DATA = 2;
         int COL_MIMETYPE = 3;
+        int COL_PROJECTION_TYPE=4;
 
         String SELECTION = FriendForecastContract.VectorTable._ID + "=?";
 
@@ -50,7 +50,8 @@ public class VectorDAO {
                 FriendForecastContract.VectorTable._ID,
                 FriendForecastContract.VectorTable.COLUMN_NAME,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
-                FriendForecastContract.VectorTable.COLUMN_MIMETYPE
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                Projections.VIEW_VECTOR_ITEM+" as "+Projections.COLUMN_PROJECTION_TYPE
         };
 
     }
@@ -64,14 +65,10 @@ public class VectorDAO {
     }
 
 
-    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db,
-                                          ArrayList<Integer> viewTypes) {
+    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType)));
-        viewTypes.add(AddActionAdapter.VIEW_TITLE);
-        cursors.add(CursorUtils.setViewType(
-                getCursor(cursorType, db, null),
-                viewTypes, AddActionAdapter.VIEW_VECTOR_ITEM));
+        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType), Projections.VIEW_TITLE));
+        cursors.add(getCursor(cursorType, db));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
@@ -86,7 +83,7 @@ public class VectorDAO {
 
 
 
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId) {
+    public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
             case ALL_VECTORS: {
                 return db.query(FriendForecastContract.VectorTable.NAME,

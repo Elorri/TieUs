@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
@@ -33,15 +34,7 @@ import com.elorri.android.friendforcast.extra.Tools;
  */
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
 
-    public static final int VIEW_EMOICON = 0;
-    public static final int VIEW_TITLE = 1;
-    public static final int VIEW_NEXT_ACTION = 2;
-    public static final int VIEW_DONE_ACTION = 3;
-    public static final int VIEW_EMPTY_CURSOR = 4;
-    public static final int VIEW_EDUCATE_USER = 5;
 
-
-    public static int[] viewTypes;
 
     private Cursor mCursor;
     private Callback mCallback;
@@ -50,7 +43,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private int mEmoIconResource;
     private String mContactId;
 
-    public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack=new ItemTouchHelper
+    public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack = new ItemTouchHelper
             .SimpleCallback(
             ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT) {
         @Override
@@ -61,9 +54,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-            int position=viewHolder.getAdapterPosition();
+            int position = viewHolder.getAdapterPosition();
             int viewType = getItemViewType(position);
-            if ((viewType == DetailAdapter.VIEW_NEXT_ACTION) || (viewType == DetailAdapter
+            if ((viewType == Projections.VIEW_NEXT_ACTION) || (viewType == Projections
                     .VIEW_DONE_ACTION)) {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 mCursor.moveToPosition(position);
@@ -112,33 +105,33 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             this.mView = view;
 
             switch (viewType) {
-                case VIEW_EMOICON: {
+                case Projections.VIEW_EMOICON: {
                     emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
                     break;
                 }
-                case VIEW_TITLE: {
+                case Projections.VIEW_TITLE: {
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     divider = view.findViewById(R.id.divider);
                     title = (TextView) view.findViewById(R.id.title);
                     break;
                 }
-                case VIEW_NEXT_ACTION: {
+                case Projections.VIEW_NEXT_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
                     actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
                     time = (TextView) view.findViewById(R.id.time);
                     break;
                 }
-                case VIEW_DONE_ACTION: {
+                case Projections.VIEW_DONE_ACTION: {
                     action = (TextView) view.findViewById(R.id.action);
                     actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
                     time = (TextView) view.findViewById(R.id.time);
                     break;
                 }
-                case VIEW_EMPTY_CURSOR: {
+                case Projections.VIEW_EMPTY_CURSOR: {
                     message = (TextView) view.findViewById(R.id.message);
                     break;
                 }
-                case VIEW_EDUCATE_USER: {
+                case Projections.VIEW_EDUCATE_USER: {
                     message = (TextView) view.findViewById(R.id.message);
                     ok = (TextView) view.findViewById(R.id.ok);
                     break;
@@ -154,7 +147,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
-            case VIEW_EMOICON: {
+            case Projections.VIEW_EMOICON: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
                         parent, false);
                 view.setOnClickListener(new View.OnClickListener() {
@@ -231,19 +224,23 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                                             ContactDAO.ContactQuery.SELECTION,
                                             new String[]{contactId},
                                             null);
-                            cursor.moveToFirst();
-                            ContentValues contentvalues = ContactDAO.getContentValues(cursor);
-                            contentvalues = Tools.updateContactValues(contentvalues,
-                                    FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                                    emoIconRessourceId);
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                                    + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID));
+                            try {
+                                cursor.moveToFirst();
+                                ContentValues contentvalues = ContactDAO.getContentValues(cursor);
+                                contentvalues = Tools.updateContactValues(contentvalues,
+                                        FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                                        emoIconRessourceId);
+                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
+                                        + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID));
 
-                            mContext.getContentResolver()
-                                    .update(FriendForecastContract.ContactTable.CONTENT_URI,
-                                            contentvalues,
-                                            ContactDAO.ContactQuery.SELECTION,
-                                            new String[]{contactId});
+                                mContext.getContentResolver()
+                                        .update(FriendForecastContract.ContactTable.CONTENT_URI,
+                                                contentvalues,
+                                                ContactDAO.ContactQuery.SELECTION,
+                                                new String[]{contactId});
+                            } finally {
+                                if (cursor != null) cursor.close();
+                            }
                             return null;
                         }
 
@@ -253,38 +250,38 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         }
                     }
                 });
-                viewHolder = new ViewHolder(view, VIEW_EMOICON);
+                viewHolder = new ViewHolder(view, Projections.VIEW_EMOICON);
                 break;
             }
-            case VIEW_TITLE: {
+            case Projections.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
                         parent, false);
-                viewHolder = new ViewHolder(view, VIEW_TITLE);
+                viewHolder = new ViewHolder(view, Projections.VIEW_TITLE);
                 break;
             }
-            case VIEW_NEXT_ACTION: {
+            case Projections.VIEW_NEXT_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
-                viewHolder = new ViewHolder(view, VIEW_NEXT_ACTION);
+                viewHolder = new ViewHolder(view, Projections.VIEW_NEXT_ACTION);
                 break;
             }
-            case VIEW_DONE_ACTION: {
+            case Projections.VIEW_DONE_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
-                viewHolder = new ViewHolder(view, VIEW_DONE_ACTION);
+                viewHolder = new ViewHolder(view, Projections.VIEW_DONE_ACTION);
                 break;
             }
-            case VIEW_EMPTY_CURSOR: {
+            case Projections.VIEW_EMPTY_CURSOR: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_cursor,
                         parent, false);
-                viewHolder = new ViewHolder(view, VIEW_EMPTY_CURSOR);
+                viewHolder = new ViewHolder(view, Projections.VIEW_EMPTY_CURSOR);
                 break;
             }
-            case VIEW_EDUCATE_USER: {
+            case Projections.VIEW_EDUCATE_USER: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate_message,
                         parent, false);
-                viewHolder = new ViewHolder(view, VIEW_EDUCATE_USER);
+                viewHolder = new ViewHolder(view, Projections.VIEW_EDUCATE_USER);
                 break;
             }
         }
@@ -297,7 +294,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case VIEW_EMOICON: {
+            case Projections.VIEW_EMOICON: {
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
                 mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
@@ -305,14 +302,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.emoIcon.setBackgroundResource(mEmoIconResource);
                 break;
             }
-            case VIEW_TITLE: {
+            case Projections.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(DetailData.SingleColumnQuery.COL_SINGLE_COLUMN));
                 break;
             }
-            case VIEW_NEXT_ACTION: {
+            case Projections.VIEW_NEXT_ACTION: {
                 bindActionCommonsViews(holder);
                 long dueDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
                 holder.time.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
@@ -332,7 +329,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 });
                 break;
             }
-            case VIEW_DONE_ACTION: {
+            case Projections.VIEW_DONE_ACTION: {
                 bindActionCommonsViews(holder);
                 long doneDateLong = mCursor.getLong(ContactActionVectorEventDAO
                         .VectorActionByContactIdQuery.COL_TIME_END);
@@ -355,11 +352,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 });
                 break;
             }
-            case VIEW_EMPTY_CURSOR: {//TODO remove this empty cursor
+            case Projections.VIEW_EMPTY_CURSOR: {//TODO remove this empty cursor
                 holder.message.setText(mCursor.getString(ContactVectorsDAO.ContactVectorsQuery.COL_ID));
                 break;
             }
-            case VIEW_EDUCATE_USER: {
+            case Projections.VIEW_EDUCATE_USER: {
                 holder.message.setText(mCursor.getString(DetailData.SingleColumnQuery.COL_SINGLE_COLUMN));
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -398,10 +395,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        return viewTypes[position];
+        mCursor.moveToPosition(position);
+        int viewtype=mCursor.getInt(mCursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"position "+position);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"viewtype "+viewtype);
+        return viewtype;
     }
-
-
 
 
     private class MarkActionAsCompletedTask extends AsyncTask<String, Void, Void> {
@@ -457,7 +456,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             String eventId = params[0];
             mContext.getContentResolver().delete(
                     FriendForecastContract.EventTable.CONTENT_URI,
-                     FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+                    FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
             );
             return null;
         }

@@ -96,6 +96,7 @@ public class FriendForecastContract {
     }
 
 
+
     public static class ContactTable implements BaseColumns {
         public static String PATH_CONTACT = "contact";
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT).build();
