@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -316,6 +315,16 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
+                Projections.COLUMN_PROJECTION_TYPE
+        };
+
+        String[] PROJECTION_NEXT_QUERY = {
+                FriendForecastContract.EventTable.VIEW_EVENT_ID,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.EventTable.COLUMN_TIME_END,
                 Projections.VIEW_NEXT_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
         };
 
@@ -379,7 +388,7 @@ public class ContactActionVectorEventDAO {
             }
             case NEXT_ACTION_BY_CONTACT_ID: {
                 Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        VectorActionByContactIdQuery.PROJECTION_NEXT,
+                        VectorActionByContactIdQuery.PROJECTION_NEXT_QUERY,
                         VectorActionByContactIdQuery.SELECTION_UNDONE,
                         new String[]{contactId}, null, null, VectorActionByContactIdQuery
                                 .SORT_ORDER_UNDONE);

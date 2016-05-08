@@ -17,7 +17,7 @@ import android.widget.ImageView;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
+import com.elorri.android.friendforcast.db.Projections;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,7 +78,6 @@ public class Tools {
         }
         return cursors;
     }
-
 
 
     public static Cursor getOneLineCursor(String id, int projectionType) {

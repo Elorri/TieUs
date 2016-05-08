@@ -145,6 +145,18 @@ public class FriendForecastProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
+            case TABLE_EVENT:
+                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_EVENT uri " + uri);
+                cursor = mOpenHelper.getReadableDatabase().query(
+                        FriendForecastContract.EventTable.NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -178,6 +190,15 @@ public class FriendForecastProvider extends ContentProvider {
                 long _id = db.insert(FriendForecastContract.EventTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = FriendForecastContract.EventTable.buildEventUri(_id);
+                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
+                } else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case TABLE_ACTION: {
+                long _id = db.insert(FriendForecastContract.ActionTable.NAME, null, values);
+                if (_id > 0) {
+                    returnUri = FriendForecastContract.ActionTable.buildActionUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -228,6 +249,9 @@ public class FriendForecastProvider extends ContentProvider {
                 break;
             case TABLE_EVENT:
                 rowsDeleted = db.delete(FriendForecastContract.EventTable.NAME, selection, selectionArgs);
+                break;
+            case TABLE_ACTION:
+                rowsDeleted = db.delete(FriendForecastContract.ActionTable.NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

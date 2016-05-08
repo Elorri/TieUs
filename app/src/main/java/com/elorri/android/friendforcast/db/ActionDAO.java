@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
 import com.elorri.android.friendforcast.extra.Tools;
 
 import java.util.ArrayList;

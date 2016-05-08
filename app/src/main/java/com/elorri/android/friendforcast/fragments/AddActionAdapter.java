@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
+import com.elorri.android.friendforcast.db.Projections;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;

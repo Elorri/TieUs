@@ -127,6 +127,10 @@ public class FriendForecastContract {
         public static final String COLUMN_SORT_ORDER = "sort_order";
         public static final String VIEW_ACTION_ID = "action_id";
         public static final String VIEW_ACTION_NAME = "action_name";
+
+        public static Uri buildActionUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
     }
 
 

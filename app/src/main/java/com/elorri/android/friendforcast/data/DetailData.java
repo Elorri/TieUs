@@ -9,6 +9,7 @@ import android.util.Log;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.Projections;
 import com.elorri.android.friendforcast.extra.Status;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -36,7 +37,7 @@ public class DetailData {
                 db, contactId);
         if ((actionsCursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
             cursors.add(Tools.getOneLineCursor(context.getResources().getString(R.string.mark_action_as_done),
-                    Projections.VIEW_EDUCATE_USER));
+                    Projections.VIEW_EDUCATE_MESSAGE));
         }
         cursors.add(getNextActionsWrappedCursor(context, context.getResources().getString(R.string.next_actions), db, contactId));
         cursors.add(getDoneActionsWrappedCursor(context, context.getResources().getString(R.string.done_actions), db, contactId));
@@ -91,7 +92,7 @@ public class DetailData {
         //if no next actions are registered we display a message
         if (nextActionsCursor.getCount() == 0) {
             return Tools.getOneLineCursor(context.getResources().getString(R.string.select_action),
-                    Projections.VIEW_EMPTY_CURSOR);
+                    Projections.VIEW_EMPTY_CURSOR_MESSAGE);
         }
 
         //otherwise we display the actions

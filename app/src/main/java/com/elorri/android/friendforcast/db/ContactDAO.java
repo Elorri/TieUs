@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -44,14 +43,28 @@ public class ContactDAO {
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
 
-        String[] PROJECTION = {
+        //This projection won't be used in queries. It will only be used for checking the column
+        // names easily. PROJECTION and PROJECTION_QUERY should match.
+        String[] PROJECTION= {
                 FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ")",
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                Projections.VIEW_EMOICON + " as " + Projections.COLUMN_PROJECTION_TYPE
+                Projections.COLUMN_PROJECTION_TYPE
+        };
+
+        //This is the projection that will be used in queries.
+        String[] PROJECTION_QUERY = {
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                +FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                Projections.VIEW_CONTACT + " as " + Projections.COLUMN_PROJECTION_TYPE
         };
 
 
@@ -120,7 +133,7 @@ public class ContactDAO {
             case CONTACT_BY_ID: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
                         "QUERY CONTACT_BY_ID");
-                return db.query(FriendForecastContract.ContactTable.NAME, ContactQuery.PROJECTION, ContactQuery.SELECTION,
+                return db.query(FriendForecastContract.ContactTable.NAME, ContactQuery.PROJECTION_QUERY, ContactQuery.SELECTION,
                         new String[]{contactId}, null, null, null);
             }
             default:

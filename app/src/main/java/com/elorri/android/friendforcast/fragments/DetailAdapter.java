@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.data.Projections;
+import com.elorri.android.friendforcast.db.Projections;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
@@ -105,7 +105,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             this.mView = view;
 
             switch (viewType) {
-                case Projections.VIEW_EMOICON: {
+                case Projections.VIEW_CONTACT: {
                     emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
                     break;
                 }
@@ -127,11 +127,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     time = (TextView) view.findViewById(R.id.time);
                     break;
                 }
-                case Projections.VIEW_EMPTY_CURSOR: {
+                case Projections.VIEW_EMPTY_CURSOR_MESSAGE: {
                     message = (TextView) view.findViewById(R.id.message);
                     break;
                 }
-                case Projections.VIEW_EDUCATE_USER: {
+                case Projections.VIEW_EDUCATE_MESSAGE: {
                     message = (TextView) view.findViewById(R.id.message);
                     ok = (TextView) view.findViewById(R.id.ok);
                     break;
@@ -147,7 +147,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
-            case Projections.VIEW_EMOICON: {
+            case Projections.VIEW_CONTACT: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
                         parent, false);
                 view.setOnClickListener(new View.OnClickListener() {
@@ -220,7 +220,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             String emoIconRessourceId = params[1];
                             Cursor cursor = mContext.getContentResolver()
                                     .query(FriendForecastContract.ContactTable.CONTENT_URI,
-                                            ContactDAO.ContactQuery.PROJECTION,
+                                            ContactDAO.ContactQuery.PROJECTION_QUERY,
                                             ContactDAO.ContactQuery.SELECTION,
                                             new String[]{contactId},
                                             null);
@@ -250,7 +250,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         }
                     }
                 });
-                viewHolder = new ViewHolder(view, Projections.VIEW_EMOICON);
+                viewHolder = new ViewHolder(view, Projections.VIEW_CONTACT);
                 break;
             }
             case Projections.VIEW_TITLE: {
@@ -272,16 +272,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, Projections.VIEW_DONE_ACTION);
                 break;
             }
-            case Projections.VIEW_EMPTY_CURSOR: {
+            case Projections.VIEW_EMPTY_CURSOR_MESSAGE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_cursor,
                         parent, false);
-                viewHolder = new ViewHolder(view, Projections.VIEW_EMPTY_CURSOR);
+                viewHolder = new ViewHolder(view, Projections.VIEW_EMPTY_CURSOR_MESSAGE);
                 break;
             }
-            case Projections.VIEW_EDUCATE_USER: {
+            case Projections.VIEW_EDUCATE_MESSAGE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate_message,
                         parent, false);
-                viewHolder = new ViewHolder(view, Projections.VIEW_EDUCATE_USER);
+                viewHolder = new ViewHolder(view, Projections.VIEW_EDUCATE_MESSAGE);
                 break;
             }
         }
@@ -294,7 +294,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case Projections.VIEW_EMOICON: {
+            case Projections.VIEW_CONTACT: {
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
                 mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
@@ -352,11 +352,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 });
                 break;
             }
-            case Projections.VIEW_EMPTY_CURSOR: {//TODO remove this empty cursor
+            case Projections.VIEW_EMPTY_CURSOR_MESSAGE: {//TODO remove this empty cursor
                 holder.message.setText(mCursor.getString(ContactVectorsDAO.ContactVectorsQuery.COL_ID));
                 break;
             }
-            case Projections.VIEW_EDUCATE_USER: {
+            case Projections.VIEW_EDUCATE_MESSAGE: {
                 holder.message.setText(mCursor.getString(DetailData.SingleColumnQuery.COL_SINGLE_COLUMN));
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override

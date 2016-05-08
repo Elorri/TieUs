@@ -212,7 +212,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             //Query 1 : Select our app database contacts
             Cursor appCursor = getContext().getContentResolver().query(
                     FriendForecastContract.ContactTable.CONTENT_URI,
-                    ContactDAO.ContactQuery.PROJECTION,
+                    ContactDAO.ContactQuery.PROJECTION_QUERY,
                     null,
                     null,
                     null
@@ -292,7 +292,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         // the fisrt query
                         localCursor = getContext().getContentResolver().query(
                                 FriendForecastContract.ContactTable.CONTENT_URI,
-                                ContactDAO.ContactQuery.PROJECTION,
+                                ContactDAO.ContactQuery.PROJECTION_QUERY,
                                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "=? and "
                                         + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
                                 new String[]{androidContactId, androidLookUpKey},
@@ -346,7 +346,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             //Query 1 : Select android contact ids
             Cursor cursorContacts = getContext().getContentResolver().query(
                     FriendForecastContract.ContactTable.CONTENT_URI,
-                    ContactDAO.ContactQuery.PROJECTION,
+                    ContactDAO.ContactQuery.PROJECTION_QUERY,
                     null,
                     null,
                     null

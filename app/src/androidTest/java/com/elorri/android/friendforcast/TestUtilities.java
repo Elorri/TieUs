@@ -3,7 +3,6 @@ package com.elorri.android.friendforcast;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,10 +25,10 @@ public class TestUtilities extends AndroidTestCase {
             assertFalse("Column '" + columnName + "' not found. ", idx == -1);
             String expectedValue = entry.getValue() != null ? entry.getValue().toString() : null;
             String cursorValue = valueCursor.getString(idx);
-            Log.e("FF", Thread.currentThread().getStackTrace()[2]
-                    + "columnName " + columnName
-                    + " expectedValue " + expectedValue
-                    + " cursorValue " + cursorValue);
+//            Log.e("FF", Thread.currentThread().getStackTrace()[2]
+//                    + "columnName " + columnName
+//                    + " expectedValue " + expectedValue
+//                    + " cursorValue " + cursorValue);
             assertEquals("Error ", expectedValue, cursorValue);
         }
     }

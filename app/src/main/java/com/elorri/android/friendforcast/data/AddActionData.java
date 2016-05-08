@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.elorri.android.friendforcast.db.ActionDAO;
+import com.elorri.android.friendforcast.db.Projections;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.Tools;
 
