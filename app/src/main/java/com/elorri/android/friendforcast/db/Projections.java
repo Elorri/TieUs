@@ -36,6 +36,14 @@ public class Projections {
         };
     }
 
+    public interface TitleQuery {
+        String COLUMN_TITLE = "_id";
+        String[] PROJECTION = {
+                TitleQuery.COLUMN_TITLE,
+                Projections.VIEW_TITLE + " as " + Projections.COLUMN_PROJECTION_TYPE
+        };
+    }
+
 
 
     //TODO rename this

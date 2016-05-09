@@ -28,6 +28,10 @@ public class TestGivens extends AndroidTestCase {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         aContext = mContext;
         deleteAllRecordsFromDB();
+        test_fillContactTable();
+        test_fillActionTable();
+        test_fillVectorTable();
+        test_fillEventTable();
         super.setUp();
     }
 
@@ -41,10 +45,12 @@ public class TestGivens extends AndroidTestCase {
 
 
     public void deleteAllRecordsFromDB() {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
-        aContext.getContentResolver().delete(FriendForecastContract.EventTable.CONTENT_URI, null, null);
         aContext.getContentResolver().delete(FriendForecastContract.ActionTable.CONTENT_URI, null, null);
         aContext.getContentResolver().delete(FriendForecastContract.VectorTable.CONTENT_URI, null, null);
+        aContext.getContentResolver().delete(FriendForecastContract.EventTable.CONTENT_URI, null, null);
+
     }
 
 
@@ -59,7 +65,8 @@ public class TestGivens extends AndroidTestCase {
     }
 
 
-    public void test_I_have_a_table_contact_that_contains_at_least_1_row_with_id_15() {
+    public void test_I_have_a_table_contact_with_id_15() {
+
         Cursor cursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
                 null,
@@ -71,12 +78,39 @@ public class TestGivens extends AndroidTestCase {
         cursor.close();
     }
 
-    public void test_I_have_a_table_contact_that_contains_at_least_1_row_with_id_16() {
+    public void test_I_have_a_table_contact_with_id_16() {
+
         Cursor cursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
                 null,
                 FriendForecastContract.ContactTable._ID + "=?",
                 new String[]{String.valueOf(16)},
+                null
+        );
+        assertTrue(cursor.getCount() > 0);
+        cursor.close();
+    }
+
+    public void test_I_have_a_table_contact_with_id_17() {
+
+        Cursor cursor = aContext.getContentResolver().query(
+                FriendForecastContract.ContactTable.CONTENT_URI,
+                null,
+                FriendForecastContract.ContactTable._ID + "=?",
+                new String[]{String.valueOf(17)},
+                null
+        );
+        assertTrue(cursor.getCount() > 0);
+        cursor.close();
+    }
+
+    public void test_I_have_a_table_contact_with_id_18() {
+
+        Cursor cursor = aContext.getContentResolver().query(
+                FriendForecastContract.ContactTable.CONTENT_URI,
+                null,
+                FriendForecastContract.ContactTable._ID + "=?",
+                new String[]{String.valueOf(18)},
                 null
         );
         assertTrue(cursor.getCount() > 0);
@@ -122,15 +156,60 @@ public class TestGivens extends AndroidTestCase {
     }
 
 
-    public void test_I_have_a_table_event_that_contains_at_least_1_row_with_contact_id_16_action_id_5_timeend_null() {
+    public void test_I_have_a_table_event_with_contact_id_16_action_id_5_timeend_null() {
 
         Cursor cursor = aContext.getContentResolver().query(
                 FriendForecastContract.EventTable.CONTENT_URI,
                 null,
                 FriendForecastContract.EventTable.COLUMN_ACTION_ID + "=?  and "
-                        + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?"
-                        + FriendForecastContract.EventTable.COLUMN_TIME_END + "=?",
-                new String[]{String.valueOf(5), String.valueOf(16), null},
+                        + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                        + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null ",
+                new String[]{String.valueOf(5), String.valueOf(16)},
+                null
+        );
+        assertTrue(cursor.getCount() > 0);
+        cursor.close();
+    }
+
+    public void test_I_have_a_table_event_with_contact_id_17_action_id_5_timeend_not_null() {
+
+        Cursor cursor = aContext.getContentResolver().query(
+                FriendForecastContract.EventTable.CONTENT_URI,
+                null,
+                FriendForecastContract.EventTable.COLUMN_ACTION_ID + "=?  and "
+                        + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                        + FriendForecastContract.EventTable.COLUMN_TIME_END + " not null ",
+                new String[]{String.valueOf(5), String.valueOf(17)},
+                null
+        );
+        assertTrue(cursor.getCount() > 0);
+        cursor.close();
+    }
+
+    public void test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_null() {
+
+        Cursor cursor = aContext.getContentResolver().query(
+                FriendForecastContract.EventTable.CONTENT_URI,
+                null,
+                FriendForecastContract.EventTable.COLUMN_ACTION_ID + "=?  and "
+                        + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                        + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null ",
+                new String[]{String.valueOf(5), String.valueOf(18)},
+                null
+        );
+        assertTrue(cursor.getCount() > 0);
+        cursor.close();
+    }
+
+    public void test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_not_null() {
+
+        Cursor cursor = aContext.getContentResolver().query(
+                FriendForecastContract.EventTable.CONTENT_URI,
+                null,
+                FriendForecastContract.EventTable.COLUMN_ACTION_ID + "=?  and "
+                        + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
+                        + FriendForecastContract.EventTable.COLUMN_TIME_END + " not null ",
+                new String[]{String.valueOf(5), String.valueOf(18)},
                 null
         );
         assertTrue(cursor.getCount() > 0);
@@ -138,7 +217,10 @@ public class TestGivens extends AndroidTestCase {
     }
 
 
+
+
     public void test_fillContactTable() {
+        aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
 
         String contactString = "\n"
                 + "header |" +
@@ -148,7 +230,10 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|" +
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|" +
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "|\n"
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|acticall||2130837600|\n";
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul||2130837600|\n"
+                + "row |16|833|298i5.3552i264b0e968b8a46ff|Pierre||2130837600|\n"
+                + "row |17|834|298i5.3552i264b0e968b8a47ff|Jacques||2130837600|\n"
+                + "row |18|835|298i5.3552i264b0e968b8a49ff|Martin||2130837600|\n";
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(contactString));
@@ -156,7 +241,7 @@ public class TestGivens extends AndroidTestCase {
         int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.ContactTable.CONTENT_URI,
                 contactValues);
 
-        assertEquals(1, insertCount);
+        assertEquals(4, insertCount);
 
         Cursor contactCursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
@@ -166,7 +251,7 @@ public class TestGivens extends AndroidTestCase {
                 null
         );
 
-        assertEquals(contactCursor.getCount(), 1);
+        assertEquals(4, contactCursor.getCount());
 
 //        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "expected : \n"
 //                + contactString);
@@ -178,6 +263,8 @@ public class TestGivens extends AndroidTestCase {
     }
 
     public void test_fillActionTable() {
+        aContext.getContentResolver().delete(FriendForecastContract.ActionTable.CONTENT_URI, null, null);
+
         String actionString = "\n"
                 + "header |" +
                 FriendForecastContract.ActionTable._ID + "|" +
@@ -188,9 +275,8 @@ public class TestGivens extends AndroidTestCase {
 
         ContentValues[] actionValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(actionString));
-       int insertCount= aContext.getContentResolver().bulkInsert(FriendForecastContract.ActionTable
-                        .CONTENT_URI,
-                actionValues);
+        int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.ActionTable
+                .CONTENT_URI, actionValues);
         assertEquals(1, insertCount);
         Cursor actionCursor = aContext.getContentResolver().query(FriendForecastContract.ActionTable
                 .CONTENT_URI, null, null, null, null);
@@ -198,6 +284,8 @@ public class TestGivens extends AndroidTestCase {
     }
 
     public void test_fillVectorTable() {
+        aContext.getContentResolver().delete(FriendForecastContract.VectorTable.CONTENT_URI, null, null);
+
         String vectorString = "\n"
                 + "header |" +
                 FriendForecastContract.VectorTable._ID + "|" +
@@ -207,7 +295,7 @@ public class TestGivens extends AndroidTestCase {
                 + "row |32|Gmail|com.google.android.gm|package|\n";
         ContentValues[] vectorValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(vectorString));
-        int insertCount=aContext.getContentResolver().bulkInsert(FriendForecastContract.VectorTable
+        int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.VectorTable
                         .CONTENT_URI,
                 vectorValues);
         assertEquals(1, insertCount);
@@ -217,6 +305,8 @@ public class TestGivens extends AndroidTestCase {
     }
 
     public void test_fillEventTable() {
+        aContext.getContentResolver().delete(FriendForecastContract.EventTable.CONTENT_URI, null, null);
+
         String eventString = "\n"
                 + "header |" +
                 FriendForecastContract.EventTable._ID + "|" +
@@ -225,20 +315,24 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.EventTable.COLUMN_VECTOR_ID + "|" +
                 FriendForecastContract.EventTable.COLUMN_TIME_START + "|" +
                 FriendForecastContract.EventTable.COLUMN_TIME_END + "|\n"
-                + "row |8|16|5|32|1462226400000|null|\n";
+                + "row |8|16|5|32|1462226400000|null|\n"
+                + "row |9|17|5|32|1462226400000|1462791975441|\n"
+                + "row |10|18|5|32|1462226400000|null|\n"
+                + "row |11|18|5|32|1462226400050|1462791975441|\n";
         ContentValues[] eventValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(eventString));
-        int insertCount=aContext.getContentResolver().bulkInsert(FriendForecastContract.EventTable
+        int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.EventTable
                         .CONTENT_URI,
                 eventValues);
-        assertEquals(1, insertCount);
+        assertEquals(4, insertCount);
         Cursor eventCursor = aContext.getContentResolver().query(FriendForecastContract.EventTable
                 .CONTENT_URI, null, null, null, null);
-//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "expected : "
-//                + eventString);
-//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actual : "
-//                + TestUtility.getCursorString(eventCursor));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "expected : "
+                + eventString);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "actual : "
+                + TestUtility.getCursorString(eventCursor));
         assertEquals(eventString, TestUtility.getCursorString(eventCursor));
     }
+
 
 }

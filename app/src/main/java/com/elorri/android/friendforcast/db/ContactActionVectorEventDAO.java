@@ -335,6 +335,16 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
+                Projections.COLUMN_PROJECTION_TYPE
+        };
+
+        String[] PROJECTION_DONE_QUERY = {
+                FriendForecastContract.EventTable.VIEW_EVENT_ID,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.EventTable.COLUMN_TIME_END,
                 Projections.VIEW_DONE_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
         };
 
@@ -396,7 +406,7 @@ public class ContactActionVectorEventDAO {
             }
             case DONE_ACTION_BY_CONTACT_ID: {
                 Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        VectorActionByContactIdQuery.PROJECTION_DONE,
+                        VectorActionByContactIdQuery.PROJECTION_DONE_QUERY,
                         VectorActionByContactIdQuery.SELECTION_DONE,
                         new String[]{contactId}, null, null, VectorActionByContactIdQuery
                                 .SORT_ORDER_DONE);
