@@ -288,4 +288,49 @@ public class FriendForecastProvider extends ContentProvider {
         }
         return rowsUpdated;
     }
+
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        final int match = sUriMatcher.match(uri);
+        int returnCount = 0;
+        switch (match) {
+            case TABLE_CONTACT:
+                returnCount = insertInBulk(FriendForecastContract.ContactTable.NAME, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            case TABLE_ACTION:
+                returnCount = insertInBulk(FriendForecastContract.ActionTable.NAME, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            case TABLE_VECTOR:
+                returnCount = insertInBulk(FriendForecastContract.VectorTable.NAME, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            case TABLE_EVENT:
+                returnCount = insertInBulk(FriendForecastContract.EventTable.NAME, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return returnCount;
+            default:
+                return super.bulkInsert(uri, values);
+        }
+    }
+
+    private int insertInBulk(String tableName, ContentValues[] values) {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        db.beginTransaction();
+        int returnCount = 0;
+        try {
+            for (ContentValues value : values) {
+                long _id = db.insert(tableName, null, value);
+                if (_id != -1) {
+                    returnCount++;
+                }
+            }
+            db.setTransactionSuccessful();
+            return returnCount;
+        } finally {
+            db.endTransaction();
+        }
+    }
 }
