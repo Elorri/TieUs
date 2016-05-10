@@ -121,8 +121,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
-                + Projections.VIEW_UNMANAGED_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from "
+                + ViewTypes.VIEW_UNMANAGED_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " != "
                 + R.drawable.ic_do_not_disturb_alt_black_48dp + " and "
@@ -134,8 +134,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
-                + Projections.VIEW_UNMANAGED_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_UNMANAGED_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
@@ -152,8 +152,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ", "
-                + Projections.VIEW_UNTRACKED_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from "
+                + ViewTypes.VIEW_UNTRACKED_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " = "
                 + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by lower("
@@ -178,8 +178,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", "
-                + Projections.VIEW_DELAY_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_DELAY_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -209,8 +209,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", "
-                + Projections.VIEW_TODAY_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_TODAY_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -240,8 +240,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", "
-                + Projections.VIEW_TODAY_DONE_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_TODAY_DONE_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null order by "
@@ -267,8 +267,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", "
-                + Projections.VIEW_NEXT_PEOPLE + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_NEXT_PEOPLE + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + " > ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
@@ -305,7 +305,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
-                Projections.VIEW_ALL_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.VIEW_ALL_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_NEXT = {
@@ -315,7 +315,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
-                Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_NEXT_QUERY = {
@@ -325,7 +325,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
-                Projections.VIEW_NEXT_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.VIEW_NEXT_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_DONE = {
@@ -335,7 +335,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
-                Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_DONE_QUERY = {
@@ -345,7 +345,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
-                Projections.VIEW_DONE_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.VIEW_DONE_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
 
@@ -451,7 +451,10 @@ public class ContactActionVectorEventDAO {
 
     public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType), Projections.VIEW_TITLE));
+        cursors.add(MatrixCursors.getOneLineCursor(
+                MatrixCursors.TitleQuery.PROJECTION,
+                MatrixCursors.TitleQuery.VALUES,
+                getCursorTitle(context, cursorType)));
         cursors.add(getCursorWithViewTypes(cursorType, db));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -476,5 +479,8 @@ public class ContactActionVectorEventDAO {
             default:
                 return null;
         }
+
     }
+
+
 }

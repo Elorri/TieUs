@@ -9,7 +9,7 @@ import android.util.Log;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
-import com.elorri.android.friendforcast.db.Projections;
+import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.extra.Status;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -36,8 +36,10 @@ public class DetailData {
                 ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
                 db, contactId);
         if ((actionsCursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
-            cursors.add(Tools.getOneLineCursor(context.getResources().getString(R.string.mark_action_as_done),
-                    Projections.VIEW_EDUCATE_MESSAGE));
+            cursors.add(MatrixCursors.getOneLineCursor(
+                    MatrixCursors.EducateMessageQuery.PROJECTION,
+                    MatrixCursors.EducateMessageQuery.VALUES,
+                    context.getResources().getString(R.string.mark_action_as_done)));
         }
         cursors.add(getNextActionsWrappedCursor(context, context.getResources().getString(R.string.next_actions), db, contactId));
         cursors.add(getDoneActionsWrappedCursor(context, context.getResources().getString(R.string.done_actions), db, contactId));
@@ -60,7 +62,11 @@ public class DetailData {
         //if some actions done are registered, we display the next action title.
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(title, Projections.VIEW_TITLE));
+        cursors.add(MatrixCursors.getOneLineCursor(
+                MatrixCursors.TitleQuery.PROJECTION,
+                MatrixCursors.TitleQuery.VALUES,
+                title
+        ));
         cursors.add(getNextActionsCursor(context, db, contactId));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -77,7 +83,11 @@ public class DetailData {
 
         //if some actions done are registered, we display the done actions title.
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(title, Projections.VIEW_TITLE));
+        cursors.add(MatrixCursors.getOneLineCursor(
+                MatrixCursors.TitleQuery.PROJECTION,
+                MatrixCursors.TitleQuery.VALUES,
+                title
+        ));
         cursors.add(doneActionCursor);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -91,8 +101,10 @@ public class DetailData {
 
         //if no next actions are registered we display a message
         if (nextActionsCursor.getCount() == 0) {
-            return Tools.getOneLineCursor(context.getResources().getString(R.string.select_action),
-                    Projections.VIEW_EMPTY_CURSOR_MESSAGE);
+            return MatrixCursors.getOneLineCursor(
+                    MatrixCursors.EducateMessageQuery.PROJECTION,
+                    MatrixCursors.EmptyCursorMessageQuery.VALUES,
+                    context.getResources().getString(R.string.select_action));
         }
 
         //otherwise we display the actions

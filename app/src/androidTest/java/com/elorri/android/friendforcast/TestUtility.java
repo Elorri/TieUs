@@ -7,7 +7,7 @@ import android.database.MergeCursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.elorri.android.friendforcast.db.Projections;
+import com.elorri.android.friendforcast.db.ViewTypes;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -26,12 +26,12 @@ public class TestUtility extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        String[] cursor1_columns = {"_id", "col1", Projections.COLUMN_PROJECTION_TYPE};
+        String[] cursor1_columns = {"_id", "col1", ViewTypes.COLUMN_VIEWTYPE};
         mCursor1 = new MatrixCursor(cursor1_columns);
         mCursor1.addRow(new Object[]{1, "data1", 1});
         mCursor1.addRow(new Object[]{2, "data3", 1});
 
-        String[] cursor2_columns = {"_id", "col1", "col2", Projections.COLUMN_PROJECTION_TYPE};
+        String[] cursor2_columns = {"_id", "col1", "col2", ViewTypes.COLUMN_VIEWTYPE};
         mCursor2 = new MatrixCursor(cursor2_columns);
         mCursor2.addRow(new Object[]{1, "data1", "data2", 2});
 
@@ -58,13 +58,13 @@ public class TestUtility extends AndroidTestCase {
     public static String getCursorString(Cursor cursor) {
         cursor.moveToPosition(-1);
         String cursorString = "\n";
-        if (cursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE) != -1) {
+        if (cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE) != -1) {
             if (cursor.moveToFirst()) {
-                int viewType = cursor.getInt(cursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE));
+                int viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
                 cursorString = cursorString + getCursorHeaderString(cursor);
                 cursor.moveToPosition(-1);
                 while (cursor.moveToNext()) {
-                    if (viewType != cursor.getInt(cursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE)))
+                    if (viewType != cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE)))
                         cursorString = cursorString + getCursorHeaderString(cursor);
                     cursorString = cursorString + getCursorRowString(cursor);
                 }
@@ -126,7 +126,7 @@ public class TestUtility extends AndroidTestCase {
     }
 
     public void test_getCursorHeaderString() {
-        assertEquals("header |_id|col1|" + Projections.COLUMN_PROJECTION_TYPE + "|\n",
+        assertEquals("header |_id|col1|" + ViewTypes.COLUMN_VIEWTYPE + "|\n",
                 getCursorHeaderString(mCursor1));
     }
 
@@ -181,6 +181,7 @@ public class TestUtility extends AndroidTestCase {
             assertEquals("Error ", expectedValue, cursorValue);
         }
     }
+
 
 
 }

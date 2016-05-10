@@ -48,4 +48,7 @@
     <string name="mark_action_as_done">Long press the action to mark it as complete or uncomplete
     </string>
     <string name="ok">Ok</string>
+    <string name="no_contacts_on_phone">Start adding contact on your phone to make the most of this
+        app
+    </string>
 </resources>

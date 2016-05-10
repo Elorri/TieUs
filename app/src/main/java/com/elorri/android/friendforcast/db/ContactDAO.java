@@ -44,7 +44,7 @@ public class ContactDAO {
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
 
         //This projection won't be used in queries. It will only be used for checking the column
-        // names easily. PROJECTION and PROJECTION_QUERY should match.
+        // names easily. PROJECTION_QUERY and PROJECTION_QUERY should match.
         String[] PROJECTION= {
                 FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
@@ -52,7 +52,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.COLUMN_VIEWTYPE
         };
 
         //This is the projection that will be used in queries.
@@ -64,7 +64,7 @@ public class ContactDAO {
                 +FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
-                Projections.VIEW_CONTACT + " as " + Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
 
@@ -75,12 +75,14 @@ public class ContactDAO {
         int COL_RATIO = 0;
         int COL_PROJECTION_TYPE = 1;
 
+        String[] PROJECTION=new String[]{FriendForecastContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
+
         String SELECT_RATIO_EMOICONE = "select "
                 + FriendForecastContract.ContactTable.VIEW_PART + "/("
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + "*1.0) as "
                 + FriendForecastContract.ContactTable.VIEW_RATIO + ", "
-                + Projections.VIEW_FORECAST + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from (select count("
+                + ViewTypes.VIEW_FORECAST + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from (select count("
                 + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
                 + FriendForecastContract.ContactTable.NAME + ") inner join (select count("

@@ -49,7 +49,10 @@ public class ActionDAO {
         try {
             while (cursorTitles.moveToNext()) {
                 String title = cursorTitles.getString(DistinctActionTitleQuery.COL_ACTION_TITLE);
-                cursors.add(Tools.getOneLineCursor(title, Projections.VIEW_TITLE));
+                cursors.add(MatrixCursors.getOneLineCursor(
+                        MatrixCursors.TitleQuery.PROJECTION,
+                        MatrixCursors.TitleQuery.VALUES,
+                        title));
                 cursors.add(ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, title));
             }
         } finally {
@@ -76,7 +79,15 @@ public class ActionDAO {
                 FriendForecastContract.ActionTable.COLUMN_TITLE,
                 FriendForecastContract.ActionTable.COLUMN_NAME,
                 FriendForecastContract.ActionTable.COLUMN_SORT_ORDER,
-                Projections.VIEW_ACTION + " as " + Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
+        String[] PROJECTION_QUERY = {
+                FriendForecastContract.ActionTable._ID,
+                FriendForecastContract.ActionTable.COLUMN_TITLE,
+                FriendForecastContract.ActionTable.COLUMN_NAME,
+                FriendForecastContract.ActionTable.COLUMN_SORT_ORDER,
+                ViewTypes.VIEW_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
     }
@@ -117,7 +128,7 @@ public class ActionDAO {
             case ALL_ACTIONS: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ALL_ACTIONS");
                 return db.query(FriendForecastContract.ActionTable.NAME,
-                        ActionQuery.PROJECTION,
+                        ActionQuery.PROJECTION_QUERY,
                         null,
                         null,
                         null,
@@ -127,7 +138,7 @@ public class ActionDAO {
             case ACTION_BY_ID: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(FriendForecastContract.ActionTable.NAME,
-                        ActionQuery.PROJECTION,
+                        ActionQuery.PROJECTION_QUERY,
                         ActionQuery.SELECTION_BY_ACTION_ID,
                         new String[]{actionId},
                         null,
@@ -137,7 +148,7 @@ public class ActionDAO {
             case ACTIONS_TITLES: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(FriendForecastContract.ActionTable.NAME,
-                        ActionQuery.PROJECTION,
+                        ActionQuery.PROJECTION_QUERY,
                         ActionQuery.SELECTION_BY_TITLE,
                         new String[]{title},
                         null,

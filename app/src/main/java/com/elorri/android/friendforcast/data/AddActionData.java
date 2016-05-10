@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.elorri.android.friendforcast.db.ActionDAO;
-import com.elorri.android.friendforcast.db.Projections;
+import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -26,7 +26,6 @@ public class AddActionData {
 
     public static final int ACTION_SELECT_ACTION = 0;
     public static final int ACTION_SELECT_VECTOR = 1;
-    public static final int ACTION_SELECT_TEMPLATE = 2;
     public static final int ACTION_VALIDATE = 3;
 
 
@@ -66,7 +65,7 @@ public class AddActionData {
             case ACTION_VALIDATE:
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + RecapQuery
                         .SELECT_ACTION_RECAP_VALIDATE);
-                return  db.rawQuery(RecapQuery.SELECT_ACTION_RECAP_VALIDATE, new
+                return db.rawQuery(RecapQuery.SELECT_ACTION_RECAP_VALIDATE, new
                         String[]{timeStart, actionId, vectorId});
         }
         return null;
@@ -99,9 +98,18 @@ public class AddActionData {
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", ? as "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
-                + Projections.VIEW_ACTION + " as "
-                + Projections.COLUMN_PROJECTION_TYPE + " from ("
+                + ViewTypes.VIEW_ACTION_RECAP_QUERY + " as "
+                + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + SELECT_ACTION + ") inner join (" + SELECT_VECTOR + ")";
+
+        String[] SELECT_ACTION_RECAP_VALIDATE_PROJECTION = new String[]{
+                FriendForecastContract.ActionTable.VIEW_ACTION_ID,
+                FriendForecastContract.ActionTable.COLUMN_NAME,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_ID,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                ViewTypes.COLUMN_VIEWTYPE};
 
     }
 

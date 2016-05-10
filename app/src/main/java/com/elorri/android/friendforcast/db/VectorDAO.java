@@ -29,8 +29,6 @@ public class VectorDAO {
             + "UNIQUE (" + FriendForecastContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE)";
 
 
-
-
     public interface VectorQuery {
 
         int LOADER_ID = 0;
@@ -39,7 +37,7 @@ public class VectorDAO {
         int COL_VECTOR_NAME = 1;
         int COL_DATA = 2;
         int COL_MIMETYPE = 3;
-        int COL_PROJECTION_TYPE=4;
+        int COL_PROJECTION_TYPE = 4;
 
         String SELECTION = FriendForecastContract.VectorTable._ID + "=?";
 
@@ -50,23 +48,34 @@ public class VectorDAO {
                 FriendForecastContract.VectorTable.COLUMN_NAME,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
-                Projections.VIEW_VECTOR_ITEM+" as "+Projections.COLUMN_PROJECTION_TYPE
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
+        String[] PROJECTION_QUERY = {
+                FriendForecastContract.VectorTable._ID,
+                FriendForecastContract.VectorTable.COLUMN_NAME,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                ViewTypes.VIEW_VECTOR_ITEM + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
     }
 
     public static ContentValues getContentValues(String name, String data, String mimetype) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_NAME,name);
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_DATA,data);
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_MIMETYPE,mimetype);
+        contentValues.put(FriendForecastContract.VectorTable.COLUMN_NAME, name);
+        contentValues.put(FriendForecastContract.VectorTable.COLUMN_DATA, data);
+        contentValues.put(FriendForecastContract.VectorTable.COLUMN_MIMETYPE, mimetype);
         return contentValues;
     }
 
 
     public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(Tools.getOneLineCursor(getCursorTitle(context, cursorType), Projections.VIEW_TITLE));
+        cursors.add(MatrixCursors.getOneLineCursor(
+                MatrixCursors.TitleQuery.PROJECTION,
+                MatrixCursors.TitleQuery.VALUES,
+                getCursorTitle(context, cursorType)));
         cursors.add(getCursor(cursorType, db));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -81,12 +90,11 @@ public class VectorDAO {
     }
 
 
-
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
             case ALL_VECTORS: {
                 return db.query(FriendForecastContract.VectorTable.NAME,
-                        VectorQuery.PROJECTION,
+                        VectorQuery.PROJECTION_QUERY,
                         null,
                         null,
                         null,

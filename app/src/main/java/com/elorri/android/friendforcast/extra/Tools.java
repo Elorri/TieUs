@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.Projections;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,13 +77,6 @@ public class Tools {
         return cursors;
     }
 
-
-    public static Cursor getOneLineCursor(String id, int projectionType) {
-        String[] cursor_columns = {"_id", Projections.COLUMN_PROJECTION_TYPE};
-        MatrixCursor cursor = new MatrixCursor(cursor_columns);
-        cursor.addRow(new Object[]{id, projectionType});
-        return cursor;
-    }
 
     public static boolean hasHoneycomb() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;

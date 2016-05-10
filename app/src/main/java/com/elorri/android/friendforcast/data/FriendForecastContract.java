@@ -43,7 +43,7 @@ public class FriendForecastContract {
 
 
         // DATA_ADD_ACTION_SELECT_ACTION  content://com.elorri.android.communication/add_action/
-        public static final Uri URI_PAGE_ADD_ACTION_SELECT_ACTION = BASE_CONTENT_URI.buildUpon()
+        public static final Uri URI_PAGE_SELECT_ACTION = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_ADD_ACTION)
                 .build();
 

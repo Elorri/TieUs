@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.Projections;
+import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
@@ -80,7 +80,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     timeStart = (TextView) view.findViewById(R.id.time);
                     break;
                 }
-                case Projections.VIEW_TITLE: {
+                case ViewTypes.VIEW_TITLE: {
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     divider = view.findViewById(R.id.divider);
                     title = (TextView) view.findViewById(R.id.title);
@@ -91,7 +91,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     textView = (TextView) view.findViewById(R.id.textview);
                     break;
                 }
-                case Projections.VIEW_VECTOR_ITEM: {
+                case ViewTypes.VIEW_VECTOR_ITEM: {
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     imageView = (ImageView) view.findViewById(R.id.imageview);
                     label = (TextView) view.findViewById(R.id.label);
@@ -115,11 +115,11 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 viewHolder = new ViewHolder(view, VIEW_ACTION_RECAP);
                 break;
             }
-            case Projections.VIEW_TITLE: {
+            case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
                         parent, false);
-                viewHolder = new ViewHolder(view, Projections.VIEW_TITLE);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_TITLE);
                 break;
             }
             case VIEW_ACTION_ITEM: {
@@ -129,11 +129,11 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 viewHolder = new ViewHolder(view, VIEW_ACTION_ITEM);
                 break;
             }
-            case Projections.VIEW_VECTOR_ITEM: {
+            case ViewTypes.VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_imageview_label,
                         parent, false);
-                viewHolder = new ViewHolder(view, Projections.VIEW_VECTOR_ITEM);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_VECTOR_ITEM);
                 break;
             }
         }
@@ -180,7 +180,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 }
                 break;
             }
-            case Projections.VIEW_TITLE: {
+            case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
@@ -201,7 +201,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 });
                 break;
             }
-            case Projections.VIEW_VECTOR_ITEM: {
+            case ViewTypes.VIEW_VECTOR_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.imageView.setBackground(null);
                 Tools.setVectorBackground(mContext, holder.imageView, mCursor.getString(
@@ -241,10 +241,10 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     @Override
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
-        int viewtype = mCursor.getInt(mCursor.getColumnIndex(Projections.COLUMN_PROJECTION_TYPE));
+        int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
-        if (viewtype == Projections.VIEW_ACTION) {
+        if (viewtype == ViewTypes.VIEW_ACTION) {
             viewtype = (mActionStepSize == 0) ? VIEW_ACTION_ITEM : VIEW_ACTION_RECAP;
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mActionStepSize " + mActionStepSize);
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);

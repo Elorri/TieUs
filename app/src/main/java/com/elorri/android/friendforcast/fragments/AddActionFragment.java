@@ -43,7 +43,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     //This variable will allow to choose the most suitable uri and display the correct data. It
     // will contain in order :
-    // no data -> uri : URI_PAGE_ADD_ACTION_SELECT_ACTION
+    // no data -> uri : URI_PAGE_SELECT_ACTION
     // actionId -> uri : URI_PAGE_ADD_ACTION_SELECT_VECTOR
     // actionId, vectorId, time -> uri : URI_PAGE_ADD_ACTION_VALIDATE
     private LinkedList<String> actionSteps = new LinkedList<>();
@@ -77,7 +77,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (actionSteps.size()) {
             case 0: //We ask the user to select an action
-                mUri = FriendForecastContract.AddActionData.URI_PAGE_ADD_ACTION_SELECT_ACTION;
+                mUri = FriendForecastContract.AddActionData.URI_PAGE_SELECT_ACTION;
                 break;
             case 1://We have the action, we ask for a vector and a dateStart
                 mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get(0));
