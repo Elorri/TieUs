@@ -7,7 +7,9 @@ import android.database.MergeCursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
+import com.elorri.android.friendforcast.extra.Tools;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,6 +22,7 @@ public class TestUtility extends AndroidTestCase {
 
     MatrixCursor mCursor1;
     MatrixCursor mCursor2;
+    MatrixCursor mEmptyCursor;
     Cursor mMergedCursor;
 
     @Override
@@ -34,6 +37,9 @@ public class TestUtility extends AndroidTestCase {
         String[] cursor2_columns = {"_id", "col1", "col2", ViewTypes.COLUMN_VIEWTYPE};
         mCursor2 = new MatrixCursor(cursor2_columns);
         mCursor2.addRow(new Object[]{1, "data1", "data2", 2});
+
+        String[] emptyCursor_columns = {"_id", "col1", "col2"};
+        mEmptyCursor = new MatrixCursor(emptyCursor_columns);
 
         mMergedCursor = new MergeCursor(new Cursor[]{mCursor1, mCursor2});
 
@@ -181,6 +187,141 @@ public class TestUtility extends AndroidTestCase {
             assertEquals("Error ", expectedValue, cursorValue);
         }
     }
+
+
+    public void test_ToolsGetCursorWithProperties() {
+
+        String aTitle = "aTitle";
+        String anEmptyCursorMessage = "anEmptyCursorMessage";
+
+
+        String cursorEmptyCursorStringWithoutMessageWithoutTitle = "\nheader |_id|col1|col2|\n";
+        Cursor cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, false,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithoutMessageWithoutTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, false,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithoutTitle" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithoutMessageWithoutTitle, getCursorString(cursor));
+
+
+
+        String cursorEmptyCursorStringWithMessageWithoutTitle = "\n"
+                + "header |"
+                + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
+        cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, true,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithMessageWithoutTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, true,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithoutTitle" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithMessageWithoutTitle, getCursorString(cursor));
+
+
+
+        String cursorEmptyCursorStringWithoutMessageWithTitle = "\n"
+                + "header |"
+                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |" + aTitle + "|" + ViewTypes.VIEW_TITLE + "|\n";
+        cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, false,
+                anEmptyCursorMessage, true);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitle" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithoutMessageWithTitle, getCursorString(cursor));
+
+
+        String cursorEmptyCursorStringWithMessageWithTitle = "\n"
+                + "header |"
+                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |" + aTitle + "|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "header |"
+                + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
+                + "|\n"
+                + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
+        cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, true,
+                anEmptyCursorMessage, true);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitle" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithMessageWithTitle, getCursorString(cursor));
+
+
+        String cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse = "\n"
+                + "header |_id|col1|col2|\n";
+        cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, false,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse,
+                getCursorString(cursor));
+
+
+        String cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse = "\n"
+                + "header |"
+                + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
+                + "|\n"
+                + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
+        cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, true,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
+        assertEquals(cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse, getCursorString(cursor));
+
+
+        String cursorFullCursorStringWithTitle = "\n"
+                + "header |"
+                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |" + aTitle + "|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "header |_id|col1|col2|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |1|data1|data2|2|\n";
+        cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, true,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, false,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, true,
+                anEmptyCursorMessage, false);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, false,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorFullCursorStringWithTitle" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
+
+
+        String cursorFullCursorStringWithoutTitle = "\n"
+                + "header |_id|col1|col2|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |1|data1|data2|2|\n";
+
+        cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, true,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, false,
+                anEmptyCursorMessage, true);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, true,
+                anEmptyCursorMessage, false);
+        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
+
+        cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, false,
+                anEmptyCursorMessage, false);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorFullCursorStringWithoutTitle" + getCursorString(cursor));
+        assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
+
+
+    }
+
 
 
 

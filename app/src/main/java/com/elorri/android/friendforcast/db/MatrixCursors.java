@@ -65,7 +65,11 @@ public class MatrixCursors {
         String COLUMN_MESSAGE = "_id";
         String[] PROJECTION = {
                 MessageQuery.COLUMN_MESSAGE,
-                ViewTypes.VIEW_MESSAGE + " as " + ViewTypes.COLUMN_VIEWTYPE
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+        String[] VALUES = {
+                "a message",
+                String.valueOf(ViewTypes.VIEW_MESSAGE)
         };
     }
 }

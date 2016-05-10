@@ -45,10 +45,22 @@
     <string name="done_actions">Done actions</string>
     <string name="completed"><xliff:g >%1$s</xliff:g> at <xliff:g >%2$s</xliff:g></string>
     <string name="pref_mark_action_feature_status_key" translatable="false">mark_action_feature_status</string>
+    <string name="pref_message_idx_status_key" translatable="false">pref_message_idx_status</string>
+    <string name="pref_message_last_fill_in_delay_message_key" translatable="false">pref_message_last_fill_in_delay_message_key</string>
+
+
     <string name="mark_action_as_done">Long press the action to mark it as complete or uncomplete
     </string>
     <string name="ok">Ok</string>
     <string name="no_contacts_on_phone">Start adding contact on your phone to make the most of this
         app
     </string>
+    <string name="manage_unmanaged_people">You have <xliff:g >%1$s</xliff:g> unmanaged people.
+        Plan actions on their profile and start caring. <xliff:g >%2$s</xliff:g></string>
+
+    <string name="fill_in_delay_feedback_title">People recently act for</string>
+
+    <string name="fill_in_delay_feedback">You recently demonstrate interest to <xliff:g >%1$s
+    </xliff:g> people. When would you like best to see them answering ? Fill the feedback delay
+        on their profile.</string>
 </resources>

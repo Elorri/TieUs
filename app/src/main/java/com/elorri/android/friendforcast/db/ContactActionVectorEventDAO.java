@@ -29,7 +29,7 @@ public class ContactActionVectorEventDAO {
     public static final int UNTRACKED_PEOPLE = 8;
 
 
-    private static final String JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT = "select "
+    public static final String JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT = "select "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -99,6 +99,7 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " asc";
 
+
     public interface PeopleQuery {
         int COL_ID = 0;
         int COL_ANDROID_CONTACT_ID = 1;
@@ -111,6 +112,17 @@ public class ContactActionVectorEventDAO {
 
 
     public interface UnmanagedPeopleQuery extends PeopleQuery {
+
+
+        String[] PROJECTION = new String[]{
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                ViewTypes.COLUMN_VIEWTYPE
+        };
 
 
         String SELECT_UNMANAGED_PEOPLE = "select "
@@ -138,6 +150,36 @@ public class ContactActionVectorEventDAO {
                 + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
+    }
+
+
+    public interface PeopleLastActedForQuery {
+
+
+        String[] PROJECTION = new String[]{
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
+
+        String[] PROJECTION_QUERY = new String[]{
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
+        String SELECTION=FriendForecastContract.EventTable.COLUMN_TIME_END+" between ? and ?";
+
     }
 
 
@@ -479,6 +521,21 @@ public class ContactActionVectorEventDAO {
             default:
                 return null;
         }
+
+    }
+
+
+    public static Cursor getUntrackedPeople(SQLiteDatabase db,
+                                            boolean withTitle,
+                                            String title,
+                                            boolean withEmptyMessageIfEmpty,
+                                            String emptyMessage,
+                                            boolean displayTitleIfListEmpty) {
+
+        Cursor cursor = db.rawQuery(UntrackedPeopleQuery.SELECT_UNTRACKED_PEOPLE, null);
+        return Tools.addDisplayProperties(cursor, withTitle, title, withEmptyMessageIfEmpty,
+                emptyMessage, displayTitleIfListEmpty);
+
 
     }
 

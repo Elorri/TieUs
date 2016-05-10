@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
+import com.elorri.android.friendforcast.db.MatrixCursors;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -186,5 +188,42 @@ public class Tools {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
+    }
+
+
+    public static Cursor addDisplayProperties(Cursor cursor,
+                                              boolean withTitle,
+                                              String title,
+                                              boolean withEmptyMessageIfEmpty,
+                                              String emptyMessage,
+                                              boolean displayTitleIfListEmpty) {
+
+        displayTitleIfListEmpty = withTitle ? displayTitleIfListEmpty : false;
+
+        boolean addTitle = false;
+        boolean addEmptyMessage = false;
+
+        if (withTitle)
+            addTitle = true;
+        ArrayList<Cursor> cursors = new ArrayList();
+        if (cursor.getCount() == 0) {
+            addTitle = displayTitleIfListEmpty;
+            if (withEmptyMessageIfEmpty)
+                addEmptyMessage = true;
+        }
+
+
+        if (addTitle)
+            cursors.add(MatrixCursors.getOneLineCursor(
+                    MatrixCursors.TitleQuery.PROJECTION,
+                    MatrixCursors.TitleQuery.VALUES,
+                    title));
+        if (addEmptyMessage)
+            cursors.add(MatrixCursors.getOneLineCursor(
+                    MatrixCursors.EmptyCursorMessageQuery.PROJECTION,
+                    MatrixCursors.EmptyCursorMessageQuery.VALUES,
+                    emptyMessage));
+        cursors.add(cursor);
+        return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 }
