@@ -127,4 +127,8 @@ public class DateUtils {
     public static long tomorrowStart() {
         return addDay(1, todayStart());
     }
+
+    public static long yesterdayStart() {
+        return addDay(-1, todayStart());
+    }
 }

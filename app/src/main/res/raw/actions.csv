@@ -1,20 +1,11 @@
-1|Awake interest|Post pictures of your life|1
-2|Awake interest|Post pictures of your thought|2
-3|Awake interest|Send a higher purpose picture thank life|3
-4|Introduce yourself|Get to know who they are and what they are looking for|4
-5|Introduce yourself|Tell who you are and what you are looking for|5
-6|Introduce yourself|Make an offer|6
-7|Help him/her achieve their short term goal|Upvote his/her competence|7
-8|Help him/her achieve their short term goal|Inform of an event that may help him/her achieve their short term goal|8
-9|Help him/her achieve their short term goal|Invite to your own event|9
-10|Help him/her achieve their short term goal|Give expertise|10
-11|Help him/her achieve their short term goal|Work for him/her|11
-12|Help him/her achieve their short term goal|Give app for free|12
-13|Help him/her achieve their short term goal|Mention what tool/app you/he/she used to solve the problem|13
-14|Encourage|Help him/her see the higher picture|14
-15|Celebrate achievement|Congrat him/her|15
-16|Celebrate achievement|Organise a celebration event|16
-17|Within 24h follow-up|Thank him/her for their meaningful conversation|17
-18|Within 24h follow-up|Thank them for the nice evening/weekend using picture|18
-19|Within 2 months follow-up|Inform on a new competence I have that may help him/her achieve their short term goal|19
-20|Within 2 months follow-up|Inform him/her of a person I know that may help him/her achieve their short term goal|20
+1|Introduce|Get to know who they are and what they are looking for|1
+2|Introduce|Tell who you are and what you are looking for|2
+3|Inform|Inform of an event|3
+4|Inform|Give expertise|4
+5|Inform|Inform of an existing tool|5
+6|Make an offer|Make an offer of work|6
+7|Make an offer|Make an offer of money|7
+8|Make an offer|Offer a present|8
+9|Give feedback|Upvote his/her competence|9
+10|Give feedback|Encourage|10
+11|Give feedback|Thanks|11

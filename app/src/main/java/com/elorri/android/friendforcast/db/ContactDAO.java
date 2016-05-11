@@ -24,7 +24,11 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
             + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
-            + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + " TEXT NOT NULL, "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD + " TEXT NOT NULL, "
+            + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + " INTEGER, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON " +
             "CONFLICT REPLACE)";
@@ -45,13 +49,13 @@ public class ContactDAO {
 
         //This projection won't be used in queries. It will only be used for checking the column
         // names easily. PROJECTION_QUERY and PROJECTION_QUERY should match.
-        String[] PROJECTION= {
+        String[] PROJECTION = {
                 FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -61,9 +65,9 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
-                +FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
                 ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -75,7 +79,7 @@ public class ContactDAO {
         int COL_RATIO = 0;
         int COL_PROJECTION_TYPE = 1;
 
-        String[] PROJECTION=new String[]{FriendForecastContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
+        String[] PROJECTION = new String[]{FriendForecastContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
 
         String SELECT_RATIO_EMOICONE = "select "
                 + FriendForecastContract.ContactTable.VIEW_PART + "/("
@@ -83,13 +87,13 @@ public class ContactDAO {
                 + FriendForecastContract.ContactTable.VIEW_RATIO + ", "
                 + ViewTypes.VIEW_FORECAST + " as "
                 + ViewTypes.COLUMN_VIEWTYPE + " from (select count("
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
                 + FriendForecastContract.ContactTable.NAME + ") inner join (select count("
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
                 + FriendForecastContract.ContactTable.VIEW_PART + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_EMOICON_ID + "="
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + "="
                 + R.drawable.ic_sentiment_satisfied_black_48dp + ")";
     }
 
@@ -103,7 +107,7 @@ public class ContactDAO {
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID, emoiconId);
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD, emoiconId);
         return contentValues;
     }
 
@@ -120,7 +124,7 @@ public class ContactDAO {
                 cursor.getString(ContactQuery.COL_ANDROID_CONTACT_NAME));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 cursor.getString(ContactQuery.COL_THUMBNAIL));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD,
                 cursor.getString(ContactQuery.COL_EMOICON_BY_ID));
         return contentValues;
     }

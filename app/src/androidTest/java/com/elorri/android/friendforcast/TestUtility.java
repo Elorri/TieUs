@@ -29,10 +29,10 @@ public class TestUtility extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        String[] cursor1_columns = {"_id", "col1", ViewTypes.COLUMN_VIEWTYPE};
+        String[] cursor1_columns = {"_id", "col1", "col2", ViewTypes.COLUMN_VIEWTYPE};
         mCursor1 = new MatrixCursor(cursor1_columns);
-        mCursor1.addRow(new Object[]{1, "data1", 1});
-        mCursor1.addRow(new Object[]{2, "data3", 1});
+        mCursor1.addRow(new Object[]{1, "data1", null, 1});
+        mCursor1.addRow(new Object[]{2, "data3", "data4", 1});
 
         String[] cursor2_columns = {"_id", "col1", "col2", ViewTypes.COLUMN_VIEWTYPE};
         mCursor2 = new MatrixCursor(cursor2_columns);
@@ -55,8 +55,10 @@ public class TestUtility extends AndroidTestCase {
 
     public static String getCursorRowString(Cursor cursor) {
         String row = "row |";
+        String cell = null;
         for (int i = 0; i < cursor.getColumnCount(); i++) {
-            row = row + cursor.getString(i) + "|";
+            cell = cursor.getString(i) == null ? "null" : cursor.getString(i);
+            row = row + cell + "|";
         }
         return row + "\n";
     }
@@ -138,7 +140,7 @@ public class TestUtility extends AndroidTestCase {
 
     public void test_getCursorRowString() {
         mCursor1.moveToFirst();
-        assertEquals("row |1|data1|1|\n", getCursorRowString(mCursor1));
+        assertEquals("row |1|data1|null|1|\n", getCursorRowString(mCursor1));
     }
 
 
@@ -207,7 +209,6 @@ public class TestUtility extends AndroidTestCase {
         assertEquals(cursorEmptyCursorStringWithoutMessageWithoutTitle, getCursorString(cursor));
 
 
-
         String cursorEmptyCursorStringWithMessageWithoutTitle = "\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
@@ -221,7 +222,6 @@ public class TestUtility extends AndroidTestCase {
                 anEmptyCursorMessage, false);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithoutTitle" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithMessageWithoutTitle, getCursorString(cursor));
-
 
 
         String cursorEmptyCursorStringWithoutMessageWithTitle = "\n"
@@ -321,8 +321,6 @@ public class TestUtility extends AndroidTestCase {
 
 
     }
-
-
 
 
 }

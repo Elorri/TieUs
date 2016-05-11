@@ -228,10 +228,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                                 cursor.moveToFirst();
                                 ContentValues contentvalues = ContactDAO.getContentValues(cursor);
                                 contentvalues = Tools.updateContactValues(contentvalues,
-                                        FriendForecastContract.ContactTable.COLUMN_EMOICON_ID,
+                                        FriendForecastContract.ContactTable.COLUMN_MOOD,
                                         emoIconRessourceId);
                                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                                        + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_EMOICON_ID));
+                                        + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_MOOD));
 
                                 mContext.getContentResolver()
                                         .update(FriendForecastContract.ContactTable.CONTENT_URI,

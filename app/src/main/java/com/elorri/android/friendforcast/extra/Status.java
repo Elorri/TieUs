@@ -76,22 +76,5 @@ public class Status {
     }
 
 
-    /**
-     * Save the timestamp as a long of the last update
-     * @param context
-     * @return
-     */
-    public static long getLastFillInDelayFeedbackChange(Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getLong(context.getString(R.string.pref_message_last_fill_in_delay_message_key),
-                System.currentTimeMillis());
-    }
 
-    public static void setLastFillInDelayFeedbackChange(Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor spe = sp.edit();
-        spe.putLong(context.getString(R.string.pref_message_last_fill_in_delay_message_key),
-                System.currentTimeMillis());
-        spe.commit();
-    }
 }

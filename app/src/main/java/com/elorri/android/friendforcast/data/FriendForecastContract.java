@@ -96,7 +96,6 @@ public class FriendForecastContract {
     }
 
 
-
     public static class ContactTable implements BaseColumns {
         public static String PATH_CONTACT = "contact";
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONTACT).build();
@@ -106,7 +105,15 @@ public class FriendForecastContract {
         public static final String COLUMN_ANDROID_CONTACT_LOOKUP_KEY = "android_contact_lookup_key";
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
-        public static final String COLUMN_EMOICON_ID = "emoicon";
+        public static final String COLUMN_MOOD = "mood";
+        public static final String COLUMN_FEEDBACK_EXPECTED_DELAY = "expected_delay_feedback";
+        public static final String COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY = "increased_expected_delay_feedback";
+
+        //TODO note should be in mimllis
+        public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
+        public static final String COLUMN_LAST_MOOD_UPDATE = "last_mood_update";
+
+
         public static final String VIEW_PART = "part";
         public static final String VIEW_TOTAL = "total";
         public static final String VIEW_RATIO = "ratio";
@@ -204,7 +211,6 @@ public class FriendForecastContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
-
 
 
 }

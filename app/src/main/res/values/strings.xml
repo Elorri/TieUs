@@ -43,10 +43,18 @@
     <string name="action_uncompleted">Action uncompleted</string>
     <string name="action_deleted">Action deleted</string>
     <string name="done_actions">Done actions</string>
-    <string name="completed"><xliff:g >%1$s</xliff:g> at <xliff:g >%2$s</xliff:g></string>
-    <string name="pref_mark_action_feature_status_key" translatable="false">mark_action_feature_status</string>
+    <string name="completed">
+        <xliff:g>%1$s</xliff:g>
+        at
+        <xliff:g>%2$s</xliff:g>
+    </string>
+    <string name="pref_mark_action_feature_status_key" translatable="false">
+        mark_action_feature_status
+    </string>
     <string name="pref_message_idx_status_key" translatable="false">pref_message_idx_status</string>
-    <string name="pref_message_last_fill_in_delay_message_key" translatable="false">pref_message_last_fill_in_delay_message_key</string>
+    <string name="pref_message_last_fill_in_delay_message_key" translatable="false">
+        pref_message_last_fill_in_delay_message_key
+    </string>
 
 
     <string name="mark_action_as_done">Long press the action to mark it as complete or uncomplete
@@ -55,12 +63,39 @@
     <string name="no_contacts_on_phone">Start adding contact on your phone to make the most of this
         app
     </string>
-    <string name="manage_unmanaged_people">You have <xliff:g >%1$s</xliff:g> unmanaged people.
-        Plan actions on their profile and start caring. <xliff:g >%2$s</xliff:g></string>
+    <string name="manage_unmanaged_people_message">You have <xliff:g>%1$s</xliff:g> unmanaged people.
+        Plan actions on their profile and start caring. </string>
 
     <string name="fill_in_delay_feedback_title">People recently act for</string>
 
-    <string name="fill_in_delay_feedback">You recently demonstrate interest to <xliff:g >%1$s
-    </xliff:g> people. When would you like best to see them answering ? Fill the feedback delay
-        on their profile.</string>
+    <string name="fill_in_delay_feedback_message">You recently demonstrate interest to
+        <xliff:g>%1$s</xliff:g>
+        people. When would you like best to see them answering ? Fill the feedback delay
+        on their profile.
+    </string>
+    <string name="update_mood_message">How are those <xliff:g>%1$s</xliff:g> people going ?
+    </string>
+    <string name="mood_to_update">Moods to update</string>
+
+    <string name="fill_up_frequency_title">Frequency of contact to set up</string>
+    <string name="fill_up_frequency_message">How often would you like to hear about
+        those <xliff:g>%1$s</xliff:g>  people ? Fill up frequency on their profile. </string>
+
+    <string name="ask_for_feedback_title">Unanswering people</string>
+    <string name="ask_for_feedback_message">Still no news from those <xliff:g>%1$s</xliff:g>
+        people ? Ask them for feedback or move them to untracked. </string>
+
+    <string name="nearby_decreased_mood_title">They are soon to turn unhappy !</string>
+    <string name="nearby_decreased_mood_message">You have <xliff:g>%1$s</xliff:g>
+        people that may turn unhappy if you don\'t interact with them. Take action, it\'s still
+        time !</string>
+
+    <string name="decreased_mood_title">They changed they mood today!</string>
+    <string name="decreased_mood_message">Those <xliff:g>%1$s</xliff:g>
+        people change mood today. </string>
+
+    <string name="take_time_for_feedback_message">Does anybody did something for you ? Let
+        him know what you think.</string>
+
+
 </resources>
