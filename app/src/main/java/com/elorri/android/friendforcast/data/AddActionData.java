@@ -18,10 +18,6 @@ import java.util.ArrayList;
  */
 public class AddActionData {
 
-    public interface TitleQuery {
-        int COL_TITLE = 0;
-    }
-
     public static final int LOADER_ID = 0;
 
     public static final int ACTION_SELECT_ACTION = 0;

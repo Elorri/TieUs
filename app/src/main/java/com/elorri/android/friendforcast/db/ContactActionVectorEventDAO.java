@@ -283,38 +283,42 @@ public class ContactActionVectorEventDAO {
 
     }
 
-    public interface ApprochingLastDelayQuery {
-        String[] PROJECTION = new String[]{
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                ViewTypes.COLUMN_VIEWTYPE
-        };
-        String[] PROJECTION_QUERY = new String[]{
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
-                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY + " as " + ViewTypes.COLUMN_VIEWTYPE
-        };
-
-        //TODO replace with a select minus. Select all contacts nearby their deadline and remove
-        // those in table event that have a finished action in the same delay.
-        String SELECTION_NEARBY_DECREASED_MOOD = " ? between "
-                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + " and "
-                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "+("
-                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2/3))";
-    }
+    //TODO add ApprochingLastDelayQuery again
+//    public interface ApprochingLastDelayQuery {
+//        String[] PROJECTION = new String[]{
+//                FriendForecastContract.ContactTable._ID,
+//                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+//                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+//                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+//                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+//                FriendForecastContract.ContactTable.COLUMN_MOOD,
+//                ViewTypes.COLUMN_VIEWTYPE
+//        };
+//        String[] PROJECTION_QUERY = new String[]{
+//                FriendForecastContract.ContactTable._ID,
+//                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+//                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+//                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+//                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+//                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+//                FriendForecastContract.ContactTable.COLUMN_MOOD,
+//                ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY + " as " + ViewTypes.COLUMN_VIEWTYPE
+//        };
+//
+//        //TODO replace with a select minus. Select all contacts nearby their deadline and remove
+//        // those in table event that have a finished action in the same delay.
+//        String SELECTION_NEARBY_DECREASED_MOOD = " ? between "
+//                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + " and "
+//                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "+("
+//                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2/3))";
+//    }
 
     public interface PeopleWhoChangedMoodQuery {
+        int COL_ID=0;
+        int COL_MOOD=5;
+
         String[] PROJECTION = new String[]{
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
@@ -323,7 +327,7 @@ public class ContactActionVectorEventDAO {
                 ViewTypes.COLUMN_VIEWTYPE
         };
         String[] PROJECTION_QUERY = new String[]{
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable._ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "

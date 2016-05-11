@@ -191,6 +191,15 @@ public class TestUtility extends AndroidTestCase {
     }
 
 
+    public static String getCursorHeaderString(String[] projection) {
+        String header = "header |";
+        for (String title : projection) {
+            header = header + title + "|";
+        }
+        return header + "\n";
+    }
+
+
     public void test_ToolsGetCursorWithProperties() {
 
         String aTitle = "aTitle";

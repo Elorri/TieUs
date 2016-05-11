@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.AddActionData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.db.ActionDAO;
+import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.VectorDAO;
+import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 
@@ -184,7 +184,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
-                holder.title.setText(mCursor.getString(AddActionData.TitleQuery.COL_TITLE));
+                holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_ACTION_ITEM: {

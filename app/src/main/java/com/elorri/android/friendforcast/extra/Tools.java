@@ -226,4 +226,12 @@ public class Tools {
         cursors.add(cursor);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
+
+    public static int decreaseMood(int moodIcon) {
+        if (moodIcon == R.drawable.ic_sentiment_satisfied_black_48dp)
+            return R.drawable.ic_sentiment_neutral_black_48dp;
+        if (moodIcon == R.drawable.ic_sentiment_neutral_black_48dp)
+            return R.drawable.ic_sentiment_dissatisfied_black_48dp;
+        return R.drawable.ic_sentiment_dissatisfied_black_48dp;
+    }
 }

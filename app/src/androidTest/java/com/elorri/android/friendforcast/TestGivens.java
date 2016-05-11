@@ -10,6 +10,7 @@ import android.util.Log;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.data.FriendForecastDbHelper;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Status;
 
@@ -277,17 +278,11 @@ public class TestGivens extends AndroidTestCase {
         aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
 
         String contactString = "\n"
-                + "header |" +
-                FriendForecastContract.ContactTable._ID + "|" +
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|" +
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|" +
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|" +
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|" +
-                FriendForecastContract.ContactTable.COLUMN_MOOD + "|\n"
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul||2130837600|\n"
-                + "row |16|833|298i5.3552i264b0e968b8a46ff|Pierre||2130837600|\n"
-                + "row |17|834|298i5.3552i264b0e968b8a47ff|Jacques||2130837600|\n"
-                + "row |18|835|298i5.3552i264b0e968b8a49ff|Martin||2130837600|\n";
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITHOUT_VIEWTYPE)
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul|null|2130837600|\n"
+                + "row |16|833|298i5.3552i264b0e968b8a46ff|Pierre|null|2130837600|\n"
+                + "row |17|834|298i5.3552i264b0e968b8a47ff|Jacques|null|2130837600|\n"
+                + "row |18|835|298i5.3552i264b0e968b8a49ff|Martin|null|2130837600|\n";
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(contactString));
@@ -299,7 +294,7 @@ public class TestGivens extends AndroidTestCase {
 
         Cursor contactCursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
-                null,
+                ContactDAO.ContactQuery.PROJECTION_WITHOUT_VIEWTYPE,
                 null,
                 null,
                 null
@@ -414,10 +409,11 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|" +
                 FriendForecastContract.ContactTable.COLUMN_MOOD + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a42fp|Hector|null|"
-                + R.drawable.ic_social_network + "|null|null|null" + "|\n";
+                + R.drawable.ic_social_network + "|null|null|null|null|\n";
 
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
@@ -494,9 +490,11 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|" +
                 FriendForecastContract.ContactTable.COLUMN_MOOD + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|Pierre||2130837600|null|null|null|\n";
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|Pierre||2130837600|null|null|null|null"
+                + "|\n";
 
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
@@ -871,7 +869,7 @@ public class TestGivens extends AndroidTestCase {
 
     }
 
-    public void test_I_have_1_person_who_changed_mood_with_id_21() {
+    public void test_I_have_1_person_who_decreased_mood_with_id_21() {
         aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
 
         String contactString = "\n"

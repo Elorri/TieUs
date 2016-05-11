@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.BoardData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.MatrixCursors;
+import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.ui.AvatarView;
@@ -37,7 +37,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public BoardAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
         mCallback = callback;
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     public int getSelectedItemPosition() {
@@ -61,6 +60,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView doneDate;
         public ImageView vectorIcon;
         public ImageView emoIcon;
+        public TextView message;
+        public TextView emptyCursorMessage;
 
         public View mView;
 
@@ -73,6 +74,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
 
             switch (viewType) {
+                case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
+                    emptyCursorMessage = (TextView) view.findViewById(R.id.message);
+                    break;
+                }
+                case ViewTypes.VIEW_MESSAGE: {
+                    message = (TextView) view.findViewById(R.id.message);
+                    break;
+                }
                 case ViewTypes.VIEW_TITLE: {
                     divider = view.findViewById(R.id.divider);
                     break;
@@ -116,6 +125,16 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         switch (viewType) {
             case ViewTypes.VIEW_FORECAST: {
                 viewHolder = new ViewHolder(new View(parent.getContext()), ViewTypes.VIEW_FORECAST);
+                break;
+            }
+            case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_empty_cursor, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE);
+                break;
+            }
+            case ViewTypes.VIEW_MESSAGE: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_message, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_MESSAGE);
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
@@ -174,11 +193,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 }
                 break;
             }
+            case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
+                holder.emptyCursorMessage.setText(mCursor.getString(MatrixCursors
+                        .EmptyCursorMessageQuery.COL_MESSAGE));
+                break;
+            }
+            case ViewTypes.VIEW_MESSAGE: {
+                holder.message.setText(mCursor.getString(MatrixCursors.MessageQuery.COL_MESSAGE));
+                break;
+            }
             case ViewTypes.VIEW_TITLE: {
-                int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
+                int visibility = position == 2 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
-                holder.contactName.setText(mCursor.getString
-                        (BoardData.TitleQuery.COL_TITLE));
+                holder.contactName.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
             }
             case ViewTypes.VIEW_UNMANAGED_PEOPLE: {
@@ -287,9 +314,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     @Override
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
-        int viewtype=mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"position "+position);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"viewtype "+viewtype);
+        int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         return viewtype;
     }
 }

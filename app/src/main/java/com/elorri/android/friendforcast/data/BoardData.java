@@ -19,11 +19,6 @@ import java.util.ArrayList;
  */
 public abstract class BoardData {
 
-
-    public interface TitleQuery {
-        int COL_TITLE = 0;
-    }
-
     public static final int LOADER_ID = 0;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db) {
@@ -161,43 +156,52 @@ public abstract class BoardData {
                             context.getResources().getString(R.string.ask_for_feedback_title), false, null,
                             false));
                 } else
-                    return getTopCursors(context, db, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
-                break;
-            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
-                cursor = db.query(FriendForecastContract.ContactTable.NAME,
-                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.SELECTION_NEARBY_DECREASED_MOOD,
-                        new String[]{now}, null, null, null);
-                if (cursor.getCount() > 0) {
-                    cursors.add(MatrixCursors.getOneLineCursor(
-                            MatrixCursors.MessageQuery.PROJECTION,
-                            MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
-                                    .getCount())));
-                    cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
-                            false));
-                } else
+                    //return getTopCursors(context, db, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
                     return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;
-            case Status.NOTE_PEOPLE_WHO_CHANGED_MOOD_TODAY:
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.SELECTION_DECREASED_MOOD,
-                        null, null, null, null);
-                if (cursor.getCount() > 0) {
-                    cursors.add(MatrixCursors.getOneLineCursor(
-                            MatrixCursors.MessageQuery.PROJECTION,
-                            MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.decreased_mood_message, cursor
-                                    .getCount())));
-                    cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.decreased_mood_title), false, null,
-                            false));
-                } else
-                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
-                break;
+//            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
+//                cursor = db.query(FriendForecastContract.ContactTable.NAME,
+//                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.PROJECTION_QUERY,
+//                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.SELECTION_NEARBY_DECREASED_MOOD,
+//                        new String[]{now}, null, null, null);
+//                if (cursor.getCount() > 0) {
+//                    cursors.add(MatrixCursors.getOneLineCursor(
+//                            MatrixCursors.MessageQuery.PROJECTION,
+//                            MatrixCursors.MessageQuery.VALUES,
+//                            context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
+//                                    .getCount())));
+//                    cursors.add(Tools.addDisplayProperties(cursor, true,
+//                            context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
+//                            false));
+//                } else
+//                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
+//                break;
+//            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
+//                cursor = db.query("(" + ContactActionVectorEventDAO
+//                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+//                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.PROJECTION_QUERY,
+//                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.SELECTION_DECREASED_MOOD,
+//                        null, null, null, null);
+//                if (cursor.getCount() > 0) {
+//                    cursors.add(MatrixCursors.getOneLineCursor(
+//                            MatrixCursors.MessageQuery.PROJECTION,
+//                            MatrixCursors.MessageQuery.VALUES,
+//                            context.getResources().getString(R.string.decreased_mood_message, cursor
+//                                    .getCount())));
+//                    cursors.add(Tools.addDisplayProperties(cursor, true,
+//                            context.getResources().getString(R.string.decreased_mood_title), false, null,
+//                            false));
+//                    //They decreased their mood, lets change their moodIcon
+//                    int moodIcon = cursor.getInt(ContactActionVectorEventDAO
+//                            .PeopleWhoChangedMoodQuery.COL_MOOD);
+//                    db.rawQuery("update " + FriendForecastContract.ContactTable.NAME + " set "
+//                                    + FriendForecastContract.ContactTable.COLUMN_MOOD + " = ? where "
+//                                    + FriendForecastContract.ContactTable._ID + "=?",
+//                            new String[]{String.valueOf(Tools.decreaseMood(moodIcon)),
+//                                    cursor.getString(ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.COL_ID)});
+//                } else
+//                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
+//                break;
             case Status.TAKE_TIME_FOR_FEEDBACK:
                 cursors.add(MatrixCursors.getOneLineCursor(
                         MatrixCursors.MessageQuery.PROJECTION,
@@ -212,50 +216,51 @@ public abstract class BoardData {
 
     }
 
-    public static int getTopCursors(Context context, int messageIdx) {
-
-        boolean manageCond = false;
-        boolean feedback = false;
-        boolean mood = false;
-        boolean frequency = false;
-        boolean askFor = true;
-
-        switch (messageIdx) {
-            case Status.MANAGE_UNMANAGED_PEOPLE:
-                if (manageCond) {
-                } else return getTopCursors(context, Status.FILL_IN_DELAY_FEEDBACK);
-                break;
-            case Status.FILL_IN_DELAY_FEEDBACK:
-                if (feedback) {
-                } else return getTopCursors(context, Status.UPDATE_MOOD);
-                break;
-            case Status.UPDATE_MOOD:
-                if (mood) {
-                } else return getTopCursors(context, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
-                break;
-            case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
-                if (frequency) {
-                } else return getTopCursors(context, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
-                break;
-            case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
-                if (askFor) {
-                } else
-                    return getTopCursors(context, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
-                break;
-            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
-                //when clicked on ok.
-                //Status.setLastMessageIdx(context, Status.NOTE_PEOPLE_WHO_CHANGED_MOOD_TODAY);
-                break;
-            case Status.NOTE_PEOPLE_WHO_CHANGED_MOOD_TODAY:
-                //Status.setLastMessageIdx(context, Status.TAKE_TIME_FOR_FEEDBACK);
-                break;
-            case Status.TAKE_TIME_FOR_FEEDBACK:
-                //Status.setLastMessageIdx(context, Status.MANAGE_UNMANAGED_PEOPLE);
-                break;
-        }
-        Status.setLastMessageIdx(context, messageIdx);
-        return Status.getLastMessageIdx(context);
-
-    }
+    //TODO remove this function
+//    public static int getTopCursors(Context context, int messageIdx) {
+//
+//        boolean manageCond = false;
+//        boolean feedback = false;
+//        boolean mood = false;
+//        boolean frequency = false;
+//        boolean askFor = true;
+//
+//        switch (messageIdx) {
+//            case Status.MANAGE_UNMANAGED_PEOPLE:
+//                if (manageCond) {
+//                } else return getTopCursors(context, Status.FILL_IN_DELAY_FEEDBACK);
+//                break;
+//            case Status.FILL_IN_DELAY_FEEDBACK:
+//                if (feedback) {
+//                } else return getTopCursors(context, Status.UPDATE_MOOD);
+//                break;
+//            case Status.UPDATE_MOOD:
+//                if (mood) {
+//                } else return getTopCursors(context, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
+//                break;
+//            case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
+//                if (frequency) {
+//                } else return getTopCursors(context, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
+//                break;
+//            case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
+//                if (askFor) {
+//                } else
+//                    return getTopCursors(context, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
+//                break;
+//            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
+//                //when clicked on ok.
+//                //Status.setLastMessageIdx(context, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
+//                break;
+//            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
+//                //Status.setLastMessageIdx(context, Status.TAKE_TIME_FOR_FEEDBACK);
+//                break;
+//            case Status.TAKE_TIME_FOR_FEEDBACK:
+//                //Status.setLastMessageIdx(context, Status.MANAGE_UNMANAGED_PEOPLE);
+//                break;
+//        }
+//        Status.setLastMessageIdx(context, messageIdx);
+//        return Status.getLastMessageIdx(context);
+//
+//    }
 
 }

@@ -10,7 +10,7 @@
     <color name="secondaryLight">#ffbdbdbd</color>
     <color name="secondaryDark">#ff616161</color>
     <color name="secondaryXDark">#424242</color>
-    <color name="educate_person_background">#455A64</color>
+    <color name="message_background">#455A64</color>
 
 
     <!-- texts -->

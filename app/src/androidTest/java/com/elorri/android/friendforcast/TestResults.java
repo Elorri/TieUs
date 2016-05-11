@@ -213,4 +213,8 @@ public class TestResults extends AndroidTestCase {
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
     }
+
+    public void test_assert_equals_BoardData_cursor8(Context mContext, Cursor cursor) {
+        //TODO don't forget to check that the mood decreased.
+    }
 }

@@ -36,6 +36,7 @@ public class ContactDAO {
 
     public interface ContactQuery {
 
+
         int COL_ID = 0;
         int COL_ANDROID_ID = 1;
         int COL_ANDROID_LOOKUP_KEY = 2;
@@ -46,6 +47,16 @@ public class ContactDAO {
 
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
+
+
+        String[] PROJECTION_WITHOUT_VIEWTYPE = {
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD
+        };
 
         //This projection won't be used in queries. It will only be used for checking the column
         // names easily. PROJECTION_QUERY and PROJECTION_QUERY should match.

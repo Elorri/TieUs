@@ -23,6 +23,7 @@ public class MatrixCursors {
     }
 
     public interface EmptyCursorMessageQuery {
+        int COL_MESSAGE=0;
         String COLUMN_EMPTY_CURSOR = "_id";
 
         String[] PROJECTION = {
@@ -30,12 +31,13 @@ public class MatrixCursors {
                 ViewTypes.COLUMN_VIEWTYPE
         };
         String[] VALUES = {
-                "an empty cursor",
+                null,
                 String.valueOf(ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE)
         };
     }
 
     public interface EducateMessageQuery {
+        int COL_MESSAGE=0;
         String COLUMN_EDUCATE_MESSAGE = "_id";
         String[] PROJECTION = {
                 EducateMessageQuery.COLUMN_EDUCATE_MESSAGE,
@@ -43,33 +45,36 @@ public class MatrixCursors {
         };
 
         String[] VALUES = {
-                "an educationnal message",
+                null,
                 String.valueOf(ViewTypes.VIEW_EDUCATE_MESSAGE)
         };
     }
 
 
     public interface TitleQuery {
+        int COL_TITLE=0;
         String COLUMN_TITLE = "_id";
         String[] PROJECTION = {
                 TitleQuery.COLUMN_TITLE,
                 ViewTypes.COLUMN_VIEWTYPE
         };
         String[] VALUES = {
-                "a title",
+                null,
                 String.valueOf(ViewTypes.VIEW_TITLE)
         };
     }
 
     public interface MessageQuery {
+        int COL_MESSAGE=0;
         String COLUMN_MESSAGE = "_id";
         String[] PROJECTION = {
                 MessageQuery.COLUMN_MESSAGE,
                 ViewTypes.COLUMN_VIEWTYPE
         };
         String[] VALUES = {
-                "a message",
+                null,
                 String.valueOf(ViewTypes.VIEW_MESSAGE)
         };
+
     }
 }

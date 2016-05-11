@@ -20,10 +20,6 @@ import java.util.ArrayList;
  */
 public class DetailData {
 
-    public interface SingleColumnQuery {
-        int COL_SINGLE_COLUMN = 0;
-    }
-
     public static final int LOADER_ID = 0;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, String contactId) {

@@ -18,13 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elorri.android.friendforcast.R;
-import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
+import com.elorri.android.friendforcast.db.MatrixCursors;
+import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Status;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -33,7 +33,6 @@ import com.elorri.android.friendforcast.extra.Tools;
  * Created by Elorri on 16/04/2016.
  */
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
-
 
 
     private Cursor mCursor;
@@ -279,7 +278,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_EDUCATE_MESSAGE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate_message,
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_EDUCATE_MESSAGE);
                 break;
@@ -306,7 +305,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
-                holder.title.setText(mCursor.getString(DetailData.SingleColumnQuery.COL_SINGLE_COLUMN));
+                holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
             }
             case ViewTypes.VIEW_NEXT_ACTION: {
@@ -357,7 +356,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_EDUCATE_MESSAGE: {
-                holder.message.setText(mCursor.getString(DetailData.SingleColumnQuery.COL_SINGLE_COLUMN));
+                holder.message.setText(mCursor.getString(MatrixCursors.EducateMessageQuery.COL_MESSAGE));
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -396,9 +395,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     @Override
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
-        int viewtype=mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"position "+position);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"viewtype "+viewtype);
+        int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         return viewtype;
     }
 
