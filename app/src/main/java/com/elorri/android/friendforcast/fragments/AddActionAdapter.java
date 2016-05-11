@@ -44,7 +44,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
         void setVectorId(String vectorId);
 
-        void showFab(String actionId, String vectorId, long timeStart);
     }
 
     public AddActionAdapter(Cursor cursor, Callback callback, int actionStepSize) {

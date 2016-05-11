@@ -64,7 +64,7 @@
         app
     </string>
     <string name="manage_unmanaged_people_message">You have <xliff:g>%1$s</xliff:g> unmanaged people.
-        Add actions on their profile to start. </string>
+        Add actions on their profile or mark them as untracked to start. </string>
 
     <string name="fill_in_delay_feedback_title">People recently act for</string>
 

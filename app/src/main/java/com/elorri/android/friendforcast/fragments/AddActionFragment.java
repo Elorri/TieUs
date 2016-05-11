@@ -61,7 +61,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new AddActionAdapter(null, this,actionSteps.size());
+        mAdapter = new AddActionAdapter(null, this, actionSteps.size());
         mRecyclerView.setAdapter(mAdapter);
         getDialog().setTitle(getResources().getString(R.string.action_add));
         return view;
@@ -164,8 +164,13 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
             actionSteps.add(String.valueOf(startDate));
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + startDate);
-            AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
-                    null, AddActionFragment.this);
+
+//            AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
+//                    null, AddActionFragment.this);
+            String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
+            AddActionTask addActionTask = new AddActionTask();
+            addActionTask.execute(
+                    contactId, actionSteps.get(0), actionSteps.get(1), actionSteps.get(2));
         }
     }
 
