@@ -16,7 +16,6 @@ import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.db.ViewTypes;
-import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Tools;
 
 /**
@@ -164,17 +163,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         Tools.setVectorBackground(mContext, holder.vectorLogo,
                                 mCursor.getString(mimetypeIdx),
                                 mCursor.getString(vectorIdx));
-                        if (timeStartIdx != -1) {//All action fields are known. Add the event.
-                            String actionId = mCursor.getString(mCursor.getColumnIndex
-                                    (FriendForecastContract.ActionTable.VIEW_ACTION_ID));
-                            String vectorId = mCursor.getString(mCursor.getColumnIndex
-                                    (FriendForecastContract.VectorTable.VIEW_VECTOR_ID));
-                            holder.clock.setVisibility(View.VISIBLE);
-                            holder.clock.setBackgroundResource(R.drawable.ic_schedule_black_24dp);
-                            timeStartLong = mCursor.getLong(timeStartIdx);
-                            holder.timeStart.setText(DateUtils.getFriendlyDateString(mContext, timeStartLong));
-                            mCallback.showFab(actionId, vectorId, timeStartLong);
-                        }
                     }
                 }
                 break;

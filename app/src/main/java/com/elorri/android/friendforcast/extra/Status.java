@@ -15,12 +15,12 @@ public class Status {
      * @param context Context used to get the SharedPreferences
      * @return the mark action feature status that tell if the user knows hows to validate an action
      */
-    public static final boolean IS_MARK_ACTION_FEATURE_AWARE = false;
+    public static final boolean MARK_ACTION_FEATURE_AWARE_FALSE = false;
 
     public static boolean getMarkActionFeatureStatus(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean(context.getString(R.string.pref_mark_action_feature_status_key),
-                IS_MARK_ACTION_FEATURE_AWARE);
+                MARK_ACTION_FEATURE_AWARE_FALSE);
     }
 
     /**
@@ -50,8 +50,8 @@ public class Status {
     public static final int UPDATE_MOOD = 2;
     public static final int SET_UP_A_FREQUENCY_OF_CONTACT = 3;
     public static final int ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 4;
-//    public static final int APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY = 5;
-//    public static final int NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 6;
+    public static final int APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY = 5;
+    public static final int NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 6;
     public static final int TAKE_TIME_FOR_FEEDBACK = 7;
 
     public static int getLastMessageIdx(Context context) {

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -38,7 +37,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     private static Uri mUri;
     private RecyclerView mRecyclerView;
-    private FloatingActionButton mSaveFab;
+
 
 
     //This variable will allow to choose the most suitable uri and display the correct data. It
@@ -57,7 +56,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         View view = inflater.inflate(R.layout.fragment_add_action, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        mSaveFab = (FloatingActionButton) view.findViewById(R.id.save_fab);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -81,10 +79,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
                 break;
             case 1://We have the action, we ask for a vector and a dateStart
                 mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get(0));
-                break;
-            case 3://We have the action, vector, and dateStart we ask for validation
-                mUri = FriendForecastContract.AddActionData.buildValidateUri(actionSteps.get(0),
-                        actionSteps.get(1), actionSteps.get(2));
                 break;
             default:
                 return null;
@@ -138,20 +132,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     }
 
 
-    @Override
-    public void showFab(final String actionId, final String vectorId, final long timeStart) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-        mSaveFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
-                AddActionTask addActionTask = new AddActionTask();
-                addActionTask.execute(contactId, actionId, vectorId, String.valueOf(timeStart));
-            }
-        });
-        mSaveFab.setVisibility(View.VISIBLE);
 
-    }
 
     private class DateListener implements DatePickerDialog.OnDateSetListener {
 

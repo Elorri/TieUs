@@ -36,7 +36,6 @@ public abstract class BoardData {
             cursor.close();
         }
 
-
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(ContactDAO.getCursor(db));
         cursors.add(getTopCursors(context, db, Status.getLastMessageIdx(context)));
@@ -54,9 +53,7 @@ public abstract class BoardData {
                 true, context.getResources().getString(R.string.next), false, null, false));
         cursors.add(Tools.addDisplayProperties(
                 ContactActionVectorEventDAO.getCursor(ContactActionVectorEventDAO.UNTRACKED_PEOPLE, db),
-                true, context.getResources().getString(R.string.untracked), false, null,
-                false));
-
+                true, context.getResources().getString(R.string.untracked), false, null, false));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
@@ -82,11 +79,8 @@ public abstract class BoardData {
                 break;
             case Status.FILL_IN_DELAY_FEEDBACK:
                 //TODO remove this comment   //String uncertainEcoIcon = ;
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.PeopleLastActedForQuery.SELECTION_ALL,
-                        new String[]{String.valueOf(R.drawable.ic_social_network)}, null, null, null);
+                cursor = db.rawQuery(ContactActionVectorEventDAO
+                        .PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT_WITH_VIEWTYPE, null);
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -100,13 +94,8 @@ public abstract class BoardData {
                 break;
             case Status.UPDATE_MOOD:
                 //TODO remove this comment   //String uncertainEcoIcon = ;
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.UpdateMoodQuery.SELECTION_ONLY_DELAYED,
-                        new String[]{String.valueOf(R.drawable.ic_social_network), now, now}, null,
-                        null,
-                        null);
+                cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery
+                        .SELECT_WITH_VIEWTYPE, new String[]{now, String.valueOf(R.drawable.ic_social_network)});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -119,13 +108,8 @@ public abstract class BoardData {
                 } else return getTopCursors(context, db, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
                 break;
             case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.FrequencyQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.FrequencyQuery.SELECTION_ONLY_NO_FREQUENCY,
-                        new String[]{String.valueOf(R.drawable.ic_social_network)}, null,
-                        null,
-                        null);
+                cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.SELECT_WITH_VIEWTYPE,
+                        new String[]{String.valueOf(R.drawable.ic_social_network)});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -139,13 +123,9 @@ public abstract class BoardData {
                     return getTopCursors(context, db, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
                 break;
             case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.AskForFeedbackQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.AskForFeedbackQuery.SELECTION_NOT_ANSWERING_PEOPLE,
-                        new String[]{String.valueOf(R.drawable.ic_social_network), now}, null,
-                        null,
-                        null);
+                cursor = db.rawQuery(
+                        ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_WITH_VIEWTYPE,
+                        new String[]{String.valueOf(R.drawable.ic_social_network), String.valueOf(now)});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -159,49 +139,48 @@ public abstract class BoardData {
                     //return getTopCursors(context, db, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
                     return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;
-//            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
-//                cursor = db.query(FriendForecastContract.ContactTable.NAME,
-//                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.PROJECTION_QUERY,
-//                        ContactActionVectorEventDAO.ApprochingLastDelayQuery.SELECTION_NEARBY_DECREASED_MOOD,
-//                        new String[]{now}, null, null, null);
-//                if (cursor.getCount() > 0) {
-//                    cursors.add(MatrixCursors.getOneLineCursor(
-//                            MatrixCursors.MessageQuery.PROJECTION,
-//                            MatrixCursors.MessageQuery.VALUES,
-//                            context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
-//                                    .getCount())));
-//                    cursors.add(Tools.addDisplayProperties(cursor, true,
-//                            context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
-//                            false));
-//                } else
-//                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
-//                break;
-//            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
-//                cursor = db.query("(" + ContactActionVectorEventDAO
-//                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-//                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.PROJECTION_QUERY,
-//                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.SELECTION_DECREASED_MOOD,
-//                        null, null, null, null);
-//                if (cursor.getCount() > 0) {
-//                    cursors.add(MatrixCursors.getOneLineCursor(
-//                            MatrixCursors.MessageQuery.PROJECTION,
-//                            MatrixCursors.MessageQuery.VALUES,
-//                            context.getResources().getString(R.string.decreased_mood_message, cursor
-//                                    .getCount())));
-//                    cursors.add(Tools.addDisplayProperties(cursor, true,
-//                            context.getResources().getString(R.string.decreased_mood_title), false, null,
-//                            false));
-//                    //They decreased their mood, lets change their moodIcon
-//                    int moodIcon = cursor.getInt(ContactActionVectorEventDAO
-//                            .PeopleWhoChangedMoodQuery.COL_MOOD);
-//                    db.rawQuery("update " + FriendForecastContract.ContactTable.NAME + " set "
-//                                    + FriendForecastContract.ContactTable.COLUMN_MOOD + " = ? where "
-//                                    + FriendForecastContract.ContactTable._ID + "=?",
-//                            new String[]{String.valueOf(Tools.decreaseMood(moodIcon)),
-//                                    cursor.getString(ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.COL_ID)});
-//                } else
-//                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
-//                break;
+            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
+                cursor = db.rawQuery(
+                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_WITH_VIEWTYPE, new
+                                String[]{now});
+                if (cursor.getCount() > 0) {
+                    cursors.add(MatrixCursors.getOneLineCursor(
+                            MatrixCursors.MessageQuery.PROJECTION,
+                            MatrixCursors.MessageQuery.VALUES,
+                            context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
+                                    .getCount())));
+                    cursors.add(Tools.addDisplayProperties(cursor, true,
+                            context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
+                            false));
+                } else
+                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
+                break;
+            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
+                cursor = db.query("(" + ContactActionVectorEventDAO
+                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.PROJECTION_QUERY,
+                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.SELECTION_DECREASED_MOOD,
+                        null, null, null, null);
+                if (cursor.getCount() > 0) {
+                    cursors.add(MatrixCursors.getOneLineCursor(
+                            MatrixCursors.MessageQuery.PROJECTION,
+                            MatrixCursors.MessageQuery.VALUES,
+                            context.getResources().getString(R.string.decreased_mood_message, cursor
+                                    .getCount())));
+                    cursors.add(Tools.addDisplayProperties(cursor, true,
+                            context.getResources().getString(R.string.decreased_mood_title), false, null,
+                            false));
+                    //They decreased their mood, lets change their moodIcon
+                    int moodIcon = cursor.getInt(ContactActionVectorEventDAO
+                            .PeopleWhoChangedMoodQuery.COL_MOOD);
+                    db.rawQuery("update " + FriendForecastContract.ContactTable.NAME + " set "
+                                    + FriendForecastContract.ContactTable.COLUMN_MOOD + " = ? where "
+                                    + FriendForecastContract.ContactTable._ID + "=?",
+                            new String[]{String.valueOf(Tools.decreaseMood(moodIcon)),
+                                    cursor.getString(ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.COL_ID)});
+                } else
+                    return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
+                break;
             case Status.TAKE_TIME_FOR_FEEDBACK:
                 cursors.add(MatrixCursors.getOneLineCursor(
                         MatrixCursors.MessageQuery.PROJECTION,

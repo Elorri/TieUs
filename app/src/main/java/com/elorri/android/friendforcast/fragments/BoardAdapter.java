@@ -59,7 +59,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView dueDate;
         public TextView doneDate;
         public ImageView vectorIcon;
-        public ImageView emoIcon;
+        public ImageView moodIcon;
         public TextView message;
         public TextView emptyCursorMessage;
 
@@ -71,7 +71,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             this.mView = view;
             avatar = (AvatarView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.title);
-            emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
+            moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
 
             switch (viewType) {
                 case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
@@ -143,8 +143,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case ViewTypes.VIEW_UNMANAGED_PEOPLE: {
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNMANAGED_PEOPLE);
+                break;
+            }
+            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK);
                 break;
             }
             case ViewTypes.VIEW_DELAY_PEOPLE: {
@@ -168,7 +173,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case ViewTypes.VIEW_UNTRACKED_PEOPLE: {
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_unmanaged_untracked_people, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNTRACKED_PEOPLE);
                 break;
             }
@@ -213,6 +218,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 setOnClickListener(holder);
                 break;
             }
+            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
             case ViewTypes.VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
@@ -221,7 +231,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
+                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .DelayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
@@ -234,7 +244,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
+                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
@@ -248,7 +258,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
                         .COL_TIME_END);
                 holder.doneDate.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
+                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayDonePeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
@@ -261,7 +271,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
+                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                         .NextPeopleQuery.COL_EMOICON_ID));
                 setOnClickListener(holder);
                 break;
@@ -282,7 +292,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
-        holder.emoIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
+        holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
                 .PeopleQuery.COL_EMOICON_ID));
     }
 

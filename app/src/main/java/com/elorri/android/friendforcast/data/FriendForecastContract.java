@@ -152,6 +152,8 @@ public class FriendForecastContract {
         public static final String COLUMN_TIME_START = "time_start";
         public static final String COLUMN_TIME_END = "time_end";
         public static final String VIEW_EVENT_ID = "event_id";
+        public static final String VIEW_LAST_TIME_END = "last_time_end";
+
 
         public static Uri buildEventUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

@@ -98,13 +98,13 @@ public class TestResults extends AndroidTestCase {
                 + mContext.getResources().getString(R.string.fill_in_delay_feedback_title) + "|" + ViewTypes
                 .VIEW_TITLE + "|\n"
                 + "header |"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[0] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[1] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[2] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[3] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[4] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[5] + "|"
-                + ContactActionVectorEventDAO.PeopleLastActedForQuery.PROJECTION[6] + "|\n"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[0] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[1] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[2] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[3] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[4] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[5] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION[6] + "|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a42fp|hector|null|2130837603|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
@@ -132,13 +132,13 @@ public class TestResults extends AndroidTestCase {
                 + mContext.getResources().getString(R.string.mood_to_update) + "|" + ViewTypes
                 .VIEW_TITLE + "|\n"
                 + "header |"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[0] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[1] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[2] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[3] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[4] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[5] + "|"
-                + ContactActionVectorEventDAO.UpdateMoodQuery.PROJECTION[6] + "|\n"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[0] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[1] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[2] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[3] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[4] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[5] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.PROJECTION[6] + "|\n"
                 + "row |17|834|298i5.3552i264b0e868b8a42fp|paul|null|2130837603|" + ViewTypes.VIEW_UPDATE_MOOD + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
@@ -166,13 +166,13 @@ public class TestResults extends AndroidTestCase {
                 + mContext.getResources().getString(R.string.fill_up_frequency_title) + "|" + ViewTypes
                 .VIEW_TITLE + "|\n"
                 + "header |"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[0] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[1] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[2] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[3] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[4] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[5] + "|"
-                + ContactActionVectorEventDAO.FrequencyQuery.PROJECTION[6] + "|\n"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[0] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[1] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[2] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[3] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[4] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[5] + "|"
+                + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.PROJECTION[6] + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42op|jacques|null|2130837599|"
                 + ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT + "|\n";
 

@@ -28,7 +28,7 @@
         android:background="@drawable/ic_do_not_disturb_alt_black_48dp"/>
 
     <ImageView
-        android:id="@+id/emo_icon"
+        android:id="@+id/mood_icon"
         android:layout_width="@dimen/emo_icon_width"
         android:layout_height="@dimen/emo_icon_height"
         android:layout_toLeftOf="@id/untracked_icon"

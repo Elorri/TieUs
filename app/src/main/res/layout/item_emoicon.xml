@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
     <ImageView
-        android:id="@+id/emo_icon"
+        android:id="@+id/mood_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/ic_sentiment_satisfied_black_48dp"

@@ -7,6 +7,7 @@ import android.database.MergeCursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.Tools;
@@ -331,5 +332,13 @@ public class TestUtility extends AndroidTestCase {
 
     }
 
+    public static void test_printSqlQueries() {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT"
+                + ContactActionVectorEventDAO.JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT);
+
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "SELECT_UNMANAGED_PEOPLE"
+                + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_UNMANAGED_PEOPLE);
+
+    }
 
 }

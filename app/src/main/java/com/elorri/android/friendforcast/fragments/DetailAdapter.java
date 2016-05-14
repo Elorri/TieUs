@@ -105,7 +105,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
             switch (viewType) {
                 case ViewTypes.VIEW_CONTACT: {
-                    emoIcon = (ImageView) view.findViewById(R.id.emo_icon);
+                    emoIcon = (ImageView) view.findViewById(R.id.mood_icon);
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
@@ -303,7 +303,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
             case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                int visibility = position == 1 ? View.INVISIBLE : View.VISIBLE;
+                int visibility = (position == 1 || position == 2) ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
@@ -412,6 +412,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             mContext.getContentResolver().update(
                     FriendForecastContract.EventTable.CONTENT_URI,
                     values, FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+            );
+
+            values = ContactDAO.getContentValues(String.valueOf(R.drawable.ic_social_network));
+            mContext.getContentResolver().update(
+                    FriendForecastContract.ContactTable.CONTENT_URI,
+                    values, FriendForecastContract.ContactTable._ID + "=?", new String[]{mContactId}
             );
             return null;
         }

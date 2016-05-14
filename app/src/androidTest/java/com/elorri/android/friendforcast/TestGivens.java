@@ -278,7 +278,7 @@ public class TestGivens extends AndroidTestCase {
         aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
 
         String contactString = "\n"
-                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITHOUT_VIEWTYPE)
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION)
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul|null|2130837600|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a46ff|Pierre|null|2130837600|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a47ff|Jacques|null|2130837600|\n"
@@ -294,7 +294,7 @@ public class TestGivens extends AndroidTestCase {
 
         Cursor contactCursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
-                ContactDAO.ContactQuery.PROJECTION_WITHOUT_VIEWTYPE,
+                ContactDAO.ContactQuery.PROJECTION,
                 null,
                 null,
                 null
@@ -329,6 +329,7 @@ public class TestGivens extends AndroidTestCase {
         assertEquals(1, insertCount);
         Cursor actionCursor = aContext.getContentResolver().query(FriendForecastContract.ActionTable
                 .CONTENT_URI, null, null, null, null);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + actionCursor);
         assertEquals(actionString, TestUtility.getCursorString(actionCursor));
     }
 
@@ -350,6 +351,7 @@ public class TestGivens extends AndroidTestCase {
         assertEquals(1, insertCount);
         Cursor vectorCursor = aContext.getContentResolver().query(FriendForecastContract.VectorTable
                 .CONTENT_URI, null, null, null, null);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorCursor);
         assertEquals(vectorString, TestUtility.getCursorString(vectorCursor));
     }
 
@@ -947,5 +949,106 @@ public class TestGivens extends AndroidTestCase {
 
         assertEquals(eventString, TestUtility.getCursorString(eventCursor));
         contactCursor.close();
+    }
+
+    public void test_addContactTableDataSet() {
+
+        aContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);
+
+        long now = DateUtils.todayStart();
+        long in30days = DateUtils.addDay(30, now);
+        long frequency30days = in30days - now;
+        String contactString = "\n"
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION)
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|\n"
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|Pierre|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|\n"
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|Jacques|null|"
+                + R.drawable.ic_social_network + "|null|null|null|\n"
+                + "row |18|835|298i5.3552i264b0e968b8a42fv|Jeanne|null|"
+                + R.drawable.ic_social_network + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(+2, now) + "|null|\n"
+                + "row |19|836|298i5.3552i264b0e968b8a42fd|Mathieu|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(+2, now) + "|null|\n"
+                + "row |20|837|298i5.3552i264b0e968b8a46fv|Denis|null|"
+                + R.drawable.ic_social_network + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|null|\n"
+                + "row |21|838|298i5.3552i264b0e968b8a47fv|Émilie|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|" + frequency30days + "|\n"
+                + "row |22|839|298i5.3552i274b0e968b8a47fv|Mélissa|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|" + frequency30days + "|\n";
+
+        ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
+                TestUtility.getCursorFromString(contactString));
+
+        int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.ContactTable.CONTENT_URI,
+                contactValues);
+
+        assertEquals(8, insertCount);
+
+        Cursor contactCursor = aContext.getContentResolver().query(
+                FriendForecastContract.ContactTable.CONTENT_URI,
+                ContactDAO.ContactQuery.PROJECTION,
+                null,
+                null,
+                null
+        );
+
+        assertEquals(8, contactCursor.getCount());
+
+//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "expected : \n" + contactString);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(contactCursor));
+
+        assertEquals(contactString, TestUtility.getCursorString(contactCursor));
+        contactCursor.close();
+
+    }
+
+
+    public void test_addEventTableDataSet() {
+        aContext.getContentResolver().delete(FriendForecastContract.EventTable.CONTENT_URI, null, null);
+
+        long now = DateUtils.todayStart();
+        long in25days = DateUtils.addDay(25, now);
+        long moreThanTwoThirdOf30days = in25days - now;
+
+        long in30days = DateUtils.addDay(30, now);
+        long frequency30days = in30days - now;
+
+
+        String eventString = "\n"
+                + "header |" +
+                FriendForecastContract.EventTable._ID + "|" +
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "|" +
+                FriendForecastContract.EventTable.COLUMN_ACTION_ID + "|" +
+                FriendForecastContract.EventTable.COLUMN_VECTOR_ID + "|" +
+                FriendForecastContract.EventTable.COLUMN_TIME_START + "|" +
+                FriendForecastContract.EventTable.COLUMN_TIME_END + "|\n"
+                + "row |8|16|5|32|" + DateUtils.addDay(-4, now) + "|null|\n"
+                + "row |9|17|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |10|18|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |11|19|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |12|20|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |13|21|5|32|" + DateUtils.addDay(-1, (now - moreThanTwoThirdOf30days))
+                + "|" + (now - moreThanTwoThirdOf30days) + "|\n"
+                + "row |14|22|5|32|" + (now - frequency30days) + "|" + (now - frequency30days) +
+                "|\n";
+
+        ContentValues[] eventValues = TestUtility.fromCursorToContentValues(
+                TestUtility.getCursorFromString(eventString));
+        int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.EventTable
+                        .CONTENT_URI,
+                eventValues);
+        assertEquals(7, insertCount);
+        Cursor eventCursor = aContext.getContentResolver().query(FriendForecastContract.EventTable
+                .CONTENT_URI, null, null, null, null);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + eventString);
+        assertEquals(eventString, TestUtility.getCursorString(eventCursor));
     }
 }
