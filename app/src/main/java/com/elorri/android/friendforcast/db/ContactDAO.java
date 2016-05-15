@@ -28,7 +28,7 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON " +
             "CONFLICT REPLACE)";

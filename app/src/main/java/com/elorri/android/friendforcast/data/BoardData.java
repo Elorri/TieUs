@@ -156,11 +156,13 @@ public abstract class BoardData {
                     return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;
             case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                                .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.PROJECTION_QUERY,
-                        ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.SELECTION_DECREASED_MOOD,
-                        null, null, null, null);
+                db.rawQuery(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
+                                + now + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND,
+                        null);
+                cursor = db.rawQuery(
+                        ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT_WITH_VIEWTYPE, new
+                                String[]{String.valueOf(Status
+                                .getLastUserMoodsConfirmAware(context))});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -171,13 +173,12 @@ public abstract class BoardData {
                             context.getResources().getString(R.string.decreased_mood_title), false, null,
                             false));
                     //They decreased their mood, lets change their moodIcon
-                    int moodIcon = cursor.getInt(ContactActionVectorEventDAO
-                            .PeopleWhoChangedMoodQuery.COL_MOOD);
+                    int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_EMOICON_ID);
                     db.rawQuery("update " + FriendForecastContract.ContactTable.NAME + " set "
                                     + FriendForecastContract.ContactTable.COLUMN_MOOD + " = ? where "
                                     + FriendForecastContract.ContactTable._ID + "=?",
                             new String[]{String.valueOf(Tools.decreaseMood(moodIcon)),
-                                    cursor.getString(ContactActionVectorEventDAO.PeopleWhoChangedMoodQuery.COL_ID)});
+                                    cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)});
                 } else
                     return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;

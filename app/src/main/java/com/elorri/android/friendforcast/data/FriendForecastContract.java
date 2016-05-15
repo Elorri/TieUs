@@ -111,7 +111,7 @@ public class FriendForecastContract {
         public static final String COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY = "increased_expected_delay_feedback";
         //TODO note should be in mimllis
         public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
-        public static final String COLUMN_LAST_MOOD_UPDATE = "last_mood_update";
+        public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
 
 
         public static final String VIEW_PART = "part";

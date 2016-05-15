@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 
 import com.elorri.android.friendforcast.R;
 
+import java.util.Date;
+
 /**
  * Created by Elorri on 03/05/2016.
  */
@@ -76,5 +78,21 @@ public class Status {
     }
 
 
+
+
+
+    public static long getLastUserMoodsConfirmAware(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getLong(context.getString(R.string.pref_last_user_moods_confirm_key),
+                (new Date(0)).getTime());
+    }
+
+
+    public static void setLastMessageIdx(Context context, long timestamp) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putLong(context.getString(R.string.pref_last_user_moods_confirm_key), timestamp);
+        spe.commit();
+    }
 
 }

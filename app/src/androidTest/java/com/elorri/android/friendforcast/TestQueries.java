@@ -8,6 +8,7 @@ import android.util.Log;
 import com.elorri.android.friendforcast.data.FriendForecastDbHelper;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Status;
 
 /**
  * Created by Elorri on 13/05/2016.
@@ -44,10 +45,11 @@ public class TestQueries extends AndroidTestCase {
         long in30days = DateUtils.addDay(30, now);
         long frequency30days = in30days - now;
 
+
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.JOINT_TABLE_PROJECTION)
                 + "row |14|5|22|32|Thank you|" + (now - frequency30days) + "|"
-                + DateUtils.addDay(+1, now - frequency30days) + "|839|298i5.3552i274b0e968b8a47fv|"
+                + (now - frequency30days) + "|839|298i5.3552i274b0e968b8a47fv|"
                 + "Mélissa|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + frequency30days + "|"
                 + DateUtils.addDay(-2, now) + "|" + DateUtils.addDay(-1, now) + "|null|\n"
@@ -103,15 +105,17 @@ public class TestQueries extends AndroidTestCase {
     public void test_unmanaged_people() {
         Cursor cursor = db.rawQuery(ContactActionVectorEventDAO.UnmanagedPeopleQuery
                 .SELECT_UNMANAGED_PEOPLE, null);
-        assertEquals(5, cursor.getCount());
+        assertEquals(7, cursor.getCount());
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION)
-                + "row |20|836|298i5.3552i264b0e968b8a46fv|denis|null|" + R.drawable.ic_social_network + "|\n"
+                + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|" + R.drawable.ic_social_network + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_social_network + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|" + R.drawable.ic_social_network + "|\n"
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|\n"
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|\n";
+                + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|\n"
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|\n"
+                + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
@@ -179,7 +183,7 @@ public class TestQueries extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.AskForFeedbackQuery.PROJECTION)
-                + "row |20|836|298i5.3552i264b0e968b8a46fv|denis|null|"
+                + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_social_network + "|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -191,18 +195,13 @@ public class TestQueries extends AndroidTestCase {
 
     public void test_people_approching_end_of_most_suitable_contact_delay() {
         long now = System.currentTimeMillis();
-//    Date today = new Date(now);
-//        Calendar calendar = Calendar.getInstance();
-//        nb = -1*30*0.75;
-//        calendar.add(Calendar.DAY_OF_YEAR,nb);
-//        end = calendar.getTime().toString();
 
         Cursor cursor = db.rawQuery(
                 ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_BEFORE_BIND
                         + now + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
                         .SELECT_AFTER_BIND, null);
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "now "+now+"- "
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "now " + now + "- "
                 + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_BEFORE_BIND
                 + now + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_AFTER_BIND);
 
@@ -220,7 +219,27 @@ public class TestQueries extends AndroidTestCase {
     }
 
     public void test_people_who_decreased_mood_today() {
+        long now = System.currentTimeMillis();
 
+        db.rawQuery(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
+                        + now + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_AFTER_BIND,
+                null);
+        Cursor cursor = db.rawQuery(
+                ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT, new
+                        String[]{String.valueOf(Status
+                        .getLastUserMoodsConfirmAware(mContext))});
+
+        assertEquals(1, cursor.getCount());
+
+        String cursorString = "\n"
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.PROJECTION)
+                + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|\n";
+
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+
+        assertEquals(cursorString, TestUtility.getCursorString(cursor));
+        cursor.close();
     }
 
     public void test_people_that_should_already_be_contacted() {

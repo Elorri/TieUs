@@ -413,7 +413,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a42fp|Hector|null|"
                 + R.drawable.ic_social_network + "|null|null|null|null|\n";
 
@@ -494,7 +494,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|Pierre||2130837600|null|null|null|null"
                 + "|\n";
 
@@ -540,7 +540,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |17|834|298i5.3552i264b0e868b8a42fp|Paul|null|"
                 + R.drawable.ic_social_network + "|1462791980000|"
                 + DateUtils.tomorrowStart()
@@ -624,7 +624,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42op|Jacques|null|"
                 + R.drawable.ic_sentiment_neutral_black_24dp + "|1462791980000|"
                 + DateUtils.tomorrowStart()
@@ -708,7 +708,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |19|836|298i6.3552i264b0e968b8a42op|Zorro|null|"
                 + R.drawable.ic_social_network + "|1462791980000|"
                 + DateUtils.yesterdayStart()
@@ -798,7 +798,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |20|835|298i5.3552i264b0e968b8a42op|Superman|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|"
                 + thereIs5Days + "|"
@@ -884,7 +884,7 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_MOOD + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_UPDATE + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
                 + "row |21|837|298i5.3552m264b0e968b8a42op|Superwoman|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|1462791980000|1814400000|1464606375441" +
                 "|\n";
@@ -1037,8 +1037,7 @@ public class TestGivens extends AndroidTestCase {
                 + "row |12|20|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
                 + "row |13|21|5|32|" + DateUtils.addDay(-1, (now - moreThanTwoThirdOf30days))
                 + "|" + (now - moreThanTwoThirdOf30days) + "|\n"
-                + "row |14|22|5|32|" + (now - frequency30days) + "|" + (now - frequency30days) +
-                "|\n";
+                + "row |14|22|5|32|" + (now - frequency30days) + "|" + (now - frequency30days) + "|\n";
 
         ContentValues[] eventValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(eventString));
