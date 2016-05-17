@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.MatrixCursors;
+import com.elorri.android.friendforcast.db.ViewTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -234,4 +235,47 @@ public class Tools {
             return R.drawable.ic_sentiment_dissatisfied_black_48dp;
         return R.drawable.ic_sentiment_dissatisfied_black_48dp;
     }
+
+
+    public static String getCursorString(Cursor cursor) {
+        cursor.moveToPosition(-1);
+        String cursorString = "\n";
+        if (cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE) != -1) {
+            if (cursor.moveToFirst()) {
+                int viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
+                cursorString = cursorString + getCursorHeaderString(cursor);
+                cursor.moveToPosition(-1);
+                while (cursor.moveToNext()) {
+                    if (viewType != cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE)))
+                        cursorString = cursorString + getCursorHeaderString(cursor);
+                    cursorString = cursorString + getCursorRowString(cursor);
+                }
+            }
+        } else {
+            cursorString = cursorString + getCursorHeaderString(cursor);
+            while (cursor.moveToNext()) {
+                cursorString = cursorString + getCursorRowString(cursor);
+            }
+        }
+        return cursorString;
+    }
+
+    public static String getCursorHeaderString(Cursor cursor) {
+        String header = "header |";
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            header = header + cursor.getColumnName(i) + "|";
+        }
+        return header + "\n";
+    }
+
+    public static String getCursorRowString(Cursor cursor) {
+        String row = "row |";
+        String cell = null;
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            cell = cursor.getString(i) == null ? "null" : cursor.getString(i);
+            row = row + cell + "|";
+        }
+        return row + "\n";
+    }
+
 }

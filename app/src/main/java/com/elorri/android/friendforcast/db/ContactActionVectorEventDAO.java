@@ -1,12 +1,6 @@
 package com.elorri.android.friendforcast.db;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.extra.DateUtils;
 
 /**
  * Created by Elorri on 12/04/2016.
@@ -132,7 +126,9 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.VectorTable.NAME + " on cae."
             + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + "="
             + FriendForecastContract.VectorTable.NAME + "."
-            + FriendForecastContract.VectorTable._ID + " order by "
+            + FriendForecastContract.VectorTable._ID + " where "
+            + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
+            + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " order by "
             + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " asc";
 
@@ -194,7 +190,7 @@ public class ContactActionVectorEventDAO {
     public interface UnmanagedPeopleQuery extends PeopleQuery {
 
 
-        String SELECT_UNMANAGED_PEOPLE = "select "
+        String SELECT = "select "
                 + FriendForecastContract.ContactTable._ID + " as "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -208,10 +204,10 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " except "
                 + ManagedPeopleQuery.SELECT_MANAGED_PEOPLE;
 
-        String SELECT_UNMANAGED_PEOPLE_WITH_VIEWTYPE = "select *, "
+        String SELECT_WITH_VIEWTYPE = "select *, "
                 + ViewTypes.VIEW_UNMANAGED_PEOPLE + " as "
-                + ViewTypes.COLUMN_VIEWTYPE + " from "
-                + UnmanagedPeopleQuery.SELECT_UNMANAGED_PEOPLE;
+                + ViewTypes.COLUMN_VIEWTYPE
+                + " from (" + UnmanagedPeopleQuery.SELECT + ")";
     }
 
 
@@ -333,9 +329,11 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
 
-        String SELECT_WITH_VIEWTYPE = "select *, "
+        String SELECT_BEFORE_BIND_WITH_VIEWTYPE = "select *, "
                 + ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY + " as " + ViewTypes.COLUMN_VIEWTYPE
-                + " from (" + SELECT_BEFORE_BIND + ")";
+                + " from (" + SELECT_BEFORE_BIND;
+
+        String SELECT_AFTER_BIND_WITH_VIEWTYPE = SELECT_AFTER_BIND + ")";
 
 
     }
@@ -554,16 +552,17 @@ public class ContactActionVectorEventDAO {
 
 
         String SELECT = "select "
-                + FriendForecastContract.ContactTable._ID + ", "
+                + FriendForecastContract.ContactTable._ID + " as "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as"
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " = "
-                + R.drawable.ic_do_not_disturb_alt_black_48dp + " order by lower("
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + " order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "
@@ -641,73 +640,6 @@ public class ContactActionVectorEventDAO {
         };
 
 
-    }
-
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        return getCursor(cursorType, db, null);
-    }
-
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db, String contactId) {
-        switch (cursorType) {
-            case UNMANAGED_PEOPLE: {
-                return db.rawQuery(UnmanagedPeopleQuery.SELECT_UNMANAGED_PEOPLE, null);
-            }
-            case DELAY_PEOPLE: {
-                long todayStart = DateUtils.todayStart();
-                return db.rawQuery(DelayPeopleQuery.SELECT, new String[]{String
-                        .valueOf(todayStart)});
-            }
-            case TODAY_PEOPLE: {
-                long todayStart = DateUtils.todayStart();
-                long todayEnd = DateUtils.tomorrowStart();
-                return db.rawQuery(TodayPeopleQuery.SELECT, new String[]{String
-                        .valueOf(todayStart),
-                        String.valueOf(todayEnd)});
-            }
-            case TODAY_DONE_PEOPLE: {
-                long todayStart = DateUtils.todayStart();
-                long todayEnd = DateUtils.tomorrowStart();
-                return db.rawQuery(TodayDonePeopleQuery.SELECT, new
-                        String[]{String.valueOf
-                        (todayStart), String.valueOf(todayEnd)});
-            }
-            case NEXT_PEOPLE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY " + NextPeopleQuery.SELECT);
-                long tomorrow = DateUtils.tomorrowStart();
-                return db.rawQuery(NextPeopleQuery.SELECT, new String[]{String
-                        .valueOf(tomorrow)});
-            }
-            case UNTRACKED_PEOPLE: {
-                return db.rawQuery(UntrackedPeopleQuery.SELECT, null);
-            }
-            case ACTION_BY_CONTACT_ID: {
-                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        VectorActionByContactIdQuery.PROJECTION_ALL,
-                        VectorActionByContactIdQuery.SELECTION_ALL,
-                        new String[]{contactId}, null, null, null);
-                return cursor;
-            }
-            case NEXT_ACTION_BY_CONTACT_ID: {
-                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        VectorActionByContactIdQuery.PROJECTION_NEXT_QUERY,
-                        VectorActionByContactIdQuery.SELECTION_UNDONE,
-                        new String[]{contactId}, null, null, VectorActionByContactIdQuery
-                                .SORT_ORDER_UNDONE);
-                return cursor;
-            }
-            case DONE_ACTION_BY_CONTACT_ID: {
-                Cursor cursor = db.query("(" + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
-                        VectorActionByContactIdQuery.PROJECTION_DONE_QUERY,
-                        VectorActionByContactIdQuery.SELECTION_DONE,
-                        new String[]{contactId}, null, null, VectorActionByContactIdQuery
-                                .SORT_ORDER_DONE);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + cursor.getCount());
-                return cursor;
-            }
-            default:
-                return null;
-        }
     }
 
 

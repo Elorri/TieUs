@@ -28,9 +28,11 @@ public class DetailData {
 
         //if actions are registered and user does not know how to mark action as done. We add a row
         // on top to educate him.
-        Cursor actionsCursor = ContactActionVectorEventDAO.getCursor(
-                ContactActionVectorEventDAO.ACTION_BY_CONTACT_ID,
-                db, contactId);
+        Cursor actionsCursor = db.query("(" + ContactActionVectorEventDAO
+                        .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_ALL,
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_ALL,
+                new String[]{contactId}, null, null, null);
         if ((actionsCursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
             cursors.add(MatrixCursors.getOneLineCursor(
                     MatrixCursors.EducateMessageQuery.PROJECTION,
@@ -46,9 +48,12 @@ public class DetailData {
     private static Cursor getNextActionsWrappedCursor(Context context, String title,
                                                       SQLiteDatabase db, String contactId) {
         //TODO close or not close this cursor
-        Cursor doneActionCursor = ContactActionVectorEventDAO.getCursor(
-                ContactActionVectorEventDAO.DONE_ACTION_BY_CONTACT_ID,
-                db, contactId);
+        Cursor doneActionCursor = db.query("(" + ContactActionVectorEventDAO
+                        .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE_QUERY,
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_DONE,
+                new String[]{contactId}, null, null, ContactActionVectorEventDAO.VectorActionByContactIdQuery
+                        .SORT_ORDER_DONE);
         //if no actions done are registered, we display no title at all. No next action title and
         // no done action title. We only dispay the list of next actions.
         if (doneActionCursor.getCount() == 0) {
@@ -68,9 +73,12 @@ public class DetailData {
     }
 
     private static Cursor getDoneActionsWrappedCursor(Context context, String title, SQLiteDatabase db, String contactId) {
-        Cursor doneActionCursor = ContactActionVectorEventDAO.getCursor(
-                ContactActionVectorEventDAO.DONE_ACTION_BY_CONTACT_ID,
-                db, contactId);
+        Cursor doneActionCursor = db.query("(" + ContactActionVectorEventDAO
+                        .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE_QUERY,
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_DONE,
+                new String[]{contactId}, null, null, ContactActionVectorEventDAO.VectorActionByContactIdQuery
+                        .SORT_ORDER_DONE);
 
         //if no actions done are registered, we display no title at all.
         if (doneActionCursor.getCount() == 0) {
@@ -91,9 +99,12 @@ public class DetailData {
 
     private static Cursor getNextActionsCursor(Context context, SQLiteDatabase db, String contactId) {
 
-        Cursor nextActionsCursor = ContactActionVectorEventDAO.getCursor(
-                ContactActionVectorEventDAO.NEXT_ACTION_BY_CONTACT_ID,
-                db, contactId);
+        Cursor nextActionsCursor = db.query("(" + ContactActionVectorEventDAO
+                        .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT_QUERY,
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_UNDONE,
+                new String[]{contactId}, null, null, ContactActionVectorEventDAO.VectorActionByContactIdQuery
+                        .SORT_ORDER_UNDONE);
 
         //if no next actions are registered we display a message
         if (nextActionsCursor.getCount() == 0) {

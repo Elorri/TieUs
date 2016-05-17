@@ -11,6 +11,7 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.data.FriendForecastDbHelper;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
+import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.extra.DateUtils;
 import com.elorri.android.friendforcast.extra.Status;
 
@@ -394,7 +395,7 @@ public class TestGivens extends AndroidTestCase {
 
         SQLiteDatabase db = new FriendForecastDbHelper(aContext).getReadableDatabase();
         Cursor cursor = db.rawQuery(ContactActionVectorEventDAO.UnmanagedPeopleQuery
-                .SELECT_UNMANAGED_PEOPLE, null);
+                .SELECT, null);
 
         assertTrue(cursor.getCount() > 0);
     }
@@ -624,11 +625,12 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|" +
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42op|Jacques|null|"
                 + R.drawable.ic_sentiment_neutral_black_24dp + "|1462791980000|"
                 + DateUtils.tomorrowStart()
-                + "|null|null" + "|\n";
+                + "|null|null|null|null|\n";
 
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
@@ -798,13 +800,14 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + "|" +
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "|" +
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|\n"
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + "|" +
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "|\n"
                 + "row |20|835|298i5.3552i264b0e968b8a42op|Superman|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|"
                 + thereIs5Days + "|"
                 + thereIs4Days + "|"
                 + freqOfContact + "|"
-                + thereIs2Days + "|\n";
+                + thereIs2Days + "|null|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + contactString + " now " + "" + System.currentTimeMillis());
@@ -995,7 +998,43 @@ public class TestGivens extends AndroidTestCase {
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|Bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n";
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + "row |35|932|398i5.3552i264b0e968b8a42ff|Paul_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |36|933|398i5.3552i264b0e968b8a42fk|Pierre_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |37|934|398i5.3552i264b0e968b8a42fl|Jacques_Untracked|null|"
+                + R.drawable.ic_social_network + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |38|935|398i5.3552i264b0e968b8a42fv|Jeanne_Untracked|null|"
+                + R.drawable.ic_social_network + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(+2, now) + "|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |39|936|398i5.3552i264b0e968b8a42fd|Mathieu_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(+2, now) + "|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |40|937|398i5.3552i264b0e968b8a46fv|Denis_Untracked|null|"
+                + R.drawable.ic_social_network + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |41|938|398i5.3552i264b0e968b8a47fv|Émilie_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|" + frequency30days + "|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |42|939|398i5.3552i274b0e968b8a47fv|Mélissa_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + DateUtils.addDay(-2, now) + "|"
+                + DateUtils.addDay(-1, now) + "|" + frequency30days + "|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |43|940|398i7.3552i264b0e968b8a42ff|Françoise_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |44|950|398i9.3552i264b0e968b8a42ff|Emma_Untracked|null|"
+                + R.drawable.ic_social_network
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + "row |45|951|390i5.3552i264b0e968b8a42fk|Bernard_Untracked|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n";
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(contactString));
@@ -1003,7 +1042,7 @@ public class TestGivens extends AndroidTestCase {
         int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.ContactTable.CONTENT_URI,
                 contactValues);
 
-        assertEquals(11, insertCount);
+        assertEquals(22, insertCount);
 
         Cursor contactCursor = aContext.getContentResolver().query(
                 FriendForecastContract.ContactTable.CONTENT_URI,
@@ -1013,7 +1052,7 @@ public class TestGivens extends AndroidTestCase {
                 null
         );
 
-        assertEquals(11, contactCursor.getCount());
+        assertEquals(22, contactCursor.getCount());
 
 //        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "expected : \n" + contactString);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(contactCursor));
@@ -1036,13 +1075,7 @@ public class TestGivens extends AndroidTestCase {
 
 
         String eventString = "\n"
-                + "header |" +
-                FriendForecastContract.EventTable._ID + "|" +
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "|" +
-                FriendForecastContract.EventTable.COLUMN_ACTION_ID + "|" +
-                FriendForecastContract.EventTable.COLUMN_VECTOR_ID + "|" +
-                FriendForecastContract.EventTable.COLUMN_TIME_START + "|" +
-                FriendForecastContract.EventTable.COLUMN_TIME_END + "|\n"
+                + TestUtility.getCursorHeaderString(EventDAO.EventQuery.PROJECTION)
                 + "row |8|16|5|32|" + DateUtils.addDay(-4, now) + "|null|\n"
                 + "row |9|17|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
                 + "row |10|18|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
@@ -1053,14 +1086,24 @@ public class TestGivens extends AndroidTestCase {
                 + "row |14|22|5|32|" + (now - frequency30days) + "|" + (now - frequency30days) + "|\n"
                 + "row |15|23|5|32|" + (DateUtils.todayStart() + 1000) + "|null|\n"
                 + "row |16|24|5|32|" + (DateUtils.todayStart() + 1000) + "|" + (DateUtils.todayStart() + 2000) + "|\n"
-                + "row |17|25|5|32|" + DateUtils.addDay(4, now) + "|null|\n";
+                + "row |17|25|5|32|" + DateUtils.addDay(4, now) + "|null|\n"
+                + "row |18|36|5|32|" + DateUtils.addDay(-4, now) + "|null|\n"
+                + "row |19|37|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |20|38|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |21|39|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |22|40|5|32|" + DateUtils.addDay(-4, now) + "|" + DateUtils.addDay(-3, now) + "|\n"
+                + "row |23|41|5|32|" + DateUtils.addDay(-1, (now - moreThanTwoThirdOf30days)) + "|" + (now - moreThanTwoThirdOf30days) + "|\n"
+                + "row |24|42|5|32|" + (now - frequency30days) + "|" + (now - frequency30days) + "|\n"
+                + "row |25|43|5|32|" + (DateUtils.todayStart() + 1000) + "|null|\n"
+                + "row |26|44|5|32|" + (DateUtils.todayStart() + 1000) + "|" + (DateUtils.todayStart() + 2000) + "|\n"
+                + "row |27|45|5|32|" + DateUtils.addDay(4, now) + "|null|\n";
 
         ContentValues[] eventValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(eventString));
         int insertCount = aContext.getContentResolver().bulkInsert(
                 FriendForecastContract.EventTable.CONTENT_URI,
                 eventValues);
-        assertEquals(10, insertCount);
+        assertEquals(20, insertCount);
         Cursor eventCursor = aContext.getContentResolver().query(FriendForecastContract.EventTable
                 .CONTENT_URI, null, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + eventString);

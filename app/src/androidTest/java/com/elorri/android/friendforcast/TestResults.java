@@ -49,8 +49,7 @@ public class TestResults extends AndroidTestCase {
                 + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[2] + "|"
                 + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[3] + "|"
                 + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[4] + "|"
-                + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[5] + "|"
-                + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[6] + "|\n"
+                + ContactActionVectorEventDAO.UnmanagedPeopleQuery.PROJECTION[5] + "|\n"
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|pierre||2130837600|" + ViewTypes
                 .VIEW_UNMANAGED_PEOPLE + "|\n";
 
