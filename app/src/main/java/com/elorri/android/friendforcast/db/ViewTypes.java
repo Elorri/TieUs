@@ -21,7 +21,7 @@ public class ViewTypes {
     public static final int VIEW_SET_UP_A_FREQUENCY_OF_CONTACT = 10;
     public static final int VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 11;
     public static final int VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY = 12;
-    public static final int VIEW_NOTE_PEOPLE_WHO_CHANGED_MOOD_TODAY = 13;
+    public static final int VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 13;
 
     public static final int VIEW_CONTACT = 14; // DetailAdapter rename view_contact ?
     public static final int VIEW_ALL_ACTION = 15;// DetailAdapter

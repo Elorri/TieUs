@@ -112,6 +112,11 @@ public class FriendForecastContract {
         //TODO note should be in mimllis
         public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
         public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
+        public static final String COLUMN_UNTRACKED = "untracked";
+
+        public static final String UNTRACKED_ON_VALUE = "1";
+        public static final String UNTRACKED_OFF_VALUE = "0";
+        public static final String UNTRACKED_CONSTRAINT = "untracked_ck";
 
 
         public static final String VIEW_PART = "part";
