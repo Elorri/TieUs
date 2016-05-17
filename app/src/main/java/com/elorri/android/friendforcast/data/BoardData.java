@@ -140,10 +140,10 @@ public abstract class BoardData {
                             context.getResources().getString(R.string.ask_for_feedback_title), false, null,
                             false));
                 } else
-                    return getTopCursors(context, db, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
+                    return getTopCursors(context, db, Status.APPROCHING_DEAD_LINE);
                 //TODO remove return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;
-            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
+            case Status.APPROCHING_DEAD_LINE:
                 cursor = db.rawQuery(
                         ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
                                 .SELECT_BEFORE_BIND_WITH_VIEWTYPE
@@ -240,9 +240,9 @@ public abstract class BoardData {
 //            case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
 //                if (askFor) {
 //                } else
-//                    return getTopCursors(context, Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
+//                    return getTopCursors(context, Status.APPROCHING_DEAD_LINE);
 //                break;
-//            case Status.APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY:
+//            case Status.APPROCHING_DEAD_LINE:
 //                //when clicked on ok.
 //                //Status.setLastMessageIdx(context, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
 //                break;

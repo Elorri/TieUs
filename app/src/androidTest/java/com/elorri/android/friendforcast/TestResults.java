@@ -17,15 +17,7 @@ public class TestResults extends AndroidTestCase {
 
 
     public void test_assert_equals_BoardData_cursor1(Context context, Cursor cursor) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-        String cursorString = "\n"
-                + "header |"
-                + MatrixCursors.EmptyCursorMessageQuery.PROJECTION[0] + "|"
-                + MatrixCursors.EmptyCursorMessageQuery.PROJECTION[1] + "|\n"
-                + "row |"
-                + context.getResources().getString(R.string.no_contacts_on_phone) + "|"
-                + MatrixCursors.EmptyCursorMessageQuery.VALUES[1] + "|\n";
-        assertEquals(cursorString, TestUtility.getCursorString(cursor));
+
     }
 
     public void test_assert_equals_BoardData_cursor2(Context mContext, Cursor cursor) {
