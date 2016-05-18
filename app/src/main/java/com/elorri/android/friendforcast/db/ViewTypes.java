@@ -29,7 +29,7 @@ public class ViewTypes {
     public static final int VIEW_DONE_ACTION = 17;// DetailAdapter
 
     public static final int VIEW_EMPTY_CURSOR_MESSAGE = 18;// DetailAdapter
-    public static final int VIEW_EDUCATE_MESSAGE = 19;// DetailAdapter
+    public static final int VIEW_CONFIRM_MESSAGE = 19;// DetailAdapter
     public static final int VIEW_MESSAGE = 20;// DetailAdapter
 
     public static final int VIEW_ACTION = 21;

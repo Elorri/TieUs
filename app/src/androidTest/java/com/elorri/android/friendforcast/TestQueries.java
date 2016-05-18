@@ -27,10 +27,10 @@ public class TestQueries extends AndroidTestCase {
         mTestGivens = new TestGivens(mContext);
         mTestGivens.deleteAllRecordsFromDB();
 
-        mTestGivens.test_addContactTableDataSet();
+        mTestGivens.test_fillContactTable();
         mTestGivens.test_fillActionTable();
         mTestGivens.test_fillVectorTable();
-        mTestGivens.test_addEventTableDataSet();
+        mTestGivens.test_fillEventTable();
 
         db = new FriendForecastDbHelper(mContext).getReadableDatabase();
     }

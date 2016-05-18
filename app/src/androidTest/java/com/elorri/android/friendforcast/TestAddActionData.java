@@ -66,8 +66,6 @@ public class TestAddActionData extends AndroidTestCase {
     }
 
     public void testSelectVectorUri() {
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.AddActionData.buildSelectVectorUri(String.valueOf(5)),
                 null,
@@ -103,10 +101,6 @@ public class TestAddActionData extends AndroidTestCase {
 
 
     public void testValidateUri() {
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-
-
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.AddActionData.buildValidateUri(
                         String.valueOf(5),

@@ -69,11 +69,14 @@ public class TestUtility extends AndroidTestCase {
         if (cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE) != -1) {
             if (cursor.moveToFirst()) {
                 int viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + viewType);
                 cursorString = cursorString + getCursorHeaderString(cursor);
                 cursor.moveToPosition(-1);
                 while (cursor.moveToNext()) {
-                    if (viewType != cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE)))
+                    if (viewType != cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))) {
                         cursorString = cursorString + getCursorHeaderString(cursor);
+                        viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
+                    }
                     cursorString = cursorString + getCursorRowString(cursor);
                 }
             }
@@ -134,7 +137,7 @@ public class TestUtility extends AndroidTestCase {
     }
 
     public void test_getCursorHeaderString() {
-        assertEquals("header |_id|col1|" + ViewTypes.COLUMN_VIEWTYPE + "|\n",
+        assertEquals("header |_id|col1|col2|" + ViewTypes.COLUMN_VIEWTYPE + "|\n",
                 getCursorHeaderString(mCursor1));
     }
 
@@ -146,25 +149,26 @@ public class TestUtility extends AndroidTestCase {
 
     public void test_getCursorString() {
         String expected = "\n"
-                + "header |_id|col1|projection_type|\n"
-                + "row |1|data1|1|\n"
-                + "row |2|data3|1|\n"
-                + "header |_id|col1|col2|projection_type|\n"
+                + "header |_id|col1|col2|"+ViewTypes.COLUMN_VIEWTYPE+"|\n"
+                + "row |1|data1|null|1|\n"
+                + "row |2|data3|data4|1|\n"
+                + "header |_id|col1|col2|"+ViewTypes.COLUMN_VIEWTYPE+"|\n"
                 + "row |1|data1|data2|2|\n";
+
         assertEquals(expected, getCursorString(mMergedCursor));
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(mMergedCursor));
     }
 
     public void test_getCursorFromString() {
         String cursorString = "\n"
-                + "header |_id|col1|projection_type|\n"
+                + "header |_id|col1|"+ViewTypes.COLUMN_VIEWTYPE+"|\n"
                 + "row |1|data1|1|\n"
                 + "row |2|data3|1|\n"
-                + "header |_id|col1|col2|projection_type|\n"
+                + "header |_id|col1|col2|"+ViewTypes.COLUMN_VIEWTYPE+"|\n"
                 + "row |1|data1|data2|2|\n";
         Cursor cursor = getCursorFromString(cursorString);
-        assertEquals(cursorString, getCursorString(cursor));
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        assertEquals(cursorString, getCursorString(cursor));
     }
 
 
@@ -330,7 +334,6 @@ public class TestUtility extends AndroidTestCase {
 
 
     }
-
 
 
 }

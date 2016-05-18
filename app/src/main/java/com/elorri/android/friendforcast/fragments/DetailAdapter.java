@@ -130,7 +130,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     message = (TextView) view.findViewById(R.id.message);
                     break;
                 }
-                case ViewTypes.VIEW_EDUCATE_MESSAGE: {
+                case ViewTypes.VIEW_CONFIRM_MESSAGE: {
                     message = (TextView) view.findViewById(R.id.message);
                     ok = (TextView) view.findViewById(R.id.ok);
                     break;
@@ -277,10 +277,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE);
                 break;
             }
-            case ViewTypes.VIEW_EDUCATE_MESSAGE: {
+            case ViewTypes.VIEW_CONFIRM_MESSAGE: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate,
                         parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_EDUCATE_MESSAGE);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONFIRM_MESSAGE);
                 break;
             }
         }
@@ -355,8 +355,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.message.setText(mCursor.getString(ContactVectorsDAO.ContactVectorsQuery.COL_ID));
                 break;
             }
-            case ViewTypes.VIEW_EDUCATE_MESSAGE: {
-                holder.message.setText(mCursor.getString(MatrixCursors.EducateMessageQuery.COL_MESSAGE));
+            case ViewTypes.VIEW_CONFIRM_MESSAGE: {
+                holder.message.setText(mCursor.getString(MatrixCursors.ConfirmMessageQuery.COL_MESSAGE));
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

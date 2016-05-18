@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
+import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
+import com.elorri.android.friendforcast.extra.DateUtils;
 
 /**
  * Created by Elorri on 04/05/2016.
@@ -37,9 +39,6 @@ public class TestDetailData extends AndroidTestCase {
 //    }
 
     public void testDetailNoActions() {
-        mTestGivens.test_I_have_a_table_contact_with_id_15();
-        mTestGivens.test_I_have_a_table_event_that_does_not_contain_row_with_contact_id_15();
-
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(15)),
                 null,
@@ -47,19 +46,12 @@ public class TestDetailData extends AndroidTestCase {
                 null,
                 null
         );
-
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
-                + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|2130837600|null|null|null|null|0|"
+                + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
                 + "|\n"
@@ -71,12 +63,7 @@ public class TestDetailData extends AndroidTestCase {
 
 
     public void testDetailUndoneActionUneducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_16();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_16_action_id_5_timeend_null();
         mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false();
-
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(16)),
@@ -86,41 +73,25 @@ public class TestDetailData extends AndroidTestCase {
                 null
         );
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        long now = DateUtils.todayStart();
 
         String cursorString = "\n"
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null|null|0|"
+                + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |16|833|298i5.3552i264b0e968b8a46ff|pierre||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
-                + "header |"
-                + MatrixCursors.EducateMessageQuery.COLUMN_EDUCATE_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_EDUCATE_MESSAGE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[6] + "|\n"
-                + "row |8|com.google.android.gm|package|Thank you|1462226400000|null|" + ViewTypes.VIEW_NEXT_ACTION + "|\n";
-
+                + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
+                + "row |8|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|null|" + ViewTypes
+                .VIEW_NEXT_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
-
     }
 
 
     public void testDetailUndoneActionEducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_16();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_16_action_id_5_timeend_null();
         mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true();
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -130,26 +101,17 @@ public class TestDetailData extends AndroidTestCase {
                 null,
                 null
         );
+
+        long now = DateUtils.todayStart();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         String cursorString = "\n"
-                + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |16|833|298i5.3552i264b0e968b8a46ff|pierre||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[6] + "|\n"
-                + "row |8|com.google.android.gm|package|Thank you|1462226400000|null|" + ViewTypes.VIEW_NEXT_ACTION + "|\n";
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null|null|0|"
+                + ViewTypes.VIEW_CONTACT + "|\n"
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
+                + "row |8|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|null|" + ViewTypes
+                .VIEW_NEXT_ACTION + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
 
@@ -158,11 +120,6 @@ public class TestDetailData extends AndroidTestCase {
 
 
     public void testDetailDoneActionUneducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_17();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens
-                .test_I_have_a_table_event_with_contact_id_17_action_id_5_timeend_not_null();
         mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false();
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -174,20 +131,14 @@ public class TestDetailData extends AndroidTestCase {
         );
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-
+        long now = DateUtils.todayStart();
         String cursorString = "\n"
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
+                "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |17|834|298i5.3552i264b0e968b8a47ff|jacques||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
-                + "header |"
-                + MatrixCursors.EducateMessageQuery.COLUMN_EDUCATE_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_EDUCATE_MESSAGE + "|\n"
+                + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -197,26 +148,15 @@ public class TestDetailData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[6] + "|\n"
-                + "row |9|com.google.android.gm|package|Thank you|1462226400000|1462791975441|" +
-                ViewTypes.VIEW_DONE_ACTION + "|\n";
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
+                + "row |9|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|"
+                + DateUtils.addDay(-3, now) + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
 
     public void testDetailDoneActionEducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_17();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens
-                .test_I_have_a_table_event_with_contact_id_17_action_id_5_timeend_not_null();
         mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true();
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -226,19 +166,13 @@ public class TestDetailData extends AndroidTestCase {
                 null,
                 null
         );
-
+        long now = DateUtils.todayStart();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
-                + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |17|834|298i5.3552i264b0e968b8a47ff|jacques||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
+                "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -248,141 +182,13 @@ public class TestDetailData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[6] + "|\n"
-                + "row |9|com.google.android.gm|package|Thank you|1462226400000|1462791975441|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
+                + "row |9|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|"
+                + DateUtils.addDay(-3, now) + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
 
-
-    public void testDetailDoneAndUndoneActionUneducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_18();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_null();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_not_null();
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false();
-
-        Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(18)),
-                null,
-                null,
-                null,
-                null
-        );
-
-
-        String cursorString = "\n"
-                + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |18|835|298i5.3552i264b0e968b8a49ff|martin||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
-                + "header |"
-                + MatrixCursors.EducateMessageQuery.COLUMN_EDUCATE_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_EDUCATE_MESSAGE + "|\n"
-                + "header |"
-                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[6] + "|\n"
-                + "row |10|com.google.android.gm|package|Thank you|1462226400000|null|" + ViewTypes.VIEW_NEXT_ACTION + "|\n"
-                + "header |"
-                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[6] + "|\n"
-                + "row |11|com.google.android.gm|package|Thank you|1462226400050|1462791975441|" +
-                ViewTypes.VIEW_DONE_ACTION + "|\n";
-
-        assertEquals(cursorString, TestUtility.getCursorString(cursor));
-
-
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-        cursor.close();
-    }
-
-    public void testDetailDoneAndUndoneActionEducatedUser() {
-        mTestGivens.test_I_have_a_table_contact_with_id_18();
-        mTestGivens.test_I_have_a_table_action_with_id_5();
-        mTestGivens.test_I_have_a_table_vector_with_id_32();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_null();
-        mTestGivens.test_I_have_a_table_event_with_contact_id_18_action_id_5_timeend_not_null();
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true();
-
-        Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(18)),
-                null,
-                null,
-                null,
-                null
-        );
-
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-
-        String cursorString = "\n"
-                + "header |"
-                + FriendForecastContract.ContactTable._ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "|"
-                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + "|"
-                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + "|"
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "|"
-                + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |18|835|298i5.3552i264b0e968b8a49ff|martin||2130837600|" + ViewTypes.VIEW_CONTACT + "|\n"
-                + "header |"
-                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT[6] + "|\n"
-                + "row |10|com.google.android.gm|package|Thank you|1462226400000|null|" + ViewTypes.VIEW_NEXT_ACTION + "|\n"
-                + "header |"
-                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
-                + "header |"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[0] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[1] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[2] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[3] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[4] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[5] + "|"
-                + ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_DONE[6] + "|\n"
-                + "row |11|com.google.android.gm|package|Thank you|1462226400050|1462791975441|" +
-                ViewTypes.VIEW_DONE_ACTION + "|\n";
-
-        assertEquals(cursorString, TestUtility.getCursorString(cursor));
-
-
-        cursor.close();
-    }
 
 }

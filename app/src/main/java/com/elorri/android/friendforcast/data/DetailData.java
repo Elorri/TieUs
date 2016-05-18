@@ -24,7 +24,12 @@ public class DetailData {
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, String contactId) {
         ArrayList<Cursor> cursors = new ArrayList();
-        cursors.add(ContactDAO.getCursor(contactId, ContactDAO.CONTACT_BY_ID, db));
+
+        cursors.add(db.query(
+                FriendForecastContract.ContactTable.NAME,
+                ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE_QUERY,
+                ContactDAO.ContactQuery.SELECTION,
+                new String[]{contactId}, null, null, null));
 
         //if actions are registered and user does not know how to mark action as done. We add a row
         // on top to educate him.
@@ -35,8 +40,8 @@ public class DetailData {
                 new String[]{contactId}, null, null, null);
         if ((actionsCursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
             cursors.add(MatrixCursors.getOneLineCursor(
-                    MatrixCursors.EducateMessageQuery.PROJECTION,
-                    MatrixCursors.EducateMessageQuery.VALUES,
+                    MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                    MatrixCursors.ConfirmMessageQuery.VALUES,
                     context.getResources().getString(R.string.mark_action_as_done)));
         }
         cursors.add(getNextActionsWrappedCursor(context, context.getResources().getString(R.string.next_actions), db, contactId));
@@ -109,7 +114,7 @@ public class DetailData {
         //if no next actions are registered we display a message
         if (nextActionsCursor.getCount() == 0) {
             return MatrixCursors.getOneLineCursor(
-                    MatrixCursors.EducateMessageQuery.PROJECTION,
+                    MatrixCursors.ConfirmMessageQuery.PROJECTION,
                     MatrixCursors.EmptyCursorMessageQuery.VALUES,
                     context.getResources().getString(R.string.select_action));
         }

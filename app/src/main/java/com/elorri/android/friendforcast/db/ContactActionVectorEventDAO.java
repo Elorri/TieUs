@@ -390,6 +390,21 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
         };
 
+        String[] PROJECTION_WITH_VIEWTYPE = new String[]{
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
+
         String SELECT = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -434,6 +449,20 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
+        };
+
+        String[] PROJECTION_WITH_VIEWTYPE = new String[]{
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                ViewTypes.COLUMN_VIEWTYPE
         };
 
         String SELECT = "select "
@@ -481,6 +510,21 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
         };
 
+
+        String[] PROJECTION_WITH_VIEWTYPE = new String[]{
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                ViewTypes.COLUMN_VIEWTYPE
+        };
+
         String SELECT = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -521,6 +565,20 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
+        };
+
+        String[] PROJECTION_WITH_VIEWTYPE = new String[]{
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
+                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.COLUMN_DATA,
+                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                ViewTypes.COLUMN_VIEWTYPE
         };
 
         String SELECT = "select "
@@ -638,8 +696,6 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.VIEW_DONE_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
-
-
     }
 
 

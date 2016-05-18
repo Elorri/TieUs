@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
@@ -43,8 +42,12 @@ public abstract class BoardData {
         String todayEnd = String.valueOf(DateUtils.tomorrowStart());
         String tomorrow = String.valueOf(DateUtils.tomorrowStart());
 
-        cursors.add(ContactDAO.getCursor(db));
+        cursors.add(db.rawQuery(ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE, null));
         cursors.add(getTopCursors(context, db, Status.getLastMessageIdx(context)));
+
+        cursor = db.rawQuery(ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE, null);
+        cursors.add(Tools.addDisplayProperties(cursor, true,
+                context.getResources().getString(R.string.unmanaged_people, cursor.getCount()), false, null, false));
 
         cursor = db.rawQuery(ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE, new String[]{todayStart});
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.delay), false, null, false));
@@ -52,7 +55,8 @@ public abstract class BoardData {
         cursor = db.rawQuery(ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE, new String[]{todayStart, todayEnd});
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.today), false, null, false));
 
-        cursor = db.rawQuery(ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT_WITH_VIEWTYPE, new String[]{todayStart, todayEnd});
+        cursor = db.rawQuery(ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT_WITH_VIEWTYPE,
+                new String[]{todayStart, todayEnd});
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.done), false, null, false));
 
         cursor = db.rawQuery(ContactActionVectorEventDAO.NextPeopleQuery.SELECT_WITH_VIEWTYPE, new String[]{tomorrow});
@@ -66,7 +70,7 @@ public abstract class BoardData {
     private static Cursor getTopCursors(Context context, SQLiteDatabase db, int messageIdx) {
         ArrayList<Cursor> cursors = new ArrayList();
         Cursor cursor;
-        String now = String.valueOf(System.currentTimeMillis());
+        long now = System.currentTimeMillis();
         switch (messageIdx) {
             case Status.MANAGE_UNMANAGED_PEOPLE:
                 cursor = db.rawQuery(ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE,
@@ -77,10 +81,6 @@ public abstract class BoardData {
                             MatrixCursors.MessageQuery.VALUES,
                             context.getResources().getString(R.string.manage_unmanaged_people_message,
                                     cursor.getCount())));
-                    cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.unmanaged_people, cursor.getCount()), false,
-                            null,
-                            false));
                 } else return getTopCursors(context, db, Status.FILL_IN_DELAY_FEEDBACK);
                 break;
             case Status.FILL_IN_DELAY_FEEDBACK:
@@ -99,7 +99,9 @@ public abstract class BoardData {
                 break;
             case Status.UPDATE_MOOD:
                 cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery
-                        .SELECT_WITH_VIEWTYPE, new String[]{now, String.valueOf(R.drawable.ic_social_network)});
+                        .SELECT_WITH_VIEWTYPE, new String[]{String.valueOf(now), String.valueOf(R
+                        .drawable
+                        .ic_social_network)});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -129,7 +131,8 @@ public abstract class BoardData {
             case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
                 cursor = db.rawQuery(
                         ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_WITH_VIEWTYPE,
-                        new String[]{String.valueOf(R.drawable.ic_social_network), now});
+                        new String[]{String.valueOf(R.drawable.ic_social_network),
+                                String.valueOf(now)});
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -141,7 +144,6 @@ public abstract class BoardData {
                             false));
                 } else
                     return getTopCursors(context, db, Status.APPROCHING_DEAD_LINE);
-                //TODO remove return getTopCursors(context, db, Status.TAKE_TIME_FOR_FEEDBACK);
                 break;
             case Status.APPROCHING_DEAD_LINE:
                 cursor = db.rawQuery(
@@ -173,7 +175,6 @@ public abstract class BoardData {
                 cursor = db.rawQuery(
                         ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT_WITH_VIEWTYPE,
                         new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context))});
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "hello");
                 if (cursor.getCount() > 0) {
                     //They decreased their mood, lets change their moodIcon
                     while (cursor.moveToNext()) {
@@ -184,6 +185,7 @@ public abstract class BoardData {
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)}
                         );
                     }
+
                     cursor.moveToPosition(-1);
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -199,8 +201,8 @@ public abstract class BoardData {
                 break;
             case Status.TAKE_TIME_FOR_FEEDBACK:
                 cursors.add(MatrixCursors.getOneLineCursor(
-                        MatrixCursors.MessageQuery.PROJECTION,
-                        MatrixCursors.MessageQuery.VALUES,
+                        MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                        MatrixCursors.ConfirmMessageQuery.VALUES,
                         context.getResources().getString(R.string.take_time_for_feedback_message)));
                 //when clicked on ok.
                 //Status.setLastMessageIdx(context, Status.MANAGE_UNMANAGED_PEOPLE);

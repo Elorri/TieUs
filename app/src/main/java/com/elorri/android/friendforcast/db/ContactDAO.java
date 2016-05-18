@@ -2,8 +2,6 @@ package com.elorri.android.friendforcast.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
@@ -13,8 +11,6 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
  */
 public class ContactDAO {
 
-
-    public static final int CONTACT_BY_ID = 1;
 
 
     public static final String CREATE = "CREATE TABLE "
@@ -95,6 +91,24 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED
+        };
+
+
+
+        String[] PROJECTION_WITH_VIEWTYPE_QUERY = {
+                FriendForecastContract.ContactTable._ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
@@ -110,7 +124,7 @@ public class ContactDAO {
 
         String[] PROJECTION = new String[]{FriendForecastContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
 
-        String SELECT_RATIO_EMOICONE = "select "
+        String SELECT_WITH_VIEWTYPE = "select "
                 + FriendForecastContract.ContactTable.VIEW_PART + "/("
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + "*1.0) as "
                 + FriendForecastContract.ContactTable.VIEW_RATIO + ", "
@@ -170,23 +184,7 @@ public class ContactDAO {
         return values;
     }
 
-    public static Cursor getCursor(SQLiteDatabase db) {
-        return db.rawQuery(RatioQuery.SELECT_RATIO_EMOICONE, null);
-    }
 
-
-    public static Cursor getCursor(String contactId, int cursorType, SQLiteDatabase db) {
-        switch (cursorType) {
-            case CONTACT_BY_ID: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "QUERY CONTACT_BY_ID");
-                return db.query(FriendForecastContract.ContactTable.NAME, ContactQuery.PROJECTION_QUERY, ContactQuery.SELECTION,
-                        new String[]{contactId}, null, null, null);
-            }
-            default:
-                return null;
-        }
-    }
 
 
 }

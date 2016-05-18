@@ -36,17 +36,17 @@ public class MatrixCursors {
         };
     }
 
-    public interface EducateMessageQuery {
+    public interface ConfirmMessageQuery {
         int COL_MESSAGE=0;
-        String COLUMN_EDUCATE_MESSAGE = "_id";
+        String COLUMN_CONFIRM_MESSAGE = "_id";
         String[] PROJECTION = {
-                EducateMessageQuery.COLUMN_EDUCATE_MESSAGE,
+                ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] VALUES = {
                 null,
-                String.valueOf(ViewTypes.VIEW_EDUCATE_MESSAGE)
+                String.valueOf(ViewTypes.VIEW_CONFIRM_MESSAGE)
         };
     }
 
