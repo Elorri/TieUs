@@ -75,6 +75,7 @@ public class MatrixCursors {
                 null,
                 String.valueOf(ViewTypes.VIEW_MESSAGE)
         };
-
     }
+
+
 }

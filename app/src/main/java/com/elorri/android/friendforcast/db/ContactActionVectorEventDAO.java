@@ -1,5 +1,6 @@
 package com.elorri.android.friendforcast.db;
 
+import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 
 /**
@@ -147,7 +148,12 @@ public class ContactActionVectorEventDAO {
         int COL_ANDROID_CONTACT_LOOKUP_KEY = 2;
         int COL_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
-        int COL_EMOICON_ID = 5;
+        int COL_MOOD_ID = 5;
+        int COL_FEEDBACK_EXPECTED_DELAY=6;
+        int COL_FEEDBACK_INCREASED_EXPECTED_DELAY=7;
+        int COL_FREQUENCY_OF_CONTACT=8;
+        int COL_LAST_MOOD_DECREASED=9;
+        int COL_UNTRACKED=10;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -155,8 +161,15 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD
+                FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED
         };
+
+
 
 
         String[] PROJECTION_WITH_VIEWTYPE = new String[]{
@@ -166,6 +179,11 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 ViewTypes.COLUMN_VIEWTYPE
         };
     }
@@ -180,7 +198,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
@@ -198,7 +221,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " except "
@@ -221,7 +249,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null and "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is null order by lower("
@@ -244,7 +277,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where ? between "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " and "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " and "
@@ -268,10 +306,15 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "!= ? and "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + "!= "+ R.drawable.ic_social_network+" and "
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is null order by lower("
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
@@ -291,7 +334,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + "= ? and ? > "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY
@@ -314,7 +362,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") inner join "
                 + FriendForecastContract.ContactTable.NAME + " on "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "="
@@ -359,7 +412,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " > ? ";
 
@@ -617,7 +675,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + " order by lower("
@@ -697,6 +760,91 @@ public class ContactActionVectorEventDAO {
                 ViewTypes.VIEW_DONE_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
     }
+
+    public interface PeopleElligibleForFillInDelayAloneUpdateQuery extends PeopleQuery {
+
+        String SELECT = "select "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
+                + PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT + ") union select "
+                + FriendForecastContract.ContactTable._ID + " as "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is null and "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE;
+
+
+        String SELECT_WITH_VIEWTYPE = "select *, "
+                + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + " as " + ViewTypes.COLUMN_VIEWTYPE
+                + " from (" + SELECT + ")";
+
+    }
+
+
+    public interface PeopleElligibleForFrequencyUpdateQuery extends PeopleQuery {
+
+        String SELECT = "select "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from ("
+                + PeopleThatNeedFrequencyQuery.SELECT + ") union select "
+                + FriendForecastContract.ContactTable._ID + " as "
+                + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
+                + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " from "
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is not null and "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE;
+
+
+        String SELECT_WITH_VIEWTYPE = "select *, "
+                + ViewTypes.VIEW_FEEDBACK_FREQUENCY + " as " + ViewTypes.COLUMN_VIEWTYPE
+                + " from (" + SELECT + ")";
+
+    }
+
 
 
 }

@@ -136,6 +136,12 @@ public class TestDetailData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
                 "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                        .PROJECTION_WITH_VIEWTYPE)
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_social_network
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
@@ -173,6 +179,12 @@ public class TestDetailData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
                 "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + TestUtility.getCursorHeaderString(
+                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                        .PROJECTION_WITH_VIEWTYPE)
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_social_network
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"

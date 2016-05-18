@@ -115,7 +115,7 @@ public abstract class BoardData {
                 break;
             case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
                 cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.SELECT_WITH_VIEWTYPE,
-                        new String[]{String.valueOf(R.drawable.ic_social_network)});
+                        null);
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -178,7 +178,7 @@ public abstract class BoardData {
                 if (cursor.getCount() > 0) {
                     //They decreased their mood, lets change their moodIcon
                     while (cursor.moveToNext()) {
-                        int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_EMOICON_ID);
+                        int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_MOOD_ID);
                         db.update(FriendForecastContract.ContactTable.NAME,
                                 ContactDAO.getContentValues(Tools.decreaseMood(moodIcon)),
                                 FriendForecastContract.ContactTable._ID + "=?",

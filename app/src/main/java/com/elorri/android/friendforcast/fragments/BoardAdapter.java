@@ -232,7 +232,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .DelayPeopleQuery.COL_EMOICON_ID));
+                        .DelayPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -245,7 +245,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .TodayPeopleQuery.COL_EMOICON_ID));
+                        .TodayPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -259,7 +259,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                         .COL_TIME_END);
                 holder.doneDate.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDate));
                 holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .TodayDonePeopleQuery.COL_EMOICON_ID));
+                        .TodayDonePeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -272,28 +272,31 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .NextPeopleQuery.COL_EMOICON_ID));
+                        .NextPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
             case ViewTypes.VIEW_UNTRACKED_PEOPLE: {
-                bindCommonViews(holder);
+                bindCommonViews(holder, R.drawable.ic_do_not_disturb_alt_black_48dp);
                 setOnClickListener(holder);
                 break;
             }
         }
-
     }
 
     private void bindCommonViews(ViewHolder holder) {
+        bindCommonViews(holder, mCursor.getInt(ContactActionVectorEventDAO
+                .PeopleQuery.COL_MOOD_ID));
+    }
+
+    private void bindCommonViews(ViewHolder holder, int moodResId) {
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         holder.avatarColor = generator.getRandomColor();
         holder.avatar.loadImage(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
-        holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                .PeopleQuery.COL_EMOICON_ID));
+        holder.moodIcon.setBackgroundResource(moodResId);
     }
 
     private void setOnClickListener(final ViewHolder holder) {

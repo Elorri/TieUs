@@ -229,7 +229,6 @@ public class TestGivens extends AndroidTestCase {
         long in30days = DateUtils.addDay(30, now);
         long frequency30days = in30days - now;
 
-
         String eventString = "\n"
                 + TestUtility.getCursorHeaderString(EventDAO.EventQuery.PROJECTION)
                 + "row |8|16|5|32|" + DateUtils.addDay(-4, now) + "|null|\n"

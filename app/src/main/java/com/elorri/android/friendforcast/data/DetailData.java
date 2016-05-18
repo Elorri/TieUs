@@ -24,21 +24,50 @@ public class DetailData {
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, String contactId) {
         ArrayList<Cursor> cursors = new ArrayList();
+        Cursor cursor = null;
 
+        //Query necessary to display the moodIcon
         cursors.add(db.query(
                 FriendForecastContract.ContactTable.NAME,
                 ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE_QUERY,
                 ContactDAO.ContactQuery.SELECTION,
                 new String[]{contactId}, null, null, null));
 
+        //If user is eligible for filling response delay or if response delay alone already filled
+        cursor = db.query(
+                "(" + ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                        .SELECT_WITH_VIEWTYPE + ")",
+                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                        .PROJECTION_WITH_VIEWTYPE,
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?",
+                new String[]{contactId},
+                null, null, null);
+        if (cursor.getCount() > 0) {
+            cursors.add(cursor);
+        }
+
+        //If user eligible for filling frequency of contact or if frequency already known.
+        cursor = db.query(
+                "(" + ContactActionVectorEventDAO.PeopleElligibleForFrequencyUpdateQuery
+                        .SELECT_WITH_VIEWTYPE + ")",
+                ContactActionVectorEventDAO.PeopleElligibleForFrequencyUpdateQuery
+                        .PROJECTION_WITH_VIEWTYPE,
+                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?",
+                new String[]{contactId},
+                null, null, null);
+        if (cursor.getCount() > 0) {
+            cursors.add(cursor);
+        }
+
+
         //if actions are registered and user does not know how to mark action as done. We add a row
         // on top to educate him.
-        Cursor actionsCursor = db.query("(" + ContactActionVectorEventDAO
+        cursor = db.query("(" + ContactActionVectorEventDAO
                         .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_ALL,
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_ALL,
                 new String[]{contactId}, null, null, null);
-        if ((actionsCursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
+        if ((cursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
             cursors.add(MatrixCursors.getOneLineCursor(
                     MatrixCursors.ConfirmMessageQuery.PROJECTION,
                     MatrixCursors.ConfirmMessageQuery.VALUES,

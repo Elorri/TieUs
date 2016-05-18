@@ -22,23 +22,17 @@ public class ViewTypes {
     public static final int VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 11;
     public static final int VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY = 12;
     public static final int VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 13;
-
+    public static final int VIEW_FEEDBACK_FREQUENCY = 24;
     public static final int VIEW_CONTACT = 14; // DetailAdapter rename view_contact ?
     public static final int VIEW_ALL_ACTION = 15;// DetailAdapter
     public static final int VIEW_NEXT_ACTION = 16;// DetailAdapter
     public static final int VIEW_DONE_ACTION = 17;// DetailAdapter
-
     public static final int VIEW_EMPTY_CURSOR_MESSAGE = 18;// DetailAdapter
     public static final int VIEW_CONFIRM_MESSAGE = 19;// DetailAdapter
     public static final int VIEW_MESSAGE = 20;// DetailAdapter
-
     public static final int VIEW_ACTION = 21;
     public static final int VIEW_VECTOR_ITEM = 22;// AddActionAdapter
     public static final int VIEW_ACTION_RECAP_QUERY = 23;// AddActionAdapter
 
 
-
-    
-    
-    
 }
