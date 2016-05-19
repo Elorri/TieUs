@@ -1,7 +1,6 @@
 package com.elorri.android.friendforcast.extra;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.elorri.android.friendforcast.R;
 
@@ -98,9 +97,9 @@ public class DateUtils {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ap " + fromLongToString
-                (calendar.getTimeInMillis(),
-                        TIMESTAMP_FORMAT, Tools.getMostSuitableLocale()));
+//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ap " + fromLongToString
+//                (calendar.getTimeInMillis(),
+//                        TIMESTAMP_FORMAT, Tools.getMostSuitableLocale()));
         return calendar.getTimeInMillis();
     }
 

@@ -91,6 +91,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public TextView time;
         public TextView message;
         public TextView ok;
+        public TextView feedback;
+        public TextView feedbackTitle;
+        public TextView expectedFeedbackTitle;
+        public TextView frequency;
+        public TextView frequencyTitle;
+        public TextView expectedFrequencyTitle;
 
 
         public View divider;
@@ -106,6 +112,19 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             switch (viewType) {
                 case ViewTypes.VIEW_CONTACT: {
                     emoIcon = (ImageView) view.findViewById(R.id.mood_icon);
+                    break;
+                }
+                case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+                    feedback = (TextView) view.findViewById(R.id.feedback);
+                    feedbackTitle = (TextView) view.findViewById(R.id.feedback_title);
+                    expectedFeedbackTitle = (TextView) view.findViewById(R.id.expected_feedback_title);
+                    break;
+                }
+                case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
+                    feedback = (TextView) view.findViewById(R.id.feedback);
+                    frequency = (TextView) view.findViewById(R.id.frequency);
+                    frequencyTitle = (TextView) view.findViewById(R.id.frequency_title);
+                    expectedFrequencyTitle = (TextView) view.findViewById(R.id.expected_frequency_title);
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
@@ -252,6 +271,20 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONTACT);
                 break;
             }
+            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_alone,
+                        parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK);
+                break;
+            }
+            case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_frequency,
+                        parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_FEEDBACK_FREQUENCY);
+                break;
+            }
             case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
@@ -301,6 +334,44 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.emoIcon.setBackgroundResource(mEmoIconResource);
                 break;
             }
+            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+                Long feedBackDelay = mCursor.getLong(ContactActionVectorEventDAO
+                        .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
+                if (feedBackDelay == null) {
+                    holder.feedbackTitle.setVisibility(View.INVISIBLE);
+                    holder.feedback.setVisibility(View.INVISIBLE);
+                    holder.expectedFeedbackTitle.setVisibility(View.VISIBLE);
+                } else {
+                    holder.feedbackTitle.setVisibility(View.VISIBLE);
+                    holder.feedback.setVisibility(View.VISIBLE);
+                    holder.expectedFeedbackTitle.setVisibility(View.INVISIBLE);
+                    holder.feedback.setText(Tools.getReadableDelay(mContext,
+                            feedBackDelay));
+                }
+                break;
+            }
+            case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                Long feedBackDelay = mCursor.getLong(ContactActionVectorEventDAO
+                        .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
+                holder.feedback.setText(Tools.getReadableDelay(mContext,
+                        feedBackDelay));
+                Long frequencyDelay = mCursor.getLong(ContactActionVectorEventDAO
+                        .PeopleElligibleForFrequencyUpdateQuery.COL_FREQUENCY_OF_CONTACT);
+                if (feedBackDelay == null) {
+                    holder.frequencyTitle.setVisibility(View.INVISIBLE);
+                    holder.frequency.setVisibility(View.INVISIBLE);
+                    holder.expectedFrequencyTitle.setVisibility(View.VISIBLE);
+                } else {
+                    holder.frequencyTitle.setVisibility(View.VISIBLE);
+                    holder.frequency.setVisibility(View.VISIBLE);
+                    holder.expectedFrequencyTitle.setVisibility(View.INVISIBLE);
+                    holder.frequency.setText(Tools.getReadableDelay(mContext,
+                            feedBackDelay));
+                }
+                break;
+            }
+
             case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = (position == 1 || position == 2) ? View.INVISIBLE : View.VISIBLE;

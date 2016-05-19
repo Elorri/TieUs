@@ -109,6 +109,20 @@
     <string name="take_time_for_feedback_message">Does anybody did something for you ? Let
         him know what you think.
     </string>
+    <string name="feedback">Feedback : </string>
+    <string name="feedback2">Feedback</string>
+    <string name="frequency">Frequency</string>
+    <string name="expected_feedback">Expected feedback ?</string>
+    <string name="_24h">24h</string>
+    <string name="_48h">48h</string>
+    <string name="_4days">4 days</string>
+    <string name="_1week">1 week</string>
+    <string name="_2weeks">2 weeks</string>
+    <string name="_1month">1 month</string>
+    <string name="_3months">3 months</string>
+    <string name="_6months">6 months</string>
+    <string name="_1year">1 year</string>
+    <string name="expected_frequency">Frequency ?</string>
 
 
 </resources>

@@ -278,4 +278,36 @@ public class Tools {
         return row + "\n";
     }
 
+    public static String getReadableDelay(Context context, long feedBackDelay) {
+        final long now = DateUtils.todayStart();
+        final long _24h = DateUtils.addDay(1, now) - now;
+        final long _48h = DateUtils.addDay(2, now) - now;
+        final long _4days = DateUtils.addDay(4, now) - now;
+        final long _1week = DateUtils.addDay(7, now) - now;
+        final long _2weeks = _1week + _1week;
+        final long _1month = DateUtils.addDay(30, now) - now;
+        final long _3months = _1month*3;
+        final long _6months = _1month*6;
+        final long _1year = DateUtils.addDay(365, now) - now;
+
+        if (feedBackDelay==_24h)
+                return context.getResources().getString(R.string._24h);
+        if (feedBackDelay==_48h)
+            return context.getResources().getString(R.string._48h);
+        if (feedBackDelay==_4days)
+            return context.getResources().getString(R.string._4days);
+        if (feedBackDelay==_1week)
+            return context.getResources().getString(R.string._1week);
+        if (feedBackDelay==_2weeks)
+            return context.getResources().getString(R.string._2weeks);
+        if (feedBackDelay==_1month)
+            return context.getResources().getString(R.string._1month);
+        if (feedBackDelay==_3months)
+            return context.getResources().getString(R.string._3months);
+        if (feedBackDelay==_6months)
+            return context.getResources().getString(R.string._6months);
+        if (feedBackDelay==_1year)
+            return context.getResources().getString(R.string._1year);
+        return null;
+    }
 }
