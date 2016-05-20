@@ -39,7 +39,7 @@ public class FriendForecastProvider extends ContentProvider {
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.BoardData.PATH_BOARD, DATA_BOARD);
+                FriendForecastContract.BoardData.PATH_BOARD + "/#", DATA_BOARD);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
                 FriendForecastContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
@@ -79,7 +79,8 @@ public class FriendForecastProvider extends ContentProvider {
             case DATA_BOARD:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
                         "uri " + uri);
-                cursor = BoardData.getCursor(getContext(), db);
+                long now=FriendForecastContract.BoardData.getTimeFromUri(uri);
+                cursor = BoardData.getCursor(getContext(), db, now);
                 break;
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);

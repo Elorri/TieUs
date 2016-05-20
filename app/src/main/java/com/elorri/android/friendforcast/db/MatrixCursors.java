@@ -36,6 +36,8 @@ public class MatrixCursors {
         };
     }
 
+
+
     public interface ConfirmMessageQuery {
         int COL_MESSAGE=0;
         String COLUMN_CONFIRM_MESSAGE = "_id";
@@ -76,6 +78,7 @@ public class MatrixCursors {
                 String.valueOf(ViewTypes.VIEW_MESSAGE)
         };
     }
+
 
 
 }

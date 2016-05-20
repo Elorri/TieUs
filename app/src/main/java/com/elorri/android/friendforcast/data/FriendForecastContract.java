@@ -16,7 +16,17 @@ public class FriendForecastContract {
     public static class BoardData {
         // DATA_BOARD  content://com.elorri.android.communication/board/
         public static String PATH_BOARD = "board";
-        public static final Uri URI_PAGE_BOARD = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BOARD).build();
+
+        public static Uri buildBoardUri(long time) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_BOARD)
+                    .appendEncodedPath(String.valueOf(time))
+                    .build();
+        }
+
+        public static long getTimeFromUri(Uri uri) {
+            return Long.valueOf(uri.getPathSegments().get(1));
+        }
     }
 
     public static class DetailData {

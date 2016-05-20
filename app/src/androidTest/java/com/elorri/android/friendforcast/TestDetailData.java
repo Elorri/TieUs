@@ -9,13 +9,15 @@ import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
-import com.elorri.android.friendforcast.extra.DateUtils;
 
 /**
  * Created by Elorri on 04/05/2016.
  */
 public class TestDetailData extends AndroidTestCase {
     TestGivens mTestGivens;
+
+    public static final long _4daysAgo_15may2016at12h40m52s = TestGivens._4daysAgo_15may2016at12h40m52s;
+    public static final long _3daysAgo_16may2016at12h40m52s = TestGivens._3daysAgo_16may2016at12h40m52s;
 
     @Override
     protected void setUp() throws Exception {
@@ -30,6 +32,7 @@ public class TestDetailData extends AndroidTestCase {
 
 
     }
+
 
 
 //    @Override
@@ -73,7 +76,6 @@ public class TestDetailData extends AndroidTestCase {
                 null
         );
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-        long now = DateUtils.todayStart();
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
@@ -84,7 +86,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Thank you|" +_4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -102,7 +104,6 @@ public class TestDetailData extends AndroidTestCase {
                 null
         );
 
-        long now = DateUtils.todayStart();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
@@ -110,7 +111,7 @@ public class TestDetailData extends AndroidTestCase {
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
@@ -131,7 +132,6 @@ public class TestDetailData extends AndroidTestCase {
         );
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-        long now = DateUtils.todayStart();
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
@@ -156,8 +156,8 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|"
-                + DateUtils.addDay(-3, now) + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
+                + "row |9|com.google.android.gm|package|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|"
+                + _3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
@@ -172,7 +172,6 @@ public class TestDetailData extends AndroidTestCase {
                 null,
                 null
         );
-        long now = DateUtils.todayStart();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
@@ -196,8 +195,8 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thank you|" + DateUtils.addDay(-4, now) + "|"
-                + DateUtils.addDay(-3, now) + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
+                + "row |9|com.google.android.gm|package|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|"
+                + _3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }

@@ -144,7 +144,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
-        Uri uri = FriendForecastContract.BoardData.URI_PAGE_BOARD;
+        Uri uri = FriendForecastContract.BoardData.buildBoardUri(System.currentTimeMillis());
         return new CursorLoader(getActivity(),
                 uri,
                 null,
