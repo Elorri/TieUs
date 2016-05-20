@@ -5,7 +5,6 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.Status;
@@ -41,10 +40,6 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
                 FriendForecastContract.BoardData.buildBoardUri(now_19may2016at12h40m52s), null, null, null, null);
 
         String cursorString = "\n"
-                + "header |"
-                + ContactDAO.RatioQuery.PROJECTION[0] + "|"
-                + ContactDAO.RatioQuery.PROJECTION[1] + "|\n"
-                + "row |null|" + ViewTypes.VIEW_FORECAST + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE +
                 "|\n"

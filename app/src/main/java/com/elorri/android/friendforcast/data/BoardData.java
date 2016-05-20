@@ -23,24 +23,22 @@ public abstract class BoardData {
     public static final int LOADER_ID = 0;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, long now) {
-        ArrayList<Cursor> cursors = new ArrayList();
+
         //If there is no contact on phone tell it to the user
         Cursor cursor = context.getContentResolver().query(FriendForecastContract.ContactTable
                 .CONTENT_URI, null, null, null, null);
         try {
             if (cursor.getCount() == 0) {
-                cursors.add(db.rawQuery(ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE, null));
-                cursors.add(MatrixCursors.getOneLineCursor(
+                return MatrixCursors.getOneLineCursor(
                         MatrixCursors.EmptyCursorMessageQuery.PROJECTION,
                         MatrixCursors.EmptyCursorMessageQuery.VALUES,
-                        context.getResources().getString(R.string.no_contacts_on_phone)));
-                return new MergeCursor(Tools.convertToArrayCursors(cursors));
+                        context.getResources().getString(R.string.no_contacts_on_phone));
             }
         } finally {
             cursor.close();
         }
 
-
+        ArrayList<Cursor> cursors = new ArrayList();
         String todayStart = String.valueOf(DateUtils.setZeroDay(now));
         String tomorrowStart = String.valueOf(DateUtils.addDay(1, DateUtils.setZeroDay(now)));
 
