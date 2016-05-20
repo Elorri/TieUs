@@ -39,23 +39,23 @@ import com.elorri.android.friendforcast.extra.Status;
  */
 public class TestGivens extends AndroidTestCase {
 
-    public static final long now_19may2016at12h40m52s = 1463654452071l;
-    public static final long todayStart_19may2016at00h00m00s = 1463608800000l;
-    public static final long tomorrowStart_20may2016at00h00m00sStart = 1463695200000l;
-    public static final long _32daysAgo_17april2016at12h40m52s = 1460889652071l;
-    public static final long _31daysAgo_18april2016at12h40m52s = 1460976052071l;
-    public static final long _30daysAgo_19april2016at12h40m52s = 1461062452071l;
-    public static final long _26daysAgo_23april2016at12h40m52s = 1461408052071l;
-    public static final long _25daysAgo_24april2016at12h40m52s = 1461494452071l;
-    public static final long _4daysAgo_15may2016at12h40m52s = 1463308852071l;
-    public static final long _3daysAgo_16may2016at12h40m52s = 1463395252071l;
-    public static final long _2daysAgo_17may2016at12h40m52s = 1463481652071l;
-    public static final long _1dayAgo_18may2016at12h40m52s = 1463568052071l;
-    public static final long _in1second_19may2016at12h40m53s = 1463654453071l;
-    public static final long _in2seconds_19may2016at12h40m54s = 1463654454071l;
-    public static final long _in1day_20may2016at12h40m52s = 1463740852071l;
-    public static final long _in2days_21may2016at12h40m52s = 1463827252071l;
-    public static final long _in4days_23may2016at12h40m52s = 1464000052071l;
+    public static  long now_19may2016at12h40m52s = 1463654452071l;
+    public static  long todayStart_19may2016at00h00m00s = 1463608800000l;
+    public static  long tomorrowStart_20may2016at00h00m00sStart = 1463695200000l;
+    public static  long _32daysAgo_17april2016at12h40m52s = 1460889652071l;
+    public static  long _31daysAgo_18april2016at12h40m52s = 1460976052071l;
+    public static  long _30daysAgo_19april2016at12h40m52s = 1461062452071l;
+    public static  long _26daysAgo_23april2016at12h40m52s = 1461408052071l;
+    public static  long _25daysAgo_24april2016at12h40m52s = 1461494452071l;
+    public static  long _4daysAgo_15may2016at12h40m52s = 1463308852071l;
+    public static  long _3daysAgo_16may2016at12h40m52s = 1463395252071l;
+    public static  long _2daysAgo_17may2016at12h40m52s = 1463481652071l;
+    public static  long _1dayAgo_18may2016at12h40m52s = 1463568052071l;
+    public static  long _in1second_19may2016at12h40m53s = 1463654453071l;
+    public static  long _in2seconds_19may2016at12h40m54s = 1463654454071l;
+    public static  long _in1day_20may2016at12h40m52s = 1463740852071l;
+    public static  long _in2days_21may2016at12h40m52s = 1463827252071l;
+    public static  long _in4days_23may2016at12h40m52s = 1464000052071l;
 
     public static final long _1day = 86400000l;
     public static final long _2days = 172800000l;

@@ -16,7 +16,6 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
 
     TestGivens mTestGivens;
 
-    public static final long now_19may2016at12h40m52s = TestGivens.now_19may2016at12h40m52s;
 
     @Override
     protected void setUp() throws Exception {
@@ -37,7 +36,7 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
 
     public void testNoContactRegisteredOnPhone() {
         Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.BoardData.buildBoardUri(now_19may2016at12h40m52s), null, null, null, null);
+                FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
 
         String cursorString = "\n"
                 + "header |"

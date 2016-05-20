@@ -452,6 +452,7 @@ public class TestQueries extends AndroidTestCase {
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
                 + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
