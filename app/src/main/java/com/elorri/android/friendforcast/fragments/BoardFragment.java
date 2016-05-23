@@ -183,6 +183,11 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
     }
 
+    @Override
+    public void updateFragment() {
+        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
+    }
+
 
     private void syncContacts() {
         SyncContactsTask syncContactsTask = new SyncContactsTask();

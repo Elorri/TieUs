@@ -32,6 +32,19 @@ import java.util.Locale;
  * Created by Elorri on 12/04/2016.
  */
 public class Tools {
+
+    public static final long NOW = DateUtils.todayStart();
+    public static final long _24H = DateUtils.addDay(1, NOW) - NOW;
+    public static final long _48H = DateUtils.addDay(2, NOW) - NOW;
+    public static final long _4DAYS = DateUtils.addDay(4, NOW) - NOW;
+    public static final long _1WEEK = DateUtils.addDay(7, NOW) - NOW;
+    public static final long _2WEEKS = _1WEEK + _1WEEK;
+    public static final long _1MONTH = DateUtils.addDay(30, NOW) - NOW;
+    public static final long _3MONTHS = _1MONTH * 3;
+    public static final long _6MONTHS = _1MONTH * 6;
+    public static final long _1YEAR = DateUtils.addDay(365, NOW) - NOW;
+
+
     /**
      * Load a text file .cvs, .txt, ... and return a collection of its lines.
      *
@@ -134,9 +147,10 @@ public class Tools {
         // list of chosen Locale
     }
 
-    public static ContentValues updateContactValues(ContentValues contentvalues, String column, String value) {
-        contentvalues.put(column, value);
-        return contentvalues;
+    public static ContentValues getContentValues(String columnName, String  value) {
+        ContentValues values = new ContentValues();
+        values.put(columnName, value);
+        return values;
     }
 
     public static int getForecastRessourceId(float ratio) {
@@ -279,34 +293,24 @@ public class Tools {
     }
 
     public static String getReadableDelay(Context context, long feedBackDelay) {
-        final long now = DateUtils.todayStart();
-        final long _24h = DateUtils.addDay(1, now) - now;
-        final long _48h = DateUtils.addDay(2, now) - now;
-        final long _4days = DateUtils.addDay(4, now) - now;
-        final long _1week = DateUtils.addDay(7, now) - now;
-        final long _2weeks = _1week + _1week;
-        final long _1month = DateUtils.addDay(30, now) - now;
-        final long _3months = _1month*3;
-        final long _6months = _1month*6;
-        final long _1year = DateUtils.addDay(365, now) - now;
 
-        if (feedBackDelay==_24h)
-                return context.getResources().getString(R.string._24h);
-        if (feedBackDelay==_48h)
+        if (feedBackDelay == _24H)
+            return context.getResources().getString(R.string._24h);
+        if (feedBackDelay == _48H)
             return context.getResources().getString(R.string._48h);
-        if (feedBackDelay==_4days)
+        if (feedBackDelay == _4DAYS)
             return context.getResources().getString(R.string._4days);
-        if (feedBackDelay==_1week)
+        if (feedBackDelay == _1WEEK)
             return context.getResources().getString(R.string._1week);
-        if (feedBackDelay==_2weeks)
+        if (feedBackDelay == _2WEEKS)
             return context.getResources().getString(R.string._2weeks);
-        if (feedBackDelay==_1month)
+        if (feedBackDelay == _1MONTH)
             return context.getResources().getString(R.string._1month);
-        if (feedBackDelay==_3months)
+        if (feedBackDelay == _3MONTHS)
             return context.getResources().getString(R.string._3months);
-        if (feedBackDelay==_6months)
+        if (feedBackDelay == _6MONTHS)
             return context.getResources().getString(R.string._6months);
-        if (feedBackDelay==_1year)
+        if (feedBackDelay == _1YEAR)
             return context.getResources().getString(R.string._1year);
         return null;
     }

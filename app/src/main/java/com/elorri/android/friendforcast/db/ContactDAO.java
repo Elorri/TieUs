@@ -12,7 +12,6 @@ import com.elorri.android.friendforcast.data.FriendForecastContract;
 public class ContactDAO {
 
 
-
     public static final String CREATE = "CREATE TABLE "
             + FriendForecastContract.ContactTable.NAME +
             "(" + FriendForecastContract.ContactTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -26,12 +25,17 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, " +
-            "CONSTRAINT " + FriendForecastContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
+            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
+            + "CONSTRAINT " + FriendForecastContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
             FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " between " +
             FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " AND "
-            + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "))";
+            + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + ")"
+            + "CONSTRAINT " + FriendForecastContract.ContactTable.MOOD_UNKNOWN_CONSTRAINT + " check  (" +
+            FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " between " +
+            FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + " AND "
+            + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "))";
 
 
     public interface ContactQuery {
@@ -42,8 +46,8 @@ public class ContactDAO {
         int COL_ANDROID_LOOKUP_KEY = 2;
         int COL_ANDROID_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
-        int COL_EMOICON_BY_ID = 5;
-        int COL_PROJECTION_TYPE = 6;
+        int COL_MOOD_ID = 5;
+        int COL_UNTRACKED = 10;
 
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
@@ -95,7 +99,6 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED
         };
-
 
 
         String[] PROJECTION_WITH_VIEWTYPE_QUERY = {
@@ -168,23 +171,9 @@ public class ContactDAO {
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 cursor.getString(ContactQuery.COL_THUMBNAIL));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD,
-                cursor.getString(ContactQuery.COL_EMOICON_BY_ID));
+                cursor.getString(ContactQuery.COL_MOOD_ID));
         return contentValues;
     }
-
-    public static ContentValues getContentValues(String  moodIconId) {
-        ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable.COLUMN_MOOD, moodIconId);
-        return values;
-    }
-
-    public static ContentValues getContentValues(long  lastMoodDecreased) {
-        ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED, lastMoodDecreased);
-        return values;
-    }
-
-
 
 
 }

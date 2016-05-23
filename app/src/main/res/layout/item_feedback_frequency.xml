@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/feedback_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/feedback_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:gravity="left"
+            android:text="@string/feedback2"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_medium"/>
+        <TextView
+            android:id="@+id/feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:gravity="left"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="next 24h"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frequency_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/frequency_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:gravity="right"
+            android:text="@string/frequency"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_medium"/>
+        <TextView
+            android:id="@+id/frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:gravity="right"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="every 3 months"/>
+        <TextView
+            android:id="@+id/expected_frequency_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/expected_frequency"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_medium"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</LinearLayout>

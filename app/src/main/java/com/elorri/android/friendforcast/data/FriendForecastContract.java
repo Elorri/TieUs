@@ -119,14 +119,18 @@ public class FriendForecastContract {
         public static final String COLUMN_MOOD = "mood";
         public static final String COLUMN_FEEDBACK_EXPECTED_DELAY = "expected_delay_feedback";
         public static final String COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY = "increased_expected_delay_feedback";
-        //TODO note should be in mimllis
         public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
         public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
         public static final String COLUMN_UNTRACKED = "untracked";
+        public static final String COLUMN_MOOD_UNKNOWN = "mood_unknown";
 
         public static final String UNTRACKED_ON_VALUE = "1";
         public static final String UNTRACKED_OFF_VALUE = "0";
         public static final String UNTRACKED_CONSTRAINT = "untracked_ck";
+
+        public static final String MOOD_UNKNOWN_ON_VALUE = "1";
+        public static final String MOOD_UNKNOWN_OFF_VALUE = "0";
+        public static final String MOOD_UNKNOWN_CONSTRAINT = "mood_unknown_ck";
 
 
         public static final String VIEW_PART = "part";

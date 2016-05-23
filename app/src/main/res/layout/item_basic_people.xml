@@ -25,7 +25,22 @@
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/secondary_dark_text"
+        android:layout_marginRight="@dimen/spacing_xsmall"
         tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
+
+    <TextView
+        android:id="@+id/unknown_mood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_small"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="\?"
+        android:visibility="invisible"
+        />
 
     <TextView
         android:id="@+id/title"

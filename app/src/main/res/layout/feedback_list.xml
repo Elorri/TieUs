@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/_24h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:gravity="center"
+        android:text="@string/within_24h"
+        android:textAppearance="?android:textAppearanceLarge"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondaryLight"/>
+
+    <TextView
+        android:id="@+id/_48h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:gravity="center"
+        android:text="@string/within_48h"
+        android:textAppearance="?android:textAppearanceLarge"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondaryLight"/>
+
+    <TextView
+        android:id="@+id/_4days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:gravity="center"
+        android:text="@string/within_4_days"
+        android:textAppearance="?android:textAppearanceLarge"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondaryLight"/>
+    <TextView
+        android:id="@+id/_1week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:gravity="center"
+        android:text="@string/within_a_week"
+        android:textAppearance="?android:textAppearanceLarge"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondaryLight"/>
+    <TextView
+        android:id="@+id/_2weeks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:gravity="center"
+        android:text="@string/within_2_weeks"
+        android:textAppearance="?android:textAppearanceLarge"/>
+
+</LinearLayout>

@@ -188,5 +188,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
     }
 
+    @Override
+    public void hideFab() {
+        mAddFab.setVisibility(View.INVISIBLE);
+    }
 
+    @Override
+    public void showFab() {
+        mAddFab.setVisibility(View.VISIBLE);
+    }
 }

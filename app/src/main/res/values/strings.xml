@@ -61,11 +61,7 @@
     <string name="no_contacts_on_phone">Start adding contact on your phone to make the most of this
         app
     </string>
-    <string name="manage_unmanaged_people_message">You have
-        <xliff:g>%1$s</xliff:g>
-        unmanaged people.
-        Add actions on their profile or mark them as untracked to start.
-    </string>
+    <string name="manage_unmanaged_people_message">You have <xliff:g>%1$s</xliff:g> unmanaged people. Add actions on their profile or mark them as untracked.    </string>
 
     <string name="fill_in_delay_feedback_title">People recently act for</string>
 
@@ -123,6 +119,18 @@
     <string name="_6months">6 months</string>
     <string name="_1year">1 year</string>
     <string name="expected_frequency">Frequency ?</string>
+    <string name="within_24h">Within 24h</string>
+    <string name="within_48h">Within 48h</string>
+    <string name="within_4_days">Within 4 days</string>
+    <string name="within_a_week">Within a week</string>
+    <string name="within_2_weeks">Within 2 weeks</string>
+    <string name="everyday">Everyday</string>
+    <string name="every_week">Every week</string>
+    <string name="every_2weeks">Every 2 weeks</string>
+    <string name="every_months">Every month</string>
+    <string name="every_3months">Every 3 months</string>
+    <string name="every_6months">Every 6 months</string>
+    <string name="every_year">Every year</string>
 
 
 </resources>

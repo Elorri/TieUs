@@ -70,12 +70,27 @@ public class Status {
      * @param context    Context to get the PreferenceManager from.
      * @param messageIdx the message index value to set
      */
-    public static void setLastMessageIdx(Context context, int messageIdx) {
+    public static void setLastMessageIdxBg(Context context, int messageIdx) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spe = sp.edit();
         spe.putInt(context.getString(R.string.pref_message_idx_status_key), messageIdx);
         spe.commit();
     }
+
+    /**
+     * Sets the MarkActionFeature status into shared preference.  Nb:if call from
+     * BG thread use, setLastMessageIdxBg instead.
+     *
+     * @param context    Context to get the PreferenceManager from.
+     * @param messageIdx the message index value to set
+     */
+    public static void setLastMessageIdxUI(Context context, int messageIdx) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putInt(context.getString(R.string.pref_message_idx_status_key), messageIdx);
+        spe.apply();
+    }
+
 
 
 
@@ -88,7 +103,7 @@ public class Status {
     }
 
 
-    public static void setLastMessageIdx(Context context, long timestamp) {
+    public static void setLastUserMoodsConfirmAware(Context context, long timestamp) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spe = sp.edit();
         spe.putLong(context.getString(R.string.pref_last_user_moods_confirm_key), timestamp);

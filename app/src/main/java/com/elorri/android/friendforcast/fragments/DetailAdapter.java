@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private Callback mCallback;
     private Context mContext;
     private AlertDialog mAlertEmoDialog;
+    private AlertDialog mFeedbackDialog;
+    private AlertDialog mFeedBackFrequencyDialog;
+    private long mFeedBackDelay;
     private int mEmoIconResource;
     private String mContactId;
 
@@ -66,12 +70,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     };
 
+
     interface Callback {
         void setTitle(String title);
 
         void setThumbnail(String url);
 
         void updateFragment();
+
+        void hideFab();
+
+        void showFab();
     }
 
 
@@ -85,7 +94,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        public ImageView emoIcon;
+        public ImageView moodIcon;
         public TextView action;
         public ImageView actionVectorImageView;
         public TextView time;
@@ -97,6 +106,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public TextView frequency;
         public TextView frequencyTitle;
         public TextView expectedFrequencyTitle;
+        public RelativeLayout feedbackAloneView;
+        public LinearLayout feedbackView;
+        public LinearLayout frequencyView;
 
 
         public View divider;
@@ -111,20 +123,23 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
             switch (viewType) {
                 case ViewTypes.VIEW_CONTACT: {
-                    emoIcon = (ImageView) view.findViewById(R.id.mood_icon);
+                    moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
                     break;
                 }
                 case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
                     feedback = (TextView) view.findViewById(R.id.feedback);
                     feedbackTitle = (TextView) view.findViewById(R.id.feedback_title);
                     expectedFeedbackTitle = (TextView) view.findViewById(R.id.expected_feedback_title);
+                    feedbackAloneView = (RelativeLayout) view.findViewById(R.id.feedback_alone_view);
                     break;
                 }
                 case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
+                    feedbackView = (LinearLayout) view.findViewById(R.id.feedback_view);
                     feedback = (TextView) view.findViewById(R.id.feedback);
                     frequency = (TextView) view.findViewById(R.id.frequency);
                     frequencyTitle = (TextView) view.findViewById(R.id.frequency_title);
                     expectedFrequencyTitle = (TextView) view.findViewById(R.id.expected_frequency_title);
+                    frequencyView = (LinearLayout) view.findViewById(R.id.frequency_view);
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
@@ -169,103 +184,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
                         parent, false);
                 view.setOnClickListener(new View.OnClickListener() {
-
-
                     @Override
                     public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        mAlertEmoDialog = builder.create();
-                        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.emoicon_list, null);
-                        RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
-                        RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
-                        RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
-                        RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
-                        happyItem.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp) {
-                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
-                                }
-                                mAlertEmoDialog.cancel();
-                            }
-                        });
-                        neutralItem.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp) {
-                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
-                                }
-                                mAlertEmoDialog.cancel();
-                            }
-                        });
-                        dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
-                                    update(mContactId, String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
-                                }
-                                mAlertEmoDialog.cancel();
-                            }
-                        });
-                        untrackedItem.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
-                                    update(mContactId, String.valueOf(R.drawable.ic_do_not_disturb_alt_black_48dp));
-                                }
-                                mAlertEmoDialog.cancel();
-                            }
-                        });
-                        //Must be done before mAlertDialog.show() Let you customize only the main
-                        // content, not the title and button
-                        //mAlertDialog.setView(listContainer);
-                        mAlertEmoDialog.show();
-                        //Must be done after mAlertDialog.show() Let you customize everything including
-                        // title and buttons.
-                        mAlertEmoDialog.setContentView(listContainer);
-                    }
-
-                    private void update(String contactId, String emoIconRessource) {
-                        UpdateContactTask updateContactTask = new UpdateContactTask();
-                        updateContactTask.execute(contactId, emoIconRessource);
-                    }
-
-                    class UpdateContactTask extends AsyncTask<String, Void, Void> {
-
-                        @Override
-                        protected Void doInBackground(String... params) {
-                            String contactId = params[0];
-                            String emoIconRessourceId = params[1];
-                            Cursor cursor = mContext.getContentResolver()
-                                    .query(FriendForecastContract.ContactTable.CONTENT_URI,
-                                            ContactDAO.ContactQuery.PROJECTION_QUERY,
-                                            ContactDAO.ContactQuery.SELECTION,
-                                            new String[]{contactId},
-                                            null);
-                            try {
-                                cursor.moveToFirst();
-                                ContentValues contentvalues = ContactDAO.getContentValues(cursor);
-                                contentvalues = Tools.updateContactValues(contentvalues,
-                                        FriendForecastContract.ContactTable.COLUMN_MOOD,
-                                        emoIconRessourceId);
-                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                                        + contentvalues.getAsString(FriendForecastContract.ContactTable.COLUMN_MOOD));
-
-                                mContext.getContentResolver()
-                                        .update(FriendForecastContract.ContactTable.CONTENT_URI,
-                                                contentvalues,
-                                                ContactDAO.ContactQuery.SELECTION,
-                                                new String[]{contactId});
-                            } finally {
-                                if (cursor != null) cursor.close();
-                            }
-                            return null;
-                        }
-
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            mCallback.updateFragment();
-                        }
+                        openMoodDialog();
                     }
                 });
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONTACT);
@@ -275,14 +196,32 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_alone,
                         parent, false);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openFeedbackDialog();
+                    }
+                });
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK);
                 break;
             }
             case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_frequency,
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_frequency,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_FEEDBACK_FREQUENCY);
+                viewHolder.feedbackView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openFeedbackDialog();
+                    }
+                });
+                viewHolder.frequencyView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openFrequencyDialog();
+                    }
+                });
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
@@ -311,13 +250,253 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_CONFIRM_MESSAGE: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_educate,
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_confirm_message,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONFIRM_MESSAGE);
                 break;
             }
         }
         return viewHolder;
+    }
+
+    private void openFrequencyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        mFeedBackFrequencyDialog = builder.create();
+        ScrollView listContainer = (ScrollView) View.inflate(mContext, R.layout.frequency_list,
+                null);
+        TextView everyday = (TextView) listContainer.findViewById(R.id.everyday);
+        TextView everyWeek = (TextView) listContainer.findViewById(R.id.every_week);
+        TextView every2weeks = (TextView) listContainer.findViewById(R.id.every_2weeks);
+        TextView everyMonths = (TextView) listContainer.findViewById(R.id.every_months);
+        TextView every3months = (TextView) listContainer.findViewById(R.id.every_3months);
+        TextView every6months = (TextView) listContainer.findViewById(R.id.every_6months);
+        TextView everyYear = (TextView) listContainer.findViewById(R.id.every_year);
+
+        everyday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._24H) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._24H));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        everyWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._1WEEK) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._1WEEK));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        every2weeks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._2WEEKS) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._2WEEKS));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        everyMonths.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._1MONTH) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._1MONTH));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        every3months.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._3MONTHS) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._3MONTHS));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        every6months.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._6MONTHS) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._6MONTHS));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        everyYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._1YEAR) {
+                    ContentValues values = getFrequencyContactValues(
+                            String.valueOf(Tools._1YEAR));
+                    update(values);
+                }
+                mFeedBackFrequencyDialog.cancel();
+            }
+        });
+        //Must be done before mAlertDialog.show() Let you customize only the main
+        // content, not the title and button
+        //mAlertDialog.setView(listContainer);
+        mFeedBackFrequencyDialog.show();
+        //Must be done after mAlertDialog.show() Let you customize everything including
+        // title and buttons.
+        mFeedBackFrequencyDialog.setContentView(listContainer);
+    }
+
+    private void openMoodDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        mAlertEmoDialog = builder.create();
+        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.emoicon_list, null);
+        RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
+        RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
+        RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
+        RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
+        happyItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp) {
+                    ContentValues values = getMoodContactValues(
+                            String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
+                    update(values);
+                }
+                mAlertEmoDialog.cancel();
+            }
+
+        });
+        neutralItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp) {
+                    ContentValues values = getMoodContactValues(
+                            String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
+                    update(values);
+                }
+                mAlertEmoDialog.cancel();
+            }
+        });
+        dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
+                    ContentValues values = getMoodContactValues(
+                            String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
+                    update(values);
+                }
+                mAlertEmoDialog.cancel();
+            }
+        });
+        untrackedItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
+                    ContentValues values = getUntrackedContactValues(
+                            String.valueOf(FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE));
+                    update(values);
+                }
+                mAlertEmoDialog.cancel();
+            }
+        });
+        //Must be done before mAlertDialog.show() Let you customize only the main
+        // content, not the title and button
+        //mAlertDialog.setView(listContainer);
+        mAlertEmoDialog.show();
+        //Must be done after mAlertDialog.show() Let you customize everything including
+        // title and buttons.
+        mAlertEmoDialog.setContentView(listContainer);
+    }
+
+    private void openFeedbackDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        mFeedbackDialog = builder.create();
+        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.feedback_list, null);
+        TextView _24h = (TextView) listContainer.findViewById(R.id._24h);
+        TextView _48h = (TextView) listContainer.findViewById(R.id._48h);
+        TextView _4days = (TextView) listContainer.findViewById(R.id._4days);
+        TextView _1week = (TextView) listContainer.findViewById(R.id._1week);
+        TextView _2weeks = (TextView) listContainer.findViewById(R.id._2weeks);
+
+        _24h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._24H) {
+                    ContentValues values = getFeedbackContactValues(
+                            String.valueOf(Tools._24H),
+                            String.valueOf(Tools._48H));
+                    update(values);
+                }
+                mFeedbackDialog.cancel();
+            }
+        });
+        _48h.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._48H) {
+                    ContentValues values = getFeedbackContactValues(
+                            String.valueOf(Tools._48H),
+                            String.valueOf(Tools._4DAYS));
+                    update(values);
+                }
+                mFeedbackDialog.cancel();
+            }
+        });
+        _4days.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._4DAYS) {
+                    ContentValues values = getFeedbackContactValues(
+                            String.valueOf(Tools._4DAYS),
+                            String.valueOf(Tools._1WEEK));
+                    update(values);
+                }
+                mFeedbackDialog.cancel();
+            }
+        });
+        _1week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._1WEEK) {
+                    ContentValues values = getFeedbackContactValues(
+                            String.valueOf(Tools._1WEEK),
+                            String.valueOf(Tools._2WEEKS));
+                    update(values);
+                }
+                mFeedbackDialog.cancel();
+            }
+        });
+        _2weeks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFeedBackDelay != Tools._4DAYS) {
+                    ContentValues values = getFeedbackContactValues(
+                            String.valueOf(Tools._2WEEKS),
+                            String.valueOf(Tools._1MONTH));
+                    update(values);
+                }
+                mFeedbackDialog.cancel();
+            }
+        });
+        //Must be done before mAlertDialog.show() Let you customize only the main
+        // content, not the title and button
+        //mAlertDialog.setView(listContainer);
+        mFeedbackDialog.show();
+        //Must be done after mAlertDialog.show() Let you customize everything including
+        // title and buttons.
+        mFeedbackDialog.setContentView(listContainer);
     }
 
 
@@ -330,23 +509,33 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
                 mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
-                mEmoIconResource = mCursor.getInt(ContactDAO.ContactQuery.COL_EMOICON_BY_ID);
-                holder.emoIcon.setBackgroundResource(mEmoIconResource);
+                if (mCursor.getString(ContactDAO.ContactQuery.COL_UNTRACKED).equals(
+                        FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE)) {
+                    holder.moodIcon.setBackgroundResource(R.drawable.ic_do_not_disturb_alt_black_48dp);
+                    mCallback.hideFab();
+                } else {
+                    mEmoIconResource = mCursor.getInt(ContactDAO.ContactQuery.COL_MOOD_ID);
+                    holder.moodIcon.setBackgroundResource(mEmoIconResource);
+                    mCallback.showFab();
+                }
                 break;
             }
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
-                Long feedBackDelay = mCursor.getLong(ContactActionVectorEventDAO
+                String feedBackDelay = mCursor.getString(ContactActionVectorEventDAO
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFeedBackDelay " + mFeedBackDelay);
                 if (feedBackDelay == null) {
                     holder.feedbackTitle.setVisibility(View.INVISIBLE);
                     holder.feedback.setVisibility(View.INVISIBLE);
                     holder.expectedFeedbackTitle.setVisibility(View.VISIBLE);
+                    holder.feedbackAloneView.setBackgroundColor(mContext.getResources().getColor(R.color.message_background));
                 } else {
                     holder.feedbackTitle.setVisibility(View.VISIBLE);
                     holder.feedback.setVisibility(View.VISIBLE);
                     holder.expectedFeedbackTitle.setVisibility(View.INVISIBLE);
-                    holder.feedback.setText(Tools.getReadableDelay(mContext,
-                            feedBackDelay));
+                    mFeedBackDelay = Long.valueOf(feedBackDelay);
+                    holder.feedback.setText(Tools.getReadableDelay(mContext, mFeedBackDelay));
+                    holder.feedbackAloneView.setBackgroundColor(mContext.getResources().getColor(R.color.mdtp_white));
                 }
                 break;
             }
@@ -356,18 +545,22 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
                 holder.feedback.setText(Tools.getReadableDelay(mContext,
                         feedBackDelay));
-                Long frequencyDelay = mCursor.getLong(ContactActionVectorEventDAO
+                String frequencyDelay = mCursor.getString(ContactActionVectorEventDAO
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FREQUENCY_OF_CONTACT);
-                if (feedBackDelay == null) {
-                    holder.frequencyTitle.setVisibility(View.INVISIBLE);
-                    holder.frequency.setVisibility(View.INVISIBLE);
+                if (frequencyDelay == null) {
+                    holder.frequencyTitle.setVisibility(View.GONE);
+                    holder.frequency.setVisibility(View.GONE);
                     holder.expectedFrequencyTitle.setVisibility(View.VISIBLE);
+                    holder.frequencyView.setBackgroundColor(mContext.getResources().getColor(R.color
+                            .message_background));
                 } else {
                     holder.frequencyTitle.setVisibility(View.VISIBLE);
                     holder.frequency.setVisibility(View.VISIBLE);
-                    holder.expectedFrequencyTitle.setVisibility(View.INVISIBLE);
+                    holder.expectedFrequencyTitle.setVisibility(View.GONE);
                     holder.frequency.setText(Tools.getReadableDelay(mContext,
-                            feedBackDelay));
+                            Long.valueOf(frequencyDelay)));
+                    holder.frequencyView.setBackgroundColor(mContext.getResources().getColor(R.color
+                            .mdtp_white));
                 }
                 break;
             }
@@ -473,6 +666,68 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     }
 
 
+    private ContentValues getUntrackedContactValues(String value) {
+        ContentValues values = new ContentValues();
+        values.put(FriendForecastContract.ContactTable._ID, mContactId);
+        values.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED, value);
+        return values;
+    }
+
+    private ContentValues getMoodContactValues(String value) {
+        ContentValues values = new ContentValues();
+        values.put(FriendForecastContract.ContactTable._ID, mContactId);
+        values.put(FriendForecastContract.ContactTable.COLUMN_MOOD, value);
+        values.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE);
+        return values;
+    }
+
+    private ContentValues getFeedbackContactValues(String feedbackValue,
+                                                   String feedbackIncreasedValue) {
+        ContentValues values = new ContentValues();
+        values.put(FriendForecastContract.ContactTable._ID, mContactId);
+        values.put(FriendForecastContract.ContactTable
+                .COLUMN_FEEDBACK_EXPECTED_DELAY, feedbackValue);
+        values.put(FriendForecastContract.ContactTable
+                .COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY, feedbackIncreasedValue);
+        return values;
+    }
+
+    private ContentValues getFrequencyContactValues(String value) {
+        ContentValues values = new ContentValues();
+        values.put(FriendForecastContract.ContactTable._ID, mContactId);
+        values.put(FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT, value);
+        return values;
+    }
+
+
+    private void update(ContentValues values) {
+        UpdateContactTask updateContactTask = new UpdateContactTask();
+        updateContactTask.execute(values);
+    }
+
+    private class UpdateContactTask extends AsyncTask<ContentValues, Void, Void> {
+
+        @Override
+        protected Void doInBackground(ContentValues... params) {
+            ContentValues values = params[0];
+            String contactId = (String) values.get(FriendForecastContract.ContactTable._ID);
+
+            mContext.getContentResolver()
+                    .update(FriendForecastContract.ContactTable.CONTENT_URI,
+                            values,
+                            ContactDAO.ContactQuery.SELECTION,
+                            new String[]{contactId});
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mCallback.updateFragment();
+        }
+    }
+
+
     private class MarkActionAsCompletedTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -485,7 +740,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     values, FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
             );
 
-            values = ContactDAO.getContentValues(String.valueOf(R.drawable.ic_social_network));
+            values = Tools.getContentValues(
+                    FriendForecastContract.ContactTable.COLUMN_MOOD,
+                    String.valueOf(R.drawable.ic_social_network));
             mContext.getContentResolver().update(
                     FriendForecastContract.ContactTable.CONTENT_URI,
                     values, FriendForecastContract.ContactTable._ID + "=?", new String[]{mContactId}

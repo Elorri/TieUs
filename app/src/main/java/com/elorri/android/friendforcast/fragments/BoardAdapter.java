@@ -19,6 +19,7 @@ import com.elorri.android.friendforcast.db.ContactDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;
 import com.elorri.android.friendforcast.extra.DateUtils;
+import com.elorri.android.friendforcast.extra.Status;
 import com.elorri.android.friendforcast.extra.Tools;
 import com.elorri.android.friendforcast.ui.AvatarView;
 
@@ -47,6 +48,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         void onContactClicked(Uri uri, int avatarColor);
 
         void setForecast(int forecastRessourceId);
+
+        void updateFragment();
     }
 
 
@@ -60,8 +63,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView doneDate;
         public ImageView vectorIcon;
         public ImageView moodIcon;
+        public TextView moodUnknown;
         public TextView message;
         public TextView emptyCursorMessage;
+        public TextView ok;
 
         public View mView;
 
@@ -72,6 +77,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             avatar = (AvatarView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.title);
             moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
+            moodUnknown = (TextView) view.findViewById(R.id.unknown_mood);
 
             switch (viewType) {
                 case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
@@ -80,6 +86,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 }
                 case ViewTypes.VIEW_MESSAGE: {
                     message = (TextView) view.findViewById(R.id.message);
+                    break;
+                }
+                case ViewTypes.VIEW_CONFIRM_MESSAGE: {
+                    message = (TextView) view.findViewById(R.id.message);
+                    ok = (TextView) view.findViewById(R.id.ok);
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
@@ -152,6 +163,36 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK);
                 break;
             }
+            case ViewTypes.VIEW_UPDATE_MOOD: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UPDATE_MOOD);
+                break;
+            }
+            case ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT);
+                break;
+            }
+            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
+                break;
+            }
+            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
+                break;
+            }
+            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UPDATE_MOOD);
+                break;
+            }
+            case ViewTypes.VIEW_CONFIRM_MESSAGE: {
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_confirm_message, parent, false);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONFIRM_MESSAGE);
+                break;
+            }
             case ViewTypes.VIEW_DELAY_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_DELAY_PEOPLE);
@@ -221,6 +262,49 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_UPDATE_MOOD: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY: {
+                bindCommonViews(holder);
+                setOnClickListener(holder);
+                break;
+            }
+            case ViewTypes.VIEW_CONFIRM_MESSAGE: {
+                holder.message.setText(mCursor.getString(MatrixCursors.ConfirmMessageQuery.COL_MESSAGE));
+                holder.ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (Status.getLastMessageIdx(mContext) == Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK)
+                            Status.setLastMessageIdxUI(mContext, Status.APPROCHING_DEAD_LINE);
+                        else if (Status.getLastMessageIdx(mContext) == Status.APPROCHING_DEAD_LINE)
+                            Status.setLastMessageIdxUI(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
+                        else if (Status.getLastMessageIdx(mContext) == Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
+                            Status.setLastMessageIdxUI(mContext, Status.TAKE_TIME_FOR_FEEDBACK);
+                        else
+                            Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+                        mCallback.updateFragment();
+                    }
+                });
                 break;
             }
             case ViewTypes.VIEW_DELAY_PEOPLE: {
@@ -297,6 +381,12 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
+        if (mCursor.getString(
+                ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
+                FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE))
+            holder.moodUnknown.setVisibility(View.VISIBLE);
+        else
+            holder.moodUnknown.setVisibility(View.INVISIBLE);
     }
 
     private void setOnClickListener(final ViewHolder holder) {

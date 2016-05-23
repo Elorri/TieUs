@@ -28,7 +28,6 @@ public class TestDetailData extends AndroidTestCase {
         mTestGivens.test_fillVectorTable();
         mTestGivens.test_fillEventTable();
 
-
     }
 
 

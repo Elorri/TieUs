@@ -31,7 +31,7 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
         //mTestGivens.deleteAllRecordsFromDB();
         super.tearDown();
 
-        Status.setLastMessageIdx(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
     }
 
     public void testNoContactRegisteredOnPhone() {

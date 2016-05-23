@@ -137,8 +137,8 @@ public abstract class BoardData {
                         null);
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
-                            MatrixCursors.MessageQuery.PROJECTION,
-                            MatrixCursors.MessageQuery.VALUES,
+                            MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                            MatrixCursors.ConfirmMessageQuery.VALUES,
                             context.getResources().getString(R.string.ask_for_feedback_message, cursor
                                     .getCount())));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
@@ -155,8 +155,8 @@ public abstract class BoardData {
                                 .SELECT_AFTER_BIND_WITH_VIEWTYPE, null);
                 if (cursor.getCount() > 0) {
                     cursors.add(MatrixCursors.getOneLineCursor(
-                            MatrixCursors.MessageQuery.PROJECTION,
-                            MatrixCursors.MessageQuery.VALUES,
+                            MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                            MatrixCursors.ConfirmMessageQuery.VALUES,
                             context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
                                     .getCount())));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
@@ -169,7 +169,9 @@ public abstract class BoardData {
             case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
 
                 db.update(FriendForecastContract.ContactTable.NAME,
-                        ContactDAO.getContentValues(now),
+                        Tools.getContentValues(
+                                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                                String.valueOf(now)),
                         ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
                                 + now
                                 + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery
@@ -183,7 +185,8 @@ public abstract class BoardData {
                     while (cursor.moveToNext()) {
                         int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_MOOD_ID);
                         db.update(FriendForecastContract.ContactTable.NAME,
-                                ContactDAO.getContentValues(Tools.decreaseMood(moodIcon)),
+                                Tools.getContentValues(FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                                        String.valueOf(Tools.decreaseMood(moodIcon))),
                                 FriendForecastContract.ContactTable._ID + "=?",
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)}
                         );
@@ -191,8 +194,8 @@ public abstract class BoardData {
 
                     cursor.moveToPosition(-1);
                     cursors.add(MatrixCursors.getOneLineCursor(
-                            MatrixCursors.MessageQuery.PROJECTION,
-                            MatrixCursors.MessageQuery.VALUES,
+                            MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                            MatrixCursors.ConfirmMessageQuery.VALUES,
                             context.getResources().getString(R.string.decreased_mood_message, cursor
                                     .getCount())));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
@@ -208,10 +211,10 @@ public abstract class BoardData {
                         MatrixCursors.ConfirmMessageQuery.VALUES,
                         context.getResources().getString(R.string.take_time_for_feedback_message)));
                 //when clicked on ok.
-                //Status.setLastMessageIdx(context, Status.MANAGE_UNMANAGED_PEOPLE);
+                //Status.setLastMessageIdxBg(context, Status.MANAGE_UNMANAGED_PEOPLE);
                 break;
         }
-        Status.setLastMessageIdx(context, messageIdx);
+        Status.setLastMessageIdxBg(context, messageIdx);
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
 
     }
@@ -249,16 +252,16 @@ public abstract class BoardData {
 //                break;
 //            case Status.APPROCHING_DEAD_LINE:
 //                //when clicked on ok.
-//                //Status.setLastMessageIdx(context, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
+//                //Status.setLastMessageIdxBg(context, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
 //                break;
 //            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
-//                //Status.setLastMessageIdx(context, Status.TAKE_TIME_FOR_FEEDBACK);
+//                //Status.setLastMessageIdxBg(context, Status.TAKE_TIME_FOR_FEEDBACK);
 //                break;
 //            case Status.TAKE_TIME_FOR_FEEDBACK:
-//                //Status.setLastMessageIdx(context, Status.MANAGE_UNMANAGED_PEOPLE);
+//                //Status.setLastMessageIdxBg(context, Status.MANAGE_UNMANAGED_PEOPLE);
 //                break;
 //        }
-//        Status.setLastMessageIdx(context, messageIdx);
+//        Status.setLastMessageIdxBg(context, messageIdx);
 //        return Status.getLastMessageIdx(context);
 //
 //    }

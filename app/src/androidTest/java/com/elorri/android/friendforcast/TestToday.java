@@ -2,6 +2,8 @@ package com.elorri.android.friendforcast;
 
 import android.test.AndroidTestCase;
 
+import com.elorri.android.friendforcast.extra.Status;
+
 /**
  * Created by Elorri on 20/05/2016.
  * This class create a set of contact with actions registered in the near past and future.
@@ -43,5 +45,9 @@ public class TestToday extends AndroidTestCase {
         mTestGivens.test_fillActionTable();
         mTestGivens.test_fillVectorTable();
         mTestGivens.test_fillEventTable();
+
+        Status.setMarkActionFeatureStatus(mContext, false);
+        Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastUserMoodsConfirmAware(mContext, 0l);
     }
 }

@@ -277,36 +277,13 @@ public class TestBoardData extends AndroidTestCase {
         //mTestGivens.deleteAllRecordsFromDB();
         super.tearDown();
 
-        Status.setLastMessageIdx(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
     }
 
-    public void testNoContactRegisteredOnPhone() {
-        Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
-
-        String cursorString = "\n"
-                + "header |"
-                + ContactDAO.RatioQuery.PROJECTION[0] + "|"
-                + ContactDAO.RatioQuery.PROJECTION[1] + "|\n"
-                + "row |0|" + ViewTypes.VIEW_FORECAST + "|\n"
-                + "header |"
-                + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |"
-                + mContext.getResources().getString(R.string.manage_unmanaged_people_message, 8)
-                + "|"
-                + ViewTypes.VIEW_MESSAGE + "|\n"
-                + ALWAYS_DISPLAYED_CURSOR;
-
-
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-        assertEquals(cursorString, TestUtility.getCursorString(cursor));
-        cursor.close();
-
-    }
 
 
     public void testManagedUnmanagedPeopleMessage() {
-        Status.setLastMessageIdx(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -333,7 +310,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testFillInDelayFeedbackMessage() {
-        Status.setLastMessageIdx(mContext, Status.FILL_IN_DELAY_FEEDBACK);
+        Status.setLastMessageIdxBg(mContext, Status.FILL_IN_DELAY_FEEDBACK);
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -370,7 +347,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testUpdateMoodMessage() {
-        Status.setLastMessageIdx(mContext, Status.UPDATE_MOOD);
+        Status.setLastMessageIdxBg(mContext, Status.UPDATE_MOOD);
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -402,7 +379,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testSetUpAFrequencyOfContact() {
-        Status.setLastMessageIdx(mContext, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
+        Status.setLastMessageIdxBg(mContext, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -436,7 +413,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testAskForFeedbackOrMoveToUntrackMessage() {
-        Status.setLastMessageIdx(mContext, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
+        Status.setLastMessageIdxBg(mContext, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
 
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -471,7 +448,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testApprochingDeadLineMessage() {
-        Status.setLastMessageIdx(mContext, Status.APPROCHING_DEAD_LINE);
+        Status.setLastMessageIdxBg(mContext, Status.APPROCHING_DEAD_LINE);
 
         long todayStart = DateUtils.todayStart();
         Cursor cursor = mContext.getContentResolver().query(
@@ -508,7 +485,7 @@ public class TestBoardData extends AndroidTestCase {
     //TODO I still don't get why putting 2130837598 instead of now_etc in ALWAYS_DISPLAYED_CURSOR_MOOD_MELISSA_UPDATED
     // make work this test.
 //        public void testNotePeopleWhoDecreasedMoodMessage() {
-//        Status.setLastMessageIdx(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
+//        Status.setLastMessageIdxBg(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
 //
 //
 //        Cursor cursor = mContext.getContentResolver().query(
@@ -520,11 +497,11 @@ public class TestBoardData extends AndroidTestCase {
 //                + ContactDAO.RatioQuery.PROJECTION[1] + "|\n"
 //                + "row |0|" + ViewTypes.VIEW_FORECAST + "|\n"
 //                + "header |"
-//                + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+//                + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
 //                + "row |"
 //                + mContext.getResources().getString(R.string.decreased_mood_message, 1)
 //                + "|"
-//                + ViewTypes.VIEW_MESSAGE + "|\n"
+//                + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
 //                + "header |"
 //                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
 //                + "row |"
@@ -546,7 +523,7 @@ public class TestBoardData extends AndroidTestCase {
 
 
     public void testTakeTimeForFeedbackMessage() {
-        Status.setLastMessageIdx(mContext, Status.TAKE_TIME_FOR_FEEDBACK);
+        Status.setLastMessageIdxBg(mContext, Status.TAKE_TIME_FOR_FEEDBACK);
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"

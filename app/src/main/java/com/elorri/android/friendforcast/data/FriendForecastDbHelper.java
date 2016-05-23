@@ -23,7 +23,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
 
     static final String DATABASE_NAME = "friends.db";
     private final Context mContext;
-    private static FriendForecastDbHelper instance = null;
+
 
 
     public FriendForecastDbHelper(Context context) {
