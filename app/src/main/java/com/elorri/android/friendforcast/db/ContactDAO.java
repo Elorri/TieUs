@@ -24,8 +24,8 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER, "
+            + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " INTEGER NOT NULL, "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER NOT NULL, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
             + "CONSTRAINT " + FriendForecastContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
@@ -64,7 +64,8 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
         };
 
         //This projection won't be used in queries. It will only be used for checking the column
@@ -81,6 +82,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -97,7 +99,8 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
         };
 
 
@@ -114,6 +117,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 

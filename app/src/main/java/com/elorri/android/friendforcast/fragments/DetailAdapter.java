@@ -93,7 +93,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-
+        public TextView moodUnknown;
         public ImageView moodIcon;
         public TextView action;
         public ImageView actionVectorImageView;
@@ -124,6 +124,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             switch (viewType) {
                 case ViewTypes.VIEW_CONTACT: {
                     moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
+                    moodUnknown = (TextView) view.findViewById(R.id.unknown_mood);
                     break;
                 }
                 case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
@@ -518,6 +519,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     holder.moodIcon.setBackgroundResource(mEmoIconResource);
                     mCallback.showFab();
                 }
+                boolean isMoodKnown = mCursor.getString(
+                        ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
+                        FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                boolean isUntracked = mCursor.getString(
+                        ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
+                        FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE);
+                if (isMoodKnown && !isUntracked)
+                    holder.moodUnknown.setVisibility(View.VISIBLE);
+                else
+                    holder.moodUnknown.setVisibility(View.INVISIBLE);
                 break;
             }
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
@@ -567,7 +578,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
             case ViewTypes.VIEW_TITLE: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                int visibility = (position == 1 || position == 2) ? View.INVISIBLE : View.VISIBLE;
+                int visibility = (position == 1 || position == 2 || position == 3) ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
@@ -677,6 +688,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         ContentValues values = new ContentValues();
         values.put(FriendForecastContract.ContactTable._ID, mContactId);
         values.put(FriendForecastContract.ContactTable.COLUMN_MOOD, value);
+        values.put(FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE);
         values.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE);
         return values;
@@ -741,8 +754,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             );
 
             values = Tools.getContentValues(
-                    FriendForecastContract.ContactTable.COLUMN_MOOD,
-                    String.valueOf(R.drawable.ic_social_network));
+                    FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                    FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
             mContext.getContentResolver().update(
                     FriendForecastContract.ContactTable.CONTENT_URI,
                     values, FriendForecastContract.ContactTable._ID + "=?", new String[]{mContactId}

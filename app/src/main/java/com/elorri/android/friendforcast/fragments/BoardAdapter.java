@@ -315,8 +315,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .DelayPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -328,8 +326,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .TodayPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -342,8 +338,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
                         .COL_TIME_END);
                 holder.doneDate.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDate));
-                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .TodayDonePeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -355,8 +349,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
-                holder.moodIcon.setBackgroundResource(mCursor.getInt(ContactActionVectorEventDAO
-                        .NextPeopleQuery.COL_MOOD_ID));
                 setOnClickListener(holder);
                 break;
             }
@@ -381,9 +373,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
-        if (mCursor.getString(
+        boolean isMoodKnown=mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
-                FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE))
+                FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+        boolean isUntracked=mCursor.getString(
+                ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
+                FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE);
+        if (isMoodKnown&&!isUntracked)
             holder.moodUnknown.setVisibility(View.VISIBLE);
         else
             holder.moodUnknown.setVisibility(View.INVISIBLE);

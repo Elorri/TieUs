@@ -494,10 +494,10 @@ public class ContactActionVectorEventDAO {
 
 
     public interface DelayPeopleQuery extends PeopleQuery {
-        int COL_ACTION = 6;
-        int COL_TIME_START = 7;
-        int COL_VECTOR_DATA = 8;
-        int COL_VECTOR_MIMETYPE = 9;
+        int COL_ACTION = 12;
+        int COL_TIME_START = 13;
+        int COL_VECTOR_DATA = 14;
+        int COL_VECTOR_MIMETYPE = 15;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -506,6 +506,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -519,6 +525,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -535,6 +547,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -555,10 +573,10 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 6;
-        int COL_TIME_START = 7;
-        int COL_VECTOR_DATA = 8;
-        int COL_VECTOR_MIMETYPE = 9;
+        int COL_ACTION = 12;
+        int COL_TIME_START = 13;
+        int COL_VECTOR_DATA = 14;
+        int COL_VECTOR_MIMETYPE = 15;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -567,6 +585,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -580,6 +604,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -595,6 +625,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -614,10 +650,10 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 6;
-        int COL_TIME_END = 7;
-        int COL_VECTOR_DATA = 8;
-        int COL_VECTOR_MIMETYPE = 9;
+        int COL_ACTION = 12;
+        int COL_TIME_END = 13;
+        int COL_VECTOR_DATA = 14;
+        int COL_VECTOR_MIMETYPE = 15;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -626,12 +662,17 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.EventTable.COLUMN_TIME_END,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
         };
-
 
         String[] PROJECTION_WITH_VIEWTYPE = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -640,8 +681,14 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
-                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.EventTable.COLUMN_TIME_END,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -655,8 +702,14 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
@@ -671,10 +724,10 @@ public class ContactActionVectorEventDAO {
 
     public interface NextPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 6;
-        int COL_TIME_START = 7;
-        int COL_VECTOR_DATA = 8;
-        int COL_VECTOR_MIMETYPE = 9;
+        int COL_ACTION = 12;
+        int COL_TIME_START = 13;
+        int COL_VECTOR_DATA = 14;
+        int COL_VECTOR_MIMETYPE = 15;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -683,6 +736,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -696,6 +755,12 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 FriendForecastContract.ContactTable.COLUMN_MOOD,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -711,6 +776,12 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ", "
                 + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
+                + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -729,7 +800,6 @@ public class ContactActionVectorEventDAO {
 
 
     public interface UntrackedPeopleQuery extends PeopleQuery {
-
 
         String SELECT = "select "
                 + FriendForecastContract.ContactTable._ID + " as "

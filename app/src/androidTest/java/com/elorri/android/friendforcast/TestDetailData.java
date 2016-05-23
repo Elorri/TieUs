@@ -31,7 +31,6 @@ public class TestDetailData extends AndroidTestCase {
     }
 
 
-
 //    @Override
 //    protected void tearDown() throws Exception {
 //        mTestGivens.deleteAllRecordsFromDB();
@@ -50,7 +49,8 @@ public class TestDetailData extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|2130837600|null|null|null|null|0|"
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|2130837600|null|null|null" +
+                "|null|0|0|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
@@ -76,14 +76,15 @@ public class TestDetailData extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null|null|0|"
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null" +
+                "|null|0|0|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thank you|" +TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Thank you|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -104,7 +105,8 @@ public class TestDetailData extends AndroidTestCase {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null|null|0|"
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null" +
+                "|null|0|0|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
@@ -131,13 +133,16 @@ public class TestDetailData extends AndroidTestCase {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
-                "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|" + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|"
+                + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
-                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_social_network
-                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE
                 + "|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
@@ -173,14 +178,17 @@ public class TestDetailData extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|2130837603|null|null|null" +
-                "|null|0|" + ViewTypes.VIEW_CONTACT + "|\n"
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|" + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|"
+                + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
-                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_social_network
+                + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE
-                + "|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
+                + "|" + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|"
+                + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"

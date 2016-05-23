@@ -13,49 +13,27 @@ import com.elorri.android.friendforcast.extra.Status;
 
 /**
  * Created by Elorri on 07/05/2016.
- * In those test I use dates I have chosen myself in order to make things readible.
- * now 1"+_4days+"03"+_2days+" and it's also the very beginning of the day
- * now last millisecond 1"+_4days+"0329999
- * <p/>
- * in () distance from now
- * <p/>
- * "+_32daysAgo_17april2016at12h40m52s+" (-3"+_2days+") //now less 32days (it's not days really but using thoses numbers  make reading  easy)
- * "+_31daysAgo_18april2016at12h40m52s+" (-310000)
- * 1"+_4days+"00"+_2days+" (-"+_30days+")
- * "+_26daysAgo_23april2016at12h40m52s+" (-260000)
- * "+_25daysAgo_24april2016at12h40m52s+" (-250000)
- * <p/>
- * "+_4daysAgo_15may2016at12h40m52s+" (-"+_4days+")
- * "+_3daysAgo_16may2016at12h40m52s+" (-"+_3days+")
- * 1"+_4days+"0"+_30days+" (-"+_2days+")
- * 1"+_4days+"0310000 (-10000)
- * <p/>
- * "+_in1second_19may2016at12h40m53s+" (+1000)
- * "+_in2seconds_19may2016at12h40m54s+" (+2000)
- * <p/>
- * 1"+_4days+"03"+_3days+" (+10000)
- * 1"+_4days+"03"+_4days+" (+"+_2days+")
- * "+_in4days_23may2016at12h40m52s+" (+"+_4days+")
- */
+ * */
+
 public class TestGivens extends AndroidTestCase {
 
-    public static  long now_19may2016at12h40m52s = 1463654452071l;
-    public static  long todayStart_19may2016at00h00m00s = 1463608800000l;
-    public static  long tomorrowStart_20may2016at00h00m00sStart = 1463695200000l;
-    public static  long _32daysAgo_17april2016at12h40m52s = 1460889652071l;
-    public static  long _31daysAgo_18april2016at12h40m52s = 1460976052071l;
-    public static  long _30daysAgo_19april2016at12h40m52s = 1461062452071l;
-    public static  long _26daysAgo_23april2016at12h40m52s = 1461408052071l;
-    public static  long _25daysAgo_24april2016at12h40m52s = 1461494452071l;
-    public static  long _4daysAgo_15may2016at12h40m52s = 1463308852071l;
-    public static  long _3daysAgo_16may2016at12h40m52s = 1463395252071l;
-    public static  long _2daysAgo_17may2016at12h40m52s = 1463481652071l;
-    public static  long _1dayAgo_18may2016at12h40m52s = 1463568052071l;
-    public static  long _in1second_19may2016at12h40m53s = 1463654453071l;
-    public static  long _in2seconds_19may2016at12h40m54s = 1463654454071l;
-    public static  long _in1day_20may2016at12h40m52s = 1463740852071l;
-    public static  long _in2days_21may2016at12h40m52s = 1463827252071l;
-    public static  long _in4days_23may2016at12h40m52s = 1464000052071l;
+    public static long now_19may2016at12h40m52s = 1463654452071l;
+    public static long todayStart_19may2016at00h00m00s = 1463608800000l;
+    public static long tomorrowStart_20may2016at00h00m00sStart = 1463695200000l;
+    public static long _32daysAgo_17april2016at12h40m52s = 1460889652071l;
+    public static long _31daysAgo_18april2016at12h40m52s = 1460976052071l;
+    public static long _30daysAgo_19april2016at12h40m52s = 1461062452071l;
+    public static long _26daysAgo_23april2016at12h40m52s = 1461408052071l;
+    public static long _25daysAgo_24april2016at12h40m52s = 1461494452071l;
+    public static long _4daysAgo_15may2016at12h40m52s = 1463308852071l;
+    public static long _3daysAgo_16may2016at12h40m52s = 1463395252071l;
+    public static long _2daysAgo_17may2016at12h40m52s = 1463481652071l;
+    public static long _1dayAgo_18may2016at12h40m52s = 1463568052071l;
+    public static long _in1second_19may2016at12h40m53s = 1463654453071l;
+    public static long _in2seconds_19may2016at12h40m54s = 1463654454071l;
+    public static long _in1day_20may2016at12h40m52s = 1463740852071l;
+    public static long _in2days_21may2016at12h40m52s = 1463827252071l;
+    public static long _in4days_23may2016at12h40m52s = 1464000052071l;
 
     public static final long _1day = 86400000l;
     public static final long _2days = 172800000l;
@@ -169,70 +147,92 @@ public class TestGivens extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION)
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|Paul|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|Pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|Jacques|null|"
-                + R.drawable.ic_social_network + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|Jeanne|null|"
-                + R.drawable.ic_social_network + "|" + _2days + "|" + _4days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|Mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|Denis|null|"
-                + R.drawable.ic_social_network + "|" + _1day + "|" + _2days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|Émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|Mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |23|840|298i7.3552i264b0e968b8a42ff|Françoise|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|Emma|null|"
-                + R.drawable.ic_social_network + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|Bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |35|932|398i5.3552i264b0e968b8a42ff|Paul_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |36|933|398i5.3552i264b0e968b8a42fk|Pierre_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |37|934|398i5.3552i264b0e968b8a42fl|Jacques_Untracked|null|"
-                + R.drawable.ic_social_network + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |38|935|398i5.3552i264b0e968b8a42fv|Jeanne_Untracked|null|"
-                + R.drawable.ic_social_network + "|" + _2days + "|" + _4days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |39|936|398i5.3552i264b0e968b8a42fd|Mathieu_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |40|937|398i5.3552i264b0e968b8a46fv|Denis_Untracked|null|"
-                + R.drawable.ic_social_network + "|" + _1day + "|" + _2days + "|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |41|938|398i5.3552i264b0e968b8a47fv|Émilie_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |42|939|398i5.3552i274b0e968b8a47fv|Mélissa_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |43|940|398i7.3552i264b0e968b8a42ff|Françoise_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
                 + "row |44|950|398i9.3552i264b0e968b8a42ff|Emma_Untracked|null|"
-                + R.drawable.ic_social_network + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n"
+                + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|\n"
                 + "row |45|951|390i5.3552i264b0e968b8a42fk|Bernard_Untracked|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|\n";
+                + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n";
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(contactString));
