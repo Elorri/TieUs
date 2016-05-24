@@ -22,7 +22,6 @@ import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
-import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.db.MatrixCursors;
 import com.elorri.android.friendforcast.db.ViewTypes;

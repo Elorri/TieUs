@@ -8,7 +8,6 @@ import android.util.Log;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.db.ActionDAO;
 import com.elorri.android.friendforcast.db.ContactDAO;
-import com.elorri.android.friendforcast.db.ContactVectorsDAO;
 import com.elorri.android.friendforcast.db.EventDAO;
 import com.elorri.android.friendforcast.db.VectorDAO;
 import com.elorri.android.friendforcast.extra.Tools;
