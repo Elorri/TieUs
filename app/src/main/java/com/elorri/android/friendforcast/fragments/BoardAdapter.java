@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
 import com.elorri.android.friendforcast.db.ContactActionVectorEventDAO;
@@ -45,7 +44,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     interface Callback {
-        void onContactClicked(Uri uri, int avatarColor);
+        void onContactClicked(Uri uri);
 
         void setForecast(int forecastRessourceId);
 
@@ -56,7 +55,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public View divider;
         public AvatarView avatar;
-        private int avatarColor;
         public TextView contactName;
         public TextView action;
         public TextView dueDate;
@@ -249,7 +247,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
-                int visibility = (position == 1||position==2) ? View.INVISIBLE : View.VISIBLE;
+                int visibility = (position == 1 || position == 2) ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
@@ -366,20 +364,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     private void bindCommonViews(ViewHolder holder, int moodResId) {
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        holder.avatarColor = generator.getRandomColor();
-        holder.avatar.loadImage(mCursor.getString(ContactActionVectorEventDAO
-                .PeopleQuery.COL_THUMBNAIL), holder.avatarColor);
+        holder.avatar.loadImage(
+                mCursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_THUMBNAIL),
+                mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_BACKGROUND_COLOR));
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
-        boolean isMoodKnown=mCursor.getString(
+        boolean isMoodKnown = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
                 FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
-        boolean isUntracked=mCursor.getString(
+        boolean isUntracked = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
                 FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE);
-        if (isMoodKnown&&!isUntracked)
+        if (isMoodKnown && !isUntracked)
             holder.moodUnknown.setVisibility(View.VISIBLE);
         else
             holder.moodUnknown.setVisibility(View.INVISIBLE);
@@ -393,7 +390,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 mCursor.moveToPosition(mPosition);
                 int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
-                mCallback.onContactClicked(uri, holder.avatarColor);
+                mCallback.onContactClicked(uri);
             }
         });
     }

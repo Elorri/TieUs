@@ -74,7 +74,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     interface Callback {
         void setTitle(String title);
 
-        void setThumbnail(String url);
+        void setThumbnail(String url, int color);
 
         void updateFragment();
 
@@ -509,7 +509,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case ViewTypes.VIEW_CONTACT: {
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
-                mCallback.setThumbnail(mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL));
+                mCallback.setThumbnail(
+                        mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL),
+                        mCursor.getInt(ContactDAO.ContactQuery.COL_BACKGROUND_COLOR));
                 if (mCursor.getString(ContactDAO.ContactQuery.COL_UNTRACKED).equals(
                         FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE)) {
                     holder.moodIcon.setBackgroundResource(R.drawable.ic_do_not_disturb_alt_black_48dp);

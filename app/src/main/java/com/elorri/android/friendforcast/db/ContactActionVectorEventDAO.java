@@ -29,7 +29,8 @@ public class ContactActionVectorEventDAO {
             FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
             FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
             FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-            FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
+            FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+            FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
     };
 
 
@@ -55,7 +56,8 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from (select "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from (select "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -75,7 +77,8 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from (select "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from (select "
             + FriendForecastContract.EventTable.NAME + "."
             + FriendForecastContract.EventTable._ID + " as "
             + FriendForecastContract.EventTable.VIEW_EVENT_ID + ", "
@@ -110,7 +113,9 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.NAME + "."
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
             + FriendForecastContract.ContactTable.NAME + "."
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+            + FriendForecastContract.ContactTable.NAME + "."
+            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
             + FriendForecastContract.EventTable.NAME + " inner join "
             + FriendForecastContract.ContactTable.NAME + " on "
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "="
@@ -158,7 +163,8 @@ public class ContactActionVectorEventDAO {
             + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
             + JOINT_LAST_ACTION_EVENT + ") lac inner join ("
             + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") e on lac."
             + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "= e."
@@ -180,6 +186,7 @@ public class ContactActionVectorEventDAO {
         int COL_LAST_MOOD_DECREASED = 9;
         int COL_UNTRACKED = 10;
         int COL_MOOD_UNKNOWN = 11;
+        int COL_BACKGROUND_COLOR = 12;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -193,7 +200,8 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
 
 
@@ -210,6 +218,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.COLUMN_VIEWTYPE
         };
     }
@@ -230,7 +239,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " and "
@@ -256,7 +266,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " except "
@@ -285,7 +296,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " and "
@@ -316,7 +328,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where ";
 
         String SELECT_AFTER_BIND = " between ("
@@ -355,7 +368,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + "!= "
@@ -387,7 +401,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + "= "
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + " and ";
@@ -426,7 +441,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_LAST_ACTION_EVENT + ") inner join "
                 + FriendForecastContract.ContactTable.NAME + " on "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "="
@@ -479,7 +495,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " > ? and "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
@@ -494,10 +511,10 @@ public class ContactActionVectorEventDAO {
 
 
     public interface DelayPeopleQuery extends PeopleQuery {
-        int COL_ACTION = 12;
-        int COL_TIME_START = 13;
-        int COL_VECTOR_DATA = 14;
-        int COL_VECTOR_MIMETYPE = 15;
+        int COL_ACTION = 13;
+        int COL_TIME_START = 14;
+        int COL_VECTOR_DATA = 15;
+        int COL_VECTOR_MIMETYPE = 16;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -512,6 +529,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -531,6 +549,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -553,6 +572,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -573,10 +593,10 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 12;
-        int COL_TIME_START = 13;
-        int COL_VECTOR_DATA = 14;
-        int COL_VECTOR_MIMETYPE = 15;
+        int COL_ACTION = 13;
+        int COL_TIME_START = 14;
+        int COL_VECTOR_DATA = 15;
+        int COL_VECTOR_MIMETYPE = 16;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -591,6 +611,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -610,6 +631,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -631,6 +653,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -650,10 +673,10 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 12;
-        int COL_TIME_END = 13;
-        int COL_VECTOR_DATA = 14;
-        int COL_VECTOR_MIMETYPE = 15;
+        int COL_ACTION = 13;
+        int COL_TIME_END = 14;
+        int COL_VECTOR_DATA = 15;
+        int COL_VECTOR_MIMETYPE = 16;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -668,6 +691,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -687,6 +711,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -708,6 +733,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -724,10 +750,10 @@ public class ContactActionVectorEventDAO {
 
     public interface NextPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 12;
-        int COL_TIME_START = 13;
-        int COL_VECTOR_DATA = 14;
-        int COL_VECTOR_MIMETYPE = 15;
+        int COL_ACTION = 13;
+        int COL_TIME_START = 14;
+        int COL_VECTOR_DATA = 15;
+        int COL_VECTOR_MIMETYPE = 16;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -742,6 +768,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -761,6 +788,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
@@ -782,6 +810,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
@@ -815,7 +844,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + " order by lower("
@@ -911,7 +941,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT + ") union select "
                 + FriendForecastContract.ContactTable._ID + " as "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -926,7 +957,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is null and "
@@ -957,7 +989,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + PeopleThatNeedFrequencyQuery.SELECT + ") union select "
                 + FriendForecastContract.ContactTable._ID + " as "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -972,7 +1005,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from "
+                + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is not null and "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="

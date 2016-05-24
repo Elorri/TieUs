@@ -2,10 +2,10 @@ package com.elorri.android.friendforcast.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
 import com.elorri.android.friendforcast.R;
 
@@ -14,9 +14,6 @@ import com.elorri.android.friendforcast.R;
  */
 public class AvatarView extends FrameLayout {
 
-    public static final String RANDOM_COLOR = "color";
-    //    boolean mAsIcon;
-    private int mRandomColor;
 
     public AvatarView(Context context) {
         super(context);
@@ -45,19 +42,13 @@ public class AvatarView extends FrameLayout {
      * @param color 0 if we don't know the color we want
      */
     public void loadImage(String uri, int color) {
-        if (color == 0) {
-            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-            mRandomColor = generator.getRandomColor();
-        } else {
-            mRandomColor = color;
-        }
-
 
         removeAllViews();
         if (uri == null) {
             inflate(getContext(), R.layout.view_no_avatar, this);
 
-            setBackgroundColor(mRandomColor);
+            Log.e("FF", Thread.currentThread().getStackTrace()[2]+"color : "+color);
+            setBackgroundColor(color);
             //FrameLayout avatarBg = (FrameLayout) findViewById(R.id.avatar_bg);
             ImageView avatar = (ImageView) findViewById(R.id.avatarImg);
 

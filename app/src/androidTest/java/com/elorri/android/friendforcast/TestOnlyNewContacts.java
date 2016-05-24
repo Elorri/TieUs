@@ -70,19 +70,19 @@ public class TestOnlyNewContacts extends AndroidTestCase {
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|Mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
-                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|1739917|\n"
                 + "row |23|840|298i7.3552i264b0e968b8a42ff|Françoise|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
-                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|4560696|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|Emma|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
-                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|18611|\n"
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|Bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
-                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|\n";
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|6190977|\n";
 
 
         ContentValues[] contactValues = TestUtility.fromCursorToContentValues(

@@ -172,8 +172,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public void onContactClicked(Uri uri, int avatarColor) {
-        ((MainActivity) getActivity()).onContactClicked(uri, avatarColor);
+    public void onContactClicked(Uri uri) {
+        ((MainActivity) getActivity()).onContactClicked(uri);
     }
 
 

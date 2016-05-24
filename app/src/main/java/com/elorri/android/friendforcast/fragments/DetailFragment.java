@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.data.DetailData;
 import com.elorri.android.friendforcast.data.FriendForecastContract;
-import com.elorri.android.friendforcast.ui.AvatarView;
 import com.elorri.android.friendforcast.ui.DynamicHeightGradientTopAvatarView;
 
 /**
@@ -42,7 +41,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private CollapsingToolbarLayout mCollapsingToolbar;
     private DynamicHeightGradientTopAvatarView mAvatar;
     private FloatingActionButton mAddFab;
-    private int mAvatarColor;
     private AppBarLayout mAppBarLayout;
     private Cursor mData;
 
@@ -53,7 +51,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mAvatarColor = getArguments().getInt(AvatarView.RANDOM_COLOR);
         mCollapsingToolbar =
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbar.setTitle("");
@@ -178,8 +175,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public void setThumbnail(String uri) {
-        mAvatar.loadImage(uri, mAvatarColor);
+    public void setThumbnail(String uri, int color) {
+        mAvatar.loadImage(uri, color);
 
     }
 

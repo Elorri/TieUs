@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.extra.Status;
-import com.elorri.android.friendforcast.ui.AvatarView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void onContactClicked(Uri uri, int avatarColor) {
+    public void onContactClicked(Uri uri) {
         Intent intent = new Intent(this, DetailActivity.class);
-        if (avatarColor != 0)
-            intent.putExtra(AvatarView.RANDOM_COLOR, avatarColor);
         intent.setData(uri);
         startActivity(intent);
     }

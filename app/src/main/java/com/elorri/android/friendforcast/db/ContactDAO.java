@@ -26,6 +26,7 @@ public class ContactDAO {
             + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
             + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " INTEGER NOT NULL, "
             + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER NOT NULL, "
+            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " INTEGER NOT NULL, "
             + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
             + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
             + "CONSTRAINT " + FriendForecastContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
@@ -48,6 +49,7 @@ public class ContactDAO {
         int COL_THUMBNAIL = 4;
         int COL_MOOD_ID = 5;
         int COL_UNTRACKED = 10;
+        int COL_BACKGROUND_COLOR = 12;
 
 
         String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
@@ -65,7 +67,8 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
 
         //This projection won't be used in queries. It will only be used for checking the column
@@ -83,6 +86,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -100,7 +104,8 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN
+                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
 
 
@@ -118,6 +123,7 @@ public class ContactDAO {
                 FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                 FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
                 FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 

@@ -123,6 +123,7 @@ public class FriendForecastContract {
         public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
         public static final String COLUMN_UNTRACKED = "untracked";
         public static final String COLUMN_MOOD_UNKNOWN = "mood_unknown";
+        public static final String COLUMN_BACKGROUND_COLOR = "background_color";
 
         public static final String UNTRACKED_ON_VALUE = "1";
         public static final String UNTRACKED_OFF_VALUE = "0";
