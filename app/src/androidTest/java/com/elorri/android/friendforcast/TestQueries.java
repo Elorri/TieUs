@@ -250,6 +250,9 @@ public class TestQueries extends AndroidTestCase {
         Cursor cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT, null);
         assertEquals(2, cursor.getCount());
 
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
+                + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT);
+
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION)
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"

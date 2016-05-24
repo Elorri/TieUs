@@ -537,7 +537,7 @@ public class TestBoardData extends AndroidTestCase {
 
 
     public void testTakeTimeForFeedbackMessage() {
-        Status.setLastMessageIdxBg(mContext, Status.TAKE_TIME_FOR_FEEDBACK);
+        Status.setLastMessageIdxBg(mContext, Status.NOTHING_TO_SAY);
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"

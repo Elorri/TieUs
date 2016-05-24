@@ -272,7 +272,7 @@ public class ContactActionVectorEventDAO {
     public interface PeopleThatNeedsToFillInDelayFeedbackQuery extends PeopleQuery {
 
 
-        String SELECT = "select "
+        String SELECT = "select distinct "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
@@ -303,7 +303,7 @@ public class ContactActionVectorEventDAO {
     public interface PeopleThatNeedMoodUpdateQuery extends PeopleQuery {
 
 
-        String SELECT_BEFORE_BIND = "select "
+        String SELECT_BEFORE_BIND = "select distinct "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
@@ -342,7 +342,7 @@ public class ContactActionVectorEventDAO {
     public interface PeopleThatNeedFrequencyQuery extends PeopleQuery {
 
 
-        String SELECT = "select "
+        String SELECT = "select distinct "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
@@ -356,7 +356,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " from ("
-                + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
+                + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + "!= "
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + " and "
@@ -374,7 +374,7 @@ public class ContactActionVectorEventDAO {
 
     public interface AskForFeedbackQuery extends PeopleQuery {
 
-        String SELECT_BEFORE_BIND = "select "
+        String SELECT_BEFORE_BIND = "select distinct "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
                 + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ", lower("
@@ -713,9 +713,9 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null order by "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " desc";
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null and "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " between ? and ?  order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " desc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "
                 + ViewTypes.VIEW_TODAY_DONE_PEOPLE + " as " + ViewTypes.COLUMN_VIEWTYPE

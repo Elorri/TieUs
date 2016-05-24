@@ -54,7 +54,7 @@ public class Status {
     public static final int ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 4;
     public static final int APPROCHING_DEAD_LINE = 5;
     public static final int NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 6;
-    public static final int TAKE_TIME_FOR_FEEDBACK = 7;
+    public static final int NOTHING_TO_SAY = 7;
 
     public static int getLastMessageIdx(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);

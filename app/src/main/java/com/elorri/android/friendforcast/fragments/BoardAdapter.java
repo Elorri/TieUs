@@ -249,7 +249,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
-                int visibility = position == 2 ? View.INVISIBLE : View.VISIBLE;
+                int visibility = (position == 1||position==2) ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.contactName.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
@@ -299,7 +299,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                         else if (Status.getLastMessageIdx(mContext) == Status.APPROCHING_DEAD_LINE)
                             Status.setLastMessageIdxUI(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
                         else if (Status.getLastMessageIdx(mContext) == Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
-                            Status.setLastMessageIdxUI(mContext, Status.TAKE_TIME_FOR_FEEDBACK);
+                            Status.setLastMessageIdxUI(mContext, Status.NOTHING_TO_SAY);
                         else
                             Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
                         mCallback.updateFragment();
