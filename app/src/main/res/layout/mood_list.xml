@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:layout_toRightOf="@id/happy"
-            android:text="@string/happy"
+            android:text="@string/satisfied"
             android:textAppearance="?android:textAppearanceLarge"           />
     </RelativeLayout>
 

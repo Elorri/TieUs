@@ -89,6 +89,7 @@ public abstract class BoardData {
     private static Cursor getTopCursors(Context context, SQLiteDatabase db, int messageIdx, long now) {
         ArrayList<Cursor> cursors = new ArrayList();
         Cursor cursor;
+        String message = "";
         switch (messageIdx) {
             case Status.MANAGE_UNMANAGED_PEOPLE:
                 cursor = db.rawQuery(ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE,
@@ -96,11 +97,19 @@ public abstract class BoardData {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                         + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.manage_unmanaged_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.manage_unmanaged_people_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
                             MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.manage_unmanaged_people_message,
-                                    cursor.getCount())));
+                            message));
                 } else return getTopCursors(context, db, Status.FILL_IN_DELAY_FEEDBACK, now);
                 break;
             case Status.FILL_IN_DELAY_FEEDBACK:
@@ -109,10 +118,19 @@ public abstract class BoardData {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                         + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.fill_in_delay_feedback_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.fill_in_delay_feedback_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
                             MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.fill_in_delay_feedback_message, cursor.getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string
                                     .fill_in_delay_feedback_title), false, null,
@@ -130,11 +148,19 @@ public abstract class BoardData {
                         + now
                         + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.update_mood_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.update_mood_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
                             MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.update_mood_message, cursor
-                                    .getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string.mood_to_update), false, null,
                             false));
@@ -146,11 +172,19 @@ public abstract class BoardData {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                         + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.fill_up_frequency_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.fill_up_frequency_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
                             MatrixCursors.MessageQuery.VALUES,
-                            context.getResources().getString(R.string.fill_up_frequency_message, cursor
-                                    .getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string.fill_up_frequency_title), false, null,
                             false));
@@ -169,11 +203,19 @@ public abstract class BoardData {
                         + now
                         + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.ask_for_feedback_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.ask_for_feedback_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.ConfirmMessageQuery.PROJECTION,
                             MatrixCursors.ConfirmMessageQuery.VALUES,
-                            context.getResources().getString(R.string.ask_for_feedback_message, cursor
-                                    .getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string.ask_for_feedback_title), false, null,
                             false));
@@ -192,11 +234,19 @@ public abstract class BoardData {
                         + now + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
                         .SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.nearby_decreased_mood_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.nearby_decreased_mood_message,
+                                cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.ConfirmMessageQuery.PROJECTION,
                             MatrixCursors.ConfirmMessageQuery.VALUES,
-                            context.getResources().getString(R.string.nearby_decreased_mood_message, cursor
-                                    .getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
                             false));
@@ -236,12 +286,20 @@ public abstract class BoardData {
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)}
                         );
                     }
+                    if (cursor.getCount() == 1) {
+                        cursor.moveToFirst();
+                        message = context.getResources().getString(R.string.decreased_mood_person,
+                                Tools.toProperCase(
+                                        cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
+                        cursor.moveToPosition(-1);
+                    } else
+                        message = context.getResources().getString(R.string.decreased_mood_message,
+                                cursor.getCount());
                     cursor.moveToPosition(-1);
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.ConfirmMessageQuery.PROJECTION,
                             MatrixCursors.ConfirmMessageQuery.VALUES,
-                            context.getResources().getString(R.string.decreased_mood_message, cursor
-                                    .getCount())));
+                            message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string.decreased_mood_title), false, null,
                             false));

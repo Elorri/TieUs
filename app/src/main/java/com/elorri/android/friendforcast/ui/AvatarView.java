@@ -47,8 +47,12 @@ public class AvatarView extends FrameLayout {
         if (uri == null) {
             inflate(getContext(), R.layout.view_no_avatar, this);
 
-            Log.e("FF", Thread.currentThread().getStackTrace()[2]+"color : "+color);
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "color : " + color);
+
+            //need this line only because in my test the - sign is mistakely removed.
+            color = color < 0 ? color : color * -1;
             setBackgroundColor(color);
+
             //FrameLayout avatarBg = (FrameLayout) findViewById(R.id.avatar_bg);
             ImageView avatar = (ImageView) findViewById(R.id.avatarImg);
 

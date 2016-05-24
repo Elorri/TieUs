@@ -362,7 +362,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openMoodDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mAlertEmoDialog = builder.create();
-        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.emoicon_list, null);
+        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.mood_list, null);
         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
