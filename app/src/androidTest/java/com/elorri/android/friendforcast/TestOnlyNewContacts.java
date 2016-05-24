@@ -33,6 +33,12 @@ public class TestOnlyNewContacts extends AndroidTestCase {
 
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        mTestGivens.deleteAllRecordsFromDB();
+    }
+
     public void test_fillContactTable_only_new_contacts() {
 
         mContext.getContentResolver().delete(FriendForecastContract.ContactTable.CONTENT_URI, null, null);

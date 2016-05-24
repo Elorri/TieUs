@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.friendforcast.R;
 import com.elorri.android.friendforcast.activities.MainActivity;
 import com.elorri.android.friendforcast.data.BoardData;
@@ -204,7 +205,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             removeAppContactsAccordingToAndroidContacts();
             addOrRemoveVectorsAccordingToAndroidAppsInstalled();
             addOrRemoveContactVectorsAccordingToAndroidContacts();
-
             return null;
         }
 
@@ -307,19 +307,23 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         //Our local database doesn't know this contact, let's add it up
                         if (localCursor.getCount() == 0) {
                             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
+                            ContentValues values = ContactDAO.getContentValues(androidCursor,
+                                    R.drawable.ic_sentiment_neutral_black_48dp,
+                                    FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE,
+                                    FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
+                                    ColorGenerator.MATERIAL.getRandomColor());
+
                             getContext().getContentResolver().insert(
-                                    FriendForecastContract.ContactTable.CONTENT_URI,
-                                    ContactDAO.getContentValues(androidCursor, R.drawable
-                                            .ic_sentiment_neutral_black_48dp));
+                                    FriendForecastContract.ContactTable.CONTENT_URI, values);
                         } else { //Our local database know this contact, but in case the contact
                             // name has been updated, we update the whole contact but keep our local
-                            // data like the emoiconId
+                            // data like the moodId
                             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "update");
                             localCursor.moveToFirst();
                             String contactId = localCursor.getString(ContactDAO.ContactQuery.COL_ID);
                             getContext().getContentResolver().update(
                                     FriendForecastContract.ContactTable.CONTENT_URI,
-                                    ContactDAO.getContentValues(localCursor),
+                                    ContactDAO.getContentValues(androidCursor),
                                     FriendForecastContract.ContactTable._ID + "=?", new
                                             String[]{contactId});
                         }

@@ -153,7 +153,11 @@ public class ContactDAO {
                 + R.drawable.ic_sentiment_satisfied_black_48dp + ")";
     }
 
-    public static ContentValues getContentValues(Cursor androidContactCursor, int emoiconId) {
+    public static ContentValues getContentValues(Cursor androidContactCursor,
+                                                 int moodId,
+                                                 String untrackedValue,
+                                                 String moodUnknownValue,
+                                                 int backgroundColorValue ) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));
@@ -163,25 +167,24 @@ public class ContactDAO {
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD, emoiconId);
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD, moodId);
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED, untrackedValue);
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN, moodUnknownValue);
+        contentValues.put(FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR, backgroundColorValue);
         return contentValues;
     }
 
 
-    public static ContentValues getContentValues(Cursor cursor) {
+    public static ContentValues getContentValues(Cursor androidContactCursor) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FriendForecastContract.ContactTable._ID,
-                cursor.getString(ContactQuery.COL_ID));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                cursor.getString(ContactQuery.COL_ANDROID_ID));
+                androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                cursor.getString(ContactQuery.COL_ANDROID_LOOKUP_KEY));
+                androidContactCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                cursor.getString(ContactQuery.COL_ANDROID_CONTACT_NAME));
+                androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                cursor.getString(ContactQuery.COL_THUMBNAIL));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD,
-                cursor.getString(ContactQuery.COL_MOOD_ID));
+                androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
         return contentValues;
     }
 
