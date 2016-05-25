@@ -137,12 +137,15 @@ public class TestQueries extends AndroidTestCase {
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
-                + "row |8|5|16|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null|833|298i5.3552i264b0e968b8a42fk|"
-                + "Pierre|null|2130837600|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "row |8|5|16|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null" +
+                "|833|298i5.3552i264b0e968b8a42fk|"
+                + "Pierre|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
-                + "row |18|5|36|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null|933|398i5.3552i264b0e968b8a42fk|"
-                + "Pierre_Untracked|null|2130837600|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "row |18|5|36|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null" +
+                "|933|398i5.3552i264b0e968b8a42fk|"
+                + "Pierre_Untracked|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android" +
+                ".gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
                 + "row |16|5|24|32|Thank you|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
@@ -166,11 +169,12 @@ public class TestQueries extends AndroidTestCase {
                 ".gm|package|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |17|5|25|32|Thank you|" + _in4days_23may2016at12h40m52s + "|null|851|290i5.3552i264b0e968b8a42fk|"
-                + "Bernard|null|2130837600|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "Bernard|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
                 + "row |27|5|45|32|Thank you|" + _in4days_23may2016at12h40m52s + "|null|951|390i5.3552i264b0e968b8a42fk|"
-                + "Bernard_Untracked|null|2130837600|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "Bernard_Untracked|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android" +
+                ".gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n";
 

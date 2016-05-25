@@ -322,51 +322,5 @@ public abstract class BoardData {
 
     }
 
-    //TODO remove this function
-//    public static int getTopCursors(Context context, int messageIdx) {
-//
-//        boolean manageCond = false;
-//        boolean feedback = false;
-//        boolean mood = false;
-//        boolean frequency = false;
-//        boolean askFor = true;
-//
-//        switch (messageIdx) {
-//            case Status.MANAGE_UNMANAGED_PEOPLE:
-//                if (manageCond) {
-//                } else return getTopCursors(context, Status.FILL_IN_DELAY_FEEDBACK);
-//                break;
-//            case Status.FILL_IN_DELAY_FEEDBACK:
-//                if (feedback) {
-//                } else return getTopCursors(context, Status.UPDATE_MOOD);
-//                break;
-//            case Status.UPDATE_MOOD:
-//                if (mood) {
-//                } else return getTopCursors(context, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
-//                break;
-//            case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
-//                if (frequency) {
-//                } else return getTopCursors(context, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
-//                break;
-//            case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
-//                if (askFor) {
-//                } else
-//                    return getTopCursors(context, Status.APPROCHING_DEAD_LINE);
-//                break;
-//            case Status.APPROCHING_DEAD_LINE:
-//                //when clicked on ok.
-//                //Status.setLastMessageIdxBg(context, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
-//                break;
-//            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
-//                //Status.setLastMessageIdxBg(context, Status.NOTHING_TO_SAY);
-//                break;
-//            case Status.NOTHING_TO_SAY:
-//                //Status.setLastMessageIdxBg(context, Status.MANAGE_UNMANAGED_PEOPLE);
-//                break;
-//        }
-//        Status.setLastMessageIdxBg(context, messageIdx);
-//        return Status.getLastMessageIdx(context);
-//
-//    }
 
 }
