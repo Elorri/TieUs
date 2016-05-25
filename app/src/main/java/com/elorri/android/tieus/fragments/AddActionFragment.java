@@ -44,7 +44,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     // will contain in order :
     // no data -> uri : URI_PAGE_SELECT_ACTION
     // actionId -> uri : URI_PAGE_ADD_ACTION_SELECT_VECTOR
-    // actionId, vectorId, time -> uri : URI_PAGE_ADD_ACTION_VALIDATE
     private LinkedList<String> actionSteps = new LinkedList<>();
 
     private AddActionAdapter mAdapter;
@@ -144,6 +143,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
             actionSteps.add(String.valueOf(startDate));
+            actionSteps.set(2, String.valueOf(startDate));
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + startDate);
 
 //            AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
@@ -159,6 +159,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
         @Override
         protected Void doInBackground(String... params) {
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + params[3]);
             getContext().getContentResolver().insert(
                     FriendForecastContract.EventTable.CONTENT_URI,
                     EventDAO.getContentValues(params[0], params[1], params[2], Long.valueOf

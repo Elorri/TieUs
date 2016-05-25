@@ -27,17 +27,18 @@ public class TestOnlyNewContacts extends AndroidTestCase {
         mTestGivens.test_fillVectorTable();
         mTestGivens.test_fillActionTable();
 
-        Status.setMarkActionFeatureStatus(mContext, false);
+        Status.setDoneActionsAware(mContext, false);
+        Status.setDeleteActionsAware(mContext, false);
         Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
         Status.setLastUserMoodsConfirmAware(mContext, 0l);
 
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        mTestGivens.deleteAllRecordsFromDB();
-    }
+//    @Override
+//    protected void tearDown() throws Exception {
+//        super.tearDown();
+//        mTestGivens.deleteAllRecordsFromDB();
+//    }
 
     public void test_fillContactTable_only_new_contacts() {
 

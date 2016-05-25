@@ -28,6 +28,6 @@
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_medium"
-        tools:text="@string/mark_action_as_done"/>
+        tools:text="@string/how_to_done_action"/>
 
 </RelativeLayout>

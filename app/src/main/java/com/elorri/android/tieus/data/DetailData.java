@@ -67,11 +67,17 @@ public class DetailData {
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_ALL,
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.SELECTION_ALL,
                 new String[]{contactId}, null, null, null);
-        if ((cursor.getCount() > 0) && (!Status.getMarkActionFeatureStatus(context))) {
+        if ((cursor.getCount() > 0) && (!Status.isDoneActionsAware(context))) {
             cursors.add(MatrixCursors.getOneLineCursor(
                     MatrixCursors.ConfirmMessageQuery.PROJECTION,
                     MatrixCursors.ConfirmMessageQuery.VALUES,
-                    context.getResources().getString(R.string.mark_action_as_done)));
+                    context.getResources().getString(R.string.how_to_done_action)));
+        }
+        if ((cursor.getCount() > 0) && (!Status.isDeleteActionsAware(context))) {
+            cursors.add(MatrixCursors.getOneLineCursor(
+                    MatrixCursors.ConfirmMessageQuery.PROJECTION,
+                    MatrixCursors.ConfirmMessageQuery.VALUES,
+                    context.getResources().getString(R.string.how_to_delete_action)));
         }
         cursors.add(getNextActionsWrappedCursor(context, context.getResources().getString(R.string.next_actions), db, contactId));
         cursors.add(getDoneActionsWrappedCursor(context, context.getResources().getString(R.string.done_actions), db, contactId));

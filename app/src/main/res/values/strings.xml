@@ -59,15 +59,14 @@
         at
         <xliff:g>%2$s</xliff:g>
     </string>
-    <string name="pref_mark_action_feature_status_key" translatable="false">
-        mark_action_feature_status
-    </string>
+    <string name="pref_done_action_aware_key" translatable="false">done_action_aware_key</string>
+    <string name="pref_delete_action_aware_key" translatable="false">delete_action_aware_key</string>
     <string name="pref_message_idx_status_key" translatable="false">pref_message_idx_status</string>
     <string name="pref_last_user_moods_confirm_key" translatable="false">pref_last_user_moods_confirm_key</string>
 
 
-    <string name="mark_action_as_done">Long press the action to mark it as complete or uncomplete
-    </string>
+    <string name="how_to_done_action">Long press the action to mark it as complete or uncomplete</string>
+    <string name="how_to_delete_action">Swipe action to the right to delete it</string>
     <string name="ok">Ok</string>
     <string name="no_contacts_on_phone">Start adding contact on your phone to make the most of this
         app

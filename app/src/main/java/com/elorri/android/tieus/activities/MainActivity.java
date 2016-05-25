@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_reset_help_messages) {
-            Status.setMarkActionFeatureStatus(this,false);
+            Status.setDoneActionsAware(this, false);
+            Status.setDeleteActionsAware(this, false);
             return true;
         }
 

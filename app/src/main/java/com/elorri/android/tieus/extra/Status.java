@@ -17,28 +17,57 @@ public class Status {
      * @param context Context used to get the SharedPreferences
      * @return the mark action feature status that tell if the user knows hows to validate an action
      */
-    public static final boolean MARK_ACTION_FEATURE_AWARE_FALSE = false;
+    public static final boolean DONE_ACTION_AWARE_FALSE = false;
 
-    public static boolean getMarkActionFeatureStatus(Context context) {
+    public static boolean isDoneActionsAware(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getBoolean(context.getString(R.string.pref_mark_action_feature_status_key),
-                MARK_ACTION_FEATURE_AWARE_FALSE);
+        return sp.getBoolean(context.getString(R.string.pref_done_action_aware_key),
+                DONE_ACTION_AWARE_FALSE);
     }
 
     /**
-     * Sets the MarkActionFeature status into shared preference.  This function should not be called from
+     * Sets the DoneActionsAware status into shared preference.  This function should not be called from
      * the UI thread because it uses commit to write to the shared preferences. Nb:if call from
      * UI thread use, apply instead.
      *
-     * @param context                 Context to get the PreferenceManager from.
-     * @param markActionFeatureStatus The IntDef value to set
+     * @param context           Context to get the PreferenceManager from.
+     * @param isDoneActionAware The IntDef value to set
      */
-    public static void setMarkActionFeatureStatus(Context context, boolean
-            markActionFeatureStatus) {
+    public static void setDoneActionsAware(Context context, boolean isDoneActionAware) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spe = sp.edit();
-        spe.putBoolean(context.getString(R.string.pref_mark_action_feature_status_key),
-                markActionFeatureStatus);
+        spe.putBoolean(context.getString(R.string.pref_done_action_aware_key),
+                isDoneActionAware);
+        spe.commit();
+    }
+
+
+
+    /**
+     * @param context Context used to get the SharedPreferences
+     * @return the mark action feature status that tell if the user knows hows to validate an action
+     */
+    public static final boolean DELETE_ACTION_AWARE_FALSE = false;
+
+    public static boolean isDeleteActionsAware(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(context.getString(R.string.pref_delete_action_aware_key),
+                DELETE_ACTION_AWARE_FALSE);
+    }
+
+    /**
+     * Sets the DeleteActionsAware status into shared preference.  This function should not be called from
+     * the UI thread because it uses commit to write to the shared preferences. Nb:if call from
+     * UI thread use, apply instead.
+     *
+     * @param context           Context to get the PreferenceManager from.
+     * @param isDeleteActionAware The IntDef value to set
+     */
+    public static void setDeleteActionsAware(Context context, boolean isDeleteActionAware) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putBoolean(context.getString(R.string.pref_delete_action_aware_key),
+                isDeleteActionAware);
         spe.commit();
     }
 
@@ -90,10 +119,6 @@ public class Status {
         spe.putInt(context.getString(R.string.pref_message_idx_status_key), messageIdx);
         spe.apply();
     }
-
-
-
-
 
 
     public static long getLastUserMoodsConfirmAware(Context context) {

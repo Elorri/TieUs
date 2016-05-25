@@ -19,7 +19,8 @@ public class EventDAO {
             + FriendForecastContract.EventTable.COLUMN_TIME_END + " INTEGER, "
             + "UNIQUE (" + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
-            + FriendForecastContract.EventTable.COLUMN_TIME_START + ") ON CONFLICT REPLACE)";
+            + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+            + FriendForecastContract.EventTable.COLUMN_TIME_END + ") ON CONFLICT REPLACE)";
 
 
     public interface EventQuery {

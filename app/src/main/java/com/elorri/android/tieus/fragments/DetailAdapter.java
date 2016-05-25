@@ -69,7 +69,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         .VectorActionByContactIdQuery.COL_EVENT_ID));
             }
         }
+
+        @Override
+        public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            if (viewHolder instanceof ViewHolderAction)
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            return 0;
+        }
     };
+    private boolean isMoodUnknown;
 
 
     interface Callback {
@@ -152,18 +160,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     title = (TextView) view.findViewById(R.id.title);
                     break;
                 }
-                case ViewTypes.VIEW_NEXT_ACTION: {
-                    action = (TextView) view.findViewById(R.id.action);
-                    actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
-                    time = (TextView) view.findViewById(R.id.time);
-                    break;
-                }
-                case ViewTypes.VIEW_DONE_ACTION: {
-                    action = (TextView) view.findViewById(R.id.action);
-                    actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
-                    time = (TextView) view.findViewById(R.id.time);
-                    break;
-                }
                 case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
                     message = (TextView) view.findViewById(R.id.message);
                     break;
@@ -176,6 +172,38 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
         }
     }
+
+
+    public static class ViewHolderAction extends ViewHolder {
+        public TextView action;
+        public ImageView actionVectorImageView;
+        public TextView time;
+        public TextView title;
+
+        public View mView;
+
+
+        public ViewHolderAction(View view, int viewType) {
+            super(view, viewType);
+            this.mView = view;
+
+            switch (viewType) {
+                case ViewTypes.VIEW_NEXT_ACTION: {
+                    action = (TextView) view.findViewById(R.id.action);
+                    actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
+                    time = (TextView) view.findViewById(R.id.time);
+                    break;
+                }
+                case ViewTypes.VIEW_DONE_ACTION: {
+                    action = (TextView) view.findViewById(R.id.action);
+                    actionVectorImageView = (ImageView) view.findViewById(R.id.action_vector);
+                    time = (TextView) view.findViewById(R.id.time);
+                    break;
+                }
+            }
+        }
+    }
+
 
 
     @Override
@@ -238,13 +266,13 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case ViewTypes.VIEW_NEXT_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_NEXT_ACTION);
+                viewHolder = new ViewHolderAction(view, ViewTypes.VIEW_NEXT_ACTION);
                 break;
             }
             case ViewTypes.VIEW_DONE_ACTION: {
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action,
                         parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_DONE_ACTION);
+                viewHolder = new ViewHolderAction(view, ViewTypes.VIEW_DONE_ACTION);
                 break;
             }
             case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
@@ -373,7 +401,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         happyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp
+                        || (mEmoIconResource == R.drawable
+                        .ic_sentiment_satisfied_black_48dp && isMoodUnknown)) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
                     update(values);
@@ -385,7 +415,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         neutralItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp
+                        || mEmoIconResource == R.drawable.ic_sentiment_neutral_black_48dp && isMoodUnknown) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
                     update(values);
@@ -396,7 +427,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         dissatisfiedItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp) {
+                if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp
+                        || mEmoIconResource == R.drawable.ic_sentiment_dissatisfied_black_48dp && isMoodUnknown) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
                     update(values);
@@ -407,7 +439,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         untrackedItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp) {
+                if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp
+                        || mEmoIconResource == R.drawable.ic_do_not_disturb_alt_black_48dp && isMoodUnknown) {
                     ContentValues values = getUntrackedContactValues(
                             String.valueOf(FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE));
                     update(values);
@@ -505,7 +538,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
     @Override
-    public void onBindViewHolder(final DetailAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final DetailAdapter.ViewHolder holder, final int position) {
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
@@ -515,6 +548,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mCallback.setThumbnail(
                         mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL),
                         mCursor.getInt(ContactDAO.ContactQuery.COL_BACKGROUND_COLOR));
+                isMoodUnknown = mCursor.getInt(ContactDAO.ContactQuery.COL_MOOD_UNKNOWN) == 1;
                 // Creates a contact lookup Uri from contact ID and lookup_key
                 final Uri androidContactUri = ContactsContract.Contacts.getLookupUri(
                         mCursor.getLong(ContactDAO.ContactQuery.COL_ANDROID_ID),
@@ -596,10 +630,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_NEXT_ACTION: {
-                bindActionCommonsViews(holder);
+                bindActionCommonsViews((ViewHolderAction)holder);
                 long dueDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
-                holder.time.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
-                holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                ((ViewHolderAction)holder).time.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
+                ((ViewHolderAction)holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         //Mark action as completed
@@ -616,12 +650,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_DONE_ACTION: {
-                bindActionCommonsViews(holder);
+                bindActionCommonsViews((ViewHolderAction)holder);
                 long doneDateLong = mCursor.getLong(ContactActionVectorEventDAO
                         .VectorActionByContactIdQuery.COL_TIME_END);
-                holder.time.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDateLong));
+                ((ViewHolderAction)holder).time.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDateLong));
 
-                holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                ((ViewHolderAction)holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         //Mark action as completed
@@ -647,8 +681,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Status.setMarkActionFeatureStatus(mContext, true);
-                        mCallback.updateFragment();
+                        if (position == 1 && !Status.isDoneActionsAware(mContext)) {
+                            Status.setDoneActionsAware(mContext, true);
+                            mCallback.updateFragment();
+                        } else if (position == 1 && Status.isDoneActionsAware(mContext)) {
+                            Status.setDeleteActionsAware(mContext, true);
+                            mCallback.updateFragment();
+                        } else {
+                            Status.setDeleteActionsAware(mContext, true);
+                            mCallback.updateFragment();
+                        }
                     }
                 });
                 break;
@@ -656,7 +698,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 
-    private void bindActionCommonsViews(ViewHolder holder) {
+    private void bindActionCommonsViews(ViewHolderAction holder) {
         Tools.setVectorBackground(mContext, holder.actionVectorImageView,
                 mCursor.getString(ContactActionVectorEventDAO
                         .VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE),
@@ -811,7 +853,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
         @Override
         protected Void doInBackground(String... params) {
-            String eventId = params[0];
+             String eventId = params[0];
             mContext.getContentResolver().delete(
                     FriendForecastContract.EventTable.CONTENT_URI,
                     FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}

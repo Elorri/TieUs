@@ -46,7 +46,7 @@ public class TestToday extends AndroidTestCase {
         mTestGivens.test_fillVectorTable();
         mTestGivens.test_fillEventTable();
 
-        Status.setMarkActionFeatureStatus(mContext, false);
+        Status.setDoneActionsAware(mContext, false);
         Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
         Status.setLastUserMoodsConfirmAware(mContext, 0l);
     }

@@ -84,13 +84,13 @@ public class TestGivens extends AndroidTestCase {
 
 
     public void test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false() {
-        Status.setMarkActionFeatureStatus(aContext, false);
-        assertEquals(false, Status.getMarkActionFeatureStatus(aContext));
+        Status.setDoneActionsAware(aContext, false);
+        assertEquals(false, Status.isDoneActionsAware(aContext));
     }
 
     public void test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true() {
-        Status.setMarkActionFeatureStatus(aContext, true);
-        assertEquals(true, Status.getMarkActionFeatureStatus(aContext));
+        Status.setDoneActionsAware(aContext, true);
+        assertEquals(true, Status.isDoneActionsAware(aContext));
     }
 
 

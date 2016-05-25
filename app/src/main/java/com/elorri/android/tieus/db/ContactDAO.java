@@ -49,6 +49,7 @@ public class ContactDAO {
         int COL_THUMBNAIL = 4;
         int COL_MOOD_ID = 5;
         int COL_UNTRACKED = 10;
+        int COL_MOOD_UNKNOWN = 11;
         int COL_BACKGROUND_COLOR = 12;
 
 
