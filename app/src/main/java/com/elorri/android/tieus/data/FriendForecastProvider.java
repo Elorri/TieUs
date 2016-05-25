@@ -80,7 +80,7 @@ public class FriendForecastProvider extends ContentProvider {
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
                         "uri " + uri);
                 long now=FriendForecastContract.BoardData.getTimeFromUri(uri);
-                cursor = BoardData.getCursor(getContext(), db, now);
+                cursor = BoardData.getCursor(getContext(), db, now, selection, selectionArgs);
                 break;
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);

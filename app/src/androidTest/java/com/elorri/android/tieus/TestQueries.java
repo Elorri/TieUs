@@ -73,7 +73,9 @@ public class TestQueries extends AndroidTestCase {
     public void test_joint_table_contact_action_vector_event() {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT);
-        Cursor cursor = db.rawQuery(ContactActionVectorEventDAO.JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT, null);
+        Cursor cursor = db.query("(" + ContactActionVectorEventDAO
+                        .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
+                null, null, null, null, null, null);
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.JOINT_TABLE_PROJECTION)
@@ -139,12 +141,12 @@ public class TestQueries extends AndroidTestCase {
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |8|5|16|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|833|298i5.3552i264b0e968b8a42fk|"
-                + "Pierre|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "Pierre|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
                 + "row |18|5|36|32|Thank you|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|933|398i5.3552i264b0e968b8a42fk|"
-                + "Pierre_Untracked|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android" +
+                + "Pierre_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
@@ -169,11 +171,11 @@ public class TestQueries extends AndroidTestCase {
                 ".gm|package|null|null|null|null|" + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |17|5|25|32|Thank you|" + _in4days_23may2016at12h40m52s + "|null|851|290i5.3552i264b0e968b8a42fk|"
-                + "Bernard|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android.gm|package|null|null|null|null|"
+                + "Bernard|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
                 + "row |27|5|45|32|Thank you|" + _in4days_23may2016at12h40m52s + "|null|951|390i5.3552i264b0e968b8a42fk|"
-                + "Bernard_Untracked|null|"+ R.drawable.ic_sentiment_neutral_black_48dp +"|Gmail|com.google.android" +
+                + "Bernard_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + "|"
                 + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n";
@@ -384,10 +386,12 @@ public class TestQueries extends AndroidTestCase {
         //it is 2 because mélissa_untracked is also updated
         assertEquals(2, updatedRows);
 
-        Cursor cursor = db.rawQuery(
-                ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT,
-                new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(mContext))});
-
+        Cursor cursor = db.query("("
+                        + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT + ")",
+                null,
+                null,
+                new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(mContext))},
+                null, null, null);
 
         assertEquals(1, cursor.getCount());
 
