@@ -638,6 +638,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 });
                 break;
             }
+            case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
+                holder.message.setText(mCursor.getString(MatrixCursors.EmptyCursorMessageQuery.COL_MESSAGE));
+                break;
+            }
             case ViewTypes.VIEW_CONFIRM_MESSAGE: {
                 holder.message.setText(mCursor.getString(MatrixCursors.ConfirmMessageQuery.COL_MESSAGE));
                 holder.ok.setOnClickListener(new View.OnClickListener() {

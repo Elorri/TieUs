@@ -17,6 +17,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +49,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private ImageView mForecastImageView;
     private ImageView mForecastToolbarImageView;
     private int mPosition = -1;
+    private SearchView mSearchView;
+    private static final String QUERY = "query";
+    private String mQuery;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -105,10 +109,27 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter = new BoardAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
 
+        mSearchView = (SearchView) view.findViewById(R.id.searchView);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
+                return true;
+            }
+
+        });
+
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+            mQuery = savedInstanceState.getString(QUERY);
+            mSearchView.setQuery(mQuery, true);
         }
         return view;
     }
@@ -145,6 +166,21 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         Uri uri = FriendForecastContract.BoardData.buildBoardUri(System.currentTimeMillis());
+
+        final String selection = FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " LIKE ? ";
+        String searchString = mSearchView.getQuery().toString();
+
+        if (searchString.length() > 0) {
+            searchString = "%" + searchString + "%";
+            return new CursorLoader(
+                    getActivity(),
+                    uri,
+                    null,
+                    selection,
+                    new String[]{searchString},
+                    null
+            );
+        }
         return new CursorLoader(getActivity(),
                 uri,
                 null,
@@ -411,6 +447,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mPosition = mRecyclerView.getVerticalScrollbarPosition();
         outState.putInt(SELECTED_KEY, mPosition);
         Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        outState.putString(QUERY, mSearchView.getQuery().toString());
         super.onSaveInstanceState(outState);
     }
+
+
 }

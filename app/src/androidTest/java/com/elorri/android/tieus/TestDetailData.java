@@ -49,8 +49,10 @@ public class TestDetailData extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|2130837600|null|null|null" +
-                "|null|0|-1739917|0|"
+                + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
@@ -76,8 +78,10 @@ public class TestDetailData extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null" +
-                "|null|0|-4560696|0|"
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
@@ -105,8 +109,10 @@ public class TestDetailData extends AndroidTestCase {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|2130837600|null|null|null" +
-                "|null|0|-4560696|0|"
+                + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
+                + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
