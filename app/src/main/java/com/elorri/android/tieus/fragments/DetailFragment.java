@@ -55,16 +55,24 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
+        if (null != menu) menu.clear();
+        mToolbar.inflateMenu(R.menu.fragment_detail);
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        item=inflateFragmentMenuItem();
-
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
         switch (item.getItemId()) {
             // When "edit" menu option selected
             case R.id.action_edit_contact:
-                if(mAndroidContactUri!=null) {
+                if (mAndroidContactUri != null) {
                     // Standard system edit contact intent
                     Intent intent = new Intent(Intent.ACTION_EDIT, mAndroidContactUri);
 
@@ -85,14 +93,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private MenuItem inflateFragmentMenuItem() {
-        Menu menu = mToolbar.getMenu();
-        if (null != menu) menu.clear();
-        mToolbar.inflateMenu(R.menu.fragment_detail);
-        return menu.findItem(R.id.action_edit_contact);
-    }
-
 
 
 
@@ -133,8 +133,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         return view;
     }
-
-
 
 
     @Override
@@ -234,7 +232,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void setAndroidContactUri(Uri uri) {
-        mAndroidContactUri=uri;
+        mAndroidContactUri = uri;
     }
 
     @Override
