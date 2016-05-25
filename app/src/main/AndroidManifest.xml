@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.elorri.android.friendforcast"
+<manifest package="com.elorri.android.tieus"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
-        android:name="com.elorri.android.friendforcast.StethoApplication"
+        android:name="com.elorri.android.tieus.StethoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity">
+            android:name="com.elorri.android.tieus.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.DetailActivity"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.elorri.android.tieus.activities.DetailActivity"
+            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"/>
+                android:value="com.elorri.android.tieus.activities.MainActivity"/>
         </activity>
         <activity
-            android:name=".activities.AddActionActivity"
-            android:parentActivityName=".activities.DetailActivity">
+            android:name="com.elorri.android.tieus.activities.AddActionActivity"
+            android:parentActivityName="com.elorri.android.tieus.activities.DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DetailActivity"/>
+                android:value="com.elorri.android.tieus.activities.DetailActivity"/>
         </activity>
         <provider
-            android:name=".data.FriendForecastProvider"
-            android:authorities="com.elorri.android.friendforcast"
+            android:name="com.elorri.android.tieus.data.FriendForecastProvider"
+            android:authorities="com.elorri.android.tieus"
             android:exported="false"/>
     </application>
 

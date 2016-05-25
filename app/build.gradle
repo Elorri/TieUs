@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.elorri.android.friendforcast"
+        applicationId "com.elorri.android.tieus"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

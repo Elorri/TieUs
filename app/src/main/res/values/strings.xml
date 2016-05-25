@@ -1,5 +1,5 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    <string name="app_name">Friends forecast</string>
+    <string name="app_name">Tie Us</string>
     <string name="board_title">board</string>
     <string name="contacts_title">contacts</string>
     <string name="unmanaged_people">Unmanaged people</string>
@@ -31,13 +31,24 @@
     <string name="select_template">Select template</string>
     <string name="mail">Mail</string>
     <string name="phone">Phone</string>
-    <string name="event">Event</string>
+    <string name="meeting">Meeting - Event</string>
 
     <!-- social networks that can be used as a vector -->
     <string name="vector_package_gmail">com.google.android.gm</string>
     <string name="vector_package_google_plus">com.google.android.apps.plus</string>
     <string name="vector_package_facebook">com.facebook.katana</string>
     <string name="vector_package_linkedin">com.linkedin.android</string>
+    <string name="vector_package_outlook">com.microsoft.office.outlook</string>
+    <string name="vector_package_yahoo">com.yahoo.mobile.client.android.mail</string>
+    <string name="vector_package_aol">com.aol.mobile.aolapp</string>
+    <string name="vector_package_skype">com.skype.raider</string>
+    <string name="vector_package_messenger">com.facebook.orca</string>
+    <string name="vector_package_strava">com.strava</string>
+    <string name="vector_package_viadeo">com.viadeo.android</string>
+    <string name="vector_package_email">com.android.email</string>
+    <string name="vector_package_phone">com.android.phone</string>
+    <string name="vector_package_exchange">com.android.exchange</string>
+
 
     <string name="action_completed">Action completed</string>
     <string name="action_uncompleted">Action uncompleted</string>
@@ -126,6 +137,7 @@
     <string name="every_3months">Every 3 months</string>
     <string name="every_6months">Every 6 months</string>
     <string name="every_year">Every year</string>
+    <string name="edit_contact">Edit contact</string>
 
 
 </resources>

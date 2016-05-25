@@ -8,7 +8,7 @@
                 android:paddingRight="@dimen/spacing_normal"
                 android:paddingTop="@dimen/spacing_small">
 
-    <com.elorri.android.friendforcast.ui.AvatarView
+    <com.elorri.android.tieus.ui.AvatarView
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_bg_width"
         android:layout_height="@dimen/avatar_bg_height"

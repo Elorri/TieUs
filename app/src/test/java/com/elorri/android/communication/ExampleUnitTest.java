@@ -1,4 +1,4 @@
-package com.elorri.android.friendforcast;
+package com.elorri.android.tieus;
 
 import org.junit.Test;
 
