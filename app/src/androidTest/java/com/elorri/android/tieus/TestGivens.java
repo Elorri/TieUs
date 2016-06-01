@@ -103,13 +103,24 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.ActionTable.COLUMN_TITLE + "|" +
                 FriendForecastContract.ActionTable.COLUMN_NAME + "|" +
                 FriendForecastContract.ActionTable.COLUMN_SORT_ORDER + "|\n"
-                + "row |5|Give feedback|Thank you|10|\n";
+                + "row |1|Introduce|Get to know who they are and what they are looking for|1|\n"
+                + "row |2|Introduce|Tell who you are and what you can do|2|\n"
+                + "row |3|Inform|Inform of an event|3|\n"
+                + "row |4|Inform|Give expertise|4|\n"
+                + "row |5|Inform|Inform of an existing tool|5|\n"
+                + "row |6|Inform|Inform of a connection you have that may help|6|\n"
+                + "row |7|Make an offer|Make an offer of work|7|\n"
+                + "row |8|Make an offer|Make an offer of money|8|\n"
+                + "row |9|Make an offer|Offer a present|9|\n"
+                + "row |10|Give feedback|Upvote their competence|10|\n"
+                + "row |11|Give feedback|Encourage|11|\n"
+                + "row |12|Give feedback|Thanks|12|\n";
 
         ContentValues[] actionValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(actionString));
         int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.ActionTable
                 .CONTENT_URI, actionValues);
-        assertEquals(1, insertCount);
+        assertEquals(12, insertCount);
         Cursor actionCursor = aContext.getContentResolver().query(FriendForecastContract.ActionTable
                 .CONTENT_URI, null, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + actionCursor);
@@ -125,13 +136,22 @@ public class TestGivens extends AndroidTestCase {
                 FriendForecastContract.VectorTable.COLUMN_NAME + "|" +
                 FriendForecastContract.VectorTable.COLUMN_DATA + "|" +
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE + "|\n"
-                + "row |32|Gmail|com.google.android.gm|package|\n";
+                + "row |32|Gmail|com.google.android.gm|package|\n"
+                + "row |33|Google plus|com.google.android.apps.plus|package|\n"
+                + "row |34|Facebook|com.facebook.katana|package|\n"
+                + "row |35|LinkedIn|com.linkedin.android|package|\n"
+                + "row |36|Viadeo|com.viadeo.android|package|\n"
+                + "row |37|Phone|com.android.phone|package|\n"
+                + "row |38|Twitter|com.twitter.android|package|\n"
+                + "row |39|Meeting|"+R.drawable.ic_meeting_24dp+"|ressourceId|\n";
+
+
         ContentValues[] vectorValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(vectorString));
         int insertCount = aContext.getContentResolver().bulkInsert(FriendForecastContract.VectorTable
                         .CONTENT_URI,
                 vectorValues);
-        assertEquals(1, insertCount);
+        assertEquals(8, insertCount);
         Cursor vectorCursor = aContext.getContentResolver().query(FriendForecastContract.VectorTable
                 .CONTENT_URI, null, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorCursor);

@@ -47,6 +47,7 @@ public abstract class BoardData {
         String todayStart = String.valueOf(DateUtils.setZeroDay(now));
         String tomorrowStart = String.valueOf(DateUtils.addDay(1, DateUtils.setZeroDay(now)));
 
+
         cursors.add(db.query("(" + ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE + ")", null, null,
                 null, null, null, null));
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
@@ -71,13 +72,15 @@ public abstract class BoardData {
                 + ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.delay), false, null, false));
 
-        args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart, tomorrowStart, selectionArgs[0]};
+        args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart,
+                tomorrowStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.today), false, null, false));
 
-        args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart, tomorrowStart, selectionArgs[0]};
+        args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart,
+                tomorrowStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.TodayDonePeopleQuery
                 .SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""

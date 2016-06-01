@@ -659,7 +659,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + " between ? and ? and "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " >= ? and "
+                + FriendForecastContract.EventTable.COLUMN_TIME_START + " < ? and "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is null and "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " = "
                 + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " order by "
@@ -740,7 +741,8 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " is not null and "
-                + FriendForecastContract.EventTable.COLUMN_TIME_END + " between ? and ?  order by "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " >= ? and "
+                + FriendForecastContract.EventTable.COLUMN_TIME_END + " < ? order by "
                 + FriendForecastContract.EventTable.COLUMN_TIME_END + " desc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "

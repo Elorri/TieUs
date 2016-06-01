@@ -197,7 +197,10 @@ public class Tools {
         if (packageName.equals(context.getString(R.string.vector_package_email))) return true;
         if (packageName.equals(context.getString(R.string.vector_package_phone))) return true;
         if (packageName.equals(context.getString(R.string.vector_package_exchange))) return true;
-
+        if (packageName.equals(context.getString(R.string.vector_package_twitter))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_quora))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_instagram))) return true;
+        if (packageName.equals(context.getString(R.string.vector_package_meetup))) return true;
         return false;
     }
 

@@ -27,11 +27,12 @@
     <string name="no_liked_contacts">What people/groups she may like ?</string>
     <string name="no_vectors_of_communication">What tools of communication she offers ?</string>
     <string name="next_actions">Next actions</string>
-    <string name="select_vector">Select a communication vector</string>
+    <string name="select_vector">Select a vector</string>
     <string name="select_template">Select template</string>
     <string name="mail">Mail</string>
     <string name="phone">Phone</string>
-    <string name="meeting">Meeting - Event</string>
+    <string name="meeting">Meeting</string>
+
 
     <!-- social networks that can be used as a vector -->
     <string name="vector_package_gmail">com.google.android.gm</string>
@@ -48,6 +49,17 @@
     <string name="vector_package_email">com.android.email</string>
     <string name="vector_package_phone">com.android.phone</string>
     <string name="vector_package_exchange">com.android.exchange</string>
+    <string name="vector_package_twitter">com.twitter.android</string>
+    <string name="vector_package_quora">com.quora.android</string>
+    <string name="vector_package_instagram">com.instagram.android</string>
+    <string name="vector_package_meetup">com.meetup</string>
+
+
+
+
+
+
+
 
 
     <string name="action_completed">Action completed</string>
