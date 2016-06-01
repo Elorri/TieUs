@@ -65,7 +65,8 @@ public class TestDetailData extends AndroidTestCase {
 
 
     public void testDetailUndoneActionUneducatedUser() {
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false();
+        mTestGivens.test_I_have_a_preference_setDoneActionsAware_equals_to_false();
+        mTestGivens.test_I_have_a_preference_setDeleteActionsAware_equals_to_true();       
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(16)),
@@ -88,7 +89,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thank you|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -96,7 +97,8 @@ public class TestDetailData extends AndroidTestCase {
 
 
     public void testDetailUndoneActionEducatedUser() {
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true();
+        mTestGivens.test_I_have_a_preference_setDoneActionsAware_equals_to_true();
+        mTestGivens.test_I_have_a_preference_setDeleteActionsAware_equals_to_true();
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(16)),
@@ -116,7 +118,7 @@ public class TestDetailData extends AndroidTestCase {
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thank you|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
@@ -126,7 +128,8 @@ public class TestDetailData extends AndroidTestCase {
 
 
     public void testDetailDoneActionUneducatedUser() {
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false();
+        mTestGivens.test_I_have_a_preference_setDoneActionsAware_equals_to_false();
+        mTestGivens.test_I_have_a_preference_setDeleteActionsAware_equals_to_true();
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(17)),
@@ -164,14 +167,15 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thank you|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
+                + "row |9|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
                 + TestGivens._3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
 
     public void testDetailDoneActionEducatedUser() {
-        mTestGivens.test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true();
+        mTestGivens.test_I_have_a_preference_setDoneActionsAware_equals_to_true();
+        mTestGivens.test_I_have_a_preference_setDeleteActionsAware_equals_to_true();
 
         Cursor cursor = mContext.getContentResolver().query(
                 FriendForecastContract.DetailData.buildDetailUri(Long.valueOf(17)),
@@ -206,7 +210,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thank you|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
+                + "row |9|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
                 + TestGivens._3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();

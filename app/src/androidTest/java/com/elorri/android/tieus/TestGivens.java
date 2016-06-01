@@ -83,16 +83,24 @@ public class TestGivens extends AndroidTestCase {
     }
 
 
-    public void test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_false() {
+    public void test_I_have_a_preference_setDoneActionsAware_equals_to_false() {
         Status.setDoneActionsAware(aContext, false);
         assertEquals(false, Status.isDoneActionsAware(aContext));
     }
 
-    public void test_I_have_a_preference_getMarkActionFeatureStatus_equals_to_true() {
+    public void test_I_have_a_preference_setDoneActionsAware_equals_to_true() {
         Status.setDoneActionsAware(aContext, true);
         assertEquals(true, Status.isDoneActionsAware(aContext));
     }
+    public void test_I_have_a_preference_setDeleteActionsAware_equals_to_false() {
+        Status.setDeleteActionsAware(aContext, false);
+        assertEquals(false, Status.isDeleteActionsAware(aContext));
+    }
 
+    public void test_I_have_a_preference_setDeleteActionsAware_equals_to_true() {
+        Status.setDeleteActionsAware(aContext, true);
+        assertEquals(true, Status.isDeleteActionsAware(aContext));
+    }
 
     public void test_fillActionTable() {
         aContext.getContentResolver().delete(FriendForecastContract.ActionTable.CONTENT_URI, null, null);
@@ -286,26 +294,26 @@ public class TestGivens extends AndroidTestCase {
 
         String eventString = "\n"
                 + TestUtility.getCursorHeaderString(EventDAO.EventQuery.PROJECTION)
-                + "row |8|16|5|32|" + _4daysAgo_15may2016at12h40m52s + "|null|\n"
-                + "row |9|17|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |10|18|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |11|19|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |12|20|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |13|21|5|32|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s + "|\n"
-                + "row |14|22|5|32|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s + "|\n"
-                + "row |15|23|5|32|" + _in1second_19may2016at12h40m53s + "|null|\n"
-                + "row |16|24|5|32|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s + "|\n"
-                + "row |17|25|5|32|" + _in4days_23may2016at12h40m52s + "|null|\n"
-                + "row |18|36|5|32|" + _4daysAgo_15may2016at12h40m52s + "|null|\n"
-                + "row |19|37|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |20|38|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |21|39|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |22|40|5|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
-                + "row |23|41|5|32|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s + "|\n"
-                + "row |24|42|5|32|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s + "|\n"
-                + "row |25|43|5|32|" + _in1second_19may2016at12h40m53s + "|null|\n"
-                + "row |26|44|5|32|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s + "|\n"
-                + "row |27|45|5|32|" + _in4days_23may2016at12h40m52s + "|null|\n";
+                + "row |8|16|12|32|" + _4daysAgo_15may2016at12h40m52s + "|null|\n"
+                + "row |9|17|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |10|18|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |11|19|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |12|20|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |13|21|12|32|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s + "|\n"
+                + "row |14|22|12|32|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s + "|\n"
+                + "row |15|23|12|32|" + _in1second_19may2016at12h40m53s + "|null|\n"
+                + "row |16|24|12|32|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s + "|\n"
+                + "row |17|25|12|32|" + _in4days_23may2016at12h40m52s + "|null|\n"
+                + "row |18|36|12|32|" + _4daysAgo_15may2016at12h40m52s + "|null|\n"
+                + "row |19|37|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |20|38|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |21|39|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |22|40|12|32|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s + "|\n"
+                + "row |23|41|12|32|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s + "|\n"
+                + "row |24|42|12|32|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s + "|\n"
+                + "row |25|43|12|32|" + _in1second_19may2016at12h40m53s + "|null|\n"
+                + "row |26|44|12|32|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s + "|\n"
+                + "row |27|45|12|32|" + _in4days_23may2016at12h40m52s + "|null|\n";
 
         ContentValues[] eventValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(eventString));

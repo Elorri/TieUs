@@ -427,6 +427,9 @@ public class ContactActionVectorEventDAO {
 
     public interface PeopleApprochingFrequencyQuery extends PeopleQuery {
 
+            int COL_TIME_END_2THIRD_FREQ=13;
+            int COL_TIME_END_FREQ=14;
+
 
         String SELECT_BEFORE_BIND = "select "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -442,7 +445,11 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
-                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", ("
+                + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2.0/3)), "
+                + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " from ("
                 + JOINT_LAST_ACTION_EVENT + ") inner join "
                 + FriendForecastContract.ContactTable.NAME + " on "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "="
@@ -451,7 +458,7 @@ public class ContactActionVectorEventDAO {
 
         String SELECT_AFTER_BIND = " between ("
                 + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
-                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2/3)) and( "
+                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2.0/3)) and( "
                 + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
                 + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ") and "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="

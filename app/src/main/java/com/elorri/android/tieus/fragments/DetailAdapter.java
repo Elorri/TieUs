@@ -44,6 +44,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private AlertDialog mFeedbackDialog;
     private AlertDialog mFeedBackFrequencyDialog;
     private long mFeedBackDelay;
+    private long mFrequencyDelay;
     private int mEmoIconResource;
     private String mContactId;
 
@@ -307,7 +308,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         everyday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._24H) {
+                if (mFrequencyDelay != Tools._24H) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._24H));
                     update(values);
@@ -318,7 +319,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         everyWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._1WEEK) {
+                if (mFrequencyDelay != Tools._1WEEK) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._1WEEK));
                     update(values);
@@ -329,7 +330,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         every2weeks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._2WEEKS) {
+                if (mFrequencyDelay != Tools._2WEEKS) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._2WEEKS));
                     update(values);
@@ -340,7 +341,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         everyMonths.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._1MONTH) {
+                if (mFrequencyDelay != Tools._1MONTH) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._1MONTH));
                     update(values);
@@ -351,7 +352,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         every3months.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._3MONTHS) {
+                if (mFrequencyDelay != Tools._3MONTHS) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._3MONTHS));
                     update(values);
@@ -362,7 +363,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         every6months.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._6MONTHS) {
+                if (mFrequencyDelay != Tools._6MONTHS) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._6MONTHS));
                     update(values);
@@ -373,7 +374,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         everyYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mFeedBackDelay != Tools._1YEAR) {
+                if (mFrequencyDelay != Tools._1YEAR) {
                     ContentValues values = getFrequencyContactValues(
                             String.valueOf(Tools._1YEAR));
                     update(values);
@@ -614,8 +615,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     holder.frequencyTitle.setVisibility(View.VISIBLE);
                     holder.frequency.setVisibility(View.VISIBLE);
                     holder.expectedFrequencyTitle.setVisibility(View.GONE);
-                    holder.frequency.setText(Tools.getReadableDelay(mContext,
-                            Long.valueOf(frequencyDelay)));
+                    mFrequencyDelay = Long.valueOf(frequencyDelay);
+                    holder.frequency.setText(Tools.getReadableDelay(mContext,mFrequencyDelay));
                     holder.frequencyView.setBackgroundColor(mContext.getResources().getColor(R.color
                             .mdtp_white));
                 }

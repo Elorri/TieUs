@@ -279,6 +279,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
                 bindCommonViews(holder);
+                Log.e("ff", Thread.currentThread().getStackTrace()[2]
+                        + " +2/3freq " + mCursor.getString(
+                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.COL_TIME_END_2THIRD_FREQ)
+                        + " +freq " + mCursor.getString(
+                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
+                                .COL_TIME_END_FREQ)
+                        + " frequence " + mCursor.getString(
+                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.COL_FREQUENCY_OF_CONTACT));
                 setOnClickListener(holder);
                 break;
             }
