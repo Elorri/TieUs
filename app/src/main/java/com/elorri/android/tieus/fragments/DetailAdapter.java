@@ -135,7 +135,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
             switch (viewType) {
                 case ViewTypes.VIEW_CONTACT: {
-                    moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
+                    moodIcon = (ImageView) view.findViewById(R.id.moodIcon);
                     moodUnknown = (TextView) view.findViewById(R.id.unknown_mood);
                     break;
                 }

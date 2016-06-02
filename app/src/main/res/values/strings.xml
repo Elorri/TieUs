@@ -149,6 +149,8 @@
     <string name="every_6months">Every 6 months</string>
     <string name="every_year">Every year</string>
     <string name="edit_contact">Edit contact</string>
+    <string name="empty_widget_list">No people to today</string>
+    <string name="title_widget_list">Today people</string>
 
 
 </resources>

@@ -20,7 +20,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
 
-    static final String DATABASE_NAME = "friends.db";
+    static final String DATABASE_NAME = "tieus.db";
     private final Context mContext;
 
 
@@ -33,7 +33,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        Log.d("TieUs", "" + Thread.currentThread().getStackTrace()[2]);
 
         sqLiteDatabase.execSQL(ContactDAO.CREATE);
         sqLiteDatabase.execSQL(ActionDAO.CREATE);
@@ -42,7 +42,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
 
 
         insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
-        Log.e("Communication", "Inserts done");
+        Log.e("TieUs", "Inserts done");
     }
 
     @Override

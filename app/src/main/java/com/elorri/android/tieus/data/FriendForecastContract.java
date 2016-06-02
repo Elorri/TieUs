@@ -13,8 +13,27 @@ public class FriendForecastContract {
     public static final String CONTENT_AUTHORITY = "com.elorri.android.tieus";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
+
+    public static class WidgetData {
+        // DATA_WIDGET  content://com.elorri.android.communication/board/
+        public static String PATH_WIDGET = "widget";
+
+        public static Uri buildWidgetUri(long time) {
+            return BASE_CONTENT_URI.buildUpon()
+                    .appendPath(PATH_WIDGET)
+                    .appendEncodedPath(String.valueOf(time))
+                    .build();
+        }
+
+        public static long getTimeFromUri(Uri uri) {
+            return Long.valueOf(uri.getPathSegments().get(1));
+        }
+
+
+    }
+
     public static class BoardData {
-        // DATA_BOARD  content://com.elorri.android.communication/board/
+        // DATA_BOARD  content://com.elorri.android.tieus/board/
         public static String PATH_BOARD = "board";
 
         public static Uri buildBoardUri(long time) {
@@ -27,6 +46,8 @@ public class FriendForecastContract {
         public static long getTimeFromUri(Uri uri) {
             return Long.valueOf(uri.getPathSegments().get(1));
         }
+
+
     }
 
     public static class DetailData {

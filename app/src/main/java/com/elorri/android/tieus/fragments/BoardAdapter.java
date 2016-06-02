@@ -74,7 +74,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             this.mView = view;
             avatar = (AvatarView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.title);
-            moodIcon = (ImageView) view.findViewById(R.id.mood_icon);
+            moodIcon = (ImageView) view.findViewById(R.id.moodIcon);
             moodUnknown = (TextView) view.findViewById(R.id.unknown_mood);
 
             switch (viewType) {
@@ -279,14 +279,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
                 bindCommonViews(holder);
-                Log.e("ff", Thread.currentThread().getStackTrace()[2]
-                        + " +2/3freq " + mCursor.getString(
-                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.COL_TIME_END_2THIRD_FREQ)
-                        + " +freq " + mCursor.getString(
-                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
-                                .COL_TIME_END_FREQ)
-                        + " frequence " + mCursor.getString(
-                        ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.COL_FREQUENCY_OF_CONTACT));
                 setOnClickListener(holder);
                 break;
             }
@@ -327,8 +319,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case ViewTypes.VIEW_TODAY_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
+                        mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_DATA));
                 holder.action.setText(mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));

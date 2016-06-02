@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingLeft="@dimen/spacing_normal"
+    android:paddingRight="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_small">
+
+
+    <ImageView
+        android:id="@+id/vectorIcon"
+        android:layout_width="@dimen/emo_icon_width"
+        android:layout_height="@dimen/emo_icon_height"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/spacing_normal"
+        tools:background="@color/secondaryLight"/>
+
+
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/vectorIcon"
+        android:layout_toRightOf="@id/vectorIcon"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/primary_dark_text"
+        android:textSize="@dimen/text_size_xlarge"
+        tools:text="Franck Lepage"/>
+
+</RelativeLayout>

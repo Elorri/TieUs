@@ -1,5 +1,6 @@
 package com.elorri.android.tieus.extra;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +10,16 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MergeCursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.data.FriendForecastContract;
@@ -147,7 +153,7 @@ public class Tools {
         // list of chosen Locale
     }
 
-    public static ContentValues getContentValues(String columnName, String  value) {
+    public static ContentValues getContentValues(String columnName, String value) {
         ContentValues values = new ContentValues();
         values.put(columnName, value);
         return values;
@@ -215,6 +221,22 @@ public class Tools {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 vectorLogo.setBackground(context.getPackageManager().getApplicationIcon(
                         data));
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public static void setWidgetVectorBackground(Context context, RemoteViews views, int viewId, String mimetype, String data) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
+        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+            views.setImageViewResource(viewId, Integer.valueOf(data));
+        } else
+            try {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                Drawable drawable = context.getPackageManager().getApplicationIcon(data);
+                Bitmap bitmap = drawableToBitmap(drawable);
+                views.setImageViewBitmap(viewId, bitmap);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
@@ -328,5 +350,58 @@ public class Tools {
         if (feedBackDelay == _1YEAR)
             return context.getResources().getString(R.string._1year);
         return null;
+    }
+
+
+
+    /**
+     * Transform a drawable to a bitmap
+     *
+     * @param drawable
+     * @return
+     */
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    public static void setRemoteContentDescription(RemoteViews views, int ressource_image, String description) {
+        views.setContentDescription(ressource_image, description);
+    }
+
+    public static String getMoodDesciption(Context context, Integer mood) {
+        int moodDesc;
+        switch (mood) {
+            case R.drawable.ic_sentiment_satisfied_black_48dp:
+                moodDesc = R.string.satisfied;
+                break;
+            case R.drawable.ic_sentiment_neutral_black_24dp:
+                moodDesc = R.string.neutral;
+                break;
+            case R.drawable.ic_sentiment_dissatisfied_black_48dp:
+                moodDesc = R.string.unsatisfied;
+                break;
+            default:
+                return null;
+        }
+        return context.getResources().getString(moodDesc);
     }
 }

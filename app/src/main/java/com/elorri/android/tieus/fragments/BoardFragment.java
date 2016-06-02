@@ -1,6 +1,8 @@
 package com.elorri.android.tieus.fragments;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -42,6 +44,9 @@ import com.elorri.android.tieus.extra.Tools;
  */
 public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, BoardAdapter.Callback {
 
+    //TODO put this in the sync adapter
+    public static final String ACTION_DATA_UPDATED = FriendForecastContract.CONTENT_AUTHORITY + ".ACTION_DATA_UPDATED";
+
     private static final String SELECTED_KEY = "selected_position";
 
     private BoardAdapter mAdapter;
@@ -62,7 +67,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
-        //syncContacts();
+        syncContacts();
         setHasOptionsMenu(true);
     }
 
@@ -236,9 +241,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         protected Void doInBackground(Void... params) {
             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
-            addOrUpdateAppContactsAccordingToAndroidContacts();
-            removeAppContactsAccordingToAndroidContacts();
-            addOrRemoveVectorsAccordingToAndroidAppsInstalled();
+//            addOrUpdateAppContactsAccordingToAndroidContacts();
+//            removeAppContactsAccordingToAndroidContacts();
+//            addOrRemoveVectorsAccordingToAndroidAppsInstalled();
+            updateWidget();
             return null;
         }
 
@@ -379,6 +385,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             super.onPostExecute(aVoid);
             getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
         }
+    }
+
+    private void updateWidget() {
+        Context context = getContext();
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     private void addOrRemoveVectorsAccordingToAndroidAppsInstalled() {

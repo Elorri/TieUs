@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
+import com.elorri.android.tieus.extra.DateUtils;
 import com.elorri.android.tieus.extra.Tools;
 
 /**
@@ -16,17 +18,18 @@ import com.elorri.android.tieus.extra.Tools;
  */
 public class FriendForecastProvider extends ContentProvider {
 
-    static final int DATA_BOARD = 100; //content://com.elorri.android.communication/board/
-    static final int DATA_DETAIL = 101; //content://com.elorri.android.communication/detail/15
-    static final int DATA_ADD_ACTION_SELECT_ACTION = 102; //content://com.elorri.android.communication/add_action/
-    static final int DATA_ADD_ACTION_SELECT_VECTOR = 103; //content://com.elorri.android.communication/add_action/12
-    static final int DATA_ADD_ACTION_VALIDATE = 105; //content://com.elorri.android.communication/add_action/12/15/1464472800000
+    static final int DATA_WIDGET = 50; //content://com.elorri.android.tieus/widget/
+    static final int DATA_BOARD = 100; //content://com.elorri.android.tieus/board/
+    static final int DATA_DETAIL = 101; //content://com.elorri.android.tieus/detail/15
+    static final int DATA_ADD_ACTION_SELECT_ACTION = 102; //content://com.elorri.android.tieus/add_action/
+    static final int DATA_ADD_ACTION_SELECT_VECTOR = 103; //content://com.elorri.android.tieus/add_action/12
+    static final int DATA_ADD_ACTION_VALIDATE = 105; //content://com.elorri.android.tieus/add_action/12/15/1464472800000
 
-    static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.communication/contact/
-    static final int TABLE_ACTION = 501; //will match content://com.elorri.android.communication/action/
-    static final int TABLE_EVENT = 502; //will match content://com.elorri.android.communication/event/
-    static final int TABLE_VECTOR = 503; //will match content://com.elorri.android.communication/vector/
-    static final int TABLE_CONTACT_VECTORS = 504; //will match content://com.elorri.android.communication/contact_vectors/
+    static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.tieus/contact/
+    static final int TABLE_ACTION = 501; //will match content://com.elorri.android.tieus/action/
+    static final int TABLE_EVENT = 502; //will match content://com.elorri.android.tieus/event/
+    static final int TABLE_VECTOR = 503; //will match content://com.elorri.android.tieus/vector/
+    static final int TABLE_CONTACT_VECTORS = 504; //will match content://com.elorri.android.tieus/contact_vectors/
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -38,6 +41,8 @@ public class FriendForecastProvider extends ContentProvider {
         // found.  The code passed into the constructor represents the code to return for the root
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
+                FriendForecastContract.WidgetData.PATH_WIDGET + "/#", DATA_WIDGET);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
                 FriendForecastContract.BoardData.PATH_BOARD + "/#", DATA_BOARD);
         matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
@@ -76,12 +81,26 @@ public class FriendForecastProvider extends ContentProvider {
         Cursor cursor = null;
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
-            case DATA_BOARD:
+            case DATA_WIDGET:{
+                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_WIDGET " +
+                        "uri " + uri);
+                long now=FriendForecastContract.WidgetData.getTimeFromUri(uri);
+                String todayStart = String.valueOf(DateUtils.setZeroDay(now));
+                String tomorrowStart = String.valueOf(DateUtils.addDay(1, DateUtils.setZeroDay(now)));
+                cursor = db.query("(" + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
+                        null,
+                        null,
+                        new String[]{todayStart, tomorrowStart},
+                        null,
+                        null,
+                        null);
+                break;}
+            case DATA_BOARD:{
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
                         "uri " + uri);
                 long now=FriendForecastContract.BoardData.getTimeFromUri(uri);
                 cursor = BoardData.getCursor(getContext(), db, now, selection, selectionArgs);
-                break;
+                break;}
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
                 String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);

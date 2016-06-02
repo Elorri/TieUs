@@ -427,8 +427,8 @@ public class ContactActionVectorEventDAO {
 
     public interface PeopleApprochingFrequencyQuery extends PeopleQuery {
 
-            int COL_TIME_END_2THIRD_FREQ=13;
-            int COL_TIME_END_FREQ=14;
+        int COL_TIME_END_2THIRD_FREQ = 13;
+        int COL_TIME_END_FREQ = 14;
 
 
         String SELECT_BEFORE_BIND = "select "
@@ -445,11 +445,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + ", "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
-                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", ("
-                + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
-                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2.0/3)), "
-                + FriendForecastContract.EventTable.VIEW_LAST_TIME_END + " + "
-                + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " from ("
+                + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_LAST_ACTION_EVENT + ") inner join "
                 + FriendForecastContract.ContactTable.NAME + " on "
                 + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "="
@@ -602,8 +598,9 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION = 13;
         int COL_TIME_START = 14;
-        int COL_VECTOR_DATA = 15;
-        int COL_VECTOR_MIMETYPE = 16;
+        int COL_VECTOR_NAME = 15;
+        int COL_VECTOR_DATA = 16;
+        int COL_VECTOR_MIMETYPE = 17;
 
         String[] PROJECTION = new String[]{
                 FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
@@ -621,6 +618,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE
         };
@@ -641,6 +639,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -663,6 +662,7 @@ public class ContactActionVectorEventDAO {
                 + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + FriendForecastContract.ActionTable.VIEW_ACTION_NAME + ", "
                 + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + FriendForecastContract.VectorTable.VIEW_VECTOR_NAME + ", "
                 + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
                 + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "

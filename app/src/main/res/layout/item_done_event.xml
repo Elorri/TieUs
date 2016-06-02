@@ -25,7 +25,7 @@
         tools:background="@color/secondaryLight"/>
 
     <ImageView
-        android:id="@+id/mood_icon"
+        android:id="@+id/moodIcon"
         android:layout_width="@dimen/emo_icon_width"
         android:layout_height="@dimen/emo_icon_height"
         android:layout_alignParentRight="true"

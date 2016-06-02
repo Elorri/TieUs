@@ -42,4 +42,10 @@
     <dimen name="small_emo_icon_width">20dp</dimen>
     <dimen name="vector_size">50dp</dimen>
     <dimen name="ok_width">50dp</dimen>
+
+    <!-- Widget related -->
+    <dimen name="widget_text_title">20sp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_list_height">110dp</dimen>
+    <dimen name="widget_list_width">180dp</dimen>
 </resources>
