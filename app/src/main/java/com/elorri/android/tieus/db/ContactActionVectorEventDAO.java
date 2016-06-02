@@ -868,12 +868,13 @@ public class ContactActionVectorEventDAO {
 
     public interface VectorActionByContactIdQuery {
         int COL_EVENT_ID = 0;
-        int COL_VECTOR_LOGO_ID = 1;
+        int COL_VECTOR_DATA = 1;
         int COL_VECTOR_MIMETYPE = 2;
-        int COL_ACTION_NAME = 3;
-        int COL_TIME_START = 4;
-        int COL_TIME_END = 5;
-        int COL_PROJECTION_TYPE = 6;
+        int COL_VECTOR_NAME = 3;
+        int COL_ACTION_NAME = 4;
+        int COL_TIME_START = 5;
+        int COL_TIME_END = 6;
+        int COL_PROJECTION_TYPE = 7;
 
         String SELECTION_ALL = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?";
         String SELECTION_UNDONE = FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=? and "
@@ -888,6 +889,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
@@ -898,6 +900,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
@@ -908,6 +911,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
@@ -918,6 +922,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,
@@ -928,6 +933,7 @@ public class ContactActionVectorEventDAO {
                 FriendForecastContract.EventTable.VIEW_EVENT_ID,
                 FriendForecastContract.VectorTable.COLUMN_DATA,
                 FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                FriendForecastContract.VectorTable.VIEW_VECTOR_NAME,
                 FriendForecastContract.ActionTable.VIEW_ACTION_NAME,
                 FriendForecastContract.EventTable.COLUMN_TIME_START,
                 FriendForecastContract.EventTable.COLUMN_TIME_END,

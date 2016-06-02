@@ -2,6 +2,7 @@ package com.elorri.android.tieus.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -204,7 +205,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
         }
     }
-
 
 
     @Override
@@ -616,7 +616,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     holder.frequency.setVisibility(View.VISIBLE);
                     holder.expectedFrequencyTitle.setVisibility(View.GONE);
                     mFrequencyDelay = Long.valueOf(frequencyDelay);
-                    holder.frequency.setText(Tools.getReadableDelay(mContext,mFrequencyDelay));
+                    holder.frequency.setText(Tools.getReadableDelay(mContext, mFrequencyDelay));
                     holder.frequencyView.setBackgroundColor(mContext.getResources().getColor(R.color
                             .mdtp_white));
                 }
@@ -631,10 +631,25 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_NEXT_ACTION: {
-                bindActionCommonsViews((ViewHolderAction)holder);
-                long dueDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
-                ((ViewHolderAction)holder).time.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
-                ((ViewHolderAction)holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
+                bindActionCommonsViews((ViewHolderAction) holder);
+                long dueDateLong = mCursor.getLong(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_START);
+                final String mimetype = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE);
+                final String vectorData = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_DATA);
+                final String vectorName = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_NAME);
+                ((ViewHolderAction) holder).time.setText(DateUtils.getFriendlyDateString(mContext, dueDateLong));
+
+                ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startVector(mContext, mimetype, vectorData, vectorName);
+                    }
+                });
+
+                ((ViewHolderAction) holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         //Mark action as completed
@@ -651,12 +666,21 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_DONE_ACTION: {
-                bindActionCommonsViews((ViewHolderAction)holder);
-                long doneDateLong = mCursor.getLong(ContactActionVectorEventDAO
-                        .VectorActionByContactIdQuery.COL_TIME_END);
-                ((ViewHolderAction)holder).time.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDateLong));
+                bindActionCommonsViews((ViewHolderAction) holder);
+                long doneDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_END);
+                final String mimetype = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE);
+                final String vectorData = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_DATA);
+                final String vectorName = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_NAME);
+                ((ViewHolderAction) holder).time.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDateLong));
 
-                ((ViewHolderAction)holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
+                ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startVector(mContext, mimetype, vectorData, vectorName);
+                    }
+                });
+
+                ((ViewHolderAction) holder).mView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         //Mark action as completed
@@ -699,12 +723,43 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 
+    private void startVector(Context context, String mimetype, String vectorData, String
+            vectorName) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
+        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+            if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
+                Toast.makeText(context, context.getResources().getString(
+                                R.string.outside_event, vectorName),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
+                Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                //TODO add phone nummber
+//                smsIntent.putExtra("address", "0646632699");
+//                smsIntent.putExtra("sms_body", "message");
+                context.startActivity(smsIntent);
+            }
+        } else if (vectorData.equals(context.getResources().getString(R.string.vector_package_phone))) {
+            Intent phoneIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            //TODO add real phone number here
+//            Intent callIntent = new Intent(Intent.ACTION_CALL);
+//            callIntent.setData(Uri.parse("tel:0377778888"));
+            context.startActivity(phoneIntent);
+        } else {
+            Tools.launchExternalApp(context, vectorData, vectorName);
+        }
+    }
+
     private void bindActionCommonsViews(ViewHolderAction holder) {
         Tools.setVectorBackground(mContext, holder.actionVectorImageView,
                 mCursor.getString(ContactActionVectorEventDAO
                         .VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE),
                 mCursor.getString(ContactActionVectorEventDAO
-                        .VectorActionByContactIdQuery.COL_VECTOR_LOGO_ID)
+                        .VectorActionByContactIdQuery.COL_VECTOR_DATA)
         );
         holder.action.setText(mCursor.getString(ContactActionVectorEventDAO
                 .VectorActionByContactIdQuery.COL_ACTION_NAME));
@@ -854,7 +909,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
         @Override
         protected Void doInBackground(String... params) {
-             String eventId = params[0];
+            String eventId = params[0];
             mContext.getContentResolver().delete(
                     FriendForecastContract.EventTable.CONTENT_URI,
                     FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}

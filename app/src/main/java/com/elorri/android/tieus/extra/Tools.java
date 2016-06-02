@@ -20,6 +20,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.data.FriendForecastContract;
@@ -353,7 +354,6 @@ public class Tools {
     }
 
 
-
     /**
      * Transform a drawable to a bitmap
      *
@@ -403,5 +403,15 @@ public class Tools {
                 return null;
         }
         return context.getResources().getString(moodDesc);
+    }
+
+
+    public static void launchExternalApp(Context context, String appPackageName, String appName) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(appPackageName);
+        if (intent != null)
+            context.startActivity(intent);
+        else
+            Toast.makeText(context, context.getResources().getString(R.string.app_not_installed, appName),
+                    Toast.LENGTH_SHORT).show();
     }
 }

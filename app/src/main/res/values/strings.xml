@@ -153,4 +153,9 @@
     <string name="title_widget_list">Today people</string>
 
 
+    <string name="app_not_installed">App <xliff:g>%1$s</xliff:g> is not installed on your device</string>
+    <string name="sms">Small text messages</string>
+    <string name="outside_event">Outside event</string>
+
+
 </resources>

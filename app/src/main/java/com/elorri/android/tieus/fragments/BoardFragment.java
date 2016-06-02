@@ -243,8 +243,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
 //            addOrUpdateAppContactsAccordingToAndroidContacts();
 //            removeAppContactsAccordingToAndroidContacts();
-//            addOrRemoveVectorsAccordingToAndroidAppsInstalled();
-            updateWidget();
+            addOrRemoveVectorsAccordingToAndroidAppsInstalled();
+            //updateWidget();
             return null;
         }
 
@@ -421,8 +421,18 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 //                FriendForecastContract.VectorTable.CONTENT_URI,
 //                phoneVectorValues);
 
-        //Add meeting vector
+        //Add sms vector
         ContentValues eventVectorValues = VectorDAO.getContentValues(
+                getResources().getString(R.string.sms),
+                String.valueOf(R.drawable.ic_textsms_black_24dp),
+                FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
+        getContext().getContentResolver().insert(
+                FriendForecastContract.VectorTable.CONTENT_URI,
+                eventVectorValues);
+
+
+        //Add meeting vector
+        eventVectorValues = VectorDAO.getContentValues(
                 getResources().getString(R.string.meeting),
                 String.valueOf(R.drawable.ic_meeting_24dp),
                 FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
