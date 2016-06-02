@@ -49,36 +49,35 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private int mEmoIconResource;
     private String mContactId;
 
-    public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack = new ItemTouchHelper
-            .SimpleCallback(
-            ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT) {
-        @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            return false;
-        }
+    public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack =
+            new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return false;
+                }
 
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-            int position = viewHolder.getAdapterPosition();
-            int viewType = getItemViewType(position);
-            if ((viewType == ViewTypes.VIEW_NEXT_ACTION) || (viewType == ViewTypes
-                    .VIEW_DONE_ACTION)) {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                mCursor.moveToPosition(position);
-                DeleteActionTask deleteActionTask = new DeleteActionTask();
-                deleteActionTask.execute(mCursor.getString(ContactActionVectorEventDAO
-                        .VectorActionByContactIdQuery.COL_EVENT_ID));
-            }
-        }
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                    int position = viewHolder.getAdapterPosition();
+                    int viewType = getItemViewType(position);
+                    if ((viewType == ViewTypes.VIEW_NEXT_ACTION) || (viewType == ViewTypes
+                            .VIEW_DONE_ACTION)) {
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                        mCursor.moveToPosition(position);
+                        DeleteActionTask deleteActionTask = new DeleteActionTask();
+                        deleteActionTask.execute(mCursor.getString(ContactActionVectorEventDAO
+                                .VectorActionByContactIdQuery.COL_EVENT_ID));
+                    }
+                }
 
-        @Override
-        public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            if (viewHolder instanceof ViewHolderAction)
-                return super.getSwipeDirs(recyclerView, viewHolder);
-            return 0;
-        }
-    };
+                @Override
+                public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                    if (viewHolder instanceof ViewHolderAction)
+                        return super.getSwipeDirs(recyclerView, viewHolder);
+                    return 0;
+                }
+            };
     private boolean isMoodUnknown;
 
 
