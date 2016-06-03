@@ -156,6 +156,7 @@
     <string name="app_not_installed">App <xliff:g>%1$s</xliff:g> is not installed on your device</string>
     <string name="sms">Small text messages</string>
     <string name="outside_event">Outside event</string>
+    <string name="tag_fragment_board">board_fragment</string>
 
 
 </resources>

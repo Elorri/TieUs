@@ -294,7 +294,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openFrequencyDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mFeedBackFrequencyDialog = builder.create();
-        ScrollView listContainer = (ScrollView) View.inflate(mContext, R.layout.frequency_list,
+        ScrollView listContainer = (ScrollView) View.inflate(mContext, R.layout.list_frequency,
                 null);
         TextView everyday = (TextView) listContainer.findViewById(R.id.everyday);
         TextView everyWeek = (TextView) listContainer.findViewById(R.id.every_week);
@@ -393,7 +393,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openMoodDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mAlertEmoDialog = builder.create();
-        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.mood_list, null);
+        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.list_mood, null);
         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
@@ -460,7 +460,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openFeedbackDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mFeedbackDialog = builder.create();
-        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.feedback_list, null);
+        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.list_feedback, null);
         TextView _24h = (TextView) listContainer.findViewById(R.id._24h);
         TextView _48h = (TextView) listContainer.findViewById(R.id._48h);
         TextView _4days = (TextView) listContainer.findViewById(R.id._4days);

@@ -5,29 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.tieus.R;
@@ -51,12 +44,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private BoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private ImageView mForecastImageView;
-    private ImageView mForecastToolbarImageView;
     private Integer mPosition;
-    private SearchView mSearchView;
-    private static final String QUERY = "query";
-    private String mQuery;
+    private String mSearchString;
+
 
     public BoardFragment() {
         // Required empty public constructor
@@ -75,38 +65,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
-        View view = inflater.inflate(R.layout.fragment_board, container, false);
-
-        Typeface courgette = Typeface.createFromAsset(getContext().getAssets(), "courgette-regular.ttf");
-        final TextView titleTextView = (TextView) view.findViewById(R.id.title);
-        titleTextView.setTypeface(courgette);
-        mForecastImageView = (ImageView) view.findViewById(R.id.forecast);
-        mForecastToolbarImageView = (ImageView) view.findViewById(R.id.forecast_toolbar);
-
-
-        AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset <= 0) {
-                    mForecastImageView.setVisibility(View.INVISIBLE);
-                    mForecastToolbarImageView.setVisibility(View.VISIBLE);
-                } else {
-                    mForecastImageView.setVisibility(View.VISIBLE);
-                    mForecastToolbarImageView.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -114,27 +73,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mAdapter = new BoardAdapter(null, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mSearchView = (SearchView) view.findViewById(R.id.searchView);
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
-                return true;
-            }
-
-        });
-
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
-        }
-        if (savedInstanceState != null && savedInstanceState.containsKey(QUERY)) {
-            mQuery = savedInstanceState.getString(QUERY);
-            mSearchView.setQuery(mQuery, true);
         }
         return view;
     }
@@ -143,7 +83,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.fragment_board, menu);
+//        inflater.inflate(R.menu.fragment_main, menu);
 //
 //    }
 
@@ -173,16 +113,15 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         Uri uri = FriendForecastContract.BoardData.buildBoardUri(System.currentTimeMillis());
 
         final String selection = FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " LIKE ? ";
-        String searchString = mSearchView.getQuery().toString();
 
-        if (searchString.length() > 0) {
-            searchString = "%" + searchString + "%";
+        if (mSearchString != null && mSearchString.length() > 0) {
+            mSearchString = "%" + mSearchString + "%";
             return new CursorLoader(
                     getActivity(),
                     uri,
                     null,
                     selection,
-                    new String[]{searchString},
+                    new String[]{mSearchString},
                     null
             );
         }
@@ -206,7 +145,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         }
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         mRecyclerView.smoothScrollToPosition(position);
-        mPosition=position;
+        mPosition = position;
     }
 
     @Override
@@ -223,12 +162,12 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void setForecast(int forecastRessourceId) {
-        mForecastImageView.setBackgroundResource(forecastRessourceId);
-        mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
+        ((MainActivity) getActivity()).setForecastImageView(forecastRessourceId);
+        ((MainActivity) getActivity()).setForecastToolbarImageView(forecastRessourceId);
     }
 
     @Override
-    public void updateFragment() {
+    public void restartLoader() {
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
     }
 
@@ -236,6 +175,11 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private void syncContacts() {
         SyncContactsTask syncContactsTask = new SyncContactsTask();
         syncContactsTask.execute();
+    }
+
+
+    public void setSearchString(String searchString) {
+        mSearchString = searchString;
     }
 
 
@@ -469,9 +413,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         //TODO see if we use this
         //mPosition = mRecyclerView.getVerticalScrollbarPosition();
         outState.putInt(SELECTED_KEY, mPosition);
-
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
-        outState.putString(QUERY, mSearchView.getQuery().toString());
         super.onSaveInstanceState(outState);
     }
 

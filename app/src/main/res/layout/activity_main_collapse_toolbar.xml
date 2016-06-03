@@ -92,16 +92,17 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.elorri.android.tieus.fragments.BoardFragment"
+        android:tag="@string/tag_fragment_board"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        tools:layout="@layout/fragment_main"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
-
-
 
 

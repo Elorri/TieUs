@@ -48,7 +48,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         void setForecast(int forecastRessourceId);
 
-        void updateFragment();
+        void restartLoader();
     }
 
 
@@ -300,7 +300,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                             Status.setLastMessageIdxUI(mContext, Status.NOTHING_TO_SAY);
                         else
                             Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
-                        mCallback.updateFragment();
+                        mCallback.restartLoader();
                     }
                 });
                 break;
