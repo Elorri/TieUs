@@ -207,7 +207,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         mRecyclerView.smoothScrollToPosition(position);
         mPosition=position;
-
     }
 
     @Override
