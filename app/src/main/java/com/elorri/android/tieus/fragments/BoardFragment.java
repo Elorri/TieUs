@@ -53,7 +53,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private RecyclerView mRecyclerView;
     private ImageView mForecastImageView;
     private ImageView mForecastToolbarImageView;
-    private int mPosition = -1;
+    private Integer mPosition;
     private SearchView mSearchView;
     private static final String QUERY = "query";
     private String mQuery;
@@ -129,10 +129,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
         });
 
-
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
-            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+        }
+        if (savedInstanceState != null && savedInstanceState.containsKey(QUERY)) {
             mQuery = savedInstanceState.getString(QUERY);
             mSearchView.setQuery(mQuery, true);
         }
@@ -159,19 +159,12 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
-        getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
-        super.onActivityCreated(savedInstanceState);
-    }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-        mPosition = 50;
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+        getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
     }
 
     @Override
@@ -204,13 +197,16 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        //mPosition = mAdapter.getSelectedItemPosition();
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
-        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-        // If we don't need to restart the loader, and there's a desired position to restore
-        // to, do so now.
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
-        mRecyclerView.smoothScrollToPosition(mPosition);
+        int position = mAdapter.getSelectedItemPosition();
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+        if (position == RecyclerView.NO_POSITION) {
+            position = mPosition == null ? 0 : mPosition;
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+        }
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+        mRecyclerView.smoothScrollToPosition(position);
+        mPosition=position;
 
     }
 
@@ -471,16 +467,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        // When tablets rotate, the currently selected list item needs to be saved.
-        // When no item is selected, mPosition will be set to INVALID_POSITION -1,
-        // so check for that before storing.
-
-        mPosition = mRecyclerView.getVerticalScrollbarPosition();
+        //TODO see if we use this
+        //mPosition = mRecyclerView.getVerticalScrollbarPosition();
         outState.putInt(SELECTED_KEY, mPosition);
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
+
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
         outState.putString(QUERY, mSearchView.getQuery().toString());
         super.onSaveInstanceState(outState);
     }
-
 
 }

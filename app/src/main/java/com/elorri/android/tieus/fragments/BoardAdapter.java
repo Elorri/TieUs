@@ -31,7 +31,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Cursor mCursor;
     private Callback mCallback;
     private Context mContext;
-    private int mPosition;
+    private int mPosition=RecyclerView.NO_POSITION;
 
 
     public BoardAdapter(Cursor cursor, Callback callback) {
@@ -415,4 +415,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         return viewtype;
     }
+
+
 }
