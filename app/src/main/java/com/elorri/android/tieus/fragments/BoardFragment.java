@@ -166,6 +166,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+        mPosition = 50;
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -197,13 +204,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        mPosition = mAdapter.getSelectedItemPosition();
+        //mPosition = mAdapter.getSelectedItemPosition();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
         if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
         // If we don't need to restart the loader, and there's a desired position to restore
         // to, do so now.
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + mPosition);
         mRecyclerView.smoothScrollToPosition(mPosition);
+
     }
 
     @Override
