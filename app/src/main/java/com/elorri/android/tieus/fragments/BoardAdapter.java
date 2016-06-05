@@ -33,6 +33,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Context mContext;
     private int mPosition = RecyclerView.NO_POSITION;
     private View mFirstContactView;
+    private Integer mFirstContactPosition;
 
 
     public BoardAdapter(Cursor cursor, Callback callback) {
@@ -46,7 +47,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     public void performClickFirstContact() {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFirstContactView " + mFirstContactView);
-        mFirstContactView.performClick();
+//        if (mFirstContactView != null)
+//            mFirstContactView.performClick();
+
     }
 
     interface Callback {
@@ -56,6 +59,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         void restartLoader();
 
+        void setFirstContactView(View firstContactView);
     }
 
 
@@ -390,14 +394,18 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     private void setOnClickListener(final ViewHolder holder) {
+//        if (mFirstContactPosition == null) {
+//            mFirstContactPosition= holder.getAdapterPosition();
+//            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFirstContactPosition " + mFirstContactPosition);
+//        }
         if (mFirstContactView == null) {
 //            Integer position= holder.getAdapterPosition();
 //            mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
 //            Uri uri = FriendForecastContract.DetailData.buildDetailUri(mContactId);
 //            mCallback.setFirstContactPosition(position);
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             mFirstContactView = holder.mView;
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFirstContactView " + mFirstContactView);
+            mCallback.setFirstContactView(mFirstContactView);
         }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
