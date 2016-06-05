@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.DetailActivity;
+import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.AddActionData;
 import com.elorri.android.tieus.data.FriendForecastContract;
 import com.elorri.android.tieus.db.EventDAO;
@@ -37,7 +38,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     private static Uri mUri;
     private RecyclerView mRecyclerView;
-
 
 
     //This variable will allow to choose the most suitable uri and display the correct data. It
@@ -131,8 +131,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     }
 
 
-
-
     private class DateListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -171,8 +169,10 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         protected void onPostExecute(Void aVoid) {
             //getActivity().finish();
             getDialog().cancel();
-            getActivity().getSupportFragmentManager().findFragmentByTag
-                    (DetailActivity.DETAIL_FRAGMENT).onResume();
+            getActivity().getSupportFragmentManager().findFragmentByTag(DetailActivity.DETAIL_FRAGMENT).onResume();
+            if(getContext().getResources().getInteger(R.integer.orientation)== MainActivity.W700dp_LAND)
+                ((MainActivity)getActivity()).getMainFragment().restartLoader();
+
             super.onPostExecute(aVoid);
         }
     }

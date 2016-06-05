@@ -46,6 +46,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private RecyclerView mRecyclerView;
     private Integer mPosition;
     private String mSearchString;
+    private Integer mFirstContactPosition;
 
 
     public BoardFragment() {
@@ -57,7 +58,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //TODO remove this when adding SyncAdapter
-        syncContacts();
+        //syncContacts();
         setHasOptionsMenu(true);
     }
 
@@ -104,7 +105,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onResume() {
         super.onResume();
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-        getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
+        //getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
+        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, this);
     }
 
     @Override
@@ -142,10 +144,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         if (position == RecyclerView.NO_POSITION) {
             position = mPosition == null ? 0 : mPosition;
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+//            ((BoardAdapter.ViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position))
+//                    .mView.performClick();
+            mAdapter.performClickFirstContact();
         }
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         mRecyclerView.smoothScrollToPosition(position);
         mPosition = position;
+
     }
 
     @Override
@@ -171,6 +177,11 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
     }
 
+    @Override
+    public void setFirstContactPosition(Integer position) {
+        mFirstContactPosition = position;
+    }
+
 
     private void syncContacts() {
         SyncContactsTask syncContactsTask = new SyncContactsTask();
@@ -188,10 +199,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         @Override
         protected Void doInBackground(Void... params) {
             Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
-//            addOrUpdateAppContactsAccordingToAndroidContacts();
-//            removeAppContactsAccordingToAndroidContacts();
+            addOrUpdateAppContactsAccordingToAndroidContacts();
+            removeAppContactsAccordingToAndroidContacts();
             addOrRemoveVectorsAccordingToAndroidAppsInstalled();
-            //updateWidget();
+            updateWidget();
             return null;
         }
 
@@ -273,51 +284,53 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             String androidLookUpKey;
             Cursor localCursor = null;
             try {
-                while (androidCursor.moveToNext()) {
-                    androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
-                    androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                            "" + androidContactId + " " + androidLookUpKey);
+                if (androidCursor != null) {
+                    while (androidCursor.moveToNext()) {
+                        androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
+                        androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
+                        Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
+                                "" + androidContactId + " " + androidLookUpKey);
 
-                    try {
-                        //Query 2 : Select app stored contact and compare them with those given by
-                        // the fisrt query
-                        localCursor = getContext().getContentResolver().query(
-                                FriendForecastContract.ContactTable.CONTENT_URI,
-                                ContactDAO.ContactQuery.PROJECTION_QUERY,
-                                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "=? and "
-                                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
-                                new String[]{androidContactId, androidLookUpKey},
-                                null
-                        );
-
-                        //Our local database doesn't know this contact, let's add it up
-                        if (localCursor.getCount() == 0) {
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
-                            ContentValues values = ContactDAO.getContentValues(androidCursor,
-                                    R.drawable.ic_sentiment_neutral_black_48dp,
-                                    FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE,
-                                    FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
-                                    ColorGenerator.MATERIAL.getRandomColor());
-
-                            getContext().getContentResolver().insert(
-                                    FriendForecastContract.ContactTable.CONTENT_URI, values);
-                        } else { //Our local database know this contact, but in case the contact
-                            // name has been updated, we update the whole contact but keep our local
-                            // data like the moodId
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "update");
-                            localCursor.moveToFirst();
-                            String contactId = localCursor.getString(ContactDAO.ContactQuery.COL_ID);
-                            getContext().getContentResolver().update(
+                        try {
+                            //Query 2 : Select app stored contact and compare them with those given by
+                            // the fisrt query
+                            localCursor = getContext().getContentResolver().query(
                                     FriendForecastContract.ContactTable.CONTENT_URI,
-                                    ContactDAO.getContentValues(androidCursor),
-                                    FriendForecastContract.ContactTable._ID + "=?", new
-                                            String[]{contactId});
-                        }
+                                    ContactDAO.ContactQuery.PROJECTION_QUERY,
+                                    FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + "=? and "
+                                            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + "=?",
+                                    new String[]{androidContactId, androidLookUpKey},
+                                    null
+                            );
 
-                    } finally {
-                        if (localCursor != null)
-                            localCursor.close();
+                            //Our local database doesn't know this contact, let's add it up
+                            if (localCursor.getCount() == 0) {
+                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
+                                ContentValues values = ContactDAO.getContentValues(androidCursor,
+                                        R.drawable.ic_sentiment_neutral_black_48dp,
+                                        FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE,
+                                        FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
+                                        ColorGenerator.MATERIAL.getRandomColor());
+
+                                getContext().getContentResolver().insert(
+                                        FriendForecastContract.ContactTable.CONTENT_URI, values);
+                            } else { //Our local database know this contact, but in case the contact
+                                // name has been updated, we update the whole contact but keep our local
+                                // data like the moodId
+                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "update");
+                                localCursor.moveToFirst();
+                                String contactId = localCursor.getString(ContactDAO.ContactQuery.COL_ID);
+                                getContext().getContentResolver().update(
+                                        FriendForecastContract.ContactTable.CONTENT_URI,
+                                        ContactDAO.getContentValues(androidCursor),
+                                        FriendForecastContract.ContactTable._ID + "=?", new
+                                                String[]{contactId});
+                            }
+
+                        } finally {
+                            if (localCursor != null)
+                                localCursor.close();
+                        }
                     }
                 }
             } finally {

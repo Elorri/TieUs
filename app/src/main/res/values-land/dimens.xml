@@ -1,3 +1,4 @@
 <resources>
     <integer name="orientation">2</integer>
+    <dimen name="layout_width">450dp</dimen>
 </resources>

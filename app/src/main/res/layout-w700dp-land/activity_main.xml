@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <android.support.v4.widget.Space
+        android:id="@+id/half_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="40dp"/>
+
+
+    <View
+        android:id="@+id/colored_view"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@id/half_toolbar"
+        android:background="@color/primary"
+        />
+
+
+    <android.support.v4.widget.Space
+        android:id="@+id/layout_center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"/>
+
+
+    <RelativeLayout
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_alignEnd="@id/layout_center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@id/layout_center"
+        android:layout_below="@id/half_toolbar"
+        android:background="@android:color/transparent"
+        android:paddingTop="@dimen/spacing_large">
+
+
+        <ImageView
+            android:id="@+id/forecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/spacing_normal"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/art_clear"/>
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/AppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/forecast"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/spacing_normal"
+            android:text="@string/app_name"/>
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/forecast"
+            android:iconifiedByDefault="true"
+            android:inputType="text"
+            android:paddingLeft="@dimen/spacing_small"
+            android:paddingRight="@dimen/spacing_small"
+            android:saveEnabled="true"/>
+
+    </RelativeLayout>
+
+
+    <fragment
+        android:id="@+id/fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignEnd="@id/layout_center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@id/layout_center"
+        android:layout_below="@id/card"
+        android:background="@android:color/transparent"
+        android:name="com.elorri.android.tieus.fragments.BoardFragment"
+        android:tag="@string/tag_fragment_board"
+        tools:layout="@layout/fragment_main"/>
+
+
+    <FrameLayout
+        android:id="@+id/detail_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/layout_center"
+        android:layout_toRightOf="@id/layout_center"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:visibility="invisible"
+        tools:layout="@layout/fragment_detail"
+        />
+</RelativeLayout>

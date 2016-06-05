@@ -1,6 +1,7 @@
 package com.elorri.android.tieus.fragments;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,8 +24,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
+import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.DetailData;
 import com.elorri.android.tieus.data.FriendForecastContract;
 import com.elorri.android.tieus.ui.DynamicHeightGradientTopAvatarView;
@@ -50,6 +53,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private Cursor mData;
 
     private Toolbar mToolbar;
+    private Integer mToolbarColor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +64,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         if (null != menu) menu.clear();
         mToolbar.inflateMenu(R.menu.fragment_detail);
         super.onPrepareOptionsMenu(menu);
@@ -68,7 +72,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         switch (item.getItemId()) {
             // When "edit" menu option selected
             case R.id.action_edit_contact:
@@ -85,8 +89,17 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                     // the flag is ignored.
                     intent.putExtra("finishActivityOnSaveCompleted", true);
 
-                    // Start the edit activity
-                    startActivity(intent);
+                    PackageManager packageManager = getActivity().getPackageManager();
+                    if(intent.resolveActivity(packageManager)!=null) {
+                        // Start the edit activity
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getContext(),getResources().getString(R.string
+                                .no_contacts_app),Toast
+                                .LENGTH_LONG).show();
+                    }
+
                     return true;
                 }
                 return false;
@@ -95,29 +108,42 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        mCollapsingToolbar =
-                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
-        mCollapsingToolbar.setTitle("");
+        setCommonViews(view);
+        setOthersViews(view);
 
-        mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
+        return view;
+    }
 
+    private void setOthersViews(View view) {
+        switch (getResources().getInteger(R.integer.orientation)) {
+            case MainActivity.PORT:
+            case MainActivity.W600dp_PORT:
+                mCollapsingToolbar =
+                        (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_layout);
+                mCollapsingToolbar.setTitle("");
+                mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                mAvatar = (DynamicHeightGradientTopAvatarView) view.findViewById(R.id.avatar);
+                //view_no_avatar.setBackgroundResource(mThumbnail);
+                //FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
+                break;
+            case MainActivity.W700dp_LAND:
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        }
+
+    }
+
+    private void setCommonViews(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        mAvatar = (DynamicHeightGradientTopAvatarView) view.findViewById(R.id.avatar);
-        //view_no_avatar.setBackgroundResource(mThumbnail);
-        //FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
-
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
@@ -130,8 +156,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
 
         mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
-
-        return view;
     }
 
 
@@ -139,25 +163,36 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         getLoaderManager().initLoader(DetailData.LOADER_ID, null, this);
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isCollapsed = false;
-            int scrollRange = -1;
+        switch (getResources().getInteger(R.integer.orientation)) {
+            case MainActivity.PORT:
+            case MainActivity.W600dp_PORT:
+                mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    boolean isCollapsed = false;
+                    int scrollRange = -1;
 
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
-                    mCollapsingToolbar.setTitle(mContactTitle);
-                    mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-                    isCollapsed = true;
-                } else if (isCollapsed) {
-                    mCollapsingToolbar.setTitle("");
-                    isCollapsed = false;
-                }
-            }
-        });
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (scrollRange == -1) {
+                            scrollRange = appBarLayout.getTotalScrollRange();
+                        }
+                        if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                            mCollapsingToolbar.setTitle(mContactTitle);
+                            mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
+                            //TODO find a better solution to display real colorinstead of primary
+                            // mCollapsingToolbar.setContentScrimColor(mToolbarColor);
+                            // mToolbar.setBackgroundColor(mToolbarColor);
+                            // mToolbar.setBackgroundColor(Color.TRANSPARENT);
+                            isCollapsed = true;
+                        } else if (isCollapsed) {
+                            Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "");
+                            mCollapsingToolbar.setTitle("");
+                            isCollapsed = false;
+                        }
+                    }
+                });
+                break;
+        }
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -222,12 +257,33 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void setTitle(String title) {
         mContactTitle = title;
+        switch (getResources().getInteger(R.integer.orientation)) {
+            case MainActivity.W700dp_LAND:
+                mToolbar.setTitle(title);
+                break;
+        }
     }
 
     @Override
     public void setThumbnail(String uri, int color) {
-        mAvatar.loadImage(uri, color);
-
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation" + getResources()
+                .getInteger(R
+                        .integer.orientation));
+        switch (getResources().getInteger(R.integer.orientation)) {
+            case MainActivity.PORT:
+//                mAvatar.loadImage(uri, color);
+//                break;
+            case MainActivity.W600dp_PORT:
+                mAvatar.loadImage(uri, color);
+                mToolbarColor = color;
+                break;
+            case MainActivity.W700dp_LAND:
+                //TODO find a better solution to display real color instead of primary
+//                //need this line only because in my test the - sign is mistakenly removed.
+//                color = color < 0 ? color : color * -1;
+//                mToolbar.setBackgroundColor(color);
+                break;
+        }
     }
 
     @Override

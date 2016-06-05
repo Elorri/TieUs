@@ -32,6 +32,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Callback mCallback;
     private Context mContext;
     private int mPosition=RecyclerView.NO_POSITION;
+    private Integer mContactId;
+
 
 
     public BoardAdapter(Cursor cursor, Callback callback) {
@@ -43,12 +45,18 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         return mPosition;
     }
 
+    public void performClickFirstContact() {
+        mFirstContactView.performClick();
+    }
+
     interface Callback {
         void onContactClicked(Uri uri);
 
         void setForecast(int forecastRessourceId);
 
         void restartLoader();
+
+        void setFirstContactPosition(Integer position);
     }
 
 
@@ -67,7 +75,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView ok;
 
         public View mView;
-
+        private View mFirstContactView;
 
         public ViewHolder(View view, int viewType) {
             super(view);
@@ -383,13 +391,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     private void setOnClickListener(final ViewHolder holder) {
+        if(mContactId==null) {
+            Integer position= holder.getAdapterPosition();
+//            mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
+//            Uri uri = FriendForecastContract.DetailData.buildDetailUri(mContactId);
+            mCallback.setFirstContactPosition(position);
+        }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPosition = holder.getAdapterPosition();
                 mCursor.moveToPosition(mPosition);
-                int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
-                Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
+                mContactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
+                Uri uri = FriendForecastContract.DetailData.buildDetailUri(mContactId);
                 mCallback.onContactClicked(uri);
             }
         });

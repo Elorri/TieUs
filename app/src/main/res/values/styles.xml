@@ -11,7 +11,7 @@
 
     <!-- Toolbar style -->
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">?attr/colorPrimaryDark</item>
+        <item name="android:background">?attr/colorPrimary</item>
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 

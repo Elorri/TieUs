@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -18,15 +19,24 @@ import android.widget.TextView;
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.fragments.BoardFragment;
+import com.elorri.android.tieus.fragments.DetailFragment;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int PORT = 1;
+    public static final int LAND = 2;
+    public static final int W600dp_PORT = 3;
+    public static final int W700dp_LAND = 4;
 
     private ImageView mForecastImageView;
     private ImageView mForecastToolbarImageView;
     private SearchView mSearchView;
     private static final String QUERY = "query";
     private String mQuery;
+    private BoardFragment mBoardFragment;
+    private String DETAIL_FRAGMENT_TAG = "detail_fragment";
+    private boolean mTwoPane = false;
 
 
     @Override
@@ -35,37 +45,25 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         setContentView(R.layout.activity_main);
 
-        final BoardFragment boardFragment = (BoardFragment)getSupportFragmentManager()
+        mBoardFragment = (BoardFragment) getSupportFragmentManager()
                 .findFragmentByTag(getResources().getString(R.string.tag_fragment_board));
 
+        setCommonViews();
+        setOthersViews(savedInstanceState);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(QUERY)) {
+            mQuery = savedInstanceState.getString(QUERY);
+            mSearchView.setQuery(mQuery, true);
+            mBoardFragment.setSearchString(mSearchView.getQuery().toString());
+        }
+
+    }
+
+    private void setCommonViews() {
         Typeface courgette = Typeface.createFromAsset(getAssets(), "courgette-regular.ttf");
         final TextView titleTextView = (TextView) findViewById(R.id.title);
         if (titleTextView != null) {
             titleTextView.setTypeface(courgette);
-        }
-        mForecastImageView = (ImageView) findViewById(R.id.forecast);
-        mForecastToolbarImageView = (ImageView) findViewById(R.id.forecast_toolbar);
-
-
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        if (appBarLayout != null) {
-            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                int scrollRange = -1;
-
-                @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if (scrollRange == -1) {
-                        scrollRange = appBarLayout.getTotalScrollRange();
-                    }
-                    if (scrollRange + verticalOffset <= 0) {
-                        mForecastImageView.setVisibility(View.INVISIBLE);
-                        mForecastToolbarImageView.setVisibility(View.VISIBLE);
-                    } else {
-                        mForecastImageView.setVisibility(View.VISIBLE);
-                        mForecastToolbarImageView.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,26 +80,91 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                boardFragment.setSearchString(mSearchView.getQuery().toString());
-                boardFragment.restartLoader();
+                mBoardFragment.setSearchString(mSearchView.getQuery().toString());
+                mBoardFragment.restartLoader();
                 return true;
             }
 
         });
+    }
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(QUERY)) {
-            mQuery = savedInstanceState.getString(QUERY);
-            mSearchView.setQuery(mQuery, true);
-            boardFragment.setSearchString(mSearchView.getQuery().toString());
+    private void setOthersViews(Bundle savedInstanceState) {
+        switch (getResources().getInteger(R.integer.orientation)) {
+            case PORT: {
+                mForecastImageView = (ImageView) findViewById(R.id.forecast);
+                mForecastToolbarImageView = (ImageView) findViewById(R.id.forecast_toolbar);
+
+                AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+                if (appBarLayout != null) {
+                    appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                        int scrollRange = -1;
+
+                        @Override
+                        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                            if (scrollRange == -1) {
+                                scrollRange = appBarLayout.getTotalScrollRange();
+                            }
+                            if (scrollRange + verticalOffset <= 0) {
+                                mForecastImageView.setVisibility(View.INVISIBLE);
+                                mForecastToolbarImageView.setVisibility(View.VISIBLE);
+                            } else {
+                                mForecastImageView.setVisibility(View.VISIBLE);
+                                mForecastToolbarImageView.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+                }
+                break;
+            }
+            case LAND: {
+                mForecastToolbarImageView = (ImageView) findViewById(R.id.forecast_toolbar);
+                break;
+            }
+            case W600dp_PORT: {
+                mForecastImageView = (ImageView) findViewById(R.id.forecast);
+                break;
+            }
+            case W700dp_LAND: {
+                mForecastImageView = (ImageView) findViewById(R.id.forecast);
+                if (findViewById(R.id.detail_fragment_container) != null) {
+                    mTwoPane = true;
+                    if (savedInstanceState != null) {
+                        Fragment detailFragment = getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
+                        if (detailFragment == null) {
+                            getSupportFragmentManager().beginTransaction().replace(
+                                    R.id.detail_fragment_container,
+                                    new DetailFragment(), DETAIL_FRAGMENT_TAG)
+                                    .commit();
+                        }
+                    }
+                }
+                break;
+            }
         }
+
 
     }
 
 
     public void onContactClicked(Uri uri) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.setData(uri);
-        startActivity(intent);
+        if (mTwoPane) {
+
+            findViewById(R.id.detail_fragment_container).setVisibility(View.VISIBLE);
+
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(DetailFragment.DETAIL_URI, uri);
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(arguments);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_fragment_container, fragment, DETAIL_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.setData(uri);
+            startActivity(intent);
+        }
     }
 
 
@@ -129,11 +192,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setForecastImageView(int forecastRessourceId) {
-        mForecastImageView.setBackgroundResource(forecastRessourceId);
+        if (mForecastImageView != null)
+            mForecastImageView.setBackgroundResource(forecastRessourceId);
     }
 
     public void setForecastToolbarImageView(int forecastRessourceId) {
-        mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
+        if (mForecastToolbarImageView != null)
+            mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
     }
 
     @Override
@@ -143,4 +208,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public BoardFragment getMainFragment() {
+        return mBoardFragment;
+    }
 }

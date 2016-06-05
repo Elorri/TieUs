@@ -157,6 +157,9 @@
     <string name="sms">Small text messages</string>
     <string name="outside_event">Outside event</string>
     <string name="tag_fragment_board">board_fragment</string>
+    <string name="no_contacts_app">You don\'t have any installed app for editing contacts on your
+        device.
+    </string>
 
 
 </resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:id="@+id/forecast_toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/AppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_below="@id/forecast"
+                android:layout_marginRight="@dimen/spacing_xlarge"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/spacing_normal"
+                android:paddingRight="@dimen/spacing_normal"
+                android:text="@string/app_name"/>
+
+            <ImageView
+                android:id="@+id/forecast_toolbar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:scaleType="centerCrop"
+                android:visibility="visible"
+                tools:src="@drawable/art_clear"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="@dimen/searchview_half_size"
+          android:layout_below="@id/toolbar"
+          android:background="@color/primary"/>
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="@dimen/layout_width"
+        android:layout_height="@dimen/searchview_size"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/spacing_small"
+        android:iconifiedByDefault="true"
+        android:inputType="text"
+        android:saveEnabled="true"
+        android:background="@android:color/white"
+        android:elevation="@dimen/appbar_elevation"/>
+
+
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.elorri.android.tieus.fragments.BoardFragment"
+        android:layout_width="@dimen/layout_width"
+        android:layout_height="match_parent"
+        android:tag="@string/tag_fragment_board"
+        android:layout_below="@id/searchView"
+        tools:layout="@layout/fragment_main"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>
+
+
+
