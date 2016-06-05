@@ -31,9 +31,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Cursor mCursor;
     private Callback mCallback;
     private Context mContext;
-    private int mPosition=RecyclerView.NO_POSITION;
-    private Integer mContactId;
-
+    private int mPosition = RecyclerView.NO_POSITION;
+    private View mFirstContactView;
 
 
     public BoardAdapter(Cursor cursor, Callback callback) {
@@ -46,6 +45,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public void performClickFirstContact() {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFirstContactView " + mFirstContactView);
         mFirstContactView.performClick();
     }
 
@@ -56,7 +56,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         void restartLoader();
 
-        void setFirstContactPosition(Integer position);
     }
 
 
@@ -75,7 +74,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public TextView ok;
 
         public View mView;
-        private View mFirstContactView;
+
 
         public ViewHolder(View view, int viewType) {
             super(view);
@@ -391,19 +390,22 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     private void setOnClickListener(final ViewHolder holder) {
-        if(mContactId==null) {
-            Integer position= holder.getAdapterPosition();
+        if (mFirstContactView == null) {
+//            Integer position= holder.getAdapterPosition();
 //            mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
 //            Uri uri = FriendForecastContract.DetailData.buildDetailUri(mContactId);
-            mCallback.setFirstContactPosition(position);
+//            mCallback.setFirstContactPosition(position);
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+            mFirstContactView = holder.mView;
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFirstContactView " + mFirstContactView);
         }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPosition = holder.getAdapterPosition();
                 mCursor.moveToPosition(mPosition);
-                mContactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
-                Uri uri = FriendForecastContract.DetailData.buildDetailUri(mContactId);
+                int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
+                Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri);
             }
         });

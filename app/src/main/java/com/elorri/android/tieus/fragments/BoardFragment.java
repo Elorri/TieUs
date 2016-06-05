@@ -46,7 +46,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private RecyclerView mRecyclerView;
     private Integer mPosition;
     private String mSearchString;
-    private Integer mFirstContactPosition;
 
 
     public BoardFragment() {
@@ -146,7 +145,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
 //            ((BoardAdapter.ViewHolder) mRecyclerView.findViewHolderForAdapterPosition(position))
 //                    .mView.performClick();
-            mAdapter.performClickFirstContact();
+
+            if (getContext().getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                mAdapter.performClickFirstContact();
         }
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         mRecyclerView.smoothScrollToPosition(position);
@@ -175,11 +176,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void restartLoader() {
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
-    }
-
-    @Override
-    public void setFirstContactPosition(Integer position) {
-        mFirstContactPosition = position;
     }
 
 
