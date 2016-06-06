@@ -318,6 +318,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        //TODO save the last selected contact here
         super.onConfigurationChanged(newConfig);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         if(Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))){

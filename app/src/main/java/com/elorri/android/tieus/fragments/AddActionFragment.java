@@ -137,11 +137,11 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
+        dpd.setMinDate(Calendar.getInstance());//Set the min date to today
         dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
         dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
                 .due_date));
         dpd.setOnDateSetListener(dateListener);
-
     }
 
 
