@@ -2,6 +2,7 @@ package com.elorri.android.tieus.fragments;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +31,8 @@ import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.DetailData;
 import com.elorri.android.tieus.data.FriendForecastContract;
-import com.elorri.android.tieus.ui.DynamicHeightGradientTopAvatarView;
+import com.elorri.android.tieus.extra.Tools;
+import com.elorri.android.tieus.ui.GradientTopAvatarView;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -47,13 +49,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private String mContactTitle;
     private CollapsingToolbarLayout mCollapsingToolbar;
-    private DynamicHeightGradientTopAvatarView mAvatar;
+    private GradientTopAvatarView mAvatar;
     private FloatingActionButton mAddFab;
     private AppBarLayout mAppBarLayout;
     private Cursor mData;
 
     private Toolbar mToolbar;
-    private Integer mToolbarColor;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,13 +92,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                     intent.putExtra("finishActivityOnSaveCompleted", true);
 
                     PackageManager packageManager = getActivity().getPackageManager();
-                    if(intent.resolveActivity(packageManager)!=null) {
+                    if (intent.resolveActivity(packageManager) != null) {
                         // Start the edit activity
                         startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(getContext(),getResources().getString(R.string
-                                .no_contacts_app),Toast
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string
+                                .no_contacts_app), Toast
                                 .LENGTH_LONG).show();
                     }
 
@@ -129,9 +130,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 mCollapsingToolbar.setTitle("");
                 mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                mAvatar = (DynamicHeightGradientTopAvatarView) view.findViewById(R.id.avatar);
+                mAvatar = (GradientTopAvatarView) view.findViewById(R.id.avatar);
                 //view_no_avatar.setBackgroundResource(mThumbnail);
                 //FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
+                break;
+            case MainActivity.LAND:
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                mAvatar = (GradientTopAvatarView) view.findViewById(R.id.avatar);
                 break;
             case MainActivity.W700dp_LAND:
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -273,9 +278,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             case MainActivity.PORT:
 //                mAvatar.loadImage(uri, color);
 //                break;
+            case MainActivity.LAND:
+//                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"mAvatar");
+//                mAvatar.loadImage(uri, color);
+//                break;
             case MainActivity.W600dp_PORT:
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAvatar");
                 mAvatar.loadImage(uri, color);
-                mToolbarColor = color;
                 break;
             case MainActivity.W700dp_LAND:
                 //TODO find a better solution to display real color instead of primary
@@ -304,5 +313,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void showFab() {
         mAddFab.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+        if(Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))){
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+            getActivity().finish();
+        }
     }
 }

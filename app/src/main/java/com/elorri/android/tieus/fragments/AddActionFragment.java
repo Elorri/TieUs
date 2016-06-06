@@ -27,9 +27,11 @@ import com.elorri.android.tieus.extra.DateUtils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * Created by Elorri on 26/04/2016.
  * Created by Elorri on 26/04/2016.
  */
 public class AddActionFragment extends DialogFragment implements LoaderManager
@@ -44,9 +46,14 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     // will contain in order :
     // no data -> uri : URI_PAGE_SELECT_ACTION
     // actionId -> uri : URI_PAGE_ADD_ACTION_SELECT_VECTOR
-    private LinkedList<String> actionSteps = new LinkedList<>();
+    private Map<String, String> actionSteps = new HashMap<>();
 
     private AddActionAdapter mAdapter;
+    public static final  String ZERO_STEP = "zero_step";
+    private static final  String ACTION_STEP = "action_step";
+    private static final  String VECTOR_STEP = "vector_step";
+    private static final  String DATE_STEP = "date_step";
+    private static final  String CURRENT_STEP="current_step";
 
     @Nullable
     @Override
@@ -58,7 +65,11 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new AddActionAdapter(null, this, actionSteps.size());
+        if(actionSteps.get(CURRENT_STEP)==null){
+            actionSteps.put(CURRENT_STEP,ZERO_STEP);
+        }
+
+        mAdapter = new AddActionAdapter(null, this, actionSteps.get(CURRENT_STEP));
         mRecyclerView.setAdapter(mAdapter);
         getDialog().setTitle(getResources().getString(R.string.action_add));
         return view;
@@ -72,12 +83,13 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        switch (actionSteps.size()) {
-            case 0: //We ask the user to select an action
+        switch (actionSteps.get(CURRENT_STEP)) {
+            case ZERO_STEP: //We ask the user to select an action
                 mUri = FriendForecastContract.AddActionData.URI_PAGE_SELECT_ACTION;
                 break;
-            case 1://We have the action, we ask for a vector and a dateStart
-                mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get(0));
+            case ACTION_STEP://We have the action, we ask for a vector and a dateStart
+                mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get
+                        (ACTION_STEP));
                 break;
             default:
                 return null;
@@ -106,15 +118,17 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     @Override
     public void setActionId(String actionId) {
-        actionSteps.add(actionId);
-        mAdapter.updateActionStepSize(actionSteps.size());
+        actionSteps.put(ACTION_STEP, actionId);
+        actionSteps.put(CURRENT_STEP, ACTION_STEP);
+        mAdapter.updateCurrentStep(ACTION_STEP);
         getLoaderManager().restartLoader(AddActionData.LOADER_ID, null, this);
     }
 
     @Override
     public void setVectorId(String vectorId) {
-        actionSteps.add(vectorId);
-
+        actionSteps.put(VECTOR_STEP, vectorId);
+        actionSteps.put(CURRENT_STEP, VECTOR_STEP);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         final DateListener dateListener = new DateListener();
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -140,8 +154,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             startDateCal.set(Calendar.MONTH, monthOfYear);
             startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
-            actionSteps.add(String.valueOf(startDate));
-            actionSteps.set(2, String.valueOf(startDate));
+            actionSteps.put(DATE_STEP, String.valueOf(startDate));
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + startDate);
 
 //            AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
@@ -149,7 +162,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
             AddActionTask addActionTask = new AddActionTask();
             addActionTask.execute(
-                    contactId, actionSteps.get(0), actionSteps.get(1), actionSteps.get(2));
+                    contactId, actionSteps.get(ACTION_STEP), actionSteps.get(VECTOR_STEP), actionSteps.get(DATE_STEP));
         }
     }
 
@@ -170,8 +183,8 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             //getActivity().finish();
             getDialog().cancel();
             getActivity().getSupportFragmentManager().findFragmentByTag(DetailActivity.DETAIL_FRAGMENT).onResume();
-            if(getContext().getResources().getInteger(R.integer.orientation)== MainActivity.W700dp_LAND)
-                ((MainActivity)getActivity()).getMainFragment().restartLoader();
+            if (getContext().getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                ((MainActivity) getActivity()).getMainFragment().restartLoader();
 
             super.onPostExecute(aVoid);
         }

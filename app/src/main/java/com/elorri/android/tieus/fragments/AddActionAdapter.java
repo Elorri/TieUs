@@ -26,15 +26,15 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
     public static final int VIEW_ACTION_ITEM = 101;
     public static final int VIEW_ACTION_RECAP = 102;
-    private int mActionStepSize;
+    private String mCurrentStep;
 
 
     private Cursor mCursor;
     private Context mContext;
     private Callback mCallback;
 
-    public void updateActionStepSize(int size) {
-        mActionStepSize=size;
+    public void updateCurrentStep(String currentStep) {
+        mCurrentStep=currentStep;
     }
 
 
@@ -45,10 +45,10 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
     }
 
-    public AddActionAdapter(Cursor cursor, Callback callback, int actionStepSize) {
+    public AddActionAdapter(Cursor cursor, Callback callback, String currentStep) {
         mCursor = cursor;
         mCallback = callback;
-        mActionStepSize = actionStepSize;
+        mCurrentStep = currentStep;
     }
 
 
@@ -232,8 +232,9 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         if (viewtype == ViewTypes.VIEW_ACTION) {
-            viewtype = (mActionStepSize == 0) ? VIEW_ACTION_ITEM : VIEW_ACTION_RECAP;
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mActionStepSize " + mActionStepSize);
+            viewtype = (mCurrentStep.equals(AddActionFragment.ZERO_STEP)) ? VIEW_ACTION_ITEM :
+                    VIEW_ACTION_RECAP;
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mCurrentStep " + mCurrentStep);
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         }
         return viewtype;

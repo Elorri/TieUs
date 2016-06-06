@@ -42,7 +42,7 @@ public class AvatarView extends FrameLayout {
      * @param color 0 if we don't know the color we want
      */
     public void loadImage(String uri, int color) {
-
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"uri "+uri+" color "+color);
         removeAllViews();
         if (uri == null) {
             inflate(getContext(), R.layout.view_no_avatar, this);
@@ -65,6 +65,7 @@ public class AvatarView extends FrameLayout {
             // requestLayout();
 
         } else {
+            Log.e("FF", Thread.currentThread().getStackTrace()[2]+"uri "+uri+" color "+color);
             inflate(getContext(), R.layout.view_avatar, this);
             ImageView thumbnail = (ImageView) findViewById(R.id.thumbnail);
             Glide.with(getContext())

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MergeCursor;
@@ -413,5 +414,18 @@ public class Tools {
         else
             Toast.makeText(context, context.getResources().getString(R.string.app_not_installed, appName),
                     Toast.LENGTH_SHORT).show();
+    }
+
+
+    // Those 2 functions will be useful to handle the case when user is in 2 pane mode and turn
+    // device to landscape.
+    public static boolean isTablet(Configuration configuration) {
+        return (configuration.screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isLandscape(Configuration configuration) {
+        return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 }

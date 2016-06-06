@@ -21,7 +21,8 @@
         </activity>
         <activity
             android:name="com.elorri.android.tieus.activities.DetailActivity"
-            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity">
+            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.elorri.android.tieus.activities.MainActivity"/>

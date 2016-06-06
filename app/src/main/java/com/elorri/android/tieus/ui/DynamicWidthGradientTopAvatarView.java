@@ -7,16 +7,15 @@ import android.widget.FrameLayout;
 
 import com.elorri.android.tieus.R;
 
-
 /**
- * Created by Elorri on 13/03/2016.
+ * Created by Elorri on 06/06/2016.
  */
-public class DynamicHeightGradientTopAvatarView extends FrameLayout implements GradientTopAvatarView{
+public class DynamicWidthGradientTopAvatarView extends FrameLayout implements GradientTopAvatarView{
 
     private float mAspectRatio=1.5f;
     private AvatarView mThumbnailView;
 
-    public DynamicHeightGradientTopAvatarView(Context context, AttributeSet attrs) {
+    public DynamicWidthGradientTopAvatarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -26,13 +25,14 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout implements G
         FrameLayout thumbnailContainer = (FrameLayout) findViewById(R.id.thumbnail_container);
         mThumbnailView = new AvatarView(getContext());
         thumbnailContainer.addView(mThumbnailView);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int measuredWidth = getMeasuredWidth();
-        int measuredHeight=(int) (measuredWidth / mAspectRatio);
+        int measuredHeight = getMeasuredHeight();
+        int measuredWidth=(int) (measuredHeight / mAspectRatio);
 
         mThumbnailView.getLayoutParams().width = measuredWidth;
         mThumbnailView.getLayoutParams().height = measuredHeight;
@@ -43,8 +43,7 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout implements G
 
     @Override
     public void loadImage(String uri, int color) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
         mThumbnailView.loadImage(uri, color);
     }
 }
-

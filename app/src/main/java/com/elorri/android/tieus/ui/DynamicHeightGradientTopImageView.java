@@ -11,6 +11,7 @@ import com.elorri.android.tieus.R;
 /**
  * Created by Elorri on 13/03/2016.
  */
+//TODO viverer cette classe
 public class DynamicHeightGradientTopImageView extends FrameLayout {
 
     private float mAspectRatio=1.5f;
