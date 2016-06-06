@@ -44,6 +44,17 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         return mPosition;
     }
 
+    public Cursor getCursor() {
+        return mCursor;
+    }
+
+    public void selectView(RecyclerView.ViewHolder viewHolder) {
+        if ( viewHolder instanceof BoardAdapter.ViewHolder ) {
+            BoardAdapter.ViewHolder vh = ( BoardAdapter.ViewHolder)viewHolder;
+            vh.mView.performClick();
+        }
+    }
+
 
     interface Callback {
         void onContactClicked(Uri uri);
@@ -187,7 +198,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UPDATE_MOOD);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
                 break;
             }
             case ViewTypes.VIEW_CONFIRM_MESSAGE: {

@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.tieus.R;
@@ -30,6 +31,7 @@ import com.elorri.android.tieus.data.FriendForecastContract;
 import com.elorri.android.tieus.db.AndroidDAO;
 import com.elorri.android.tieus.db.ContactDAO;
 import com.elorri.android.tieus.db.VectorDAO;
+import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Tools;
 
 /**
@@ -46,7 +48,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private RecyclerView mRecyclerView;
     private Integer mPosition;
     private String mSearchString;
-
 
 
     public BoardFragment() {
@@ -138,18 +139,78 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        int position = mAdapter.getSelectedItemPosition();
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        if (position == RecyclerView.NO_POSITION) {
-            position = mPosition == null ? 0 : mPosition;
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        }
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        mRecyclerView.smoothScrollToPosition(position);
-        mPosition = position;
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "swapCursor ");
+        mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+
+                if (mRecyclerView.getChildCount() > 0) {
+                    // Since we know we're going to get items, we keep the listener around until
+                    // we see Children.
+                    mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    int position = mAdapter.getSelectedItemPosition();
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                    if (position == RecyclerView.NO_POSITION) {
+                        position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                    }
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                    mRecyclerView.smoothScrollToPosition(position);
+
+                    //this method findViewHolderForAdapterPosition will always return null if we
+                    // call it after a swapCursor
+                    //(because it always return null after a notifyDataSetChanged) that's why we
+                    // call findViewHolderForAdapterPosition in the onPreDraw method
+                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
+                    if (null != vh) {
+                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                            mAdapter.selectView(vh);
+                    }
+                    mPosition = position;
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
     }
+
+    private int getFirstContactPosition(BoardAdapter mAdapter) {
+        Cursor data = mAdapter.getCursor();
+        for (int i = 0; i < data.getCount(); i++) {
+            data.moveToPosition(i);
+            if ((data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_UNMANAGED_PEOPLE)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_UPDATE_MOOD)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_DELAY_PEOPLE)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_TODAY_PEOPLE)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_TODAY_DONE_PEOPLE)
+                    || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
+                    == ViewTypes.VIEW_NEXT_PEOPLE)
+                    ) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -173,7 +234,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void restartLoader() {
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
     }
-
 
 
     private void syncContacts() {
@@ -418,7 +478,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onSaveInstanceState(Bundle outState) {
         //TODO see if we use this
         //mPosition = mRecyclerView.getVerticalScrollbarPosition();
-        outState.putInt(SELECTED_KEY, mPosition);
+        if (outState != null)
+            outState.putInt(SELECTED_KEY, mPosition);
         super.onSaveInstanceState(outState);
     }
 

@@ -38,6 +38,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
+        android:background="@android:drawable/dialog_holo_light_frame"
         tools:layout="@layout/fragment_detail"/>
 </RelativeLayout>
 
