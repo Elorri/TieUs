@@ -394,11 +394,14 @@ public class Tools {
             case R.drawable.ic_sentiment_satisfied_black_48dp:
                 moodDesc = R.string.satisfied;
                 break;
-            case R.drawable.ic_sentiment_neutral_black_24dp:
+            case R.drawable.ic_sentiment_neutral_black_48dp:
                 moodDesc = R.string.neutral;
                 break;
             case R.drawable.ic_sentiment_dissatisfied_black_48dp:
                 moodDesc = R.string.unsatisfied;
+                break;
+            case R.drawable.ic_do_not_disturb_alt_black_48dp:
+                moodDesc = R.string.untracked;
                 break;
             default:
                 return null;
@@ -427,5 +430,26 @@ public class Tools {
 
     public static boolean isLandscape(Configuration configuration) {
         return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static String getForecastDescription(Context context, int forecastRessourceId) {
+        int forecastDesc;
+        switch (forecastRessourceId) {
+            case R.drawable.art_clear:
+                forecastDesc = R.string.shining;
+                break;
+            case R.drawable.art_light_clouds:
+                forecastDesc = R.string.slightly_cloudy;
+                break;
+            case R.drawable.art_clouds:
+                forecastDesc = R.string.cloudy;
+                break;
+            case R.drawable.art_rain:
+                forecastDesc = R.string.rainy;
+                break;
+            default:
+                return null;
+        }
+        return context.getResources().getString(forecastDesc);
     }
 }

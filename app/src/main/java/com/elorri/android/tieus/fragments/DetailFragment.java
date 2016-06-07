@@ -315,6 +315,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mAddFab.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setAvatarContentDescription(String contactName) {
+        mAvatar.setContentDescription(contactName);
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

@@ -408,6 +408,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
+        holder.moodIcon.setContentDescription(Tools.getMoodDesciption(mContext,moodResId));
         boolean isMoodKnown = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
                 FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);

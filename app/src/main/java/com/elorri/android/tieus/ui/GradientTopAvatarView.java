@@ -5,4 +5,6 @@ package com.elorri.android.tieus.ui;
  */
 public interface GradientTopAvatarView {
     void loadImage(String uri, int color);
+
+    void setContentDescription(String contactName);
 }

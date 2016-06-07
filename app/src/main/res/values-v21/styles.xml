@@ -4,7 +4,7 @@
     </style>
 
     <style name="AppTheme.Details">
-        <item name="android:windowEnterTransition">@transition/slide_right</item>
+        <item name="android:windowEnterTransition">@transition/slide_left</item>
 
         <!-- note this apply to the activity disapearing ie MainActivity -->
         <item name="android:windowTransitionBackgroundFadeDuration">900</item>

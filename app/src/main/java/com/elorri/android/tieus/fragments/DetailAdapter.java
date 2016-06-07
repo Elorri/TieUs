@@ -93,6 +93,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         void hideFab();
 
         void showFab();
+
+        void setAvatarContentDescription(String contactName);
     }
 
 
@@ -108,7 +110,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         public TextView moodUnknown;
         public ImageView moodIcon;
         public TextView action;
-        public ImageView actionVectorImageView;
         public TextView time;
         public TextView message;
         public TextView ok;
@@ -544,10 +545,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         switch (viewType) {
             case ViewTypes.VIEW_CONTACT: {
                 mContactId = mCursor.getString(ContactDAO.ContactQuery.COL_ID);
-                mCallback.setTitle(Tools.toProperCase(mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME)));
+                String contactName = mCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_CONTACT_NAME);
+                mCallback.setTitle(Tools.toProperCase(contactName));
                 mCallback.setThumbnail(
                         mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL),
                         mCursor.getInt(ContactDAO.ContactQuery.COL_BACKGROUND_COLOR));
+                mCallback.setAvatarContentDescription(contactName);
                 isMoodUnknown = mCursor.getInt(ContactDAO.ContactQuery.COL_MOOD_UNKNOWN) == 1;
                 // Creates a contact lookup Uri from contact ID and lookup_key
                 final Uri androidContactUri = ContactsContract.Contacts.getLookupUri(
@@ -760,6 +763,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mCursor.getString(ContactActionVectorEventDAO
                         .VectorActionByContactIdQuery.COL_VECTOR_DATA)
         );
+        holder.actionVectorImageView.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
+                .VectorActionByContactIdQuery.COL_VECTOR_NAME));
         holder.action.setText(mCursor.getString(ContactActionVectorEventDAO
                 .VectorActionByContactIdQuery.COL_ACTION_NAME));
     }

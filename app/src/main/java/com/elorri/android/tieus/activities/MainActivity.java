@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.extra.Status;
+import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.fragments.BoardFragment;
 import com.elorri.android.tieus.fragments.DetailFragment;
 
@@ -206,13 +207,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setForecastImageView(int forecastRessourceId) {
-        if (mForecastImageView != null)
+        if (mForecastImageView != null) {
             mForecastImageView.setBackgroundResource(forecastRessourceId);
+            mForecastImageView.setContentDescription(Tools.getForecastDescription(this, forecastRessourceId));
+        }
     }
 
     public void setForecastToolbarImageView(int forecastRessourceId) {
-        if (mForecastToolbarImageView != null)
+        if (mForecastToolbarImageView != null) {
             mForecastToolbarImageView.setBackgroundResource(forecastRessourceId);
+            mForecastToolbarImageView.setContentDescription(Tools.getForecastDescription
+                    (this, forecastRessourceId));
+        }
+
     }
 
     @Override

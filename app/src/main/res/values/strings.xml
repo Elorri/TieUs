@@ -164,6 +164,10 @@
     <string name="keep">keep</string>
     <string name="only_untracked_people">Start following people by affecting them a mood face on
         their detail    </string>
+    <string name="shining">contacts shining</string>
+    <string name="slightly_cloudy">Contacts slightly cloudy</string>
+    <string name="cloudy">Contacts cloudy</string>
+    <string name="rainy">Contacts rainy</string>
 
 
 </resources>

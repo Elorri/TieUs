@@ -46,4 +46,9 @@ public class DynamicWidthGradientTopAvatarView extends FrameLayout implements Gr
         Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
         mThumbnailView.loadImage(uri, color);
     }
+
+    @Override
+    public void setContentDescription(String contactName) {
+        super.setContentDescription(contactName);
+    }
 }
