@@ -27,7 +27,9 @@
         <item name="android:textSize">@dimen/text_size_xxlarge</item>
     </style>
 
-
-
-
+    <!-- Style for forecast listview -->
+    <style name="ItemClickStyle">
+        <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications
+        for two-pane layout -->
+    </style>
 </resources>

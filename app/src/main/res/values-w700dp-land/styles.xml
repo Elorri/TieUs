@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Style for forecast listview -->
+    <style name="ItemClickStyle">
+        <item name="android:background">@drawable/touch_selector</item>
+    </style>
+</resources>

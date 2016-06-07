@@ -50,7 +50,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
-    private String mChoiceMode;
 
 
     public BoardFragment() {
@@ -65,7 +64,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         //syncContacts();
         setHasOptionsMenu(true);
     }
-
 
 
     @Override
@@ -83,7 +81,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
-            mAdapter.onRestoreInstanceState(savedInstanceState);
+            mAdapter.onRestoreInstanceState(getContext(), savedInstanceState);
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
@@ -159,7 +157,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     // Since we know we're going to get items, we keep the listener around until
                     // we see Children.
                     mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int position = mAdapter.getSelectedItemPosition();
+                    int position = mAdapter.getSelectedItemPosition(getContext());
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
                     if (position == RecyclerView.NO_POSITION) {
@@ -167,7 +165,19 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
                     }
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-                    mRecyclerView.smoothScrollToPosition(position);
+
+                    final int finalPosition = position;
+                    mRecyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+//                    mRecyclerView.smoothScrollToPosition(finalPosition);
+//                    mRecyclerView.getLayoutManager().scrollToPosition(finalPosition);
+                            //mLayoutManager.scrollToPosition(finalPosition);
+                            mLayoutManager.scrollToPositionWithOffset(finalPosition, 20);
+//                    mRecyclerView.scrollToPosition(position);
+                        }
+                    }, 1000);
+
 
                     //this method findViewHolderForAdapterPosition will always return null if we
                     // call it after a swapCursor
@@ -492,7 +502,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             outState.putInt(SELECTED_KEY, mPosition);
 
             // When tablets rotate, the currently selected list item needs to be saved.
-            mAdapter.onSaveInstanceState(outState);
+            mAdapter.onSaveInstanceState(getContext(), outState);
         }
         super.onSaveInstanceState(outState);
     }
