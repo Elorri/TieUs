@@ -4,7 +4,4 @@
         <attr name="asIcon" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="BoardFragment">
-        <attr name="android:choiceMode"  />
-    </declare-styleable>
 </resources>

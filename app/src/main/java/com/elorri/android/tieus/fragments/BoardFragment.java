@@ -1,11 +1,9 @@
 package com.elorri.android.tieus.fragments;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -18,7 +16,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -69,14 +66,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
-        super.onInflate(activity, attrs, savedInstanceState);
-        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.BoardFragment, 0, 0);
-        mChoiceMode = a.getString(R.styleable.BoardFragment_android_choiceMode);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mChoiceMode " + mChoiceMode);
-        a.recycle();
-    }
 
 
     @Override
@@ -88,9 +77,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        int choiceMode = getContext().getResources().getString(R.string
-                .singleChoice).equals(mChoiceMode) ? AbsListView.CHOICE_MODE_SINGLE : AbsListView
-                .CHOICE_MODE_NONE;
+        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
+                AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE;
         mAdapter = new BoardAdapter(null, this, choiceMode);
         mRecyclerView.setAdapter(mAdapter);
 
