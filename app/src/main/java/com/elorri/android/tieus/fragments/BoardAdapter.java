@@ -3,6 +3,7 @@ package com.elorri.android.tieus.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,16 +33,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private Callback mCallback;
     private Context mContext;
     private int mPosition = RecyclerView.NO_POSITION;
+    private ItemChoiceManager mItemChoiceManager;
 
 
-
-    public BoardAdapter(Cursor cursor, Callback callback) {
+    public BoardAdapter(Cursor cursor, Callback callback, int choiceMode) {
         mCursor = cursor;
         mCallback = callback;
+        mItemChoiceManager = new ItemChoiceManager(this);
+        mItemChoiceManager.setChoiceMode(choiceMode);
     }
 
     public int getSelectedItemPosition() {
-        return mPosition;
+        //return mPosition;
+        return mItemChoiceManager.getSelectedItemPosition();
     }
 
     public Cursor getCursor() {
@@ -49,10 +53,20 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public void selectView(RecyclerView.ViewHolder viewHolder) {
-        if ( viewHolder instanceof BoardAdapter.ViewHolder ) {
-            BoardAdapter.ViewHolder vh = ( BoardAdapter.ViewHolder)viewHolder;
-            vh.mView.performClick();
+        if (viewHolder instanceof BoardAdapter.ViewHolder) {
+            BoardAdapter.ViewHolder vh = (BoardAdapter.ViewHolder) viewHolder;
+           // vh.mView.performClick();
+            Log.e("FF", Thread.currentThread().getStackTrace()[2]+" "+vh.mView+" "+vh.itemView);
+            //This works too
+            vh.itemView.performClick();
         }
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
+    }
+    public void onSaveInstanceState(Bundle outState) {
+        mItemChoiceManager.onSaveInstanceState(outState);
     }
 
 
@@ -395,6 +409,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             holder.moodUnknown.setVisibility(View.VISIBLE);
         else
             holder.moodUnknown.setVisibility(View.INVISIBLE);
+
+        Log.e("FF",Thread.currentThread().getStackTrace()[2]+"holder.getAdapterPosition() " +
+                ""+holder.getAdapterPosition());
+        mItemChoiceManager.onBindViewHolder(holder, holder.getAdapterPosition());
     }
 
     private void setOnClickListener(final ViewHolder holder) {
@@ -406,6 +424,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri);
+                mItemChoiceManager.onClick(holder);
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + " getSelectedItemPosition" +
+                        getSelectedItemPosition());
             }
         });
     }

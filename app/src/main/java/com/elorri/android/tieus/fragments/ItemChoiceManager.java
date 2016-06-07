@@ -76,6 +76,7 @@ public class ItemChoiceManager {
      */
     LongSparseArray<Integer> mCheckedIdStates = new LongSparseArray<Integer>();
 
+
     public void onClick(RecyclerView.ViewHolder vh) {
         if (mChoiceMode == AbsListView.CHOICE_MODE_NONE)
             return;
@@ -191,9 +192,11 @@ public class ItemChoiceManager {
     }
 
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"vh.itemView"+vh.itemView);
         boolean checked = isItemChecked(position);
         if (vh.itemView instanceof Checkable) {
             ((Checkable) vh.itemView).setChecked(checked);
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         }
         ViewCompat.setActivated(vh.itemView, checked);
     }

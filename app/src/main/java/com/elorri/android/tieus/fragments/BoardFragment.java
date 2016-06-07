@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.tieus.R;
@@ -48,6 +50,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private RecyclerView mRecyclerView;
     private Integer mPosition;
     private String mSearchString;
+    private LinearLayoutManager mLayoutManager;
+    private Parcelable mListState;
+    private String LIST_STATE_KEY="list_state_key";
 
 
     public BoardFragment() {
@@ -70,10 +75,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new BoardAdapter(null, this);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new BoardAdapter(null, this, AbsListView.CHOICE_MODE_SINGLE);
         mRecyclerView.setAdapter(mAdapter);
+
+        if (savedInstanceState != null) {
+            mAdapter.onRestoreInstanceState(savedInstanceState);
+        }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
@@ -163,6 +172,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     //(because it always return null after a notifyDataSetChanged) that's why we
                     // call findViewHolderForAdapterPosition in the onPreDraw method
                     RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
+
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
                     if (null != vh) {
                         if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
@@ -174,8 +184,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                 return false;
             }
         });
-
-
     }
 
     private int getFirstContactPosition(BoardAdapter mAdapter) {
@@ -478,9 +486,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onSaveInstanceState(Bundle outState) {
         //TODO see if we use this
         //mPosition = mRecyclerView.getVerticalScrollbarPosition();
-        if (outState != null)
+        if (outState != null) {
             outState.putInt(SELECTED_KEY, mPosition);
+
+            // When tablets rotate, the currently selected list item needs to be saved.
+            mAdapter.onSaveInstanceState(outState);
+        }
         super.onSaveInstanceState(outState);
     }
+
 
 }
