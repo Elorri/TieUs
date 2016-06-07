@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public abstract class BoardData {
 
     public static final int LOADER_ID = 0;
+    private static boolean onlyUntrackedPeople = false;
 
     public static Cursor getCursor(Context context, SQLiteDatabase db, long now, String
             selection, String[] selectionArgs) {
@@ -33,11 +34,21 @@ public abstract class BoardData {
         Cursor cursor = context.getContentResolver().query(FriendForecastContract.ContactTable
                 .CONTENT_URI, null, null, null, null);
         try {
-            if (cursor.getCount() == 0) {
+            int contactsCount = cursor.getCount();
+            if (contactsCount == 0) {
                 return MatrixCursors.getOneLineCursor(
                         MatrixCursors.EmptyCursorMessageQuery.PROJECTION,
                         MatrixCursors.EmptyCursorMessageQuery.VALUES,
                         context.getResources().getString(R.string.no_contacts_on_phone));
+            } else {
+                cursor = context.getContentResolver().query(FriendForecastContract.ContactTable
+                        .CONTENT_URI, null, FriendForecastContract.ContactTable
+                        .COLUMN_UNTRACKED + "=?", new String[]{FriendForecastContract.ContactTable
+                        .UNTRACKED_ON_VALUE}, null);
+                if (cursor.getCount() == contactsCount)
+                    onlyUntrackedPeople = true;
+                else
+                    onlyUntrackedPeople=false;
             }
         } finally {
             cursor.close();
@@ -52,9 +63,14 @@ public abstract class BoardData {
                 null, null, null, null));
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE);
-
-        cursor = getTopCursors(context, db, Status.getLastMessageIdx(context), now, selection,
-                selectionArgs);
+        if (onlyUntrackedPeople)
+            cursor = MatrixCursors.getOneLineCursor(
+                    MatrixCursors.MessageQuery.PROJECTION,
+                    MatrixCursors.MessageQuery.VALUES,
+                    context.getResources().getString(R.string.only_untracked_people));
+        else
+            cursor = getTopCursors(context, db, Status.getLastMessageIdx(context), now, selection,
+                    selectionArgs);
         if (cursor != null)
             cursors.add(cursor);
 

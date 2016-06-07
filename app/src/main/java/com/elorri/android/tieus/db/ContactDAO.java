@@ -146,19 +146,24 @@ public class ContactDAO {
                 + ViewTypes.COLUMN_VIEWTYPE + " from (select count("
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
                 + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
-                + FriendForecastContract.ContactTable.NAME + ") inner join (select count("
+                + FriendForecastContract.ContactTable.NAME + " where "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + ") inner join (select" +
+                " count("
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
                 + FriendForecastContract.ContactTable.VIEW_PART + " from "
                 + FriendForecastContract.ContactTable.NAME + " where "
                 + FriendForecastContract.ContactTable.COLUMN_MOOD + "="
-                + R.drawable.ic_sentiment_satisfied_black_48dp + ")";
+                + R.drawable.ic_sentiment_satisfied_black_48dp + " and "
+                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
+                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + ")";
     }
 
     public static ContentValues getContentValues(Cursor androidContactCursor,
                                                  int moodId,
                                                  String untrackedValue,
                                                  String moodUnknownValue,
-                                                 int backgroundColorValue ) {
+                                                 int backgroundColorValue) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));

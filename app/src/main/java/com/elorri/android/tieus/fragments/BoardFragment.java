@@ -490,7 +490,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onSaveInstanceState(Bundle outState) {
         //TODO see if we use this
         //mPosition = mRecyclerView.getVerticalScrollbarPosition();
-        if (outState != null) {
+        if (mPosition != null) {
             outState.putInt(SELECTED_KEY, mPosition);
 
             // When tablets rotate, the currently selected list item needs to be saved.

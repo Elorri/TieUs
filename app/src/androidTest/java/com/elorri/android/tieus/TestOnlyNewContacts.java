@@ -16,7 +16,6 @@ public class TestOnlyNewContacts extends AndroidTestCase {
 
     TestGivens mTestGivens;
 
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();

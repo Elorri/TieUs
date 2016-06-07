@@ -162,6 +162,8 @@
     </string>
     <string name="singleChoice">singleChoice</string>
     <string name="keep">keep</string>
+    <string name="only_untracked_people">Start following people by affecting them a mood face on
+        their detail    </string>
 
 
 </resources>
