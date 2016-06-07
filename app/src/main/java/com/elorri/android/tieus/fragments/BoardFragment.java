@@ -373,7 +373,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
                                 ContentValues values = ContactDAO.getContentValues(androidCursor,
                                         R.drawable.ic_sentiment_neutral_black_48dp,
-                                        FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE,
+                                        FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE,
                                         FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
                                         ColorGenerator.MATERIAL.getRandomColor());
 
