@@ -166,18 +166,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     }
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
 
-                    final int finalPosition = position;
-                    mRecyclerView.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-//                    mRecyclerView.smoothScrollToPosition(finalPosition);
-//                    mRecyclerView.getLayoutManager().scrollToPosition(finalPosition);
-                            //mLayoutManager.scrollToPosition(finalPosition);
-                            mLayoutManager.scrollToPositionWithOffset(finalPosition, 20);
-//                    mRecyclerView.scrollToPosition(position);
-                        }
-                    }, 1000);
-
+                    mRecyclerView.smoothScrollToPosition(position);
 
                     //this method findViewHolderForAdapterPosition will always return null if we
                     // call it after a swapCursor
@@ -197,6 +186,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         });
     }
+
+
 
     private int getFirstContactPosition(BoardAdapter mAdapter) {
         Cursor data = mAdapter.getCursor();

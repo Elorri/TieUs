@@ -61,7 +61,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation "+getResources().getInteger(R.integer.orientation));
     }
 
     @Override
@@ -325,5 +325,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             getActivity().finish();
         }
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation "+getResources().getInteger(R.integer.orientation));
     }
 }
