@@ -17,6 +17,15 @@ public class EventDAO {
             + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + " INTEGER NOT NULL,"
             + FriendForecastContract.EventTable.COLUMN_TIME_START + " INTEGER NOT NULL,"
             + FriendForecastContract.EventTable.COLUMN_TIME_END + " INTEGER, "
+            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ") "
+            + "REFERENCES " + FriendForecastContract.ContactTable.NAME
+            + "(" + FriendForecastContract.ContactTable._ID + "), "
+            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ") "
+            + "REFERENCES " + FriendForecastContract.ActionTable.NAME
+            + "(" + FriendForecastContract.ActionTable._ID + "), "
+            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + ") "
+            + "REFERENCES " + FriendForecastContract.VectorTable.NAME
+            + "(" + FriendForecastContract.VectorTable._ID + "), "
             + "UNIQUE (" + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
             + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
