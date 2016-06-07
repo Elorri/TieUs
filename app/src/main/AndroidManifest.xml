@@ -13,7 +13,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.elorri.android.tieus.activities.MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Board">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -22,7 +23,8 @@
         <activity
             android:name="com.elorri.android.tieus.activities.DetailActivity"
             android:parentActivityName="com.elorri.android.tieus.activities.MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.Details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.elorri.android.tieus.activities.MainActivity"/>

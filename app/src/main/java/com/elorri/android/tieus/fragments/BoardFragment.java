@@ -230,9 +230,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public void onContactClicked(Uri uri) {
-        ((MainActivity) getActivity()).onContactClicked(uri);
+    public void onContactClicked(Uri uri, View v) {
+        ((MainActivity) getActivity()).onContactClicked(uri, v);
     }
+
 
 
     @Override

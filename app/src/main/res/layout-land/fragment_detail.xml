@@ -15,7 +15,8 @@
             <com.elorri.android.tieus.ui.DynamicWidthGradientTopAvatarView
                 android:id="@+id/avatar"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:transitionName="@string/keep"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

@@ -324,6 +324,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if(Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))){
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             getActivity().finish();
+        }else{
+            getActivity().recreate();
         }
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation "+getResources().getInteger(R.integer.orientation));
     }

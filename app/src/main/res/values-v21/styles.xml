@@ -1,0 +1,13 @@
+<resources>
+    <style name="AppTheme.Board">
+        <item name="android:windowExitTransition">@transition/list_exit</item>
+    </style>
+
+    <style name="AppTheme.Details">
+        <item name="android:windowEnterTransition">@transition/slide_right</item>
+
+        <!-- note this apply to the activity disapearing ie MainActivity -->
+        <item name="android:windowTransitionBackgroundFadeDuration">900</item>
+    </style>
+
+</resources>

@@ -32,4 +32,10 @@
         <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications
         for two-pane layout -->
     </style>
+
+    <style name="AppTheme.Board">
+    </style>
+
+    <style name="AppTheme.Details">
+    </style>
 </resources>

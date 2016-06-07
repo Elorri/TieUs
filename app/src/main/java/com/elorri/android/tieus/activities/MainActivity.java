@@ -1,8 +1,10 @@
 package com.elorri.android.tieus.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onContactClicked(Uri uri) {
+    public void onContactClicked(Uri uri, View view) {
         if (mTwoPane) {
 
             findViewById(R.id.detail_fragment_container).setVisibility(View.VISIBLE);
@@ -161,9 +163,21 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.detail_fragment_container, fragment, DETAIL_FRAGMENT_TAG)
                     .commit();
         } else {
-            Intent intent = new Intent(this, DetailActivity.class);
-            intent.setData(uri);
-            startActivity(intent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                final Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        view,
+                        getResources().getString(R.string.keep))
+                        .toBundle();
+                Intent intent = new Intent(this, DetailActivity.class);
+                intent.setData(uri);
+                startActivity(intent, bundle);
+            } else {
+                Intent intent = new Intent(this, DetailActivity.class);
+                intent.setData(uri);
+                startActivity(intent);
+            }
         }
     }
 

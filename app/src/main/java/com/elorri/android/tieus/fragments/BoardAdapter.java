@@ -80,7 +80,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
 
     interface Callback {
-        void onContactClicked(Uri uri);
+        void onContactClicked(Uri uri, View v);
 
         void setForecast(int forecastRessourceId);
 
@@ -432,8 +432,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 mCursor.moveToPosition(mPosition);
                 int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
                 Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
-                mCallback.onContactClicked(uri);
+                mCallback.onContactClicked(uri, v);
                 mItemChoiceManager.onClick(holder);
+
             }
         });
     }

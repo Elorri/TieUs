@@ -161,6 +161,7 @@
         device.
     </string>
     <string name="singleChoice">singleChoice</string>
+    <string name="keep">keep</string>
 
 
 </resources>

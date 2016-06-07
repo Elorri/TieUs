@@ -16,7 +16,8 @@
         android:layout_height="@dimen/avatar_bg_height"
         android:layout_marginRight="@dimen/spacing_normal"
         android:layout_centerVertical="true"
-        tools:background="@color/secondaryLight"/>
+        tools:background="@color/secondaryLight"
+        android:transitionName="@string/keep"/>
 
     <ImageView
         android:id="@+id/vectorIcon"
