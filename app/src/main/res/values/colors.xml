@@ -20,4 +20,8 @@
     <color name="educate_text">#90A4AE</color>
 
 
+    <!-- the activated state recycler view color -->
+    <color name="activated">#E0E0E0</color>
+
+
 </resources>
