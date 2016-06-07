@@ -1,14 +1,15 @@
 package com.elorri.android.tieus.fragments;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,8 +53,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
-    private Parcelable mListState;
-    private String LIST_STATE_KEY="list_state_key";
+    private String mChoiceMode;
 
 
     public BoardFragment() {
@@ -69,6 +70,16 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(activity, attrs, savedInstanceState);
+        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.BoardFragment, 0, 0);
+        mChoiceMode = a.getString(R.styleable.BoardFragment_android_choiceMode);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mChoiceMode " + mChoiceMode);
+        a.recycle();
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
@@ -77,7 +88,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new BoardAdapter(null, this, AbsListView.CHOICE_MODE_SINGLE);
+        int choiceMode = getContext().getResources().getString(R.string
+                .singleChoice).equals(mChoiceMode) ? AbsListView.CHOICE_MODE_SINGLE : AbsListView
+                .CHOICE_MODE_NONE;
+        mAdapter = new BoardAdapter(null, this, choiceMode);
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {

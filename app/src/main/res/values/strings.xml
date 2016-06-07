@@ -160,6 +160,7 @@
     <string name="no_contacts_app">You don\'t have any installed app for editing contacts on your
         device.
     </string>
+    <string name="singleChoice">singleChoice</string>
 
 
 </resources>
