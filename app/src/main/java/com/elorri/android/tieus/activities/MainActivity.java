@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                else {
+                    mTwoPane = false;
+                }
                 break;
             }
         }

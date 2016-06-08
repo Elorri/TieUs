@@ -153,7 +153,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "swapCursor ");
         mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -170,9 +169,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
                     }
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAdapter.count " + mAdapter.getItemCount());
 
                     mRecyclerView.smoothScrollToPosition(position);
+
+
                     //this method findViewHolderForAdapterPosition will always return null if we
                     // call it after a swapCursor
                     //(because it always return null after a notifyDataSetChanged) that's why we
@@ -185,14 +185,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
                             mAdapter.selectView(vh);
 
-                    }
-                    else {
-                        position = getFirstContactPosition(mAdapter);
-                        mLayoutManager.scrollToPosition(position);
-                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) {
-                            vh = mRecyclerView.findViewHolderForAdapterPosition(position);
-                            mAdapter.selectView(vh);
-                        }
                     }
                     mPosition = position;
                     return true;
