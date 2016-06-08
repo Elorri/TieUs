@@ -170,26 +170,30 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
                     }
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAdapter.count " + mAdapter.getItemCount());
 
                     mLayoutManager.scrollToPosition(position);
                     //this method findViewHolderForAdapterPosition will always return null if we
                     // call it after a swapCursor
                     //(because it always return null after a notifyDataSetChanged) that's why we
                     // call findViewHolderForAdapterPosition in the onPreDraw method
+
                     RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
 
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
                     if (null != vh) {
                         if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
                             mAdapter.selectView(vh);
-                    } else {
-                        position = getFirstContactPosition(mAdapter);
-                        mLayoutManager.scrollToPosition(position);
-                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) {
-                            vh = mRecyclerView.findViewHolderForAdapterPosition(position);
-                            mAdapter.selectView(vh);
-                        }
+
                     }
+//                    else {
+//                        position = getFirstContactPosition(mAdapter);
+//                        mLayoutManager.scrollToPosition(position);
+//                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) {
+//                            vh = mRecyclerView.findViewHolderForAdapterPosition(position);
+//                            mAdapter.selectView(vh);
+//                        }
+//                    }
                     mPosition = position;
                     return true;
                 }
