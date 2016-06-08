@@ -45,10 +45,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public int getSelectedItemPosition(Context context) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            return mItemChoiceManager.getSelectedItemPosition();
-//        return mPosition;
-        return mItemChoiceManager.getSelectedItemPosition();
+//        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+//            return mItemChoiceManager.getSelectedItemPosition();
+        return mPosition;
+
+//        return mItemChoiceManager.getSelectedItemPosition();
     }
 
     public Cursor getCursor() {
@@ -66,21 +67,21 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public void onRestoreInstanceState(Context context, Bundle savedInstanceState) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
-////        else
-//            mPosition = savedInstanceState.getInt(ADAPTER_POSITION, RecyclerView.NO_POSITION);
+//        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+//            mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
+//        else
+            mPosition = savedInstanceState.getInt(ADAPTER_POSITION, RecyclerView.NO_POSITION);
 
-        mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
+//        mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
     }
 
     public void onSaveInstanceState(Context context, Bundle outState) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            mItemChoiceManager.onSaveInstanceState(outState);
-////        else
-//            outState.putInt(ADAPTER_POSITION, mPosition);
+//        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+//            mItemChoiceManager.onSaveInstanceState(outState);
+//        else
+            outState.putInt(ADAPTER_POSITION, mPosition);
 
-        mItemChoiceManager.onSaveInstanceState(outState);
+//        mItemChoiceManager.onSaveInstanceState(outState);
     }
 
 
