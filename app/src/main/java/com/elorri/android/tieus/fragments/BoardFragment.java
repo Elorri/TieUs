@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,8 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
+    private Parcelable mListState;
+    private String LIST_STATE_KEY = "list_state_key";
 
 
     public BoardFragment() {
@@ -75,13 +78,15 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
-                AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE;
+//        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
+//                AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE;
+        int choiceMode = AbsListView.CHOICE_MODE_SINGLE;
         mAdapter = new BoardAdapter(null, this, choiceMode);
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
             mAdapter.onRestoreInstanceState(getContext(), savedInstanceState);
+            mListState = savedInstanceState.getParcelable(LIST_STATE_KEY);
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
@@ -166,8 +171,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     }
                     Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
 
-                    mRecyclerView.smoothScrollToPosition(position);
-
+                    mLayoutManager.scrollToPosition(position);
                     //this method findViewHolderForAdapterPosition will always return null if we
                     // call it after a swapCursor
                     //(because it always return null after a notifyDataSetChanged) that's why we
@@ -178,6 +182,13 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                     if (null != vh) {
                         if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
                             mAdapter.selectView(vh);
+                    } else {
+                        position = getFirstContactPosition(mAdapter);
+                        mLayoutManager.scrollToPosition(position);
+                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) {
+                            vh = mRecyclerView.findViewHolderForAdapterPosition(position);
+                            mAdapter.selectView(vh);
+                        }
                     }
                     mPosition = position;
                     return true;
@@ -186,7 +197,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         });
     }
-
 
 
     private int getFirstContactPosition(BoardAdapter mAdapter) {
@@ -233,7 +243,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onContactClicked(Uri uri, View v) {
         ((MainActivity) getActivity()).onContactClicked(uri, v);
     }
-
 
 
     @Override
@@ -495,6 +504,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
             // When tablets rotate, the currently selected list item needs to be saved.
             mAdapter.onSaveInstanceState(getContext(), outState);
+
+            // Save list state
+            mListState = mLayoutManager.onSaveInstanceState();
+            outState.putParcelable(LIST_STATE_KEY, mListState);
         }
         super.onSaveInstanceState(outState);
     }

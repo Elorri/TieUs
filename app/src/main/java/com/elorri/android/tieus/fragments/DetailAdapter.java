@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
+import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.FriendForecastContract;
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.db.ContactDAO;
@@ -550,7 +551,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mCallback.setThumbnail(
                         mCursor.getString(ContactDAO.ContactQuery.COL_THUMBNAIL),
                         mCursor.getInt(ContactDAO.ContactQuery.COL_BACKGROUND_COLOR));
-                mCallback.setAvatarContentDescription(contactName);
+                if (mContext.getResources().getInteger(R.integer.orientation) != MainActivity.W700dp_LAND)
+                    mCallback.setAvatarContentDescription(contactName);
                 isMoodUnknown = mCursor.getInt(ContactDAO.ContactQuery.COL_MOOD_UNKNOWN) == 1;
                 // Creates a contact lookup Uri from contact ID and lookup_key
                 final Uri androidContactUri = ContactsContract.Contacts.getLookupUri(
