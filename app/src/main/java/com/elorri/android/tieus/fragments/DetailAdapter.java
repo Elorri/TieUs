@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.db.ContactDAO;
 import com.elorri.android.tieus.db.EventDAO;
@@ -444,7 +444,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp
                         || mEmoIconResource == R.drawable.ic_do_not_disturb_alt_black_48dp && isMoodUnknown) {
                     ContentValues values = getUntrackedContactValues(
-                            String.valueOf(FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE));
+                            String.valueOf(TieUsContract.ContactTable.UNTRACKED_ON_VALUE));
                     update(values);
                 }
                 mAlertEmoDialog.cancel();
@@ -562,7 +562,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
                 if (mCursor.getString(ContactDAO.ContactQuery.COL_UNTRACKED).equals(
-                        FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE)) {
+                        TieUsContract.ContactTable.UNTRACKED_ON_VALUE)) {
                     holder.moodIcon.setBackgroundResource(R.drawable.ic_do_not_disturb_alt_black_48dp);
                     mCallback.hideFab();
                 } else {
@@ -572,10 +572,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 }
                 boolean isMoodKnown = mCursor.getString(
                         ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
-                        FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                        TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
                 boolean isUntracked = mCursor.getString(
                         ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
-                        FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE);
+                        TieUsContract.ContactTable.UNTRACKED_ON_VALUE);
                 if (isMoodKnown && !isUntracked)
                     holder.moodUnknown.setVisibility(View.VISIBLE);
                 else
@@ -731,7 +731,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             vectorName) {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
-        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
             if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
                 Toast.makeText(context, context.getResources().getString(
@@ -795,37 +795,37 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     private ContentValues getUntrackedContactValues(String value) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable._ID, mContactId);
-        values.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED, value);
+        values.put(TieUsContract.ContactTable._ID, mContactId);
+        values.put(TieUsContract.ContactTable.COLUMN_UNTRACKED, value);
         return values;
     }
 
     private ContentValues getMoodContactValues(String value) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable._ID, mContactId);
-        values.put(FriendForecastContract.ContactTable.COLUMN_MOOD, value);
-        values.put(FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE);
-        values.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE);
+        values.put(TieUsContract.ContactTable._ID, mContactId);
+        values.put(TieUsContract.ContactTable.COLUMN_MOOD, value);
+        values.put(TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE);
+        values.put(TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.UNTRACKED_OFF_VALUE);
         return values;
     }
 
     private ContentValues getFeedbackContactValues(String feedbackValue,
                                                    String feedbackIncreasedValue) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable._ID, mContactId);
-        values.put(FriendForecastContract.ContactTable
+        values.put(TieUsContract.ContactTable._ID, mContactId);
+        values.put(TieUsContract.ContactTable
                 .COLUMN_FEEDBACK_EXPECTED_DELAY, feedbackValue);
-        values.put(FriendForecastContract.ContactTable
+        values.put(TieUsContract.ContactTable
                 .COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY, feedbackIncreasedValue);
         return values;
     }
 
     private ContentValues getFrequencyContactValues(String value) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.ContactTable._ID, mContactId);
-        values.put(FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT, value);
+        values.put(TieUsContract.ContactTable._ID, mContactId);
+        values.put(TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT, value);
         return values;
     }
 
@@ -840,10 +840,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         @Override
         protected Void doInBackground(ContentValues... params) {
             ContentValues values = params[0];
-            String contactId = (String) values.get(FriendForecastContract.ContactTable._ID);
+            String contactId = (String) values.get(TieUsContract.ContactTable._ID);
 
             mContext.getContentResolver()
-                    .update(FriendForecastContract.ContactTable.CONTENT_URI,
+                    .update(TieUsContract.ContactTable.CONTENT_URI,
                             values,
                             ContactDAO.ContactQuery.SELECTION,
                             new String[]{contactId});
@@ -865,16 +865,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             ContentValues values = EventDAO.getContentValues(now);
             String eventId = params[0];
             mContext.getContentResolver().update(
-                    FriendForecastContract.EventTable.CONTENT_URI,
-                    values, FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+                    TieUsContract.EventTable.CONTENT_URI,
+                    values, TieUsContract.EventTable._ID + "=?", new String[]{eventId}
             );
 
             values = Tools.getContentValues(
-                    FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                    FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                    TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                    TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
             mContext.getContentResolver().update(
-                    FriendForecastContract.ContactTable.CONTENT_URI,
-                    values, FriendForecastContract.ContactTable._ID + "=?", new String[]{mContactId}
+                    TieUsContract.ContactTable.CONTENT_URI,
+                    values, TieUsContract.ContactTable._ID + "=?", new String[]{mContactId}
             );
             return null;
         }
@@ -895,8 +895,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             ContentValues values = EventDAO.getContentValues(null);
             String eventId = params[0];
             mContext.getContentResolver().update(
-                    FriendForecastContract.EventTable.CONTENT_URI,
-                    values, FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+                    TieUsContract.EventTable.CONTENT_URI,
+                    values, TieUsContract.EventTable._ID + "=?", new String[]{eventId}
             );
             return null;
         }
@@ -917,8 +917,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         protected Void doInBackground(String... params) {
             String eventId = params[0];
             mContext.getContentResolver().delete(
-                    FriendForecastContract.EventTable.CONTENT_URI,
-                    FriendForecastContract.EventTable._ID + "=?", new String[]{eventId}
+                    TieUsContract.EventTable.CONTENT_URI,
+                    TieUsContract.EventTable._ID + "=?", new String[]{eventId}
             );
             return null;
         }

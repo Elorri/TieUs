@@ -6,8 +6,6 @@ import android.preference.PreferenceManager;
 
 import com.elorri.android.tieus.R;
 
-import java.util.Date;
-
 /**
  * Created by Elorri on 03/05/2016.
  */
@@ -123,8 +121,7 @@ public class Status {
 
     public static long getLastUserMoodsConfirmAware(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getLong(context.getString(R.string.pref_last_user_moods_confirm_key),
-                (new Date(0)).getTime());
+        return sp.getLong(context.getString(R.string.pref_last_user_moods_confirm_key),0);
     }
 
 
@@ -134,5 +131,22 @@ public class Status {
         spe.putLong(context.getString(R.string.pref_last_user_moods_confirm_key), timestamp);
         spe.commit();
     }
+
+
+
+    public static long getLastNotificationTimestamp(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getLong(context.getString(R.string.pref_last_notification_key),0);
+    }
+
+
+    public static void setLastNotificationTimestamp(Context context, long timestamp) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putLong(context.getString(R.string.pref_last_notification_key), timestamp);
+        spe.commit();
+    }
+
+
 
 }

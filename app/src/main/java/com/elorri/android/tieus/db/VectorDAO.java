@@ -7,7 +7,7 @@ import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.elorri.android.tieus.R;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.extra.Tools;
 
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ public class VectorDAO {
     public static final int ALL_VECTORS = 0;
 
     public static final String CREATE = "CREATE TABLE "
-            + FriendForecastContract.VectorTable.NAME +
-            "(" + FriendForecastContract.VectorTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FriendForecastContract.VectorTable.COLUMN_NAME + " TEXT NOT NULL, "
-            + FriendForecastContract.VectorTable.COLUMN_DATA + " TEXT NOT NULL, "
-            + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " TEXT NOT NULL, "
-            + "UNIQUE (" + FriendForecastContract.VectorTable.COLUMN_NAME + ") ON CONFLICT REPLACE,"
-            + "UNIQUE (" + FriendForecastContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE)";
+            + TieUsContract.VectorTable.NAME +
+            "(" + TieUsContract.VectorTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TieUsContract.VectorTable.COLUMN_NAME + " TEXT NOT NULL, "
+            + TieUsContract.VectorTable.COLUMN_DATA + " TEXT NOT NULL, "
+            + TieUsContract.VectorTable.COLUMN_MIMETYPE + " TEXT NOT NULL, "
+            + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_NAME + ") ON CONFLICT REPLACE,"
+            + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE)";
 
 
     public interface VectorQuery {
@@ -39,23 +39,23 @@ public class VectorDAO {
         int COL_MIMETYPE = 3;
         int COL_PROJECTION_TYPE = 4;
 
-        String SELECTION = FriendForecastContract.VectorTable._ID + "=?";
+        String SELECTION = TieUsContract.VectorTable._ID + "=?";
 
-        String SORT_ORDER = FriendForecastContract.VectorTable.COLUMN_NAME + " asc";
+        String SORT_ORDER = TieUsContract.VectorTable.COLUMN_NAME + " asc";
 
         String[] PROJECTION = {
-                FriendForecastContract.VectorTable._ID,
-                FriendForecastContract.VectorTable.COLUMN_NAME,
-                FriendForecastContract.VectorTable.COLUMN_DATA,
-                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                TieUsContract.VectorTable._ID,
+                TieUsContract.VectorTable.COLUMN_NAME,
+                TieUsContract.VectorTable.COLUMN_DATA,
+                TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_QUERY = {
-                FriendForecastContract.VectorTable._ID,
-                FriendForecastContract.VectorTable.COLUMN_NAME,
-                FriendForecastContract.VectorTable.COLUMN_DATA,
-                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
+                TieUsContract.VectorTable._ID,
+                TieUsContract.VectorTable.COLUMN_NAME,
+                TieUsContract.VectorTable.COLUMN_DATA,
+                TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.VIEW_VECTOR_ITEM + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -63,9 +63,9 @@ public class VectorDAO {
 
     public static ContentValues getContentValues(String name, String data, String mimetype) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_NAME, name);
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_DATA, data);
-        contentValues.put(FriendForecastContract.VectorTable.COLUMN_MIMETYPE, mimetype);
+        contentValues.put(TieUsContract.VectorTable.COLUMN_NAME, name);
+        contentValues.put(TieUsContract.VectorTable.COLUMN_DATA, data);
+        contentValues.put(TieUsContract.VectorTable.COLUMN_MIMETYPE, mimetype);
         return contentValues;
     }
 
@@ -93,7 +93,7 @@ public class VectorDAO {
     public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
         switch (cursorType) {
             case ALL_VECTORS: {
-                return db.query(FriendForecastContract.VectorTable.NAME,
+                return db.query(TieUsContract.VectorTable.NAME,
                         VectorQuery.PROJECTION_QUERY,
                         null,
                         null,

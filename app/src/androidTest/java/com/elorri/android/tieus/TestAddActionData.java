@@ -5,7 +5,7 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import com.elorri.android.tieus.data.AddActionData;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ActionDAO;
 import com.elorri.android.tieus.db.MatrixCursors;
 import com.elorri.android.tieus.db.ViewTypes;
@@ -40,7 +40,7 @@ public class TestAddActionData extends AndroidTestCase {
 
     public void testSelectActionUri() {
         Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.AddActionData.URI_PAGE_SELECT_ACTION,
+                TieUsContract.AddActionData.URI_PAGE_SELECT_ACTION,
                 null,
                 null,
                 null,
@@ -81,7 +81,7 @@ public class TestAddActionData extends AndroidTestCase {
 
     public void testSelectVectorUri() {
         Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.AddActionData.buildSelectVectorUri(String.valueOf(12)),
+                TieUsContract.AddActionData.buildSelectVectorUri(String.valueOf(12)),
                 null,
                 null,
                 null,
@@ -113,7 +113,7 @@ public class TestAddActionData extends AndroidTestCase {
 
     public void testValidateUri() {
         Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.AddActionData.buildValidateUri(
+                TieUsContract.AddActionData.buildValidateUri(
                         String.valueOf(12),
                         String.valueOf(32),
                         String.valueOf(1462226400000l)),

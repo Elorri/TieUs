@@ -13,7 +13,7 @@ import android.widget.RemoteViewsService;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.extra.Tools;
 
@@ -44,7 +44,7 @@ public class WidgetListRemoteViewsService extends RemoteViewsService {
                 // data. Therefore we need to clear (and finally restore) the calling identity so
                 // that calls use our process and permission
                 final long identityToken = Binder.clearCallingIdentity();
-                Uri uri = FriendForecastContract.WidgetData.buildWidgetUri(System.currentTimeMillis
+                Uri uri = TieUsContract.WidgetData.buildWidgetUri(System.currentTimeMillis
                         ());
                 data = getContentResolver().query(
                         uri,

@@ -2,7 +2,13 @@
 <manifest package="com.elorri.android.tieus"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- needed to read android device contacts -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <!-- SyncAdapter related -->
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
     <application
         android:name="com.elorri.android.tieus.StethoApplication"
@@ -37,7 +43,7 @@
                 android:value="com.elorri.android.tieus.activities.DetailActivity"/>
         </activity>
         <provider
-            android:name="com.elorri.android.tieus.data.FriendForecastProvider"
+            android:name=".data.TieUsProvider"
             android:authorities="com.elorri.android.tieus"
             android:exported="false"/>
         <receiver
@@ -54,6 +60,31 @@
             android:name=".widget.WidgetListRemoteViewsService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+
+        <!-- SyncAdapter's dummy authentication service -->
+        <service android:name=".sync.TieUsAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+
+        <!-- The SyncAdapter service -->
+        <service
+            android:name=".sync.TieUsService"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+
     </application>
 
 </manifest>

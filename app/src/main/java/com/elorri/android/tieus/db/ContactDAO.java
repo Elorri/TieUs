@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.elorri.android.tieus.R;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -13,30 +13,30 @@ public class ContactDAO {
 
 
     public static final String CREATE = "CREATE TABLE "
-            + FriendForecastContract.ContactTable.NAME +
-            "(" + FriendForecastContract.ContactTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + " TEXT NOT NULL,"
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " TEXT NOT NULL,"
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
-            + FriendForecastContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
-            + FriendForecastContract.ContactTable.COLUMN_MOOD + " TEXT NOT NULL, "
-            + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
-            + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " INTEGER NOT NULL, "
-            + FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER NOT NULL, "
-            + FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR + " INTEGER NOT NULL, "
-            + "UNIQUE (" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
-            + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
-            + "CONSTRAINT " + FriendForecastContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
-            FriendForecastContract.ContactTable.COLUMN_UNTRACKED + " between " +
-            FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + " AND "
-            + FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE + ")"
-            + "CONSTRAINT " + FriendForecastContract.ContactTable.MOOD_UNKNOWN_CONSTRAINT + " check  (" +
-            FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN + " between " +
-            FriendForecastContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + " AND "
-            + FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "))";
+            + TieUsContract.ContactTable.NAME +
+            "(" + TieUsContract.ContactTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + " TEXT NOT NULL,"
+            + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + " TEXT NOT NULL,"
+            + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
+            + TieUsContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
+            + TieUsContract.ContactTable.COLUMN_MOOD + " TEXT NOT NULL, "
+            + TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_UNTRACKED + " INTEGER NOT NULL, "
+            + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + " INTEGER NOT NULL, "
+            + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " INTEGER NOT NULL, "
+            + "UNIQUE (" + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
+            + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY + ") ON CONFLICT REPLACE, "
+            + "CONSTRAINT " + TieUsContract.ContactTable.UNTRACKED_CONSTRAINT + " check  (" +
+            TieUsContract.ContactTable.COLUMN_UNTRACKED + " between " +
+            TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " AND "
+            + TieUsContract.ContactTable.UNTRACKED_ON_VALUE + ")"
+            + "CONSTRAINT " + TieUsContract.ContactTable.MOOD_UNKNOWN_CONSTRAINT + " check  (" +
+            TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + " between " +
+            TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + " AND "
+            + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "))";
 
 
     public interface ContactQuery {
@@ -53,78 +53,78 @@ public class ContactDAO {
         int COL_BACKGROUND_COLOR = 12;
 
 
-        String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
+        String SELECTION = TieUsContract.ContactTable._ID + "=?";
 
 
         String[] PROJECTION = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
+                TieUsContract.ContactTable._ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                TieUsContract.ContactTable.COLUMN_THUMBNAIL,
+                TieUsContract.ContactTable.COLUMN_MOOD,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
 
         //This projection won't be used in queries. It will only be used for checking the column
         // names easily. PROJECTION_QUERY and PROJECTION_QUERY should match.
         String[] PROJECTION_WITH_VIEWTYPE = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
+                TieUsContract.ContactTable._ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                TieUsContract.ContactTable.COLUMN_THUMBNAIL,
+                TieUsContract.ContactTable.COLUMN_MOOD,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
         //This is the projection that will be used in queries.
         String[] PROJECTION_QUERY = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
-                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR
+                TieUsContract.ContactTable._ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                "lower(" + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                        + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                TieUsContract.ContactTable.COLUMN_THUMBNAIL,
+                TieUsContract.ContactTable.COLUMN_MOOD,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
 
 
         String[] PROJECTION_WITH_VIEWTYPE_QUERY = {
-                FriendForecastContract.ContactTable._ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
-                FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
-                "lower(" + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
-                        + FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
-                FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
-                FriendForecastContract.ContactTable.COLUMN_MOOD,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
-                FriendForecastContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                FriendForecastContract.ContactTable.COLUMN_UNTRACKED,
-                FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR,
+                TieUsContract.ContactTable._ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+                TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+                "lower(" + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") as "
+                        + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+                TieUsContract.ContactTable.COLUMN_THUMBNAIL,
+                TieUsContract.ContactTable.COLUMN_MOOD,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
+                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
+                TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.VIEW_CONTACT + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
 
@@ -136,27 +136,27 @@ public class ContactDAO {
         int COL_RATIO = 0;
         int COL_PROJECTION_TYPE = 1;
 
-        String[] PROJECTION = new String[]{FriendForecastContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
+        String[] PROJECTION = new String[]{TieUsContract.ContactTable.VIEW_RATIO, ViewTypes.COLUMN_VIEWTYPE};
 
         String SELECT_WITH_VIEWTYPE = "select "
-                + FriendForecastContract.ContactTable.VIEW_PART + "/("
-                + FriendForecastContract.ContactTable.VIEW_TOTAL + "*1.0) as "
-                + FriendForecastContract.ContactTable.VIEW_RATIO + ", "
+                + TieUsContract.ContactTable.VIEW_PART + "/("
+                + TieUsContract.ContactTable.VIEW_TOTAL + "*1.0) as "
+                + TieUsContract.ContactTable.VIEW_RATIO + ", "
                 + ViewTypes.VIEW_FORECAST + " as "
                 + ViewTypes.COLUMN_VIEWTYPE + " from (select count("
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
-                + FriendForecastContract.ContactTable.VIEW_TOTAL + " from "
-                + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + ") inner join (select" +
+                + TieUsContract.ContactTable.COLUMN_MOOD + ") as "
+                + TieUsContract.ContactTable.VIEW_TOTAL + " from "
+                + TieUsContract.ContactTable.NAME + " where "
+                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
+                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + ") inner join (select" +
                 " count("
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + ") as "
-                + FriendForecastContract.ContactTable.VIEW_PART + " from "
-                + FriendForecastContract.ContactTable.NAME + " where "
-                + FriendForecastContract.ContactTable.COLUMN_MOOD + "="
+                + TieUsContract.ContactTable.COLUMN_MOOD + ") as "
+                + TieUsContract.ContactTable.VIEW_PART + " from "
+                + TieUsContract.ContactTable.NAME + " where "
+                + TieUsContract.ContactTable.COLUMN_MOOD + "="
                 + R.drawable.ic_sentiment_satisfied_black_48dp + " and "
-                + FriendForecastContract.ContactTable.COLUMN_UNTRACKED + "="
-                + FriendForecastContract.ContactTable.UNTRACKED_OFF_VALUE + ")";
+                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
+                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + ")";
     }
 
     public static ContentValues getContentValues(Cursor androidContactCursor,
@@ -165,31 +165,31 @@ public class ContactDAO {
                                                  String moodUnknownValue,
                                                  int backgroundColorValue) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD, moodId);
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_UNTRACKED, untrackedValue);
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_MOOD_UNKNOWN, moodUnknownValue);
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_BACKGROUND_COLOR, backgroundColorValue);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_MOOD, moodId);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_UNTRACKED, untrackedValue);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN, moodUnknownValue);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR, backgroundColorValue);
         return contentValues;
     }
 
 
     public static ContentValues getContentValues(Cursor androidContactCursor) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_ID));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_LOOKUP_KEY,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
-        contentValues.put(FriendForecastContract.ContactTable.COLUMN_THUMBNAIL,
+        contentValues.put(TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
         return contentValues;
     }

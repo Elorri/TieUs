@@ -31,7 +31,7 @@ public abstract class BoardData {
         String[] args;
 
         //If there is no contact on phone tell it to the user
-        Cursor cursor = context.getContentResolver().query(FriendForecastContract.ContactTable
+        Cursor cursor = context.getContentResolver().query(TieUsContract.ContactTable
                 .CONTENT_URI, null, null, null, null);
         try {
             int contactsCount = cursor.getCount();
@@ -41,9 +41,9 @@ public abstract class BoardData {
                         MatrixCursors.EmptyCursorMessageQuery.VALUES,
                         context.getResources().getString(R.string.no_contacts_on_phone));
             } else {
-                cursor = context.getContentResolver().query(FriendForecastContract.ContactTable
-                        .CONTENT_URI, null, FriendForecastContract.ContactTable
-                        .COLUMN_UNTRACKED + "=?", new String[]{FriendForecastContract.ContactTable
+                cursor = context.getContentResolver().query(TieUsContract.ContactTable
+                        .CONTENT_URI, null, TieUsContract.ContactTable
+                        .COLUMN_UNTRACKED + "=?", new String[]{TieUsContract.ContactTable
                         .UNTRACKED_ON_VALUE}, null);
                 if (cursor.getCount() == contactsCount)
                     onlyUntrackedPeople = true;
@@ -293,9 +293,9 @@ public abstract class BoardData {
                 break;
             case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
 
-                db.update(FriendForecastContract.ContactTable.NAME,
+                db.update(TieUsContract.ContactTable.NAME,
                         Tools.getContentValues(
-                                FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                                 String.valueOf(now)),
                         ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
                                 + now
@@ -319,10 +319,10 @@ public abstract class BoardData {
                     //They decreased their mood, lets change their moodIcon
                     while (cursor.moveToNext()) {
                         int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_MOOD_ID);
-                        db.update(FriendForecastContract.ContactTable.NAME,
-                                Tools.getContentValues(FriendForecastContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                        db.update(TieUsContract.ContactTable.NAME,
+                                Tools.getContentValues(TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                                         String.valueOf(Tools.decreaseMood(moodIcon))),
-                                FriendForecastContract.ContactTable._ID + "=?",
+                                TieUsContract.ContactTable._ID + "=?",
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)}
                         );
                     }

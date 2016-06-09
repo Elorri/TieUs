@@ -16,7 +16,7 @@ import com.elorri.android.tieus.extra.Tools;
 /**
  * Created by Elorri on 12/04/2016.
  */
-public class FriendForecastProvider extends ContentProvider {
+public class TieUsProvider extends ContentProvider {
 
     static final int DATA_WIDGET = 50; //content://com.elorri.android.tieus/widget/
     static final int DATA_BOARD = 100; //content://com.elorri.android.tieus/board/
@@ -34,42 +34,42 @@ public class FriendForecastProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    private FriendForecastDbHelper mOpenHelper;
+    private TieUsDbHelper mOpenHelper;
 
     static UriMatcher buildUriMatcher() {
         // All paths added to the UriMatcher have a corresponding code to return when a match is
         // found.  The code passed into the constructor represents the code to return for the root
         // URI.  It's common to use NO_MATCH as the code for this case.
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.WidgetData.PATH_WIDGET + "/#", DATA_WIDGET);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.BoardData.PATH_BOARD + "/#", DATA_BOARD);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION, DATA_ADD_ACTION_SELECT_ACTION);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/#", DATA_ADD_ACTION_SELECT_VECTOR);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY,
-                FriendForecastContract.AddActionData.PATH_ADD_ACTION + "/#/#/#", DATA_ADD_ACTION_VALIDATE);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.WidgetData.PATH_WIDGET + "/#", DATA_WIDGET);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.BoardData.PATH_BOARD + "/#", DATA_BOARD);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.AddActionData.PATH_ADD_ACTION, DATA_ADD_ACTION_SELECT_ACTION);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.AddActionData.PATH_ADD_ACTION + "/#", DATA_ADD_ACTION_SELECT_VECTOR);
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
+                TieUsContract.AddActionData.PATH_ADD_ACTION + "/#/#/#", DATA_ADD_ACTION_VALIDATE);
 
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ContactTable
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract.ContactTable
                 .PATH_CONTACT, TABLE_CONTACT);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.ActionTable
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract.ActionTable
                 .PATH_ACTION, TABLE_ACTION);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.EventTable
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract.EventTable
                 .PATH_EVENT, TABLE_EVENT);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract.VectorTable
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract.VectorTable
                 .PATH_VECTOR, TABLE_VECTOR);
-        matcher.addURI(FriendForecastContract.CONTENT_AUTHORITY, FriendForecastContract
+        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract
                 .ContactVectorsTable.PATH_CONTACT_VECTORS, TABLE_CONTACT_VECTORS);
         return matcher;
     }
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = new FriendForecastDbHelper(getContext());
+        mOpenHelper = new TieUsDbHelper(getContext());
         return true;
     }
 
@@ -84,7 +84,7 @@ public class FriendForecastProvider extends ContentProvider {
             case DATA_WIDGET:{
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_WIDGET " +
                         "uri " + uri);
-                long now=FriendForecastContract.WidgetData.getTimeFromUri(uri);
+                long now= TieUsContract.WidgetData.getTimeFromUri(uri);
                 String todayStart = String.valueOf(DateUtils.setZeroDay(now));
                 String tomorrowStart = String.valueOf(DateUtils.addDay(1, DateUtils.setZeroDay(now)));
                 cursor = db.query("(" + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
@@ -98,12 +98,12 @@ public class FriendForecastProvider extends ContentProvider {
             case DATA_BOARD:{
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
                         "uri " + uri);
-                long now=FriendForecastContract.BoardData.getTimeFromUri(uri);
+                long now= TieUsContract.BoardData.getTimeFromUri(uri);
                 cursor = BoardData.getCursor(getContext(), db, now, selection, selectionArgs);
                 break;}
             case DATA_DETAIL:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
-                String contactId = FriendForecastContract.DetailData.getContactIdFromUri(uri);
+                String contactId = TieUsContract.DetailData.getContactIdFromUri(uri);
                 cursor = DetailData.getCursor(getContext(), db, contactId);
                 break;
             case DATA_ADD_ACTION_SELECT_ACTION:
@@ -113,16 +113,16 @@ public class FriendForecastProvider extends ContentProvider {
                 break;
             case DATA_ADD_ACTION_SELECT_VECTOR: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_VECTOR uri " + uri);
-                String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectVectorUri(uri);
+                String actionId = TieUsContract.AddActionData.getActionIdFromSelectVectorUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_VECTOR,
                         actionId, null,  null);
             }
             break;
             case DATA_ADD_ACTION_VALIDATE: {
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_VALIDATE uri " + uri);
-                String actionId = FriendForecastContract.AddActionData.getActionIdFromSelectValidateUri(uri);
-                String vectorId = FriendForecastContract.AddActionData.getVectorIdFromSelectValidateUri(uri);
-                String timeStart = FriendForecastContract.AddActionData.getTimeStartIdFromSelectValidateUri(uri);
+                String actionId = TieUsContract.AddActionData.getActionIdFromSelectValidateUri(uri);
+                String vectorId = TieUsContract.AddActionData.getVectorIdFromSelectValidateUri(uri);
+                String timeStart = TieUsContract.AddActionData.getTimeStartIdFromSelectValidateUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_VALIDATE,
                         actionId, vectorId, timeStart);
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursor.getCount()"
@@ -132,7 +132,7 @@ public class FriendForecastProvider extends ContentProvider {
             case TABLE_CONTACT:
                 Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendForecastContract.ContactTable.NAME,
+                        TieUsContract.ContactTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -144,7 +144,7 @@ public class FriendForecastProvider extends ContentProvider {
             case TABLE_ACTION:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_ACTION uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendForecastContract.ActionTable.NAME,
+                        TieUsContract.ActionTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -156,7 +156,7 @@ public class FriendForecastProvider extends ContentProvider {
             case TABLE_VECTOR:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_VECTOR uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendForecastContract.VectorTable.NAME,
+                        TieUsContract.VectorTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -168,7 +168,7 @@ public class FriendForecastProvider extends ContentProvider {
             case TABLE_EVENT:
                 Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_EVENT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
-                        FriendForecastContract.EventTable.NAME,
+                        TieUsContract.EventTable.NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -198,45 +198,45 @@ public class FriendForecastProvider extends ContentProvider {
         Uri returnUri;
         switch (match) {
             case TABLE_CONTACT: {
-                long _id = db.insert(FriendForecastContract.ContactTable.NAME, null, values);
+                long _id = db.insert(TieUsContract.ContactTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.ContactTable.buildContactUri(_id);
+                    returnUri = TieUsContract.ContactTable.buildContactUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
             case TABLE_EVENT: {
-                long _id = db.insert(FriendForecastContract.EventTable.NAME, null, values);
+                long _id = db.insert(TieUsContract.EventTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.EventTable.buildEventUri(_id);
+                    returnUri = TieUsContract.EventTable.buildEventUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
             case TABLE_ACTION: {
-                long _id = db.insert(FriendForecastContract.ActionTable.NAME, null, values);
+                long _id = db.insert(TieUsContract.ActionTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.ActionTable.buildActionUri(_id);
+                    returnUri = TieUsContract.ActionTable.buildActionUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
             case TABLE_VECTOR: {
-                long _id = db.insert(FriendForecastContract.VectorTable.NAME, null, values);
+                long _id = db.insert(TieUsContract.VectorTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.VectorTable.buildVectorUri(_id);
+                    returnUri = TieUsContract.VectorTable.buildVectorUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_VECTORS " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
             case TABLE_CONTACT_VECTORS: {
-                long _id = db.insert(FriendForecastContract.ContactVectorsTable.NAME, null, values);
+                long _id = db.insert(TieUsContract.ContactVectorsTable.NAME, null, values);
                 if (_id > 0) {
-                    returnUri = FriendForecastContract.ContactVectorsTable.buildContactVectorsUri(_id);
+                    returnUri = TieUsContract.ContactVectorsTable.buildContactVectorsUri(_id);
                     Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT_VECTORS " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -258,20 +258,20 @@ public class FriendForecastProvider extends ContentProvider {
         if (null == selection) selection = "1";
         switch (match) {
             case TABLE_CONTACT:
-                rowsDeleted = db.delete(FriendForecastContract.ContactTable.NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(TieUsContract.ContactTable.NAME, selection, selectionArgs);
                 break;
             case TABLE_VECTOR:
-                rowsDeleted = db.delete(FriendForecastContract.VectorTable.NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(TieUsContract.VectorTable.NAME, selection, selectionArgs);
                 break;
             case TABLE_CONTACT_VECTORS:
-                rowsDeleted = db.delete(FriendForecastContract.ContactVectorsTable.NAME, selection,
+                rowsDeleted = db.delete(TieUsContract.ContactVectorsTable.NAME, selection,
                         selectionArgs);
                 break;
             case TABLE_EVENT:
-                rowsDeleted = db.delete(FriendForecastContract.EventTable.NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(TieUsContract.EventTable.NAME, selection, selectionArgs);
                 break;
             case TABLE_ACTION:
-                rowsDeleted = db.delete(FriendForecastContract.ActionTable.NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(TieUsContract.ActionTable.NAME, selection, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -291,12 +291,12 @@ public class FriendForecastProvider extends ContentProvider {
 
         switch (match) {
             case TABLE_CONTACT:
-                rowsUpdated = db.update(FriendForecastContract.ContactTable.NAME, values,
+                rowsUpdated = db.update(TieUsContract.ContactTable.NAME, values,
                         selection,
                         selectionArgs);
                 break;
             case TABLE_EVENT:
-                rowsUpdated = db.update(FriendForecastContract.EventTable.NAME, values,
+                rowsUpdated = db.update(TieUsContract.EventTable.NAME, values,
                         selection,
                         selectionArgs);
                 break;
@@ -316,19 +316,19 @@ public class FriendForecastProvider extends ContentProvider {
         int returnCount = 0;
         switch (match) {
             case TABLE_CONTACT:
-                returnCount = insertInBulk(FriendForecastContract.ContactTable.NAME, values);
+                returnCount = insertInBulk(TieUsContract.ContactTable.NAME, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
             case TABLE_ACTION:
-                returnCount = insertInBulk(FriendForecastContract.ActionTable.NAME, values);
+                returnCount = insertInBulk(TieUsContract.ActionTable.NAME, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
             case TABLE_VECTOR:
-                returnCount = insertInBulk(FriendForecastContract.VectorTable.NAME, values);
+                returnCount = insertInBulk(TieUsContract.VectorTable.NAME, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
             case TABLE_EVENT:
-                returnCount = insertInBulk(FriendForecastContract.EventTable.NAME, values);
+                returnCount = insertInBulk(TieUsContract.EventTable.NAME, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
             default:

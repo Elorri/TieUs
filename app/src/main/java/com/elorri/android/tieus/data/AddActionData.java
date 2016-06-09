@@ -71,40 +71,40 @@ public class AddActionData {
 
 
         String SELECT_ACTION = "select "
-                + FriendForecastContract.ActionTable._ID + " as "
-                + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
-                + FriendForecastContract.ActionTable.COLUMN_NAME + " from "
-                + FriendForecastContract.ActionTable.NAME + " where "
-                + FriendForecastContract.ActionTable._ID + "=?";
+                + TieUsContract.ActionTable._ID + " as "
+                + TieUsContract.ActionTable.VIEW_ACTION_ID + ", "
+                + TieUsContract.ActionTable.COLUMN_NAME + " from "
+                + TieUsContract.ActionTable.NAME + " where "
+                + TieUsContract.ActionTable._ID + "=?";
 
 
         String SELECT_VECTOR = "select "
-                + FriendForecastContract.VectorTable._ID + " as "
-                + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
-                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + " from "
-                + FriendForecastContract.VectorTable.NAME + " where "
-                + FriendForecastContract.VectorTable._ID + "=?";
+                + TieUsContract.VectorTable._ID + " as "
+                + TieUsContract.VectorTable.VIEW_VECTOR_ID + ", "
+                + TieUsContract.VectorTable.COLUMN_DATA + ", "
+                + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from "
+                + TieUsContract.VectorTable.NAME + " where "
+                + TieUsContract.VectorTable._ID + "=?";
 
 
         String SELECT_ACTION_RECAP_VALIDATE = "select "
-                + FriendForecastContract.ActionTable.VIEW_ACTION_ID + ", "
-                + FriendForecastContract.ActionTable.COLUMN_NAME + ", "
-                + FriendForecastContract.VectorTable.VIEW_VECTOR_ID + ", "
-                + FriendForecastContract.VectorTable.COLUMN_DATA + ", "
-                + FriendForecastContract.VectorTable.COLUMN_MIMETYPE + ", ? as "
-                + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
+                + TieUsContract.ActionTable.VIEW_ACTION_ID + ", "
+                + TieUsContract.ActionTable.COLUMN_NAME + ", "
+                + TieUsContract.VectorTable.VIEW_VECTOR_ID + ", "
+                + TieUsContract.VectorTable.COLUMN_DATA + ", "
+                + TieUsContract.VectorTable.COLUMN_MIMETYPE + ", ? as "
+                + TieUsContract.EventTable.COLUMN_TIME_START + ", "
                 + ViewTypes.VIEW_ACTION_RECAP_QUERY + " as "
                 + ViewTypes.COLUMN_VIEWTYPE + " from ("
                 + SELECT_ACTION + ") inner join (" + SELECT_VECTOR + ")";
 
         String[] SELECT_ACTION_RECAP_VALIDATE_PROJECTION = new String[]{
-                FriendForecastContract.ActionTable.VIEW_ACTION_ID,
-                FriendForecastContract.ActionTable.COLUMN_NAME,
-                FriendForecastContract.VectorTable.VIEW_VECTOR_ID,
-                FriendForecastContract.VectorTable.COLUMN_DATA,
-                FriendForecastContract.VectorTable.COLUMN_MIMETYPE,
-                FriendForecastContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.ActionTable.VIEW_ACTION_ID,
+                TieUsContract.ActionTable.COLUMN_NAME,
+                TieUsContract.VectorTable.VIEW_VECTOR_ID,
+                TieUsContract.VectorTable.COLUMN_DATA,
+                TieUsContract.VectorTable.COLUMN_MIMETYPE,
+                TieUsContract.EventTable.COLUMN_TIME_START,
                 ViewTypes.COLUMN_VIEWTYPE};
 
     }

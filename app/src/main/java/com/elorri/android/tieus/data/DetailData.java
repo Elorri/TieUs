@@ -28,7 +28,7 @@ public class DetailData {
 
         //Query necessary to display the moodIcon
         cursors.add(db.query(
-                FriendForecastContract.ContactTable.NAME,
+                TieUsContract.ContactTable.NAME,
                 ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE_QUERY,
                 ContactDAO.ContactQuery.SELECTION,
                 new String[]{contactId}, null, null, null));
@@ -39,7 +39,7 @@ public class DetailData {
                         .SELECT_WITH_VIEWTYPE + ")",
                 ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE,
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?",
+                TieUsContract.EventTable.COLUMN_CONTACT_ID + "=?",
                 new String[]{contactId},
                 null, null, null);
         if (cursor.getCount() > 0) {
@@ -52,7 +52,7 @@ public class DetailData {
                         .SELECT_WITH_VIEWTYPE + ")",
                 ContactActionVectorEventDAO.PeopleElligibleForFrequencyUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE,
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID + "=?",
+                TieUsContract.EventTable.COLUMN_CONTACT_ID + "=?",
                 new String[]{contactId},
                 null, null, null);
         if (cursor.getCount() > 0) {

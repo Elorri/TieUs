@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class FriendForecastContract {
+public class TieUsContract {
 
     public static final String CONTENT_AUTHORITY = "com.elorri.android.tieus";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);

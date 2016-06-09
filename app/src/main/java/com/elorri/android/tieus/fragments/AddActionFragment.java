@@ -21,7 +21,7 @@ import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.DetailActivity;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.AddActionData;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.EventDAO;
 import com.elorri.android.tieus.extra.DateUtils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -85,10 +85,10 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (actionSteps.get(CURRENT_STEP)) {
             case ZERO_STEP: //We ask the user to select an action
-                mUri = FriendForecastContract.AddActionData.URI_PAGE_SELECT_ACTION;
+                mUri = TieUsContract.AddActionData.URI_PAGE_SELECT_ACTION;
                 break;
             case ACTION_STEP://We have the action, we ask for a vector and a dateStart
-                mUri = FriendForecastContract.AddActionData.buildSelectVectorUri(actionSteps.get
+                mUri = TieUsContract.AddActionData.buildSelectVectorUri(actionSteps.get
                         (ACTION_STEP));
                 break;
             default:
@@ -172,7 +172,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         protected Void doInBackground(String... params) {
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + params[3]);
             getContext().getContentResolver().insert(
-                    FriendForecastContract.EventTable.CONTENT_URI,
+                    TieUsContract.EventTable.CONTENT_URI,
                     EventDAO.getContentValues(params[0], params[1], params[2], Long.valueOf
                             (params[3])));
             return null;

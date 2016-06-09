@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ActionDAO;
 import com.elorri.android.tieus.db.MatrixCursors;
 import com.elorri.android.tieus.db.VectorDAO;
@@ -145,16 +145,16 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                int vectorIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_DATA);
-                int actionIdx = mCursor.getColumnIndex(FriendForecastContract.ActionTable.COLUMN_NAME);
-                int timeStartIdx = mCursor.getColumnIndex(FriendForecastContract.EventTable.COLUMN_TIME_START);
+                int vectorIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_DATA);
+                int actionIdx = mCursor.getColumnIndex(TieUsContract.ActionTable.COLUMN_NAME);
+                int timeStartIdx = mCursor.getColumnIndex(TieUsContract.EventTable.COLUMN_TIME_START);
                 String actionName;
                 long timeStartLong;
                 if (actionIdx != -1) {
                     actionName = mCursor.getString(actionIdx);
                     holder.action.setText(actionName);
                     if (vectorIdx != -1) {
-                        int mimetypeIdx = mCursor.getColumnIndex(FriendForecastContract.VectorTable.COLUMN_MIMETYPE);
+                        int mimetypeIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_MIMETYPE);
 
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" +
                                 mCursor.getString(mimetypeIdx) +

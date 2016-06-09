@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.MatrixCursors;
 import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Status;
@@ -36,7 +36,7 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
 
     public void testNoContactRegisteredOnPhone() {
         Cursor cursor = mContext.getContentResolver().query(
-                FriendForecastContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
 
         String cursorString = "\n"
                 + "header |"

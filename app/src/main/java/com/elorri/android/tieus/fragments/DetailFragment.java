@@ -30,7 +30,7 @@ import android.widget.Toast;
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.DetailData;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.ui.GradientTopAvatarView;
 
@@ -241,7 +241,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String contactId = FriendForecastContract.DetailData.getContactIdFromUri(mUri);
+                String contactId = TieUsContract.DetailData.getContactIdFromUri(mUri);
                 //((DetailActivity) getActivity()).startAddActions(contactId);
 
                 Bundle arguments = new Bundle();

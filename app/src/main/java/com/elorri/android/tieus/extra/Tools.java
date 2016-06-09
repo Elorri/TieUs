@@ -24,7 +24,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.MatrixCursors;
 import com.elorri.android.tieus.db.ViewTypes;
 
@@ -215,7 +215,7 @@ public class Tools {
     public static void setVectorBackground(Context context, ImageView vectorLogo,
                                            String mimetype, String data) {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
-        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             vectorLogo.setBackgroundResource(Integer.valueOf(data));
         } else
@@ -230,7 +230,7 @@ public class Tools {
 
     public static void setWidgetVectorBackground(Context context, RemoteViews views, int viewId, String mimetype, String data) {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
-        if (mimetype.equals(FriendForecastContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             views.setImageViewResource(viewId, Integer.valueOf(data));
         } else

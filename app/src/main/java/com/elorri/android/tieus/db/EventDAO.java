@@ -2,7 +2,7 @@ package com.elorri.android.tieus.db;
 
 import android.content.ContentValues;
 
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -10,26 +10,26 @@ import com.elorri.android.tieus.data.FriendForecastContract;
 public class EventDAO {
 
     public static final String CREATE = "CREATE TABLE "
-            + FriendForecastContract.EventTable.NAME +
-            "(" + FriendForecastContract.EventTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
-            + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventTable.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventTable.COLUMN_TIME_START + " INTEGER NOT NULL,"
-            + FriendForecastContract.EventTable.COLUMN_TIME_END + " INTEGER, "
-            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ") "
-            + "REFERENCES " + FriendForecastContract.ContactTable.NAME
-            + "(" + FriendForecastContract.ContactTable._ID + "), "
-            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ") "
-            + "REFERENCES " + FriendForecastContract.ActionTable.NAME
-            + "(" + FriendForecastContract.ActionTable._ID + "), "
-            + "FOREIGN KEY (" + FriendForecastContract.EventTable.COLUMN_VECTOR_ID + ") "
-            + "REFERENCES " + FriendForecastContract.VectorTable.NAME
-            + "(" + FriendForecastContract.VectorTable._ID + "), "
-            + "UNIQUE (" + FriendForecastContract.EventTable.COLUMN_CONTACT_ID + ", "
-            + FriendForecastContract.EventTable.COLUMN_ACTION_ID + ", "
-            + FriendForecastContract.EventTable.COLUMN_TIME_START + ", "
-            + FriendForecastContract.EventTable.COLUMN_TIME_END + ") ON CONFLICT REPLACE)";
+            + TieUsContract.EventTable.NAME +
+            "(" + TieUsContract.EventTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+            + TieUsContract.EventTable.COLUMN_CONTACT_ID + " INTEGER NOT NULL,"
+            + TieUsContract.EventTable.COLUMN_ACTION_ID + " INTEGER NOT NULL,"
+            + TieUsContract.EventTable.COLUMN_VECTOR_ID + " INTEGER NOT NULL,"
+            + TieUsContract.EventTable.COLUMN_TIME_START + " INTEGER NOT NULL,"
+            + TieUsContract.EventTable.COLUMN_TIME_END + " INTEGER, "
+            + "FOREIGN KEY (" + TieUsContract.EventTable.COLUMN_CONTACT_ID + ") "
+            + "REFERENCES " + TieUsContract.ContactTable.NAME
+            + "(" + TieUsContract.ContactTable._ID + "), "
+            + "FOREIGN KEY (" + TieUsContract.EventTable.COLUMN_ACTION_ID + ") "
+            + "REFERENCES " + TieUsContract.ActionTable.NAME
+            + "(" + TieUsContract.ActionTable._ID + "), "
+            + "FOREIGN KEY (" + TieUsContract.EventTable.COLUMN_VECTOR_ID + ") "
+            + "REFERENCES " + TieUsContract.VectorTable.NAME
+            + "(" + TieUsContract.VectorTable._ID + "), "
+            + "UNIQUE (" + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
+            + TieUsContract.EventTable.COLUMN_ACTION_ID + ", "
+            + TieUsContract.EventTable.COLUMN_TIME_START + ", "
+            + TieUsContract.EventTable.COLUMN_TIME_END + ") ON CONFLICT REPLACE)";
 
 
     public interface EventQuery {
@@ -41,15 +41,15 @@ public class EventDAO {
         int COL_TIME_START = 3;
         int COL_TIME_END = 4;
 
-        String SELECTION = FriendForecastContract.ContactTable._ID + "=?";
+        String SELECTION = TieUsContract.ContactTable._ID + "=?";
 
         String[] PROJECTION = {
-                FriendForecastContract.EventTable._ID,
-                FriendForecastContract.EventTable.COLUMN_CONTACT_ID,
-                FriendForecastContract.EventTable.COLUMN_ACTION_ID,
-                FriendForecastContract.EventTable.COLUMN_VECTOR_ID,
-                FriendForecastContract.EventTable.COLUMN_TIME_START,
-                FriendForecastContract.EventTable.COLUMN_TIME_END
+                TieUsContract.EventTable._ID,
+                TieUsContract.EventTable.COLUMN_CONTACT_ID,
+                TieUsContract.EventTable.COLUMN_ACTION_ID,
+                TieUsContract.EventTable.COLUMN_VECTOR_ID,
+                TieUsContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.EventTable.COLUMN_TIME_END
         };
 
     }
@@ -58,16 +58,16 @@ public class EventDAO {
     public static ContentValues getContentValues(String contactId, String actionId, String
             vectorId, long date) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.EventTable.COLUMN_CONTACT_ID, contactId);
-        values.put(FriendForecastContract.EventTable.COLUMN_ACTION_ID, actionId);
-        values.put(FriendForecastContract.EventTable.COLUMN_VECTOR_ID, vectorId);
-        values.put(FriendForecastContract.EventTable.COLUMN_TIME_START, date);
+        values.put(TieUsContract.EventTable.COLUMN_CONTACT_ID, contactId);
+        values.put(TieUsContract.EventTable.COLUMN_ACTION_ID, actionId);
+        values.put(TieUsContract.EventTable.COLUMN_VECTOR_ID, vectorId);
+        values.put(TieUsContract.EventTable.COLUMN_TIME_START, date);
         return values;
     }
 
     public static ContentValues getContentValues(Long timeEnd) {
         ContentValues values = new ContentValues();
-        values.put(FriendForecastContract.EventTable.COLUMN_TIME_END, timeEnd);
+        values.put(TieUsContract.EventTable.COLUMN_TIME_END, timeEnd);
         return values;
     }
 }

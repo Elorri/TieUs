@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
-import com.elorri.android.tieus.data.FriendForecastContract;
+import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.db.ContactDAO;
 import com.elorri.android.tieus.db.MatrixCursors;
@@ -417,10 +417,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.moodIcon.setContentDescription(Tools.getMoodDesciption(mContext,moodResId));
         boolean isMoodKnown = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
-                FriendForecastContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
         boolean isUntracked = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
-                FriendForecastContract.ContactTable.UNTRACKED_ON_VALUE);
+                TieUsContract.ContactTable.UNTRACKED_ON_VALUE);
         if (isMoodKnown && !isUntracked)
             holder.moodUnknown.setVisibility(View.VISIBLE);
         else
@@ -438,7 +438,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 mPosition = holder.getAdapterPosition();
                 mCursor.moveToPosition(mPosition);
                 int contactId = mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
-                Uri uri = FriendForecastContract.DetailData.buildDetailUri(contactId);
+                Uri uri = TieUsContract.DetailData.buildDetailUri(contactId);
                 mCallback.onContactClicked(uri, v);
                 mItemChoiceManager.onClick(holder);
             }

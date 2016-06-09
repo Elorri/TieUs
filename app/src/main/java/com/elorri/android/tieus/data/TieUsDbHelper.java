@@ -15,7 +15,7 @@ import com.elorri.android.tieus.extra.Tools;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class FriendForecastDbHelper extends SQLiteOpenHelper {
+public class TieUsDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 1;
@@ -25,7 +25,7 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
 
 
 
-    public FriendForecastDbHelper(Context context) {
+    public TieUsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
@@ -53,9 +53,9 @@ public class FriendForecastDbHelper extends SQLiteOpenHelper {
         // It does NOT depend on the version number for your application.
         // If you want to update the schema without wiping data, commenting out the next 2 lines
         // should be your top priority before modifying this method.
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ContactTable.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.ActionTable.NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FriendForecastContract.EventTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.ContactTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.ActionTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.EventTable.NAME);
         onCreate(sqLiteDatabase);
     }
 
