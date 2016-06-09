@@ -401,7 +401,7 @@ public class Tools {
                 moodDesc = R.string.unsatisfied;
                 break;
             case R.drawable.ic_do_not_disturb_alt_black_48dp:
-                moodDesc = R.string.untracked;
+                moodDesc = R.string.unfollowed;
                 break;
             default:
                 return null;

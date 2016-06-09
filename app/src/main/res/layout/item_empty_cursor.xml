@@ -7,6 +7,6 @@
     android:layout_height="match_parent"
     android:fontFamily="sans-serif-narrow"
     android:gravity="center"
-    android:padding="16dp"
+    android:padding="@dimen/spacing_normal"
     android:textSize="@dimen/text_size_medium"
     tools:text="What people may she like ?"/>

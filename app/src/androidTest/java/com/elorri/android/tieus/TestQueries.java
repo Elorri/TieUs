@@ -13,6 +13,8 @@ import com.elorri.android.tieus.extra.DateUtils;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
 
+import java.util.Locale;
+
 /**
  * Created by Elorri on 13/05/2016.
  */
@@ -740,10 +742,9 @@ public class TestQueries extends AndroidTestCase {
                 + (DateUtils.addDay(50, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "today - "
-                + DateUtils.todayStart() + " - tomorrow "
-                + DateUtils.tomorrowStart()+" - tomorrow "+String.valueOf(DateUtils.addDay(1,
-                DateUtils.setZeroDay(System.currentTimeMillis()))));
+        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "DateUtils.nextYearStart() - "
+                + DateUtils.fromLongToString(DateUtils.nextYearStart(), DateUtils
+                .TIMESTAMP_FORMAT, Locale.getDefault()));
     }
 
 }

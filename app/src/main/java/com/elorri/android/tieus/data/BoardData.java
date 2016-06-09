@@ -67,7 +67,7 @@ public abstract class BoardData {
             cursor = MatrixCursors.getOneLineCursor(
                     MatrixCursors.MessageQuery.PROJECTION,
                     MatrixCursors.MessageQuery.VALUES,
-                    context.getResources().getString(R.string.only_untracked_people));
+                    context.getResources().getString(R.string.no_people_to_follow));
         else
             cursor = getTopCursors(context, db, Status.getLastMessageIdx(context), now, selection,
                     selectionArgs);
@@ -79,7 +79,7 @@ public abstract class BoardData {
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true,
-                context.getResources().getString(R.string.unmanaged_people, cursor.getCount()), false, null, false));
+                context.getResources().getString(R.string.unfollowed_people, cursor.getCount()), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart} : new String[]{todayStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
@@ -115,7 +115,7 @@ public abstract class BoardData {
                 selection, selectionArgs, null, null, null);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.UntrackedPeopleQuery.SELECT_WITH_VIEWTYPE);
-        cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.untracked), false, null, false));
+        cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.unfollowed), false, null, false));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
@@ -198,7 +198,7 @@ public abstract class BoardData {
                             MatrixCursors.MessageQuery.VALUES,
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.mood_to_update), false, null,
+                            context.getResources().getString(R.string.mood_to_update_title), false, null,
                             false));
                 } else
                     return getTopCursors(context, db, Status.SET_UP_A_FREQUENCY_OF_CONTACT, now, selection, selectionArgs);

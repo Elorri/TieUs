@@ -131,7 +131,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:layout_toRightOf="@id/untracked"
-            android:text="@string/untracked"
+            android:text="@string/unfollowed"
             android:textAppearance="?android:textAppearanceLarge"           />
     </RelativeLayout>
 

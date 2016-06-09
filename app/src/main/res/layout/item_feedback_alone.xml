@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:padding="16dp">
+    android:padding="@dimen/spacing_normal">
 
     <TextView
         android:id="@+id/feedback_title"

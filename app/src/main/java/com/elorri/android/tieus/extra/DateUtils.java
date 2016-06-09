@@ -58,7 +58,7 @@ public class DateUtils {
                 fromLongToString(date, HOURS_MINUTES_FORMAT, Tools.getMostSuitableLocale()));
     }
 
-    private static long nextYearStart() {
+    public static long nextYearStart() {
         long nextYear = addDay(365, System.currentTimeMillis());
         return setZeroYear(nextYear);
     }

@@ -21,6 +21,6 @@
         android:padding="@dimen/spacing_small"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/primaryDark"
-        tool:text="Today">
+        tool:text="@string/today">
     </TextView>
 </RelativeLayout>

@@ -50,4 +50,9 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_list_height">110dp</dimen>
     <dimen name="widget_list_width">180dp</dimen>
+    <dimen name="toolbar_forcast_size">50dp</dimen>
+    <dimen name="half_toolbar_height">40dp</dimen>
+    <dimen name="colored_view_height">180dp</dimen>
+    <dimen name="unknown_mood_margin_top">25dp</dimen>
+    <dimen name="unknown_mood_margin_top_done_event">36dp</dimen>
 </resources>
