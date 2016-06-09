@@ -2,10 +2,12 @@ package com.elorri.android.tieus.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -20,18 +22,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.BoardData;
 import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ViewTypes;
+import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 
 /**
  * Created by Elorri on 11/04/2016.
  */
-public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, BoardAdapter.Callback {
+public class BoardFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        BoardAdapter.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
 
     //TODO put this in the sync adapter
     public static final String ACTION_DATA_UPDATED = TieUsContract.CONTENT_AUTHORITY + ".ACTION_DATA_UPDATED";
@@ -40,6 +45,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private BoardAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private TextView mSynchronising;
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
@@ -68,6 +74,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        mSynchronising = (TextView) view.findViewById(R.id.synchronising);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 //        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
@@ -112,10 +119,23 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onResume() {
-        super.onResume();
         Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "Status.getSyncStatus(getContext()) "
+                + Status.getSyncStatus(getContext()));
+
         //getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, this);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
     }
 
     @Override
@@ -146,47 +166,50 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
-        updateWidget();
-        mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
+        updateSynchronisingView();
+        if (Status.getSyncStatus(getContext()).equals(Status.SYNC_DONE)) {
+            mAdapter.swapCursor(data);
+            updateWidget();
+            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
 
-                if (mRecyclerView.getChildCount() > 0) {
-                    // Since we know we're going to get items, we keep the listener around until
-                    // we see Children.
-                    mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int position = mAdapter.getSelectedItemPosition(getContext());
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-                    if (position == RecyclerView.NO_POSITION) {
-                        position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
+                    if (mRecyclerView.getChildCount() > 0) {
+                        // Since we know we're going to get items, we keep the listener around until
+                        // we see Children.
+                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        int position = mAdapter.getSelectedItemPosition(getContext());
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                        if (position == RecyclerView.NO_POSITION) {
+                            position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+                        }
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+
+                        mRecyclerView.smoothScrollToPosition(position);
+
+
+                        //this method findViewHolderForAdapterPosition will always return null if we
+                        // call it after a swapCursor
+                        //(because it always return null after a notifyDataSetChanged) that's why we
+                        // call findViewHolderForAdapterPosition in the onPreDraw method
+
+                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
+
+                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
+                        if (null != vh) {
+                            if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                                mAdapter.selectView(vh);
+
+                        }
+                        mPosition = position;
+                        return true;
                     }
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-
-                    mRecyclerView.smoothScrollToPosition(position);
-
-
-                    //this method findViewHolderForAdapterPosition will always return null if we
-                    // call it after a swapCursor
-                    //(because it always return null after a notifyDataSetChanged) that's why we
-                    // call findViewHolderForAdapterPosition in the onPreDraw method
-
-                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
-
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
-                    if (null != vh) {
-                        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-                            mAdapter.selectView(vh);
-
-                    }
-                    mPosition = position;
-                    return true;
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
 
@@ -248,14 +271,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
 
-
-
-
     public void setSearchString(String searchString) {
         mSearchString = searchString;
     }
-
-
 
 
     private void updateWidget() {
@@ -264,8 +282,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(context.getPackageName());
         context.sendBroadcast(dataUpdatedIntent);
     }
-
-
 
 
     @Override
@@ -286,4 +302,28 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+        if (key.equals(getString(R.string.pref_sync_status_key))) {
+            updateSynchronisingView();
+            restartLoader();
+        }
+    }
+
+    private void updateSynchronisingView() {
+        if (mRecyclerView != null && mSynchronising != null) {
+            Log.e("Communication",  Thread.currentThread().getStackTrace()[2]+""+Status
+                    .getSyncStatus(getContext()));
+            if (Status.getSyncStatus(getContext()).equals(Status.SYNC_START)) {
+                Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+                mRecyclerView.setVisibility(View.INVISIBLE);
+                mSynchronising.setVisibility(View.VISIBLE);
+            } else {
+                Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mSynchronising.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
 }

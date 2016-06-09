@@ -42,7 +42,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
     // Interval at which to sync with the Tmdb network, in seconds.
     // 60 seconds (1 minute) * 60 * 24 * 3= 24 hours - will sync once every 3 days
     public static final int SYNC_INTERVAL = 60 * 60 * 24 * 3;
-   // public static final int SYNC_INTERVAL = 60; //for testing
+    // public static final int SYNC_INTERVAL = 60; //for testing
 
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
     private static final long _3DAYS_IN_MILLIS = 1000 * 60 * 60 * 24 * 3;
@@ -61,11 +61,13 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
 
     private void syncContacts() {
+        Status.setSyncStatus(getContext(), Status.SYNC_START);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "will start sync");
         addOrUpdateAppContactsAccordingToAndroidContacts();
         removeAppContactsAccordingToAndroidContacts();
         addOrRemoveVectorsAccordingToAndroidAppsInstalled();
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "sync done");
+        Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
 
 

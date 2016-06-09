@@ -147,6 +147,21 @@ public class Status {
         spe.commit();
     }
 
+    public static final String SYNC_UNKNOWWN="sync_unknown";
+    public static final String SYNC_START="sync_start";
+    public static final String SYNC_DONE="sync_done";
+    public static String getSyncStatus(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(context.getString(R.string.pref_sync_status_key), SYNC_UNKNOWWN);
+    }
+
+
+    public static void setSyncStatus(Context context, String status) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putString(context.getString(R.string.pref_sync_status_key), status);
+        spe.commit();
+    }
 
 
 }
