@@ -172,7 +172,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
                             ContentValues values = ContactDAO.getContentValues(androidCursor,
                                     R.drawable.ic_sentiment_neutral_black_48dp,
-                                    TieUsContract.ContactTable.UNTRACKED_ON_VALUE,
+                                    TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE,
                                     TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
                                     ColorGenerator.MATERIAL.getRandomColor());
 

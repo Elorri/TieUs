@@ -44,11 +44,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         mItemChoiceManager.setChoiceMode(choiceMode);
     }
 
-    public int getSelectedItemPosition(Context context) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            return mItemChoiceManager.getSelectedItemPosition();
-//        return mPosition;
-
+    public int getSelectedItemPosition() {
         return mItemChoiceManager.getSelectedItemPosition();
     }
 
@@ -59,28 +55,15 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public void selectView(RecyclerView.ViewHolder viewHolder) {
         if (viewHolder instanceof BoardAdapter.ViewHolder) {
             BoardAdapter.ViewHolder vh = (BoardAdapter.ViewHolder) viewHolder;
-            // vh.mView.performClick();
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + " " + vh.mView + " " + vh.itemView);
-            //This works too
             vh.itemView.performClick();
         }
     }
 
-    public void onRestoreInstanceState(Context context, Bundle savedInstanceState) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
-////        else
-//            mPosition = savedInstanceState.getInt(ADAPTER_POSITION, RecyclerView.NO_POSITION);
-
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         mItemChoiceManager.onRestoreInstanceState(savedInstanceState);
     }
 
-    public void onSaveInstanceState(Context context, Bundle outState) {
-////        if (context.getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-////            mItemChoiceManager.onSaveInstanceState(outState);
-////        else
-//            outState.putInt(ADAPTER_POSITION, mPosition);
-
+    public void onSaveInstanceState(Bundle outState) {
         mItemChoiceManager.onSaveInstanceState(outState);
     }
 
@@ -420,14 +403,11 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
         boolean isUntracked = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
-                TieUsContract.ContactTable.UNTRACKED_ON_VALUE);
+                TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE);
         if (isMoodKnown && !isUntracked)
             holder.moodUnknown.setVisibility(View.VISIBLE);
         else
             holder.moodUnknown.setVisibility(View.INVISIBLE);
-
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "holder.getAdapterPosition() " +
-                "" + holder.getAdapterPosition());
         mItemChoiceManager.onBindViewHolder(holder, holder.getAdapterPosition());
     }
 
@@ -461,8 +441,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
         int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         return viewtype;
     }
 

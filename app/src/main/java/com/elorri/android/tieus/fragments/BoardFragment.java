@@ -55,7 +55,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     public BoardFragment() {
         // Required empty public constructor
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     @Override
@@ -70,7 +69,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -84,8 +82,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
-            mAdapter.onRestoreInstanceState(getContext(), savedInstanceState);
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "onRestoreInstanceState");
+            mAdapter.onRestoreInstanceState(savedInstanceState);
             mListState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+            mLayoutManager.onRestoreInstanceState(mListState);
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
@@ -119,10 +119,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onResume() {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "Status.getSyncStatus(getContext()) "
-                + Status.getSyncStatus(getContext()));
-
         //getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
         getLoaderManager().restartLoader(BoardData.LOADER_ID, null, this);
 
@@ -140,7 +136,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         Uri uri = TieUsContract.BoardData.buildBoardUri(System.currentTimeMillis());
 
         final String selection = TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " LIKE ? ";
@@ -178,7 +173,7 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
                         // Since we know we're going to get items, we keep the listener around until
                         // we see Children.
                         mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int position = mAdapter.getSelectedItemPosition(getContext());
+                        int position = mAdapter.getSelectedItemPosition();
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
                         if (position == RecyclerView.NO_POSITION) {
@@ -189,6 +184,9 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
                         mRecyclerView.smoothScrollToPosition(position);
 
+//                        mLayoutManager.scrollToPosition(position);
+//                        mLayoutManager.scrollToPositionWithOffset(position, 20);
+//                        mRecyclerView.scrollToPosition(position);
 
                         //this method findViewHolderForAdapterPosition will always return null if we
                         // call it after a swapCursor
@@ -286,13 +284,14 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
         //TODO see if we use this
         //mPosition = mRecyclerView.getVerticalScrollbarPosition();
         if (mPosition != null) {
             outState.putInt(SELECTED_KEY, mPosition);
 
             // When tablets rotate, the currently selected list item needs to be saved.
-            mAdapter.onSaveInstanceState(getContext(), outState);
+            mAdapter.onSaveInstanceState(outState);
 
             // Save list state
             mListState = mLayoutManager.onSaveInstanceState();
@@ -304,7 +303,6 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         if (key.equals(getString(R.string.pref_sync_status_key))) {
             updateSynchronisingView();
             restartLoader();
@@ -313,14 +311,10 @@ public class BoardFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private void updateSynchronisingView() {
         if (mRecyclerView != null && mSynchronising != null) {
-            Log.e("Communication",  Thread.currentThread().getStackTrace()[2]+""+Status
-                    .getSyncStatus(getContext()));
             if (Status.getSyncStatus(getContext()).equals(Status.SYNC_START)) {
-                Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
                 mRecyclerView.setVisibility(View.INVISIBLE);
                 mSynchronising.setVisibility(View.VISIBLE);
             } else {
-                Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2]);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mSynchronising.setVisibility(View.INVISIBLE);
             }

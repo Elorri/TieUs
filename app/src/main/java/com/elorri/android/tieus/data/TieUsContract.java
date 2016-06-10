@@ -3,7 +3,6 @@ package com.elorri.android.tieus.data;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -62,8 +61,6 @@ public class TieUsContract {
         }
 
         public static String getContactIdFromUri(Uri uri) {
-            Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "" + "contactId" +
-                    uri.getPathSegments().get(1));
             return uri.getPathSegments().get(1);
         }
     }
@@ -142,12 +139,12 @@ public class TieUsContract {
         public static final String COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY = "increased_expected_delay_feedback";
         public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
         public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
-        public static final String COLUMN_UNTRACKED = "untracked";
+        public static final String COLUMN_UNFOLLOWED = "untracked";
         public static final String COLUMN_MOOD_UNKNOWN = "mood_unknown";
         public static final String COLUMN_BACKGROUND_COLOR = "background_color";
 
-        public static final String UNTRACKED_ON_VALUE = "1";
-        public static final String UNTRACKED_OFF_VALUE = "0";
+        public static final String UNFOLLOWED_ON_VALUE = "1";
+        public static final String UNFOLLOWED_OFF_VALUE = "0";
         public static final String UNTRACKED_CONSTRAINT = "untracked_ck";
 
         public static final String MOOD_UNKNOWN_ON_VALUE = "1";

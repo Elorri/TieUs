@@ -28,7 +28,7 @@ public class ContactActionVectorEventDAO {
             TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
             TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
             TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-            TieUsContract.ContactTable.COLUMN_UNTRACKED,
+            TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
             TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
             TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
     };
@@ -55,7 +55,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
             + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
             + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-            + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+            + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
             + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
             + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from (select "
             + TieUsContract.EventTable.VIEW_EVENT_ID + ", "
@@ -76,7 +76,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + ", "
             + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
             + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-            + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+            + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
             + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
             + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from (select "
             + TieUsContract.EventTable.NAME + "."
@@ -111,7 +111,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.ContactTable.NAME + "."
             + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
             + TieUsContract.ContactTable.NAME + "."
-            + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+            + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
             + TieUsContract.ContactTable.NAME + "."
             + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
             + TieUsContract.ContactTable.NAME + "."
@@ -162,7 +162,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
             + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
             + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-            + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+            + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
             + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
             + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
             + JOINT_LAST_ACTION_EVENT + ") lac inner join ("
@@ -199,7 +199,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
         };
@@ -216,7 +216,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -224,7 +224,7 @@ public class ContactActionVectorEventDAO {
     }
 
 
-    public interface ManagedPeopleQuery extends PeopleQuery {
+    public interface SchedulePeopleQuery extends PeopleQuery {
 
         String SELECT_MANAGED_PEOPLE = "select "
                 + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -238,18 +238,18 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " and "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " and "
                 + TieUsContract.EventTable.COLUMN_TIME_END + " is null order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
     }
 
 
-    public interface UnmanagedPeopleQuery extends PeopleQuery {
+    public interface UnscheduledPeopleQuery extends PeopleQuery {
 
 
         String SELECT = "select "
@@ -265,18 +265,18 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + TieUsContract.ContactTable.NAME + " where "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + " = "
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " except "
-                + ManagedPeopleQuery.SELECT_MANAGED_PEOPLE;
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " = "
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " except "
+                + SchedulePeopleQuery.SELECT_MANAGED_PEOPLE;
 
         String SELECT_WITH_VIEWTYPE = "select *, "
                 + ViewTypes.VIEW_UNMANAGED_PEOPLE + " as "
                 + ViewTypes.COLUMN_VIEWTYPE
-                + " from (" + UnmanagedPeopleQuery.SELECT + ")";
+                + " from (" + UnscheduledPeopleQuery.SELECT + ")";
     }
 
 
@@ -295,12 +295,12 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " and "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " and "
                 + TieUsContract.EventTable.COLUMN_TIME_END + " is not null and "
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is null order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
@@ -327,7 +327,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where ";
@@ -339,8 +339,8 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ") and "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + "="
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + " and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by lower("
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
         String SELECT_BEFORE_BIND_WITH_VIEWTYPE = "select *, "
@@ -367,7 +367,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
@@ -375,8 +375,8 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + "!= "
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + " and "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by lower("
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "
@@ -400,7 +400,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_TABLE_CONTACT_LAST_ACTION_VECTOR_EVENT + ") where "
@@ -410,8 +410,8 @@ public class ContactActionVectorEventDAO {
         String SELECT_AFTER_BIND = " > ("
                 + TieUsContract.EventTable.COLUMN_TIME_END + "+"
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ") and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by lower("
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
 
@@ -443,7 +443,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + JOINT_LAST_ACTION_EVENT + ") inner join "
@@ -457,8 +457,8 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + "*(2.0/3)) and( "
                 + TieUsContract.EventTable.VIEW_LAST_TIME_END + " + "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ") and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by lower("
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
 
@@ -497,13 +497,13 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + TieUsContract.ContactTable.NAME + " where "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " > ? and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE;
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE;
 
 
         String SELECT_WITH_VIEWTYPE = "select *, "
@@ -530,7 +530,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -550,7 +550,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -573,7 +573,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -583,8 +583,8 @@ public class ContactActionVectorEventDAO {
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + TieUsContract.EventTable.COLUMN_TIME_START + "< ? and "
                 + TieUsContract.EventTable.COLUMN_TIME_END + " is null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + " = "
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " = "
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by "
                 + TieUsContract.EventTable.COLUMN_TIME_START + " asc";
 
 
@@ -613,7 +613,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -634,7 +634,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -657,7 +657,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -669,8 +669,8 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.EventTable.COLUMN_TIME_START + " >= ? and "
                 + TieUsContract.EventTable.COLUMN_TIME_START + " < ? and "
                 + TieUsContract.EventTable.COLUMN_TIME_END + " is null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + " = "
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " = "
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by "
                 + TieUsContract.EventTable.COLUMN_TIME_START + " asc";
 
 
@@ -697,7 +697,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -717,7 +717,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -739,7 +739,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -775,7 +775,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -795,7 +795,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                TieUsContract.ContactTable.COLUMN_UNTRACKED,
+                TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME,
@@ -817,7 +817,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
@@ -827,8 +827,8 @@ public class ContactActionVectorEventDAO {
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
                 + TieUsContract.EventTable.COLUMN_TIME_START + " >= ? and "
                 + TieUsContract.EventTable.COLUMN_TIME_END + " is null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + " = "
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " order by "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " = "
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " order by "
                 + TieUsContract.EventTable.COLUMN_TIME_START + " asc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "
@@ -852,12 +852,12 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + TieUsContract.ContactTable.NAME + " where "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + " = "
-                + TieUsContract.ContactTable.UNTRACKED_ON_VALUE + " order by lower("
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " = "
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + " order by lower("
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + ") asc";
 
         String SELECT_WITH_VIEWTYPE = "select *, "
@@ -955,7 +955,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT + ") union select "
@@ -971,14 +971,14 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + TieUsContract.ContactTable.NAME + " where "
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " is not null and "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + " except "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + " except "
                 + PeopleThatNeedFrequencyQuery.SELECT;
 
 
@@ -1003,7 +1003,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
                 + PeopleThatNeedFrequencyQuery.SELECT + ") union select "
@@ -1019,13 +1019,13 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + ", "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + ", "
                 + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + ", "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + ", "
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from "
                 + TieUsContract.ContactTable.NAME + " where "
                 + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " is not null and "
-                + TieUsContract.ContactTable.COLUMN_UNTRACKED + "="
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE;
+                + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + "="
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE;
 
 
         String SELECT_WITH_VIEWTYPE = "select *, "

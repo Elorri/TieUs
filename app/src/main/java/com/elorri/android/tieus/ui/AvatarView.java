@@ -2,7 +2,6 @@ package com.elorri.android.tieus.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -42,12 +41,9 @@ public class AvatarView extends FrameLayout {
      * @param color 0 if we don't know the color we want
      */
     public void loadImage(String uri, int color) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"uri "+uri+" color "+color);
         removeAllViews();
         if (uri == null) {
             inflate(getContext(), R.layout.view_no_avatar, this);
-
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "color : " + color);
 
             //need this line only because in my test the - sign is mistakely removed.
             color = color < 0 ? color : color * -1;
@@ -65,7 +61,6 @@ public class AvatarView extends FrameLayout {
             // requestLayout();
 
         } else {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2]+"uri "+uri+" color "+color);
             inflate(getContext(), R.layout.view_avatar, this);
             ImageView thumbnail = (ImageView) findViewById(R.id.thumbnail);
             Glide.with(getContext())

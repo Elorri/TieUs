@@ -43,8 +43,8 @@ public abstract class BoardData {
             } else {
                 cursor = context.getContentResolver().query(TieUsContract.ContactTable
                         .CONTENT_URI, null, TieUsContract.ContactTable
-                        .COLUMN_UNTRACKED + "=?", new String[]{TieUsContract.ContactTable
-                        .UNTRACKED_ON_VALUE}, null);
+                        .COLUMN_UNFOLLOWED + "=?", new String[]{TieUsContract.ContactTable
+                        .UNFOLLOWED_ON_VALUE}, null);
                 if (cursor.getCount() == contactsCount)
                     onlyUntrackedPeople = true;
                 else
@@ -61,8 +61,6 @@ public abstract class BoardData {
 
         cursors.add(db.query("(" + ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE + ")", null, null,
                 null, null, null, null));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE);
         if (onlyUntrackedPeople)
             cursor = MatrixCursors.getOneLineCursor(
                     MatrixCursors.MessageQuery.PROJECTION,
@@ -74,47 +72,34 @@ public abstract class BoardData {
         if (cursor != null)
             cursors.add(cursor);
 
-        cursor = db.query("(" + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
+        cursor = db.query("(" + ContactActionVectorEventDAO.UnscheduledPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                 null, selection, selectionArgs, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true,
-                context.getResources().getString(R.string.unfollowed_people, cursor.getCount()), false, null, false));
+                context.getResources().getString(R.string.unscheduled_people, cursor.getCount()), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart} : new String[]{todayStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                 null, selection, args, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.delay), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart,
                 tomorrowStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.today), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart,
                 tomorrowStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.TodayDonePeopleQuery
                 .SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT_WITH_VIEWTYPE + " - "
-                + todayStart + " - " + tomorrowStart);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.done), false, null, false));
 
         args = selectionArgs == null ? new String[]{tomorrowStart} : new String[]{tomorrowStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.NextPeopleQuery.SELECT_WITH_VIEWTYPE
                 + ")", null, selection, args, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.NextPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.next), false, null, false));
 
         cursor = db.query("(" + ContactActionVectorEventDAO.UntrackedPeopleQuery.SELECT_WITH_VIEWTYPE + ")", null,
                 selection, selectionArgs, null, null, null);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                + ContactActionVectorEventDAO.UntrackedPeopleQuery.SELECT_WITH_VIEWTYPE);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.unfollowed), false, null, false));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
@@ -126,10 +111,8 @@ public abstract class BoardData {
         String message = "";
         switch (messageIdx) {
             case Status.MANAGE_UNMANAGED_PEOPLE:
-                cursor = db.query("(" + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
+                cursor = db.query("(" + ContactActionVectorEventDAO.UnscheduledPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                         null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.UnmanagedPeopleQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -150,8 +133,6 @@ public abstract class BoardData {
             case Status.FILL_IN_DELAY_FEEDBACK:
                 cursor = db.query("(" + ContactActionVectorEventDAO
                         .PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -179,10 +160,6 @@ public abstract class BoardData {
                         + now
                         + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery
                         .SELECT_AFTER_BIND_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
-                        + now
-                        + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -206,8 +183,6 @@ public abstract class BoardData {
             case Status.SET_UP_A_FREQUENCY_OF_CONTACT:
                 cursor = db.query("(" + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.SELECT_WITH_VIEWTYPE + ")",
                         null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleThatNeedFrequencyQuery.SELECT_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -235,10 +210,6 @@ public abstract class BoardData {
                                 + now
                                 + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE + ")",
                         null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
-                        + now
-                        + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -265,11 +236,6 @@ public abstract class BoardData {
                                 .SELECT_BEFORE_BIND_WITH_VIEWTYPE
                         + now + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
                         .SELECT_AFTER_BIND_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
-                        .SELECT_BEFORE_BIND_WITH_VIEWTYPE
-                        + now + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
-                        .SELECT_AFTER_BIND_WITH_VIEWTYPE);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
@@ -302,19 +268,13 @@ public abstract class BoardData {
                                 + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery
                                 .UPDATE_AFTER_BIND, null);
 
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
-                        + now
-                        + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_AFTER_BIND);
-
                 String[] args = selectionArgs == null ?
                         new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context))} :
                         new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context)), selectionArgs[0]};
                 cursor = db.query("(" +
                         ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery
                                 .SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
-                        + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.SELECT_WITH_VIEWTYPE);
+
                 if (cursor.getCount() > 0) {
                     //They decreased their mood, lets change their moodIcon
                     while (cursor.moveToNext()) {

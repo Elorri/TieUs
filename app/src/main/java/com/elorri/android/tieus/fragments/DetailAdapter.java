@@ -102,7 +102,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public DetailAdapter(Cursor cursor, Callback callback) {
         mCursor = cursor;
         mCallback = callback;
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
     }
 
 
@@ -444,7 +443,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp
                         || mEmoIconResource == R.drawable.ic_do_not_disturb_alt_black_48dp && isMoodUnknown) {
                     ContentValues values = getUntrackedContactValues(
-                            String.valueOf(TieUsContract.ContactTable.UNTRACKED_ON_VALUE));
+                            String.valueOf(TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE));
                     update(values);
                 }
                 mAlertEmoDialog.cancel();
@@ -562,7 +561,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
                 if (mCursor.getString(ContactDAO.ContactQuery.COL_UNTRACKED).equals(
-                        TieUsContract.ContactTable.UNTRACKED_ON_VALUE)) {
+                        TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE)) {
                     holder.moodIcon.setBackgroundResource(R.drawable.ic_do_not_disturb_alt_black_48dp);
                     mCallback.hideFab();
                 } else {
@@ -575,7 +574,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
                 boolean isUntracked = mCursor.getString(
                         ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
-                        TieUsContract.ContactTable.UNTRACKED_ON_VALUE);
+                        TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE);
                 if (isMoodKnown && !isUntracked)
                     holder.moodUnknown.setVisibility(View.VISIBLE);
                 else
@@ -787,8 +786,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
         int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         return viewtype;
     }
 
@@ -796,7 +793,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private ContentValues getUntrackedContactValues(String value) {
         ContentValues values = new ContentValues();
         values.put(TieUsContract.ContactTable._ID, mContactId);
-        values.put(TieUsContract.ContactTable.COLUMN_UNTRACKED, value);
+        values.put(TieUsContract.ContactTable.COLUMN_UNFOLLOWED, value);
         return values;
     }
 
@@ -806,8 +803,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         values.put(TieUsContract.ContactTable.COLUMN_MOOD, value);
         values.put(TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE);
-        values.put(TieUsContract.ContactTable.COLUMN_UNTRACKED,
-                TieUsContract.ContactTable.UNTRACKED_OFF_VALUE);
+        values.put(TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
+                TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE);
         return values;
     }
 

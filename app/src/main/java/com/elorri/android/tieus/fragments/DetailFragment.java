@@ -61,12 +61,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation "+getResources().getInteger(R.integer.orientation));
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         if (null != menu) menu.clear();
         mToolbar.inflateMenu(R.menu.fragment_detail);
         super.onPrepareOptionsMenu(menu);
@@ -74,7 +72,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         switch (item.getItemId()) {
             // When "edit" menu option selected
             case R.id.action_edit_contact:
@@ -112,7 +109,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         setCommonViews(view);
@@ -166,7 +162,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         getLoaderManager().initLoader(DetailData.LOADER_ID, null, this);
         switch (getResources().getInteger(R.integer.orientation)) {
             case MainActivity.PORT:
@@ -203,9 +198,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onResume() {
-        Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
         if (mData != null) {
-            Log.e("FF", "" + Thread.currentThread().getStackTrace()[2]);
             getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
         }
         super.onResume();
@@ -283,7 +276,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 //                mAvatar.loadImage(uri, color);
 //                break;
             case MainActivity.W600dp_PORT:
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAvatar");
                 mAvatar.loadImage(uri, color);
                 break;
             case MainActivity.W700dp_LAND:

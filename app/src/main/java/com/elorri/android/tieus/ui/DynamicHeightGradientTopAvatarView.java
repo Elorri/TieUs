@@ -2,7 +2,6 @@ package com.elorri.android.tieus.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.elorri.android.tieus.R;
@@ -43,7 +42,6 @@ public class DynamicHeightGradientTopAvatarView extends FrameLayout implements G
 
     @Override
     public void loadImage(String uri, int color) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         mThumbnailView.loadImage(uri, color);
     }
 

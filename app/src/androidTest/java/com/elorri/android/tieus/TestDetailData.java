@@ -51,7 +51,7 @@ public class TestDetailData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
@@ -81,7 +81,7 @@ public class TestDetailData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
@@ -113,7 +113,7 @@ public class TestDetailData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
@@ -143,14 +143,14 @@ public class TestDetailData extends AndroidTestCase {
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
-                + "|null|null|null|null|" + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE
                 + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
-                + "|null|null|null|null|" + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE + "|"
+                + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE
                 + "|-18611|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
@@ -189,14 +189,14 @@ public class TestDetailData extends AndroidTestCase {
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
-                + "|null|null|null|null|" + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE
                 + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
-                + "|null|null|null|null|" + TieUsContract.ContactTable.UNTRACKED_OFF_VALUE
+                + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE
                 + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"

@@ -23,7 +23,6 @@ import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.fragments.BoardFragment;
 import com.elorri.android.tieus.fragments.DetailFragment;
-import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         //This will launch a synchronisation with the user device contacts at first install and
         // then every 3 days.
-        TieUsSyncAdapter.initializeSyncAdapter(this);
+        //TieUsSyncAdapter.initializeSyncAdapter(this);
     }
 
     private void setCommonViews() {
