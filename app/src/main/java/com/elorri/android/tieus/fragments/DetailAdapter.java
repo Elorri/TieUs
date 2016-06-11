@@ -734,7 +734,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
                 Toast.makeText(context, context.getResources().getString(
-                                R.string.outside_event, vectorName),
+                                R.string.meeting, vectorName),
                         Toast.LENGTH_SHORT).show();
                 return;
             } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {

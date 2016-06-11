@@ -35,12 +35,12 @@
     <string name="next_actions" translatable="true">Next actions</string>
     <string name="select_vector" translatable="true">Select a vector</string>
     <string name="done_actions" translatable="true">Done actions</string>
-    <string name="fill_in_delay_feedback_title" translatable="true">People recently act for</string>
-    <string name="mood_to_update_title" translatable="true">Moods to update</string>
+    <string name="fill_in_delay_feedback_title" translatable="true">People recently worked for</string>
+    <string name="mood_to_update_title" translatable="true">Satisfaction face to update</string>
     <string name="fill_up_frequency_title" translatable="true">Frequency of contact to set up</string>
     <string name="ask_for_feedback_title" translatable="true">Unanswering people</string>
-    <string name="nearby_decreased_mood_title" translatable="true">They are soon to turn unhappy !</string>
-    <string name="decreased_mood_title" translatable="true">They changed they mood today!</string>
+    <string name="nearby_decreased_mood_title" translatable="true">They are soon to turn unsatisfied !</string>
+    <string name="decreased_mood_title" translatable="true">They decreased their satisfaction state today!</string>
 
     <!-- options to choose -->
     <string name="satisfied" translatable="true">Satisfied</string>
@@ -52,10 +52,10 @@
     <!-- ui elements -->
     <string name="due_date" translatable="true">Due date</string>
     <string name="ok" translatable="true">Ok</string>
-    <string name="feedback" translatable="true">Feedback : </string>
-    <string name="feedback2" translatable="true">Feedback</string>
+    <string name="feedback" translatable="true">Answer : </string>
+    <string name="feedback2" translatable="true">Answer</string>
     <string name="frequency" translatable="true">Frequency</string>
-    <string name="expected_feedback" translatable="true">Expected feedback ?</string>
+    <string name="expected_feedback" translatable="true">Expected answer ?</string>
     <string name="_24h" translatable="true">24h</string>
     <string name="_48h" translatable="true">48h</string>
     <string name="_4days" translatable="true">4 days</string>
@@ -94,21 +94,23 @@
     <string name="no_contacts_on_phone" translatable="true">Start adding contact on your phone to make the most of this app</string>
     <string name="manage_unmanaged_people_message" translatable="true">You have <xliff:g>%1$s</xliff:g> people with no actions registered. Add actions on their profile or mark them as unfollowed.</string>
     <string name="manage_unmanaged_person" translatable="true"><xliff:g>%1$s</xliff:g> has no actions registered. Add actions or mark her/him profile as unfollowed.</string>
-    <string name="fill_in_delay_feedback_message" translatable="true">You recently demonstrate interest to <xliff:g>%1$s</xliff:g> people. When would you like best to see them answering ? Fill the feedback delay on their profile.</string>
-    <string name="fill_in_delay_feedback_person" translatable="true">You recently did something for <xliff:g>%1$s</xliff:g> When would you like to see her/him answering ? Fill the feedback delay on her/his profile.</string>
-    <string name="update_mood_message" translatable="true">How are those <xliff:g>%1$s</xliff:g> people going ? </string>
+    <string name="fill_in_delay_feedback_message" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> people. When do you expect to see them answering ? Fill the answer delay on their profile.</string>
+    <string name="fill_in_delay_feedback_person" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> When do you expect to see her/him answering ? Fill the answer delay on her/his profile.</string>
+    <string name="update_mood_message" translatable="true">Are those <xliff:g>%1$s</xliff:g>
+        people satisfied by your actions ? </string>
     <string name="update_mood_person" translatable="true">How is <xliff:g>%1$s</xliff:g> going ? </string>
-    <string name="fill_up_frequency_message" translatable="true">How often would you like to hear about those  <xliff:g>%1$s</xliff:g>
-        people ? Fill up frequency on their profile.</string>
+    <string name="fill_up_frequency_message" translatable="true">How often would you like to
+        interact with those  <xliff:g>%1$s</xliff:g> people ? Fill up frequency on their profile.</string>
     <string name="fill_up_frequency_person" translatable="true">How often would you like to hear from  <xliff:g>%1$s</xliff:g> ? Fill up frequency on her/his profile.</string>
-    <string name="ask_for_feedback_message" translatable="true">Still no news from those <xliff:g>%1$s</xliff:g> people ? Ask them for feedback or move them to unfollowed.</string>
-    <string name="ask_for_feedback_person" translatable="true">Still no news from <xliff:g>%1$s</xliff:g> ? Ask him/her for feedback or move him/her to unfollowed.</string>
+    <string name="ask_for_feedback_message" translatable="true">Still no answer from those <xliff:g>%1$s</xliff:g> people ? Ask them for feedback or move them to unfollowed.</string>
+    <string name="ask_for_feedback_person" translatable="true">Still no answer from <xliff:g>%1$s</xliff:g> ? Ask him/her for feedback or move him/her to unfollowed.</string>
     <string name="nearby_decreased_mood_message" translatable="true">You have <xliff:g>%1$s</xliff:g>  contacts that may turn unsatisfied if you don\'t interact with them. Take action, it\'s still time ! </string>
     <string name="nearby_decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> may turn unsatisfied if you don\'t interact with her/him. Take action, it\'s still time ! </string>
-    <string name="decreased_mood_message" translatable="true">Those <xliff:g>%1$s</xliff:g> people decreased mood today.</string>
-    <string name="decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> decreased mood today.</string>
-    <string name="take_time_for_feedback_message" translatable="true">Does anybody did something for you ? Let him know what you think.</string>
-    <string name="no_people_to_follow" translatable="true">Start following people by affecting them a mood face on their detail</string>
+    <string name="decreased_mood_message" translatable="true">Those <xliff:g>%1$s</xliff:g>
+        people decreased their satisfaction state today.</string>
+    <string name="decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> decreased his/her satisfaction state today.</string>
+    <string name="no_people_to_follow" translatable="true">Start following people by choosing a
+        satisfaction face on their profile</string>
 
     <!-- notes messages -->
     <string name="action_completed" translatable="true">Action completed</string>
@@ -155,5 +157,12 @@
     <string name="sync_contact_done" translatable="true">Contacts synchronisation accomplished</string>
     <!-- the content_authority is also define in TieUsContract, a change here should be followed by a change there -->
     <string name="content_authority" translatable="false">com.elorri.android.tieus</string>
+
+
+
+
+    <!-- Only used in free flavor -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 
 </resources>

@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
+
+
+
     <application
         android:name="com.elorri.android.tieus.StethoApplication"
         android:allowBackup="true"
@@ -17,6 +20,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity
             android:name="com.elorri.android.tieus.activities.MainActivity"
             android:launchMode="singleTop"
@@ -28,8 +33,8 @@
         </activity>
         <activity
             android:name="com.elorri.android.tieus.activities.DetailActivity"
-            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity"
             android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity"
             android:theme="@style/AppTheme.Details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,11 +70,11 @@
         <!-- SyncAdapter's dummy authentication service -->
         <service android:name=".sync.TieUsAuthenticatorService">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
+                <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                android:resource="@xml/authenticator"/>
         </service>
 
         <!-- The SyncAdapter service -->
@@ -78,12 +83,13 @@
             android:exported="true"
             >
             <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
+                <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
             <meta-data
                 android:name="android.content.SyncAdapter"
-                android:resource="@xml/syncadapter" />
+                android:resource="@xml/syncadapter"/>
         </service>
+
 
     </application>
 
