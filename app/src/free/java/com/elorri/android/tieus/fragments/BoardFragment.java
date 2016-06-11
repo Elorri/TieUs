@@ -12,7 +12,7 @@ import com.google.android.gms.ads.AdView;
 /**
  * Created by Elorri on 11/06/2016.
  */
-public class FreeBoardFragment extends BoardFragment {
+public class BoardFragment extends AbstractBoardFragment {
 
     private AdView mAdBannerView = null;
 

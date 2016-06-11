@@ -31,13 +31,12 @@ import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.sync.TieUsSyncAdapter;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 
 /**
  * Created by Elorri on 11/04/2016.
  */
-public abstract class BoardFragment extends Fragment implements LoaderManager
+public abstract class AbstractBoardFragment extends Fragment implements LoaderManager
         .LoaderCallbacks<Cursor>,
         BoardAdapter.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -56,11 +55,8 @@ public abstract class BoardFragment extends Fragment implements LoaderManager
     private String LIST_STATE_KEY = "list_state_key";
 
 
-    //For free flavor
-    private AdView mAdBannerView = null;
 
-
-    public BoardFragment() {
+    public AbstractBoardFragment() {
         // Required empty public constructor
     }
 
@@ -99,21 +95,9 @@ public abstract class BoardFragment extends Fragment implements LoaderManager
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
-
-        mAdBannerView = (AdView) view.findViewById(R.id.adView);
-        requestBannerAd();
         return view;
     }
 
-    private void requestBannerAd() {
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdBannerView.loadAd(adRequest);
-    }
 
 
 //    @Override
@@ -130,7 +114,7 @@ public abstract class BoardFragment extends Fragment implements LoaderManager
         if (id == R.id.action_sync) {
             TieUsSyncAdapter.syncImmediately(getContext());
             //TODO is it necessary ?
-            //getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
+            //getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractBoardFragment.this);
             return true;
         }
 
@@ -286,7 +270,7 @@ public abstract class BoardFragment extends Fragment implements LoaderManager
 
     @Override
     public void restartLoader() {
-        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, BoardFragment.this);
+        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractBoardFragment.this);
     }
 
 

@@ -5,14 +5,14 @@
 
 
     <!-- actions of the app -->
-    <string name="action_reset_help_messages" translatable="true">Réinitialise messages d\'aide</string>
-    <string name="action_sync" translatable="true">Synchronise</string>
+    <string name="action_reset_help_messages" translatable="true">Réinitialiser messages d\'aide</string>
+    <string name="action_sync" translatable="true">Synchroniser</string>
     <string name="action_add" translatable="true">Ajouter action</string>
     <string name="action_edit_contact" translatable="true">Editer contact</string>
 
     <!-- strings diplayed on the UI -->
     <!-- titles -->
-    <string name="unscheduled_people" translatable="true">Contacts programmés</string>
+    <string name="unscheduled_people" translatable="true">Contacts non programmés</string>
     <string name="delay" translatable="true">Retard</string>
     <string name="today" translatable="true">Aujourd\'hui</string>
     <string name="done" translatable="true">Fait aujourd\'hui</string>
@@ -76,7 +76,7 @@
     <string name="no_contacts_on_phone" translatable="true">Ajoutez des contacts sur votre
         téléphone pour voir fonctionner cette application</string>
     <string name="manage_unmanaged_people_message" translatable="true">Vous avez <xliff:g>%1$s</xliff:g> contacts sans actions programmées. Ajoutez des actions sur leur profils ou marquez les comme \'non suivi\'.</string>
-    <string name="manage_unmanaged_person" translatable="true"><xliff:g>%1$s</xliff:g> n\'a pas d\'actions programmées. Ajoutez des actions sur son profils ou marquez le comme \'non suivi\'.</string>
+    <string name="manage_unmanaged_person" translatable="true"><xliff:g>%1$s</xliff:g> n\'a pas d\'actions programmées. Ajoutez des actions sur son profil ou marquez le comme \'non suivi\'.</string>
     <string name="fill_in_delay_feedback_message" translatable="true">Vous avez recemment
         travaillé pour <xliff:g>%1$s</xliff:g> contacts. Quand pensez vous recevoir une réponse
         ? Remplisez le \'délai de réponse\' sur leur profil.</string>
