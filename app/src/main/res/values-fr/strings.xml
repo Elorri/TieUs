@@ -70,7 +70,7 @@
     <!-- guidance messages -->
     <string name="select_action" translatable="true">Ajouter des actions pour commencer le suivi</string>
     <string name="how_to_done_action" translatable="true">Pressez longuement l\'action pour
-        la rendre \'effectuée\' ou non \'effectuée\'</string>
+        la rendre \'effectuée\' ou \'non effectuée\'</string>
     <string name="how_to_delete_action" translatable="true">Glissez l\'action vers la droite
     pour la supprimer</string>
     <string name="no_contacts_on_phone" translatable="true">Ajoutez des contacts sur votre

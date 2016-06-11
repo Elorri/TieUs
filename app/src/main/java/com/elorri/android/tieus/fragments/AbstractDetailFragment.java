@@ -1,11 +1,13 @@
 package com.elorri.android.tieus.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -37,7 +39,8 @@ import com.elorri.android.tieus.ui.GradientTopAvatarView;
 /**
  * Created by Elorri on 16/04/2016.
  */
-public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+public abstract class AbstractDetailFragment extends Fragment implements LoaderManager
+        .LoaderCallbacks<Cursor>,
         DetailAdapter.Callback {
     public static final String CONTACT_ID = "contact_id";
     public static final String DETAIL_URI = "uri";
@@ -310,6 +313,38 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void setAvatarContentDescription(String contactName) {
         mAvatar.setContentDescription(contactName);
+    }
+
+    @Override
+    public void startVector(Context context, String mimetype, String vectorData, String
+            vectorName) {
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
+        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+            if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
+                Toast.makeText(context, context.getResources().getString(
+                                R.string.meeting, vectorName),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
+                Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                //TODO add phone nummber
+//                smsIntent.putExtra("address", "0646632699");
+//                smsIntent.putExtra("sms_body", "message");
+                context.startActivity(smsIntent);
+            }
+        } else if (vectorData.equals(context.getResources().getString(R.string.vector_package_phone))) {
+            Intent phoneIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            //TODO add real phone number here
+//            Intent callIntent = new Intent(Intent.ACTION_CALL);
+//            callIntent.setData(Uri.parse("tel:0377778888"));
+            context.startActivity(phoneIntent);
+        } else {
+            Tools.launchExternalApp(context, vectorData, vectorName);
+        }
     }
 
 

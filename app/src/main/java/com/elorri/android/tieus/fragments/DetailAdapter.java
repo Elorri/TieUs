@@ -2,7 +2,6 @@ package com.elorri.android.tieus.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -96,6 +95,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         void showFab();
 
         void setAvatarContentDescription(String contactName);
+
+        void startVector(Context mContext, String mimetype, String vectorData, String vectorName);
     }
 
 
@@ -539,7 +540,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
     @Override
-    public void onBindViewHolder(final DetailAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final DetailAdapter.ViewHolder holder, final int
+            position) {
         mCursor.moveToPosition(position);
         int viewType = getItemViewType(position);
         switch (viewType) {
@@ -648,7 +650,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.startVector(mContext, mimetype, vectorData, vectorName);
                     }
                 });
 
@@ -679,7 +681,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.startVector(mContext, mimetype, vectorData, vectorName);
                     }
                 });
 
@@ -726,36 +728,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 
-    private void startVector(Context context, String mimetype, String vectorData, String
-            vectorName) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
-        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
-            if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
-                Toast.makeText(context, context.getResources().getString(
-                                R.string.meeting, vectorName),
-                        Toast.LENGTH_SHORT).show();
-                return;
-            } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
-                Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                smsIntent.setType("vnd.android-dir/mms-sms");
-                //TODO add phone nummber
-//                smsIntent.putExtra("address", "0646632699");
-//                smsIntent.putExtra("sms_body", "message");
-                context.startActivity(smsIntent);
-            }
-        } else if (vectorData.equals(context.getResources().getString(R.string.vector_package_phone))) {
-            Intent phoneIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            //TODO add real phone number here
-//            Intent callIntent = new Intent(Intent.ACTION_CALL);
-//            callIntent.setData(Uri.parse("tel:0377778888"));
-            context.startActivity(phoneIntent);
-        } else {
-            Tools.launchExternalApp(context, vectorData, vectorName);
-        }
-    }
 
     private void bindActionCommonsViews(ViewHolderAction holder) {
         Tools.setVectorBackground(mContext, holder.actionVectorImageView,
