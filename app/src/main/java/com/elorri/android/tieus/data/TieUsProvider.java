@@ -313,27 +313,26 @@ public class TieUsProvider extends ContentProvider {
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
         final int match = sUriMatcher.match(uri);
-        int returnCount = 0;
+        int returnCount;
         switch (match) {
             case TABLE_CONTACT:
                 returnCount = insertInBulk(TieUsContract.ContactTable.NAME, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return returnCount;
+                break;
             case TABLE_ACTION:
                 returnCount = insertInBulk(TieUsContract.ActionTable.NAME, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return returnCount;
+                break;
             case TABLE_VECTOR:
                 returnCount = insertInBulk(TieUsContract.VectorTable.NAME, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return returnCount;
+                break;
             case TABLE_EVENT:
                 returnCount = insertInBulk(TieUsContract.EventTable.NAME, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return returnCount;
+                break;
             default:
                 return super.bulkInsert(uri, values);
         }
+        getContext().getContentResolver().notifyChange(uri, null);
+        Log.d("TieUs", returnCount+ "rows inserted in " + uri);
+        return returnCount;
     }
 
     private int insertInBulk(String tableName, ContentValues[] values) {

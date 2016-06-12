@@ -7,7 +7,7 @@
     <!-- actions of the app -->
     <string name="action_reset_help_messages" translatable="true">Réinitialiser messages d\'aide</string>
     <string name="action_sync" translatable="true">Synchroniser</string>
-    <string name="action_add" translatable="true">Ajouter action</string>
+    <string name="action_add" translatable="true">Ajouter une action</string>
     <string name="action_edit_contact" translatable="true">Editer contact</string>
 
     <!-- strings diplayed on the UI -->
@@ -109,6 +109,57 @@
     <string name="no_contacts_app" translatable="true">Vous n\'avez pas d\'applications pouvant
         éditer les contacts sur votre materiel.</string>
     <string name="synchronising" translatable="true">Synchronisation en cours…</string>
+
+
+    <!-- actions messages -->
+    <string name="action_title1">Se presenter</string>
+    <string name="action_name1">Rechercher qui ils sont et ce dont ils ont besoin</string>
+    <string name="action_sort_order1">1</string>
+
+    <string name="action_title2">Se presenter</string>
+    <string name="action_name2">Informer qui vous êtes et ce que vous faites</string>
+    <string name="action_sort_order2">2</string>
+
+    <string name="action_title3">Informer</string>
+    <string name="action_name3">Informer d\'un événement</string>
+    <string name="action_sort_order3">3</string>
+
+    <string name="action_title4">Informer</string>
+    <string name="action_name4">Donner son expertise</string>
+    <string name="action_sort_order4">4</string>
+
+    <string name="action_title5">Informer</string>
+    <string name="action_name5">Informer sur un outil existant</string>
+    <string name="action_sort_order5">5</string>
+
+    <string name="action_title6">Informer</string>
+    <string name="action_name6">Informer sur une connexion qui pourrait aider</string>
+    <string name="action_sort_order6">6</string>
+
+    <string name="action_title7">Faire une offre</string>
+    <string name="action_name7">Proposer son travail</string>
+    <string name="action_sort_order7">7</string>
+
+    <string name="action_title8">Faire une offre</string>
+    <string name="action_name8">Proposer de l\'argent</string>
+    <string name="action_sort_order8">8</string>
+
+    <string name="action_title9">Faire une offre</string>
+    <string name="action_name9">Offrir un cadeau</string>
+    <string name="action_sort_order9">9</string>
+
+    <string name="action_title10">Donner son feedback</string>
+    <string name="action_name10">Recommander leur competence</string>
+    <string name="action_sort_order10">10</string>
+
+    <string name="action_title11">Donner son feedback</string>
+    <string name="action_name11">Encourager</string>
+    <string name="action_sort_order11">11</string>
+
+    <string name="action_title12">Donner son feedback</string>
+    <string name="action_name12">Remercier</string>
+    <string name="action_sort_order12">12</string>
+
 
     <!-- widget related -->
     <string name="empty_widget_list" translatable="true">Personne à contacter aujourd\'hui</string>

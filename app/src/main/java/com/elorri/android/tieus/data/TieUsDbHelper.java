@@ -1,5 +1,6 @@
 package com.elorri.android.tieus.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,7 +11,6 @@ import com.elorri.android.tieus.db.ActionDAO;
 import com.elorri.android.tieus.db.ContactDAO;
 import com.elorri.android.tieus.db.EventDAO;
 import com.elorri.android.tieus.db.VectorDAO;
-import com.elorri.android.tieus.extra.Tools;
 
 /**
  * Created by Elorri on 11/04/2016.
@@ -25,25 +25,35 @@ public class TieUsDbHelper extends SQLiteOpenHelper {
 
 
 
+
     public TieUsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
     }
 
 
+
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
         Log.d("TieUs", "" + Thread.currentThread().getStackTrace()[2]);
 
-        sqLiteDatabase.execSQL(ContactDAO.CREATE);
-        sqLiteDatabase.execSQL(ActionDAO.CREATE);
-        sqLiteDatabase.execSQL(EventDAO.CREATE);
-        sqLiteDatabase.execSQL(VectorDAO.CREATE);
+        db.execSQL(ContactDAO.CREATE);
+        db.execSQL(ActionDAO.CREATE);
+        db.execSQL(EventDAO.CREATE);
+        db.execSQL(VectorDAO.CREATE);
+
+        bulkInsert(db, TieUsContract.ActionTable.NAME, getActionTableStartData());
 
 
-        insert(sqLiteDatabase, ActionDAO.INSERT, R.raw.actions);
-        Log.e("TieUs", "Inserts done");
+     }
+
+    private void bulkInsert(SQLiteDatabase db, String table, ContentValues[] contentValues) {
+        for(ContentValues contentValue : contentValues){
+            db.insert(table, null, contentValue);
+        }
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
@@ -56,15 +66,61 @@ public class TieUsDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.ContactTable.NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.ActionTable.NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.EventTable.NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.VectorTable.NAME);
         onCreate(sqLiteDatabase);
     }
 
 
-    protected void insert(SQLiteDatabase db, String queryInsert, int ressource_reference) {
-        for (String line : Tools.loadTextFile(mContext, ressource_reference)) {
-            db.execSQL(queryInsert, line.split("\\|"));
-        }
+
+    private ContentValues getActionTableLine(String title, String name, String sortOrder) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(TieUsContract.ActionTable.COLUMN_TITLE, title);
+        contentValue.put(TieUsContract.ActionTable.COLUMN_NAME, name);
+        contentValue.put(TieUsContract.ActionTable.COLUMN_SORT_ORDER, sortOrder);
+        return contentValue;
     }
+
+    public ContentValues[] getActionTableStartData() {
+        ContentValues[] contentValues = new ContentValues[12];
+        contentValues[0] = getActionTableLine(mContext.getResources().getString(R.string.action_title1),
+                mContext.getResources().getString(R.string.action_name1),
+                mContext.getResources().getString(R.string.action_sort_order1));
+        contentValues[1] = getActionTableLine(mContext.getResources().getString(R.string.action_title2),
+                mContext.getResources().getString(R.string.action_name2),
+                mContext.getResources().getString(R.string.action_sort_order2));
+        contentValues[2] = getActionTableLine(mContext.getResources().getString(R.string.action_title3),
+                mContext.getResources().getString(R.string.action_name3),
+                mContext.getResources().getString(R.string.action_sort_order3));
+        contentValues[3] = getActionTableLine(mContext.getResources().getString(R.string.action_title4),
+                mContext.getResources().getString(R.string.action_name4),
+                mContext.getResources().getString(R.string.action_sort_order4));
+        contentValues[4] = getActionTableLine(mContext.getResources().getString(R.string.action_title5),
+                mContext.getResources().getString(R.string.action_name5),
+                mContext.getResources().getString(R.string.action_sort_order5));
+        contentValues[5] = getActionTableLine(mContext.getResources().getString(R.string.action_title6),
+                mContext.getResources().getString(R.string.action_name6),
+                mContext.getResources().getString(R.string.action_sort_order6));
+        contentValues[6] = getActionTableLine(mContext.getResources().getString(R.string.action_title7),
+                mContext.getResources().getString(R.string.action_name7),
+                mContext.getResources().getString(R.string.action_sort_order7));
+        contentValues[7] = getActionTableLine(mContext.getResources().getString(R.string.action_title8),
+                mContext.getResources().getString(R.string.action_name8),
+                mContext.getResources().getString(R.string.action_sort_order8));
+        contentValues[8] = getActionTableLine(mContext.getResources().getString(R.string.action_title9),
+                mContext.getResources().getString(R.string.action_name9),
+                mContext.getResources().getString(R.string.action_sort_order9));
+        contentValues[9] = getActionTableLine(mContext.getResources().getString(R.string.action_title10),
+                mContext.getResources().getString(R.string.action_name10),
+                mContext.getResources().getString(R.string.action_sort_order10));
+        contentValues[10] = getActionTableLine(mContext.getResources().getString(R.string.action_title11),
+                mContext.getResources().getString(R.string.action_name11),
+                mContext.getResources().getString(R.string.action_sort_order11));
+        contentValues[11] = getActionTableLine(mContext.getResources().getString(R.string.action_title12),
+                mContext.getResources().getString(R.string.action_name12),
+                mContext.getResources().getString(R.string.action_sort_order12));
+        return contentValues;
+    }
+
 
 
 }

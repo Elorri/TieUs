@@ -816,12 +816,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             values,
                             ContactDAO.ContactQuery.SELECTION,
                             new String[]{contactId});
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + ""
+                    + mContext.getResources().getString(R.string.action_title1));
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             mCallback.updateFragment();
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + ""
+                    + mContext.getResources().getString(R.string.action_title1));
         }
     }
 
