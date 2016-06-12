@@ -108,8 +108,8 @@ public class TestGivens extends AndroidTestCase {
         String actionString = "\n"
                 + "header |" +
                 TieUsContract.ActionTable._ID + "|" +
-                TieUsContract.ActionTable.COLUMN_TITLE + "|" +
-                TieUsContract.ActionTable.COLUMN_NAME + "|" +
+                TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + "|" +
+                TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + "|" +
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER + "|\n"
                 + "row |1|Introduce|Get to know who they are and what they are looking for|1|\n"
                 + "row |2|Introduce|Tell who you are and what you can do|2|\n"

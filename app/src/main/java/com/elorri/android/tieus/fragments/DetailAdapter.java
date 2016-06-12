@@ -738,8 +738,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         );
         holder.actionVectorImageView.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
                 .VectorActionByContactIdQuery.COL_VECTOR_NAME));
-        holder.action.setText(mCursor.getString(ContactActionVectorEventDAO
-                .VectorActionByContactIdQuery.COL_ACTION_NAME));
+        holder.action.setText(mContext.getString(mCursor.getInt(ContactActionVectorEventDAO
+                .VectorActionByContactIdQuery.COL_ACTION_NAME_RESOURCE_ID)));
     }
 
 

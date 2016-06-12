@@ -13,7 +13,7 @@ public class ContactActionVectorEventDAO {
             TieUsContract.EventTable.COLUMN_ACTION_ID,
             TieUsContract.EventTable.COLUMN_CONTACT_ID,
             TieUsContract.EventTable.COLUMN_VECTOR_ID,
-            TieUsContract.ActionTable.VIEW_ACTION_NAME,
+            TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
             TieUsContract.EventTable.COLUMN_TIME_START,
             TieUsContract.EventTable.COLUMN_TIME_END,
             TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
@@ -39,7 +39,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.EventTable.COLUMN_ACTION_ID + ", "
             + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
             + TieUsContract.EventTable.COLUMN_VECTOR_ID + ", "
-            + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+            + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
             + TieUsContract.EventTable.COLUMN_TIME_START + ", "
             + TieUsContract.EventTable.COLUMN_TIME_END + ", "
             + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -63,8 +63,8 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
             + TieUsContract.EventTable.COLUMN_VECTOR_ID + ", "
             + TieUsContract.ActionTable.NAME + "."
-            + TieUsContract.ActionTable.COLUMN_NAME + " as "
-            + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+            + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + " as "
+            + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
             + TieUsContract.EventTable.COLUMN_TIME_START + ", "
             + TieUsContract.EventTable.COLUMN_TIME_END + ", "
             + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -146,7 +146,7 @@ public class ContactActionVectorEventDAO {
             + TieUsContract.EventTable.COLUMN_ACTION_ID + ", lac."
             + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
             + TieUsContract.EventTable.COLUMN_VECTOR_ID + ", "
-            + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+            + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
             + TieUsContract.EventTable.COLUMN_TIME_START + ", "
             + TieUsContract.EventTable.COLUMN_TIME_END + ", "
             + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
@@ -514,7 +514,7 @@ public class ContactActionVectorEventDAO {
 
 
     public interface DelayPeopleQuery extends PeopleQuery {
-        int COL_ACTION = 13;
+        int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_START = 14;
         int COL_VECTOR_DATA = 15;
         int COL_VECTOR_MIMETYPE = 16;
@@ -533,7 +533,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
@@ -553,7 +553,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
@@ -576,7 +576,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
-                + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+                + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_START + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
@@ -596,7 +596,7 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 13;
+        int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_START = 14;
         int COL_VECTOR_NAME = 15;
         int COL_VECTOR_DATA = 16;
@@ -616,7 +616,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
@@ -637,7 +637,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
@@ -660,7 +660,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
-                + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+                + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_START + ", "
                 + TieUsContract.VectorTable.VIEW_VECTOR_NAME + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
@@ -681,7 +681,7 @@ public class ContactActionVectorEventDAO {
 
     public interface TodayDonePeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 13;
+        int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_END = 14;
         int COL_VECTOR_DATA = 15;
         int COL_VECTOR_MIMETYPE = 16;
@@ -700,7 +700,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
@@ -720,7 +720,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
@@ -742,7 +742,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
-                + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+                + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_END + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
@@ -759,7 +759,7 @@ public class ContactActionVectorEventDAO {
 
     public interface NextPeopleQuery extends PeopleQuery {
 
-        int COL_ACTION = 13;
+        int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_START = 14;
         int COL_VECTOR_DATA = 15;
         int COL_VECTOR_MIMETYPE = 16;
@@ -778,7 +778,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
@@ -798,7 +798,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
@@ -820,7 +820,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
-                + TieUsContract.ActionTable.VIEW_ACTION_NAME + ", "
+                + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_START + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
@@ -871,7 +871,7 @@ public class ContactActionVectorEventDAO {
         int COL_VECTOR_DATA = 1;
         int COL_VECTOR_MIMETYPE = 2;
         int COL_VECTOR_NAME = 3;
-        int COL_ACTION_NAME = 4;
+        int COL_ACTION_NAME_RESOURCE_ID = 4;
         int COL_TIME_START = 5;
         int COL_TIME_END = 6;
         int COL_PROJECTION_TYPE = 7;
@@ -890,7 +890,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.VIEW_ALL_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
@@ -901,7 +901,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -912,7 +912,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.VIEW_NEXT_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
@@ -923,7 +923,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -934,7 +934,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 TieUsContract.VectorTable.VIEW_VECTOR_NAME,
-                TieUsContract.ActionTable.VIEW_ACTION_NAME,
+                TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
                 TieUsContract.EventTable.COLUMN_TIME_END,
                 ViewTypes.VIEW_DONE_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE

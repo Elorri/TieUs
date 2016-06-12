@@ -34,7 +34,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     private Callback mCallback;
 
     public void updateCurrentStep(String currentStep) {
-        mCurrentStep=currentStep;
+        mCurrentStep = currentStep;
     }
 
 
@@ -146,12 +146,12 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             case VIEW_ACTION_RECAP: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int vectorIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_DATA);
-                int actionIdx = mCursor.getColumnIndex(TieUsContract.ActionTable.COLUMN_NAME);
+                int actionIdx = mCursor.getColumnIndex(TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID);
                 int timeStartIdx = mCursor.getColumnIndex(TieUsContract.EventTable.COLUMN_TIME_START);
                 String actionName;
                 long timeStartLong;
                 if (actionIdx != -1) {
-                    actionName = mCursor.getString(actionIdx);
+                    actionName = mContext.getResources().getString(mCursor.getInt(actionIdx));
                     holder.action.setText(actionName);
                     if (vectorIdx != -1) {
                         int mimetypeIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_MIMETYPE);
@@ -176,7 +176,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
             }
             case VIEW_ACTION_ITEM: {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                holder.textView.setText(mCursor.getString(ActionDAO.ActionQuery.COL_ACTION_NAME));
+                holder.textView.setText(mContext.getString(mCursor.getInt(ActionDAO.ActionQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

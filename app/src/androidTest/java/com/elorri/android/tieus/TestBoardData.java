@@ -480,7 +480,7 @@ public class TestBoardData extends AndroidTestCase {
 //                + "|"
 //                + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
 //                + "header |"
-//                + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+//                + MatrixCursors.TitleQuery.COLUMN_TITLE_RESOURCE_ID + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
 //                + "row |"
 //                + mContext.getString(R.string.decreased_mood_title) + "|"
 //                + ViewTypes.VIEW_TITLE + "|\n"

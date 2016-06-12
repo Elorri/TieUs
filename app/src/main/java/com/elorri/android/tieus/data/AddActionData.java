@@ -31,7 +31,7 @@ public class AddActionData {
         ArrayList<Cursor> cursors = new ArrayList();
         switch (cursorType) {
             case ACTION_SELECT_ACTION:
-                cursors.add(ActionDAO.getCursorActionsWithTitle(db));
+                cursors.add(ActionDAO.getCursorActionsWithTitle(context, db));
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 break;
 
@@ -73,7 +73,7 @@ public class AddActionData {
         String SELECT_ACTION = "select "
                 + TieUsContract.ActionTable._ID + " as "
                 + TieUsContract.ActionTable.VIEW_ACTION_ID + ", "
-                + TieUsContract.ActionTable.COLUMN_NAME + " from "
+                + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + " from "
                 + TieUsContract.ActionTable.NAME + " where "
                 + TieUsContract.ActionTable._ID + "=?";
 
@@ -89,7 +89,7 @@ public class AddActionData {
 
         String SELECT_ACTION_RECAP_VALIDATE = "select "
                 + TieUsContract.ActionTable.VIEW_ACTION_ID + ", "
-                + TieUsContract.ActionTable.COLUMN_NAME + ", "
+                + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + ", "
                 + TieUsContract.VectorTable.VIEW_VECTOR_ID + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + ", ? as "
@@ -100,7 +100,7 @@ public class AddActionData {
 
         String[] SELECT_ACTION_RECAP_VALIDATE_PROJECTION = new String[]{
                 TieUsContract.ActionTable.VIEW_ACTION_ID,
-                TieUsContract.ActionTable.COLUMN_NAME,
+                TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID,
                 TieUsContract.VectorTable.VIEW_VECTOR_ID,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,

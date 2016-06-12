@@ -80,7 +80,7 @@ public class WidgetListRemoteViewsService extends RemoteViewsService {
                 // Extract the data from the Cursor
                 Context context = getApplicationContext();
                 String contact = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_CONTACT_NAME);
-                //String action = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION);
+                //String action = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION_NAME_RESOURCE_ID);
                 //Integer contactThumbnail = data.getInt(ContactActionVectorEventDAO.TodayPeopleQuery.COL_THUMBNAIL);
                 String vectorMimeType = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_MIMETYPE);
                 String vector = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_DATA);

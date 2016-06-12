@@ -125,52 +125,22 @@
 
     <!-- actions messages -->
     <string name="action_title1">Introduce</string>
+    <string name="action_title2">Inform</string>
+    <string name="action_title3">Make an offer</string>
+    <string name="action_title4">Give feedback</string>
+
     <string name="action_name1">Get to know who they are and what they are looking for</string>
-    <string name="action_sort_order1">1</string>
-
-    <string name="action_title2">Introduce</string>
     <string name="action_name2">Tell who you are and what you can do</string>
-    <string name="action_sort_order2">2</string>
-
-    <string name="action_title3">Inform</string>
     <string name="action_name3">Inform of an event</string>
-    <string name="action_sort_order3">3</string>
-
-    <string name="action_title4">Inform</string>
     <string name="action_name4">Give expertise</string>
-    <string name="action_sort_order4">4</string>
-
-    <string name="action_title5">Inform</string>
     <string name="action_name5">Inform of an existing tool</string>
-    <string name="action_sort_order5">5</string>
-
-    <string name="action_title6">Inform</string>
     <string name="action_name6">Inform of a connection you have that may help</string>
-    <string name="action_sort_order6">6</string>
-
-    <string name="action_title7">Make an offer</string>
     <string name="action_name7">Make an offer of work</string>
-    <string name="action_sort_order7">7</string>
-
-    <string name="action_title8">Make an offer</string>
     <string name="action_name8">Make an offer of money</string>
-    <string name="action_sort_order8">8</string>
-
-    <string name="action_title9">Make an offer</string>
     <string name="action_name9">Offer a present</string>
-    <string name="action_sort_order9">9</string>
-
-    <string name="action_title10">Give feedback</string>
     <string name="action_name10">Upvote their competence</string>
-    <string name="action_sort_order10">10</string>
-
-    <string name="action_title11">Give feedback</string>
     <string name="action_name11">Encourage</string>
-    <string name="action_sort_order11">11</string>
-
-    <string name="action_title12">Give feedback</string>
     <string name="action_name12">Thanks</string>
-    <string name="action_sort_order12">12</string>
 
 
 

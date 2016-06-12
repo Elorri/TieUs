@@ -341,7 +341,7 @@ public class TieUsProvider extends ContentProvider {
         int returnCount = 0;
         try {
             for (ContentValues value : values) {
-                long _id = db.insert(tableName, null, value);
+                long _id = db.insertWithOnConflict(tableName, null, value, SQLiteDatabase.CONFLICT_REPLACE);
                 if (_id != -1) {
                     returnCount++;
                 }

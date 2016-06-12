@@ -25,23 +25,14 @@ public class ActionDAO {
     public static final String CREATE = "CREATE TABLE "
             + TieUsContract.ActionTable.NAME +
             "(" + TieUsContract.ActionTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TieUsContract.ActionTable.COLUMN_TITLE + " TEXT NOT NULL, "
-            + TieUsContract.ActionTable.COLUMN_NAME + " TEXT NOT NULL, "
+            + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + " INTEGER NOT NULL, "
+            + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + " INTEGER NOT NULL, "
             + TieUsContract.ActionTable.COLUMN_SORT_ORDER + " INTEGER NOT NULL, "
-            + "UNIQUE (" + TieUsContract.ActionTable.COLUMN_TITLE + ", "
-            + TieUsContract.ActionTable.COLUMN_NAME + ") ON CONFLICT REPLACE)";
+            + "UNIQUE (" + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + ", "
+            + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + ") ON CONFLICT REPLACE)";
 
 
-    public static final String INSERT = "INSERT INTO "
-            + TieUsContract.ActionTable.NAME
-            + " ("
-            + TieUsContract.ActionTable._ID + ", "
-            + TieUsContract.ActionTable.COLUMN_TITLE + ", "
-            + TieUsContract.ActionTable.COLUMN_NAME + ", "
-            + TieUsContract.ActionTable.COLUMN_SORT_ORDER
-            + ") " + "VALUES (?, ?, ?, ?)";
-
-    public static Cursor getCursorActionsWithTitle(SQLiteDatabase db) {
+    public static Cursor getCursorActionsWithTitle(Context context, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
 
         Cursor cursorTitles = db.query(true, TieUsContract.ActionTable.NAME,
@@ -49,12 +40,13 @@ public class ActionDAO {
                 null, null, null, null, DistinctActionTitleQuery.SORT_ORDER, null);
         try {
             while (cursorTitles.moveToNext()) {
-                String title = cursorTitles.getString(DistinctActionTitleQuery.COL_ACTION_TITLE);
+                int title = cursorTitles.getInt(DistinctActionTitleQuery.COL_ACTION_TITLE_RESOURCE_ID);
                 cursors.add(MatrixCursors.getOneLineCursor(
                         MatrixCursors.TitleQuery.PROJECTION,
                         MatrixCursors.TitleQuery.VALUES,
-                        title));
-                cursors.add(ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, title));
+                        context.getResources().getString(title)));
+                cursors.add(ActionDAO.getCursor(ActionDAO.ACTIONS_TITLES, db, null, String
+                        .valueOf(title)));
             }
         } finally {
             if (cursorTitles != null) cursorTitles.close();
@@ -65,28 +57,26 @@ public class ActionDAO {
     public interface ActionQuery {
 
         int COL_ID = 0;
-        int COL_ACTION_TITLE = 1;
-        int COL_ACTION_NAME = 2;
-        int COL_ACTION_SORT_ORDER = 3;
-        int COL_PROJECTION_TYPE = 4;
+        int COL_ACTION_NAME_RESOURCE_ID = 2;
+
 
         String SELECTION_BY_ACTION_ID = TieUsContract.ActionTable._ID + "=?";
-        String SELECTION_BY_TITLE = TieUsContract.ActionTable.COLUMN_TITLE + "=?";
+        String SELECTION_BY_TITLE = TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + "=?";
 
         String SORT_ORDER = TieUsContract.ActionTable.COLUMN_SORT_ORDER + " asc";
 
         String[] PROJECTION = {
                 TieUsContract.ActionTable._ID,
-                TieUsContract.ActionTable.COLUMN_TITLE,
-                TieUsContract.ActionTable.COLUMN_NAME,
+                TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID,
+                TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER,
                 ViewTypes.COLUMN_VIEWTYPE
         };
 
         String[] PROJECTION_QUERY = {
                 TieUsContract.ActionTable._ID,
-                TieUsContract.ActionTable.COLUMN_TITLE,
-                TieUsContract.ActionTable.COLUMN_NAME,
+                TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID,
+                TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER,
                 ViewTypes.VIEW_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
         };
@@ -95,16 +85,16 @@ public class ActionDAO {
 
     public interface DistinctActionTitleQuery {
 
-        int COL_ACTION_TITLE = 0;
+        int COL_ACTION_TITLE_RESOURCE_ID = 0;
 
-        String[] PROJECTION = {TieUsContract.ActionTable.COLUMN_TITLE};
+        String[] PROJECTION = {TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID};
 
         String SELECTION = TieUsContract.ActionTable._ID + "=?";
 
         String SORT_ORDER = TieUsContract.ActionTable.COLUMN_SORT_ORDER + " asc";
 
         String SELECT_TITLE = "select distinct"
-                + TieUsContract.ActionTable.COLUMN_TITLE + " from "
+                + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + " from "
                 + TieUsContract.ActionTable.NAME;
 
     }
@@ -161,5 +151,30 @@ public class ActionDAO {
         }
     }
 
+
+    private static ContentValues getLine(int titleResource, int nameResource, int sortOrder) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID, titleResource);
+        contentValue.put(TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID, nameResource);
+        contentValue.put(TieUsContract.ActionTable.COLUMN_SORT_ORDER, sortOrder);
+        return contentValue;
+    }
+
+    public static ContentValues[] getStartData() {
+        ContentValues[] contentValues = new ContentValues[12];
+        contentValues[0] = getLine(R.string.action_title1, R.string.action_name1, 1);
+        contentValues[1] = getLine(R.string.action_title1, R.string.action_name2, 2);
+        contentValues[2] = getLine(R.string.action_title2, R.string.action_name3, 3);
+        contentValues[3] = getLine(R.string.action_title2, R.string.action_name4, 4);
+        contentValues[4] = getLine(R.string.action_title2, R.string.action_name5, 5);
+        contentValues[5] = getLine(R.string.action_title2, R.string.action_name6, 6);
+        contentValues[6] = getLine(R.string.action_title3, R.string.action_name7, 7);
+        contentValues[7] = getLine(R.string.action_title3, R.string.action_name8, 8);
+        contentValues[8] = getLine(R.string.action_title3, R.string.action_name9, 9);
+        contentValues[9] = getLine(R.string.action_title4, R.string.action_name10, 10);
+        contentValues[10] = getLine(R.string.action_title4, R.string.action_name11, 11);
+        contentValues[11] = getLine(R.string.action_title4, R.string.action_name12, 12);
+        return contentValues;
+    }
 
 }

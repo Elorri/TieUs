@@ -71,6 +71,8 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
 
+
+
     /**
      * This function will remove the app database contacts in order to match the
      * device android database contacts

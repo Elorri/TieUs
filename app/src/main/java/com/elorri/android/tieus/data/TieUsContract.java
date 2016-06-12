@@ -167,11 +167,11 @@ public class TieUsContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ACTION).build();
 
         public static final String NAME = "action";
-        public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_TITLE_RESOURCE_ID = "title";
+        public static final String COLUMN_NAME_RESOURCE_ID = "name";
         public static final String COLUMN_SORT_ORDER = "sort_order";
         public static final String VIEW_ACTION_ID = "action_id";
-        public static final String VIEW_ACTION_NAME = "action_name";
+        public static final String VIEW_ACTION_NAME_RESOURCE_ID = "action_name";
 
         public static Uri buildActionUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
