@@ -57,7 +57,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE
                 + "|\n"
-                + "row |Add actions to start following up with this person|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
+                + "row |"+mContext.getResources().getString(R.string.select_action)+"|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -86,10 +86,10 @@ public class TestDetailData extends AndroidTestCase {
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.how_to_done_action)+"|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Gmail|"+R.string.action_name12+"|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -118,7 +118,7 @@ public class TestDetailData extends AndroidTestCase {
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |8|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
+                + "row |8|com.google.android.gm|package|Gmail|"+R.string.action_name12+"|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|null|" + ViewTypes
                 .VIEW_NEXT_ACTION + "|\n";
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
@@ -155,19 +155,20 @@ public class TestDetailData extends AndroidTestCase {
                 + "|-18611|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Long press the action to mark it as complete or uncomplete|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.how_to_done_action)+"|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.next_actions)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Add actions to start following up with this person|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.select_action)+"|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.done_actions)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
+                + "row |9|com.google.android.gm|package|Gmail|"+R.string.action_name12+"|" +
+                TestGivens._4daysAgo_15may2016at12h40m52s + "|"
                 + TestGivens._3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -201,16 +202,17 @@ public class TestDetailData extends AndroidTestCase {
                 + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Next actions|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.next_actions)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + "header |"
                 + MatrixCursors.EmptyCursorMessageQuery.COLUMN_EMPTY_CURSOR + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Add actions to start following up with this person|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.select_action)+"|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |Done actions|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.done_actions)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(
                 ContactActionVectorEventDAO.VectorActionByContactIdQuery.PROJECTION_NEXT)
-                + "row |9|com.google.android.gm|package|Thanks|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|"
+                + "row |9|com.google.android.gm|package|Gmail|"+R.string.action_name12+"|" + TestGivens
+                ._4daysAgo_15may2016at12h40m52s + "|"
                 + TestGivens._3daysAgo_16may2016at12h40m52s + "|" + ViewTypes.VIEW_DONE_ACTION + "|\n";
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();

@@ -111,18 +111,18 @@ public class TestGivens extends AndroidTestCase {
                 TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + "|" +
                 TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + "|" +
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER + "|\n"
-                + "row |1|Introduce|Get to know who they are and what they are looking for|1|\n"
-                + "row |2|Introduce|Tell who you are and what you can do|2|\n"
-                + "row |3|Inform|Inform of an event|3|\n"
-                + "row |4|Inform|Give expertise|4|\n"
-                + "row |5|Inform|Inform of an existing tool|5|\n"
-                + "row |6|Inform|Inform of a connection you have that may help|6|\n"
-                + "row |7|Make an offer|Make an offer of work|7|\n"
-                + "row |8|Make an offer|Make an offer of money|8|\n"
-                + "row |9|Make an offer|Offer a present|9|\n"
-                + "row |10|Give feedback|Upvote their competence|10|\n"
-                + "row |11|Give feedback|Encourage|11|\n"
-                + "row |12|Give feedback|Thanks|12|\n";
+                + "row |1|"+R.string.action_title1+"|"+R.string.action_name1+"|1|\n"
+                + "row |2|"+R.string.action_title1+"|"+R.string.action_name2+"|2|\n"
+                + "row |3|"+R.string.action_title2+"|"+R.string.action_name3+"|3|\n"
+                + "row |4|"+R.string.action_title2+"|"+R.string.action_name4+"|4|\n"
+                + "row |5|"+R.string.action_title2+"|"+R.string.action_name5+"|5|\n"
+                + "row |6|"+R.string.action_title2+"|"+R.string.action_name6+"|6|\n"
+                + "row |7|"+R.string.action_title3+"|"+R.string.action_name7+"|7|\n"
+                + "row |8|"+R.string.action_title3+"|"+R.string.action_name8+"|8|\n"
+                + "row |9|"+R.string.action_title3+"|"+R.string.action_name9+"|9|\n"
+                + "row |10|"+R.string.action_title4+"|"+R.string.action_name10+"|10|\n"
+                + "row |11|"+R.string.action_title4+"|"+R.string.action_name11+"|11|\n"
+                + "row |12|"+R.string.action_title4+"|"+R.string.action_name12+"|12|\n";
 
         ContentValues[] actionValues = TestUtility.fromCursorToContentValues(
                 TestUtility.getCursorFromString(actionString));

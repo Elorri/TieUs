@@ -81,102 +81,102 @@ public class TestQueries extends AndroidTestCase {
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.JOINT_TABLE_PROJECTION)
-                + "row |14|12|22|32|Thanks|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s
+                + "row |14|12|22|32|"+R.string.action_name12+"|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s
                 + "|839|298i5.3552i274b0e968b8a47fv|" + "Mélissa|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _3days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
-                + "row |24|12|42|32|Thanks|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s
+                + "row |24|12|42|32|"+R.string.action_name12+"|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s
                 + "|939|398i5.3552i274b0e968b8a47fv|Mélissa_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _3days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
-                + "row |13|12|21|32|Thanks|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
+                + "row |13|12|21|32|"+R.string.action_name12+"|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
                 + "|838|298i5.3552i264b0e968b8a47fv|Émilie|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n"
-                + "row |23|12|41|32|Thanks|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
+                + "row |23|12|41|32|"+R.string.action_name12+"|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
                 + "|938|398i5.3552i264b0e968b8a47fv|Émilie_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n"
-                + "row |12|12|20|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |12|12|20|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|837|298i5.3552i264b0e968b8a46fv|Denis|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
-                + "row |22|12|40|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |22|12|40|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|937|398i5.3552i264b0e968b8a46fv|Denis_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
-                + "row |9|12|17|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |9|12|17|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|834|298i5.3552i264b0e968b8a42fl|Jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
-                + "row |19|12|37|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |19|12|37|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|934|398i5.3552i264b0e968b8a42fl|Jacques_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
-                + "row |10|12|18|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |10|12|18|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|835|298i5.3552i264b0e968b8a42fv|Jeanne|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
-                + "row |20|12|38|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |20|12|38|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|935|398i5.3552i264b0e968b8a42fv|Jeanne_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
-                + "row |11|12|19|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |11|12|19|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|836|298i5.3552i264b0e968b8a42fd|Mathieu|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
-                + "row |21|12|39|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
+                + "row |21|12|39|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|936|398i5.3552i264b0e968b8a42fd|Mathieu_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
-                + "row |8|12|16|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|null" +
+                + "row |8|12|16|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|833|298i5.3552i264b0e968b8a42fk|"
                 + "Pierre|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
-                + "row |18|12|36|32|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|null" +
+                + "row |18|12|36|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|933|398i5.3552i264b0e968b8a42fk|"
                 + "Pierre_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
-                + "row |16|12|24|32|Thanks|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
+                + "row |16|12|24|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
                 + "|850|288i7.3552i264b0e968b8a42ff|"
                 + "Emma|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
-                + "row |26|12|44|32|Thanks|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
+                + "row |26|12|44|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
                 + "|950|398i9.3552i264b0e968b8a42ff|"
                 + "Emma_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
-                + "row |15|12|23|32|Thanks|" + _in1second_19may2016at12h40m53s + "|null|840|298i7.3552i264b0e968b8a42ff|"
+                + "row |15|12|23|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|null|840|298i7.3552i264b0e968b8a42ff|"
                 + "Françoise|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
-                + "row |25|12|43|32|Thanks|" + _in1second_19may2016at12h40m53s + "|null|940|398i7.3552i264b0e968b8a42ff|"
+                + "row |25|12|43|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|null|940|398i7.3552i264b0e968b8a42ff|"
                 + "Françoise_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
-                + "row |17|12|25|32|Thanks|" + tomorrowStart_20may2016at00h00m00sStart + "|null|851|290i5.3552i264b0e968b8a42fk|"
+                + "row |17|12|25|32|"+R.string.action_name12+"|" + tomorrowStart_20may2016at00h00m00sStart + "|null|851|290i5.3552i264b0e968b8a42fk|"
                 + "Bernard|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
-                + "row |27|12|45|32|Thanks|" + _in4days_23may2016at12h40m52s + "|null|951|390i5.3552i264b0e968b8a42fk|"
+                + "row |27|12|45|32|"+R.string.action_name12+"|" + _in4days_23may2016at12h40m52s + "|null|951|390i5.3552i264b0e968b8a42fk|"
                 + "Bernard_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
@@ -428,7 +428,7 @@ public class TestQueries extends AndroidTestCase {
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696"
-                + "|Thanks|" + _4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package" + "|\n";
+                + "|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package" + "|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
@@ -453,7 +453,7 @@ public class TestQueries extends AndroidTestCase {
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917"
-                + "|Thanks|" + _in1second_19may2016at12h40m53s + "|Gmail|com.google.android" +
+                + "|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|Gmail|com.google.android" +
                 ".gm|package|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -478,12 +478,12 @@ public class TestQueries extends AndroidTestCase {
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696"
-                + "|Thanks|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n"
+                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n"
                 + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696"
-                + "|Thanks|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n";
+                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n";
 
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -508,7 +508,7 @@ public class TestQueries extends AndroidTestCase {
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611"
-                + "|Thanks|" + tomorrowStart_20may2016at00h00m00sStart + "|com.google.android.gm|package|\n";
+                + "|"+R.string.action_name12+"|" + tomorrowStart_20may2016at00h00m00sStart + "|com.google.android.gm|package|\n";
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
@@ -519,12 +519,12 @@ public class TestQueries extends AndroidTestCase {
     public void test_untracked_people() {
 
         Cursor cursor = db.rawQuery(
-                ContactActionVectorEventDAO.UntrackedPeopleQuery.SELECT, null);
+                ContactActionVectorEventDAO.UnfollowedPeopleQuery.SELECT, null);
 
         assertEquals(11, cursor.getCount());
 
         String cursorString = "\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UntrackedPeopleQuery.PROJECTION)
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnfollowedPeopleQuery.PROJECTION)
                 + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"

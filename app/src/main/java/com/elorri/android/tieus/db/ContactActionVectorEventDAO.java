@@ -837,7 +837,7 @@ public class ContactActionVectorEventDAO {
     }
 
 
-    public interface UntrackedPeopleQuery extends PeopleQuery {
+    public interface UnfollowedPeopleQuery extends PeopleQuery {
 
         String SELECT = "select "
                 + TieUsContract.ContactTable._ID + " as "

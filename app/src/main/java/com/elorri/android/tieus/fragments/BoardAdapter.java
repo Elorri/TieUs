@@ -255,8 +255,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         int viewType = getItemViewType(position);
         switch (viewType) {
             case ViewTypes.VIEW_FORECAST: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ratio "
-                        + mCursor.getString(ContactDAO.RatioQuery.COL_RATIO));
                 String cursorRatio = mCursor.getString(ContactDAO.RatioQuery.COL_RATIO);
                 if (cursorRatio != null) {
                     float ratio = Float.valueOf(cursorRatio);
@@ -401,7 +399,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
-        holder.moodIcon.setContentDescription(Tools.getMoodDesciption(mContext,moodResId));
+        holder.moodIcon.setContentDescription(Tools.getMoodDesciption(mContext, moodResId));
         boolean isMoodKnown = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
                 TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
@@ -446,6 +444,44 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         mCursor.moveToPosition(position);
         int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
         return viewtype;
+    }
+
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "recyclerView " + recyclerView);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "recyclerView " + recyclerView);
+    }
+
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+        super.onViewRecycled(holder);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(ViewHolder holder) {
+        boolean isFailed = super.onFailedToRecycleView(holder);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder + " isFailed " + "" + isFailed);
+        return isFailed;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
     }
 
 

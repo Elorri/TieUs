@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
@@ -98,7 +97,7 @@ public abstract class BoardData {
                 + ")", null, selection, args, null, null, null);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.next), false, null, false));
 
-        cursor = db.query("(" + ContactActionVectorEventDAO.UntrackedPeopleQuery.SELECT_WITH_VIEWTYPE + ")", null,
+        cursor = db.query("(" + ContactActionVectorEventDAO.UnfollowedPeopleQuery.SELECT_WITH_VIEWTYPE + ")", null,
                 selection, selectionArgs, null, null, null);
         cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.unfollowed), false, null, false));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));

@@ -55,7 +55,6 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
     private String LIST_STATE_KEY = "list_state_key";
 
 
-
     public AbstractBoardFragment() {
         // Required empty public constructor
     }
@@ -75,6 +74,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"recyclerView "+mRecyclerView);
         mSynchronising = (TextView) view.findViewById(R.id.synchronising);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -97,7 +97,6 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
 
         return view;
     }
-
 
 
 //    @Override
@@ -165,53 +164,94 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
         updateSynchronisingView();
         if (Status.getSyncStatus(getContext()).equals(Status.SYNC_DONE)) {
             mAdapter.swapCursor(data);
             updateWidget();
-            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+            int position = mAdapter.getSelectedItemPosition();
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+            if (position == RecyclerView.NO_POSITION) {
+                position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
+                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+            }
+            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
+            mRecyclerView.smoothScrollToPosition(position);
+            mPosition = position;
+
+            mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
-                public boolean onPreDraw() {
-
-                    if (mRecyclerView.getChildCount() > 0) {
-                        // Since we know we're going to get items, we keep the listener around until
-                        // we see Children.
-                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int position = mAdapter.getSelectedItemPosition();
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-                        if (position == RecyclerView.NO_POSITION) {
-                            position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-                        }
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-
-                        mRecyclerView.smoothScrollToPosition(position);
-
-//                        mLayoutManager.scrollToPosition(position);
-//                        mLayoutManager.scrollToPositionWithOffset(position, 20);
-//                        mRecyclerView.scrollToPosition(position);
-
-                        //this method findViewHolderForAdapterPosition will always return null if we
-                        // call it after a swapCursor
-                        //(because it always return null after a notifyDataSetChanged) that's why we
-                        // call findViewHolderForAdapterPosition in the onPreDraw method
-
-                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(position);
-
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
-                        if (null != vh) {
-                            if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-                                mAdapter.selectView(vh);
-
-                        }
-                        mPosition = position;
-                        return true;
-                    }
-                    return false;
+                public void onGlobalLayout() {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                    mRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             });
+
+            mRecyclerView.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+                @Override
+                public void onDraw() {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                    mRecyclerView.getViewTreeObserver().removeOnDrawListener(this);
+                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
+
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
+                }
+            });
+
+            mRecyclerView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                    mRecyclerView.getViewTreeObserver().removeOnScrollChangedListener(this);
+                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
+
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
+                }
+            });
+
+            mRecyclerView.getViewTreeObserver().addOnWindowAttachListener(new ViewTreeObserver.OnWindowAttachListener() {
+                @Override
+                public void onWindowAttached() {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                }
+
+                @Override
+                public void onWindowDetached() {
+                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
+                }
+            });
+
+            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mRecyclerView.getChildCount() " + mRecyclerView.getChildCount());
+                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAdapter.getItemCount() " + mAdapter.getItemCount());
+
+                            if (mRecyclerView.getChildCount() > 0) {
+                                // Since we know we're going to get items, we keep the listener around until
+                                // we see Children.
+                                mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                                //this method findViewHolderForAdapterPosition will always return null if we
+                                // call it after a swapCursor
+                                //(because it always return null after a notifyDataSetChanged) that's why we
+                                // call findViewHolderForAdapterPosition in the onPreDraw method
+                                RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
+
+                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
+                                if (null != vh) {
+                                    if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                                        mAdapter.selectView(vh);
+                                }else{
+                                    restartLoader();
+                                }
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
         }
     }
 
