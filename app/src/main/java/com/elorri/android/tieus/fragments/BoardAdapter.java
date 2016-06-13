@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -444,44 +443,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         mCursor.moveToPosition(position);
         int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
         return viewtype;
-    }
-
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "recyclerView " + recyclerView);
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "recyclerView " + recyclerView);
-    }
-
-    @Override
-    public void onViewRecycled(ViewHolder holder) {
-        super.onViewRecycled(holder);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
-    }
-
-    @Override
-    public boolean onFailedToRecycleView(ViewHolder holder) {
-        boolean isFailed = super.onFailedToRecycleView(holder);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder + " isFailed " + "" + isFailed);
-        return isFailed;
-    }
-
-    @Override
-    public void onViewAttachedToWindow(ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(ViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "holder " + holder);
     }
 
 

@@ -171,64 +171,14 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
             updateWidget();
 
             int position = mAdapter.getSelectedItemPosition();
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mPosition " + mPosition);
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
             if (position == RecyclerView.NO_POSITION) {
                 position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
             }
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
             mRecyclerView.smoothScrollToPosition(position);
             mPosition = position;
-
-            mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                    mRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-
-            mRecyclerView.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
-                @Override
-                public void onDraw() {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                    mRecyclerView.getViewTreeObserver().removeOnDrawListener(this);
-                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
-
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
-                }
-            });
-
-            mRecyclerView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-                @Override
-                public void onScrollChanged() {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                    mRecyclerView.getViewTreeObserver().removeOnScrollChangedListener(this);
-                    RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
-
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
-                }
-            });
-
-            mRecyclerView.getViewTreeObserver().addOnWindowAttachListener(new ViewTreeObserver.OnWindowAttachListener() {
-                @Override
-                public void onWindowAttached() {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                }
-
-                @Override
-                public void onWindowDetached() {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                }
-            });
-
             mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                         @Override
                         public boolean onPreDraw() {
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mRecyclerView.getChildCount() " + mRecyclerView.getChildCount());
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mAdapter.getItemCount() " + mAdapter.getItemCount());
-
                             if (mRecyclerView.getChildCount() > 0) {
                                 // Since we know we're going to get items, we keep the listener around until
                                 // we see Children.
