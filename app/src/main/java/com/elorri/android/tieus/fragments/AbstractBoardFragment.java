@@ -189,8 +189,6 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
                                 //(because it always return null after a notifyDataSetChanged) that's why we
                                 // call findViewHolderForAdapterPosition in the onPreDraw method
                                 RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
-
-                                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "vh " + vh);
                                 if (null != vh) {
                                     if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
                                         mAdapter.selectView(vh);

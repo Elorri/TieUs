@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
+import com.elorri.android.tieus.TieUsApplication;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.fragments.BoardFragment;
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         //This will launch a synchronisation with the user device contacts at first install and
         // then every 3 days.
         //TieUsSyncAdapter.initializeSyncAdapter(this);
+
+        // Make sure that Analytics tracking has started
+        ((TieUsApplication) getApplication()).startTracking();
     }
 
     private void setCommonViews() {
