@@ -62,15 +62,12 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void syncContacts() {
         Status.setSyncStatus(getContext(), Status.SYNC_START);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "will start sync");
         addOrUpdateAppContactsAccordingToAndroidContacts();
         removeAppContactsAccordingToAndroidContacts();
         addOrRemoveVectorsAccordingToAndroidAppsInstalled();
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "sync done");
+        Status.setFirebaseStatsSent(getContext(), false);
         Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
-
-
 
 
     /**
@@ -78,6 +75,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
      * device android database contacts
      */
     private void removeAppContactsAccordingToAndroidContacts() {
+        int deletedContacts = 0;
         //Query 1 : Select our app database contacts
         Cursor appCursor = getContext().getContentResolver().query(
                 TieUsContract.ContactTable.CONTENT_URI,
@@ -119,6 +117,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                                 TieUsContract.ContactTable.CONTENT_URI,
                                 TieUsContract.ContactTable._ID + "=?",
                                 new String[]{appContactId});
+                        deletedContacts++;
                     }
 
                 } finally {
@@ -129,7 +128,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
             appCursor.close();
         }
 
-
+        Status.setSyncStatsContactDeleted(getContext(), deletedContacts);
     }
 
     /**
@@ -137,6 +136,9 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
      * device android database contacts
      */
     private void addOrUpdateAppContactsAccordingToAndroidContacts() {
+        int updatedContact = 0;
+        int addedContact = 0;
+
         //Query 1 : Select android phone/tablet contacts
         Cursor androidCursor = getContext().getContentResolver().query(
                 AndroidDAO.ContactQuery.CONTENT_URI,
@@ -180,6 +182,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
                             getContext().getContentResolver().insert(
                                     TieUsContract.ContactTable.CONTENT_URI, values);
+                            addedContact++;
                         } else { //Our local database know this contact, but in case the contact
                             // name has been updated, we update the whole contact but keep our local
                             // data like the moodId
@@ -191,6 +194,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                                     ContactDAO.getContentValues(androidCursor),
                                     TieUsContract.ContactTable._ID + "=?", new
                                             String[]{contactId});
+                            updatedContact++;
                         }
 
                     } finally {
@@ -203,6 +207,9 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
             if (androidCursor != null)
                 androidCursor.close();
         }
+
+        Status.setSyncStatsContactAdded(getContext(), addedContact);
+        Status.setSyncStatsContactUpdated(getContext(), updatedContact);
     }
 
     private void addOrRemoveVectorsAccordingToAndroidAppsInstalled() {

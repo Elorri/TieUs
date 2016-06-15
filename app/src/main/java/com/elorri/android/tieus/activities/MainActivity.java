@@ -24,6 +24,7 @@ import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.fragments.BoardFragment;
 import com.elorri.android.tieus.fragments.DetailFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,8 +66,23 @@ public class MainActivity extends AppCompatActivity {
         // then every 3 days.
         //TieUsSyncAdapter.initializeSyncAdapter(this);
 
-        // Make sure that Analytics tracking has started
-        ((TieUsApplication) getApplication()).startTracking();
+        if (!Status.getFirebaseStatsSent(this)) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactAdded(this));
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_added", bundle);
+
+            bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactUpdated(this));
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_updated", bundle);
+
+            bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactDeleted(this));
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_deleted", bundle);
+
+            Status.setFirebaseStatsSent(this, true);
+        }
+
     }
 
     private void setCommonViews() {
@@ -147,8 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                     .commit();
                         }
                     }
-                }
-                else {
+                } else {
                     mTwoPane = false;
                 }
                 break;

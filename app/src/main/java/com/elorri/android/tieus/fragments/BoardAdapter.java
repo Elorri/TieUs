@@ -334,7 +334,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
                         mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
-                holder.action.setText(mContext.getString(mCursor.getInt(ContactActionVectorEventDAO
+                holder.action.setText(mContext.getResources().getString(mCursor.getInt
+                        (ContactActionVectorEventDAO
                         .DelayPeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));

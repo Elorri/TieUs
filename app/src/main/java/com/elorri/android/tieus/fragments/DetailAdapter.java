@@ -31,6 +31,7 @@ import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.DateUtils;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -97,6 +98,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         void setAvatarContentDescription(String contactName);
 
         void startVector(Context mContext, String mimetype, String vectorData, String vectorName);
+
+        void sendToFirebase(String event, String contentType, String itemId, String itemName);
     }
 
 
@@ -409,6 +412,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
                     update(values);
+                    mCallback.sendToFirebase(FirebaseAnalytics.Event.SELECT_CONTENT, null, null,
+                            mContext.getResources().getString(R.string.satisfied));
                 }
                 mAlertEmoDialog.cancel();
             }
@@ -422,6 +427,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
                     update(values);
+                    mCallback.sendToFirebase(FirebaseAnalytics.Event.SELECT_CONTENT, null, null,
+                            mContext.getResources().getString(R.string.neutral));
                 }
                 mAlertEmoDialog.cancel();
             }
@@ -434,6 +441,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
                     update(values);
+                    mCallback.sendToFirebase(FirebaseAnalytics.Event.SELECT_CONTENT, null, null,
+                            mContext.getResources().getString(R.string.unsatisfied));
                 }
                 mAlertEmoDialog.cancel();
             }
@@ -446,6 +455,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     ContentValues values = getUntrackedContactValues(
                             String.valueOf(TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE));
                     update(values);
+                    mCallback.sendToFirebase(FirebaseAnalytics.Event.SELECT_CONTENT, null, null,
+                            mContext.getResources().getString(R.string.unfollowed));
                 }
                 mAlertEmoDialog.cancel();
             }
@@ -651,6 +662,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     @Override
                     public void onClick(View v) {
                         mCallback.startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.sendToFirebase(
+                                mContext.getResources().getString(R.string.event_start),
+                                mContext.getResources().getString(R.string.item_vector),
+                                null, vectorName);
                     }
                 });
 
@@ -682,6 +697,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     @Override
                     public void onClick(View v) {
                         mCallback.startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.sendToFirebase(
+                                mContext.getResources().getString(R.string.event_start),
+                                mContext.getResources().getString(R.string.item_vector),
+                                null, vectorName);
                     }
                 });
 
@@ -858,6 +877,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     mContext.getResources().getString(R.string.action_completed),
                     Toast.LENGTH_SHORT).show();
             mCallback.updateFragment();
+            mCallback.sendToFirebase(mContext.getResources().getString(R.string.event_completed),
+                    mContext.getResources().getString(R.string.item_action), null, null);
         }
     }
 
@@ -880,6 +901,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     mContext.getResources().getString(R.string.action_uncompleted),
                     Toast.LENGTH_LONG).show();
             mCallback.updateFragment();
+            mCallback.sendToFirebase(mContext.getResources().getString(R.string.event_uncompleted),
+                    mContext.getResources().getString(R.string.item_action), null, null);
         }
     }
 
@@ -902,6 +925,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     mContext.getResources().getString(R.string.action_deleted),
                     Toast.LENGTH_SHORT).show();
             mCallback.updateFragment();
+            mCallback.sendToFirebase(mContext.getResources().getString(R.string.event_delete),
+                    mContext.getResources().getString(R.string.item_action), null, null);
         }
     }
 }

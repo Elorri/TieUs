@@ -18,12 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elorri.android.tieus.R;
+import com.elorri.android.tieus.TieUsApplication;
 import com.elorri.android.tieus.activities.DetailActivity;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.AddActionData;
 import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.EventDAO;
 import com.elorri.android.tieus.extra.DateUtils;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -142,6 +144,16 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
                 .due_date));
         dpd.setOnDateSetListener(dateListener);
+    }
+
+    @Override
+    public void sendToFirebase(String contentType, String itemId, String itemName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
+        ((TieUsApplication) getActivity().getApplication()).getFirebaseAnalytics().logEvent(
+                FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
 

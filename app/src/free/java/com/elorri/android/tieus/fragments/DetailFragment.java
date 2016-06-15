@@ -58,4 +58,7 @@ public class DetailFragment extends AbstractDetailFragment {
             super.startVector(context, mimetype, vectorData, vectorName);
         }
     }
+
+
+
 }

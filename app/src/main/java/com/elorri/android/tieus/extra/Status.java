@@ -164,4 +164,52 @@ public class Status {
     }
 
 
+    public static void setSyncStats(Context context, String key, int stat) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putInt(key, stat);
+        spe.commit();
+    }
+
+    public static int getSyncStatsContactAdded(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(context.getString(R.string.pref_sync_stat_contact_added_key), 0);
+    }
+
+    public static void setSyncStatsContactAdded(Context context, int contactNumber) {
+        setSyncStats(context, context.getString(R.string.pref_sync_stat_contact_added_key),
+                contactNumber);
+    }
+
+    public static int getSyncStatsContactUpdated(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(context.getString(R.string.pref_sync_stat_contact_updated_key), 0);
+    }
+
+    public static void setSyncStatsContactUpdated(Context context, int contactNumber) {
+        setSyncStats(context, context.getString(R.string.pref_sync_stat_contact_updated_key),
+                contactNumber);
+    }
+
+    public static int getSyncStatsContactDeleted(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(context.getString(R.string.pref_sync_stat_contact_deleted_key), 0);
+    }
+
+    public static void setSyncStatsContactDeleted(Context context, int contactNumber) {
+        setSyncStats(context, context.getString(R.string.pref_sync_stat_contact_deleted_key),
+                contactNumber);
+    }
+
+    public static Boolean getFirebaseStatsSent(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(context.getString(R.string.pref_firebase_stat_send_key), false);
+    }
+    public static void setFirebaseStatsSent(Context context, Boolean status) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putBoolean(context.getString(R.string.pref_firebase_stat_send_key), status);
+        spe.commit();
+    }
+
 }

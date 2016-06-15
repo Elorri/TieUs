@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ga_trackingId">UA-78373883-1</string>
-    <bool name="ga_autoActivityTracking">true</bool>
-    <screenName name="com.elorri.android.tieus.activities.MainActivity">MainActivity</screenName>
-    <screenName name="com.elorri.android.tieus.activities.DetailActivity">DetailActivity</screenName>
-    <screenName name="com.elorri.android.tieus.activities.AddActionActivity">AddActionActivity</screenName>
-</resources>

@@ -1,0 +1,104 @@
+{
+  "project_info": {
+    "project_number": "324574698367",
+    "firebase_url": "https://project-6114689125141687349.firebaseio.com",
+    "project_id": "project-6114689125141687349",
+    "storage_bucket": "project-6114689125141687349.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324574698367:android:efac233a7f398c01",
+        "android_client_info": {
+          "package_name": "com.elorri.android.tieus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324574698367:android:c9bb4768c8334ae2",
+        "android_client_info": {
+          "package_name": "com.elorri.android.tieus.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324574698367:android:76a3fd6ba1236f93",
+        "android_client_info": {
+          "package_name": "com.elorri.android.tieus.paid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

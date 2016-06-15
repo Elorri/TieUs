@@ -43,6 +43,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
         void setVectorId(String vectorId);
 
+        void sendToFirebase(String contentType, String actionId, String actionName);
     }
 
     public AddActionAdapter(Cursor cursor, Callback callback, String currentStep) {
@@ -183,7 +184,11 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         int adapterPosition = holder.getAdapterPosition();
                         mCursor.moveToPosition(adapterPosition);
                         final String actionId = mCursor.getString(ActionDAO.ActionQuery.COL_ID);
+                        final String actionName = mContext.getResources().getString(mCursor.getInt
+                                (ActionDAO.ActionQuery.COL_ACTION_NAME_RESOURCE_ID));
+                        final String contentTypeAction = mContext.getResources().getString(R.string.item_action);
                         mCallback.setActionId(actionId);
+                        mCallback.sendToFirebase(contentTypeAction, actionId, actionName);
                     }
                 });
                 break;
@@ -192,7 +197,7 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.imageView.setBackground(null);
                 Tools.setVectorBackground(mContext, holder.imageView, mCursor.getString(
-                                VectorDAO.VectorQuery.COL_MIMETYPE),
+                        VectorDAO.VectorQuery.COL_MIMETYPE),
                         mCursor.getString(VectorDAO.VectorQuery.COL_DATA)
                 );
 
@@ -203,8 +208,11 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         int adapterPosition = holder.getAdapterPosition();
                         mCursor.moveToPosition(adapterPosition);
                         final String vectorId = mCursor.getString(VectorDAO.VectorQuery.COL_ID);
+                        final String vectorName = mCursor.getString(VectorDAO.VectorQuery.COL_VECTOR_NAME);
                         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorId);
+                        final String contentTypeVector = mContext.getResources().getString(R.string.item_vector);
                         mCallback.setVectorId(vectorId);
+                        mCallback.sendToFirebase(contentTypeVector,vectorId, vectorName);
                     }
                 });
                 break;

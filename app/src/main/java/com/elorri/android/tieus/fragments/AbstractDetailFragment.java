@@ -30,11 +30,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.elorri.android.tieus.R;
+import com.elorri.android.tieus.TieUsApplication;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.DetailData;
 import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.ui.GradientTopAvatarView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by Elorri on 16/04/2016.
@@ -237,6 +239,12 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, getContext().getResources().getString(R.string.action_add));
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, getContext().getResources().getString(R.string.item_button));
+                ((TieUsApplication) getActivity().getApplication()).getFirebaseAnalytics().logEvent(
+                        FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 String contactId = TieUsContract.DetailData.getContactIdFromUri(mUri);
                 //((DetailActivity) getActivity()).startAddActions(contactId);
 
@@ -324,7 +332,7 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
             if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
                 Toast.makeText(context, context.getResources().getString(
-                                R.string.meeting, vectorName),
+                        R.string.outside_event, vectorName),
                         Toast.LENGTH_SHORT).show();
                 return;
             } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
@@ -348,17 +356,32 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
     }
 
 
+
+    @Override
+    public void sendToFirebase(String event, String contentType, String itemId, String itemName) {
+        Bundle bundle = new Bundle();
+        if (itemId != null)
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        if (itemName != null)
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
+        if (contentType != null)
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
+        ((TieUsApplication) getActivity().getApplication())
+                .getFirebaseAnalytics().logEvent(event, bundle);
+    }
+
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //TODO save the last selected contact here
         super.onConfigurationChanged(newConfig);
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-        if(Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))){
+        if (Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))) {
             Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             getActivity().finish();
-        }else{
+        } else {
             getActivity().recreate();
         }
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation "+getResources().getInteger(R.integer.orientation));
+        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation " + getResources().getInteger(R.integer.orientation));
     }
 }

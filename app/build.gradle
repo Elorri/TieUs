@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.elorri.android.tieus"
@@ -39,6 +39,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
     freeCompile 'com.google.android.gms:play-services-ads:9.0.2'
-    compile 'com.google.android.gms:play-services-analytics:9.0.2'
-    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.firebase:firebase-core:9.0.2'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
