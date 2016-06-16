@@ -79,8 +79,8 @@ public class TestBoardData extends AndroidTestCase {
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |" + context.getResources().getString(R.string.delay) + "|" + ViewTypes.VIEW_TITLE + "|\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.DelayPeopleQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |" + context.getResources().getString(R.string.delayed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.DelayedPeopleQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
@@ -199,8 +199,8 @@ public class TestBoardData extends AndroidTestCase {
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |" + context.getResources().getString(R.string.delay) + "|" + ViewTypes.VIEW_TITLE + "|\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.DelayPeopleQuery.PROJECTION_WITH_VIEWTYPE)
+                + "row |" + context.getResources().getString(R.string.delayed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.DelayedPeopleQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|-4560696|"
                 + "" + R.string.action_name12 + "|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package"
@@ -287,7 +287,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.manage_unmanaged_people_message, 8)
+                + mContext.getResources().getString(R.string.manage_unscheduled_contact_message, "8")
                 + "|"
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
@@ -312,14 +312,13 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.fill_in_delay_feedback_message, 2)
+                + mContext.getResources().getString(R.string.fill_in_time_limit_response_message, "2")
                 + "|"
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"+mContext.getResources().getString(R.string.fill_in_delay_feedback_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO
-                .PeopleThatNeedsToFillInDelayFeedbackQuery.PROJECTION_WITH_VIEWTYPE)
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
@@ -351,14 +350,13 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.update_mood_person, "Jeanne")
+                + mContext.getResources().getString(R.string.update_satisfaction_face_person, "Jeanne")
                 + "|"
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"+mContext.getResources().getString(R.string.mood_to_update_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO
-                .PeopleThatNeedMoodUpdateQuery.PROJECTION_WITH_VIEWTYPE)
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UPDATE_MOOD + "|\n"
@@ -495,7 +493,7 @@ public class TestBoardData extends AndroidTestCase {
 //                + mContext.getString(R.string.decreased_mood_title) + "|"
 //                + ViewTypes.VIEW_TITLE + "|\n"
 //                + TestUtility.getCursorHeaderString
-//                (ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.PROJECTION_WITH_VIEWTYPE)
+//                (ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.PROJECTION_WITH_VIEWTYPE)
 //                + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
 //                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|"
 //                + TestGivens._30days + "|"+TestGivens.now_19may2016at12h40m52s+"|"

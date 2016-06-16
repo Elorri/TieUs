@@ -34,7 +34,7 @@
     <!-- strings diplayed on the UI -->
     <!-- titles -->
     <string name="unscheduled_people" translatable="true">Unscheduled people</string>
-    <string name="delay" translatable="true">Delay</string>
+    <string name="delayed" translatable="true">Delayed</string>
     <string name="today" translatable="true">Today</string>
     <string name="done" translatable="true">Done today</string>
     <string name="next" translatable="true">Next</string>
@@ -98,13 +98,13 @@
     <string name="how_to_done_action" translatable="true">Long press the action to mark it as complete or uncomplete</string>
     <string name="how_to_delete_action" translatable="true">Swipe action to the right to delete it</string>
     <string name="no_contacts_on_phone" translatable="true">Start adding contact on your phone to make the most of this app</string>
-    <string name="manage_unmanaged_people_message" translatable="true">You have <xliff:g>%1$s</xliff:g> contacts with no actions registered. Add actions on their profile or mark them as unfollowed.</string>
-    <string name="manage_unmanaged_person" translatable="true"><xliff:g>%1$s</xliff:g> has no actions registered. Add actions or mark her/him profile as unfollowed.</string>
-    <string name="fill_in_delay_feedback_message" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> contacts. When do you expect to see them answering ? Fill the answer delay on their profile.</string>
-    <string name="fill_in_delay_feedback_person" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> When do you expect to see her/him answering ? Fill the answer delay on her/his profile.</string>
-    <string name="update_mood_message" translatable="true">Are those <xliff:g>%1$s</xliff:g>
+    <string name="manage_unscheduled_contact_message" translatable="true">You have <xliff:g>%1$s</xliff:g> contacts with no actions registered. Add actions on their profile or mark them as unfollowed.</string>
+    <string name="manage_unscheduled_person" translatable="true"><xliff:g>%1$s</xliff:g> has no actions registered. Add actions or mark her/him profile as unfollowed.</string>
+    <string name="fill_in_time_limit_response_message" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> contacts. When do you expect to see them answering ? Fill the answer time limit on their profile.</string>
+    <string name="fill_in_time_limit_response_person" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> When do you expect to see her/him answering ? Fill the answer time limit on her/his profile.</string>
+    <string name="update_satisfaction_face_message" translatable="true">Are those <xliff:g>%1$s</xliff:g>
         contacts satisfied by your actions ? </string>
-    <string name="update_mood_person" translatable="true">How is <xliff:g>%1$s</xliff:g> going ? </string>
+    <string name="update_satisfaction_face_person" translatable="true">How is <xliff:g>%1$s</xliff:g> going ? </string>
     <string name="fill_up_frequency_message" translatable="true">How often would you like to
         interact with those  <xliff:g>%1$s</xliff:g> contacts ? Fill up frequency on their profile.</string>
     <string name="fill_up_frequency_person" translatable="true">How often would you like to hear from  <xliff:g>%1$s</xliff:g> ? Fill up frequency on her/his profile.</string>
@@ -204,6 +204,10 @@
     <string name="event_completed" translatable="false">completed</string>
     <string name="event_uncompleted" translatable="false">uncompleted</string>
     <string name="event_start" translatable="false">start</string>
+
+    <string name="event_contact_added" translatable="false">contact_added</string>
+    <string name="event_contact_updated" translatable="false">contact_updated</string>
+    <string name="event_contact_deleted" translatable="false">contact_deleted</string>
 
 
 </resources>

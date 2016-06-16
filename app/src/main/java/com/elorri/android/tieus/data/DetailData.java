@@ -35,9 +35,9 @@ public class DetailData {
 
         //If user is eligible for filling response delay or if response delay alone already filled
         cursor = db.query(
-                "(" + ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                "(" + ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery
                         .SELECT_WITH_VIEWTYPE + ")",
-                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE,
                 TieUsContract.EventTable.COLUMN_CONTACT_ID + "=?",
                 new String[]{contactId},

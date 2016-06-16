@@ -63,7 +63,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.elorri.android.tieus.fragments.BoardFragment"
+        android:name="com.elorri.android.tieus.fragments.MainFragment"
         android:layout_width="@dimen/layout_width"
         android:layout_height="wrap_content"
         android:layout_below="@id/card"

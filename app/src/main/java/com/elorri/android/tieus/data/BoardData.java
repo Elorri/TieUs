@@ -77,9 +77,9 @@ public abstract class BoardData {
                 context.getResources().getString(R.string.unscheduled_people, cursor.getCount()), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart} : new String[]{todayStart, selectionArgs[0]};
-        cursor = db.query("(" + ContactActionVectorEventDAO.DelayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
+        cursor = db.query("(" + ContactActionVectorEventDAO.DelayedPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                 null, selection, args, null, null, null);
-        cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.delay), false, null, false));
+        cursors.add(Tools.addDisplayProperties(cursor, true, context.getResources().getString(R.string.delayed), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart, tomorrowStart} : new String[]{todayStart,
                 tomorrowStart, selectionArgs[0]};
@@ -115,12 +115,12 @@ public abstract class BoardData {
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.manage_unmanaged_person,
+                        message = context.getResources().getString(R.string.manage_unscheduled_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.manage_unmanaged_people_message,
+                        message = context.getResources().getString(R.string.manage_unscheduled_contact_message,
                                 cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -130,17 +130,16 @@ public abstract class BoardData {
                     return getTopCursors(context, db, Status.FILL_IN_DELAY_FEEDBACK, now, selection, selectionArgs);
                 break;
             case Status.FILL_IN_DELAY_FEEDBACK:
-                cursor = db.query("(" + ContactActionVectorEventDAO
-                        .PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
+                cursor = db.query("(" + ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.fill_in_delay_feedback_person,
+                        message = context.getResources().getString(R.string.fill_in_time_limit_response_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.fill_in_delay_feedback_message,
+                        message = context.getResources().getString(R.string.fill_in_time_limit_response_message,
                                 cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -155,19 +154,19 @@ public abstract class BoardData {
                 break;
             case Status.UPDATE_MOOD:
                 cursor = db.query("(" +
-                        ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
+                        ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
                         + now
-                        + ContactActionVectorEventDAO.PeopleThatNeedMoodUpdateQuery
+                        + ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery
                         .SELECT_AFTER_BIND_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.update_mood_person,
+                        message = context.getResources().getString(R.string.update_satisfaction_face_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.update_mood_message,
+                        message = context.getResources().getString(R.string.update_satisfaction_face_message,
                                 cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.MessageQuery.PROJECTION,
@@ -262,27 +261,27 @@ public abstract class BoardData {
                         Tools.getContentValues(
                                 TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                                 String.valueOf(now)),
-                        ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.UPDATE_BEFORE_BIND
+                        ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.UPDATE_BEFORE_BIND
                                 + now
-                                + ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery
+                                + ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery
                                 .UPDATE_AFTER_BIND, null);
 
                 String[] args = selectionArgs == null ?
                         new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context))} :
                         new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context)), selectionArgs[0]};
                 cursor = db.query("(" +
-                        ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery
+                        ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery
                                 .SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
 
                 if (cursor.getCount() > 0) {
                     //They decreased their mood, lets change their moodIcon
                     while (cursor.moveToNext()) {
-                        int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_MOOD_ID);
+                        int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_MOOD_ID);
                         db.update(TieUsContract.ContactTable.NAME,
                                 Tools.getContentValues(TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
                                         String.valueOf(Tools.decreaseMood(moodIcon))),
                                 TieUsContract.ContactTable._ID + "=?",
-                                new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedMoodQuery.COL_ID)}
+                                new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_ID)}
                         );
                     }
                     if (cursor.getCount() == 1) {

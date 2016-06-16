@@ -239,11 +239,8 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, getContext().getResources().getString(R.string.action_add));
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, getContext().getResources().getString(R.string.item_button));
-                ((TieUsApplication) getActivity().getApplication()).getFirebaseAnalytics().logEvent(
-                        FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                sendToFirebase(FirebaseAnalytics.Event.SELECT_CONTENT, getContext().getResources
+                        ().getString(R.string.item_button), null, getContext().getResources().getString(R.string.item_action));
 
                 String contactId = TieUsContract.DetailData.getContactIdFromUri(mUri);
                 //((DetailActivity) getActivity()).startAddActions(contactId);
@@ -354,7 +351,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
             Tools.launchExternalApp(context, vectorData, vectorName);
         }
     }
-
 
 
     @Override

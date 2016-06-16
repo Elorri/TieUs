@@ -22,7 +22,7 @@ import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.TieUsApplication;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
-import com.elorri.android.tieus.fragments.BoardFragment;
+import com.elorri.android.tieus.fragments.MainFragment;
 import com.elorri.android.tieus.fragments.DetailFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private SearchView mSearchView;
     private static final String QUERY = "query";
     private String mQuery;
-    private BoardFragment mBoardFragment;
+    private MainFragment mBoardFragment;
     private String DETAIL_FRAGMENT_TAG = "detail_fragment";
     private boolean mTwoPane = false;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         setContentView(R.layout.activity_main);
 
-        mBoardFragment = (BoardFragment) getSupportFragmentManager()
+        mBoardFragment = (MainFragment) getSupportFragmentManager()
                 .findFragmentByTag(getResources().getString(R.string.tag_fragment_board));
 
         setCommonViews();
@@ -70,15 +70,18 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactAdded(this));
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
-            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_added", bundle);
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent(
+                    this.getResources().getString(R.string.event_contact_added), bundle);
 
             bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactUpdated(this));
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
-            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_updated", bundle);
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent(
+                    this.getResources().getString(R.string.event_contact_updated), bundle);
 
             bundle.putInt(FirebaseAnalytics.Param.VALUE, Status.getSyncStatsContactDeleted(this));
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, this.getResources().getString(R.string.item_contact));
-            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent("contact_deleted", bundle);
+            ((TieUsApplication) getApplication()).getFirebaseAnalytics().logEvent(
+                    this.getResources().getString(R.string.event_contact_deleted), bundle);
 
             Status.setFirebaseStatsSent(this, true);
         }
@@ -254,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public BoardFragment getMainFragment() {
+    public MainFragment getMainFragment() {
         return mBoardFragment;
     }
 }

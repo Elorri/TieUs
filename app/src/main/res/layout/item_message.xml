@@ -15,6 +15,6 @@
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_medium"
-        tools:text="@string/manage_unmanaged_people_message"/>
+        tools:text="@string/manage_unscheduled_contact_message"/>
 
 </FrameLayout>

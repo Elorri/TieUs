@@ -8,14 +8,14 @@ public class ViewTypes {
 
 
     //TODO rename this
-    public static final int VIEW_FORECAST = 0; //BoardAdapter ContactDAO.RATIO
-    public static final int VIEW_TITLE = 1; //BoardAdapter DetailAdapter AddActionAdapter
-    public static final int VIEW_UNMANAGED_PEOPLE = 2;//BoardAdapter
-    public static final int VIEW_DELAY_PEOPLE = 3;//BoardAdapter
-    public static final int VIEW_TODAY_PEOPLE = 4;//BoardAdapter
-    public static final int VIEW_TODAY_DONE_PEOPLE = 5;//BoardAdapter
-    public static final int VIEW_NEXT_PEOPLE = 6;//BoardAdapter
-    public static final int VIEW_UNTRACKED_PEOPLE = 7;//BoardAdapter
+    public static final int VIEW_FORECAST = 0; //MainAdapter ContactDAO.RATIO
+    public static final int VIEW_TITLE = 1; //MainAdapter DetailAdapter AddActionAdapter
+    public static final int VIEW_UNMANAGED_PEOPLE = 2;//MainAdapter
+    public static final int VIEW_DELAY_PEOPLE = 3;//MainAdapter
+    public static final int VIEW_TODAY_PEOPLE = 4;//MainAdapter
+    public static final int VIEW_TODAY_DONE_PEOPLE = 5;//MainAdapter
+    public static final int VIEW_NEXT_PEOPLE = 6;//MainAdapter
+    public static final int VIEW_UNTRACKED_PEOPLE = 7;//MainAdapter
     public static final int VIEW_FILL_IN_DELAY_FEEDBACK = 8;
     public static final int VIEW_UPDATE_MOOD = 9;
     public static final int VIEW_SET_UP_A_FREQUENCY_OF_CONTACT = 10;

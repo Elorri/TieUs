@@ -14,7 +14,7 @@ import android.widget.RemoteViews;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
-import com.elorri.android.tieus.fragments.AbstractBoardFragment;
+import com.elorri.android.tieus.fragments.AbstractMainFragment;
 
 /**
  * This class make the call to the db
@@ -52,7 +52,7 @@ public class WidgetListProvider extends AppWidgetProvider {
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
-        if (AbstractBoardFragment.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+        if (AbstractMainFragment.ACTION_DATA_UPDATED.equals(intent.getAction())) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));

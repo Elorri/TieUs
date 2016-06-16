@@ -147,7 +147,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
-                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
@@ -194,7 +194,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_CONTACT + "|\n"
                 + TestUtility.getCursorHeaderString(
-                ContactActionVectorEventDAO.PeopleElligibleForFillInDelayAloneUpdateQuery
+                ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery
                         .PROJECTION_WITH_VIEWTYPE)
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE

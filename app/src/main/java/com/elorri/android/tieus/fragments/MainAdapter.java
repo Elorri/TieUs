@@ -25,7 +25,7 @@ import com.elorri.android.tieus.ui.AvatarView;
 /**
  * Created by Elorri on 12/04/2016.
  */
-public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
 
     private Cursor mCursor;
@@ -36,7 +36,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     private String ADAPTER_POSITION = "adapter_position";
 
 
-    public BoardAdapter(Cursor cursor, Callback callback, int choiceMode) {
+    public MainAdapter(Cursor cursor, Callback callback, int choiceMode) {
         mCursor = cursor;
         mCallback = callback;
         mItemChoiceManager = new ItemChoiceManager(this);
@@ -52,8 +52,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     }
 
     public void selectView(RecyclerView.ViewHolder viewHolder) {
-        if (viewHolder instanceof BoardAdapter.ViewHolder) {
-            BoardAdapter.ViewHolder vh = (BoardAdapter.ViewHolder) viewHolder;
+        if (viewHolder instanceof MainAdapter.ViewHolder) {
+            MainAdapter.ViewHolder vh = (MainAdapter.ViewHolder) viewHolder;
             vh.itemView.performClick();
         }
     }
@@ -153,7 +153,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
 
     @Override
-    public BoardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         ViewHolder viewHolder = null;
         View view;
@@ -332,12 +332,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case ViewTypes.VIEW_DELAY_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
+                        mCursor.getString(ContactActionVectorEventDAO.DelayedPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.DelayedPeopleQuery.COL_VECTOR_DATA));
+                holder.vectorIcon.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
+                        .DelayedPeopleQuery.COL_VECTOR_NAME));
                 holder.action.setText(mContext.getResources().getString(mCursor.getInt
-                        (ContactActionVectorEventDAO
-                        .DelayPeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
-                long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayPeopleQuery.COL_TIME_START);
+                        (ContactActionVectorEventDAO.DelayedPeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
+                long dueDate = mCursor.getLong(ContactActionVectorEventDAO.DelayedPeopleQuery.COL_TIME_START);
                 holder.dueDate.setText(DateUtils.getFriendlyDateString(mContext, dueDate));
                 setOnClickListener(holder);
                 break;
@@ -347,6 +348,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_MIMETYPE),
                         mCursor.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_DATA));
+                holder.vectorIcon.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
+                        .TodayPeopleQuery.COL_VECTOR_NAME));
                 holder.action.setText(mContext.getString(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayPeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.TodayPeopleQuery.COL_TIME_START);
@@ -357,8 +360,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case ViewTypes.VIEW_TODAY_DONE_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
+                        mCursor.getString(ContactActionVectorEventDAO.TodayDonePeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.TodayDonePeopleQuery.COL_VECTOR_DATA));
+                holder.vectorIcon.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
+                        .TodayDonePeopleQuery.COL_VECTOR_NAME));
                 holder.action.setText(mContext.getString(mCursor.getInt(ContactActionVectorEventDAO
                         .TodayDonePeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 long doneDate = mCursor.getLong(ContactActionVectorEventDAO.TodayDonePeopleQuery
@@ -370,8 +375,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             case ViewTypes.VIEW_NEXT_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_MIMETYPE),
-                        mCursor.getString(ContactActionVectorEventDAO.DelayPeopleQuery.COL_VECTOR_DATA));
+                        mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_VECTOR_MIMETYPE),
+                        mCursor.getString(ContactActionVectorEventDAO.NextPeopleQuery.COL_VECTOR_DATA));
+                holder.vectorIcon.setContentDescription(mCursor.getString(ContactActionVectorEventDAO
+                        .NextPeopleQuery.COL_VECTOR_NAME));
                 holder.action.setText(mContext.getString(mCursor.getInt(ContactActionVectorEventDAO
                         .NextPeopleQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 long dueDate = mCursor.getLong(ContactActionVectorEventDAO.NextPeopleQuery.COL_TIME_START);

@@ -36,16 +36,16 @@ import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 /**
  * Created by Elorri on 11/04/2016.
  */
-public abstract class AbstractBoardFragment extends Fragment implements LoaderManager
+public abstract class AbstractMainFragment extends Fragment implements LoaderManager
         .LoaderCallbacks<Cursor>,
-        BoardAdapter.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
+        MainAdapter.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
 
     //TODO put this in the sync adapter
     public static final String ACTION_DATA_UPDATED = TieUsContract.CONTENT_AUTHORITY + ".ACTION_DATA_UPDATED";
 
     private static final String SELECTED_KEY = "selected_position";
 
-    private BoardAdapter mAdapter;
+    private MainAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private TextView mSynchronising;
     private Integer mPosition;
@@ -55,7 +55,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
     private String LIST_STATE_KEY = "list_state_key";
 
 
-    public AbstractBoardFragment() {
+    public AbstractMainFragment() {
         // Required empty public constructor
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
 //        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
 //                AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE;
         int choiceMode = AbsListView.CHOICE_MODE_SINGLE;
-        mAdapter = new BoardAdapter(null, this, choiceMode);
+        mAdapter = new MainAdapter(null, this, choiceMode);
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
@@ -113,7 +113,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
         if (id == R.id.action_sync) {
             TieUsSyncAdapter.syncImmediately(getContext());
             //TODO is it necessary ?
-            //getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractBoardFragment.this);
+            //getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractMainFragment.this);
             return true;
         }
 
@@ -204,7 +204,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
     }
 
 
-    private int getFirstContactPosition(BoardAdapter mAdapter) {
+    private int getFirstContactPosition(MainAdapter mAdapter) {
         Cursor data = mAdapter.getCursor();
         for (int i = 0; i < data.getCount(); i++) {
             data.moveToPosition(i);
@@ -258,7 +258,7 @@ public abstract class AbstractBoardFragment extends Fragment implements LoaderMa
 
     @Override
     public void restartLoader() {
-        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractBoardFragment.this);
+        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractMainFragment.this);
     }
 
 

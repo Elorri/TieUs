@@ -94,7 +94,7 @@
         android:layout_alignRight="@id/layout_center"
         android:layout_below="@id/card"
         android:background="@android:color/transparent"
-        android:name="com.elorri.android.tieus.fragments.BoardFragment"
+        android:name="com.elorri.android.tieus.fragments.MainFragment"
         android:tag="@string/tag_fragment_board"
         tools:layout="@layout/fragment_main"/>
 

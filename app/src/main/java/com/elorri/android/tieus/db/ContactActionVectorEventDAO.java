@@ -280,7 +280,7 @@ public class ContactActionVectorEventDAO {
     }
 
 
-    public interface PeopleThatNeedsToFillInDelayFeedbackQuery extends PeopleQuery {
+    public interface PeopleThatNeedsToFillInTimeLimitResponseQuery extends PeopleQuery {
 
 
         String SELECT = "select distinct "
@@ -312,7 +312,7 @@ public class ContactActionVectorEventDAO {
     }
 
 
-    public interface PeopleThatNeedMoodUpdateQuery extends PeopleQuery {
+    public interface PeopleThatNeedSatisfactionUpdateQuery extends PeopleQuery {
 
 
         String SELECT_BEFORE_BIND = "select distinct "
@@ -471,7 +471,7 @@ public class ContactActionVectorEventDAO {
 
     }
 
-    public interface PeopleWhoDecreasedMoodQuery extends PeopleQuery {
+    public interface PeopleWhoDecreasedSatisfactionQuery extends PeopleQuery {
 
         String UPDATE_BEFORE_BIND = ""
                 + TieUsContract.ContactTable._ID + " in (select "
@@ -513,11 +513,12 @@ public class ContactActionVectorEventDAO {
     }
 
 
-    public interface DelayPeopleQuery extends PeopleQuery {
+    public interface DelayedPeopleQuery extends PeopleQuery {
         int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_START = 14;
-        int COL_VECTOR_DATA = 15;
-        int COL_VECTOR_MIMETYPE = 16;
+        int COL_VECTOR_NAME = 15;
+        int COL_VECTOR_DATA = 16;
+        int COL_VECTOR_MIMETYPE = 17;
 
         String[] PROJECTION = new String[]{
                 TieUsContract.EventTable.COLUMN_CONTACT_ID,
@@ -535,6 +536,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
         };
@@ -555,6 +557,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -578,6 +581,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_START + ", "
+                + TieUsContract.VectorTable.VIEW_VECTOR_NAME + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
@@ -683,8 +687,10 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_END = 14;
-        int COL_VECTOR_DATA = 15;
-        int COL_VECTOR_MIMETYPE = 16;
+        int COL_VECTOR_NAME = 15;
+        int COL_VECTOR_DATA = 16;
+        int COL_VECTOR_MIMETYPE = 17;
+
 
         String[] PROJECTION = new String[]{
                 TieUsContract.EventTable.COLUMN_CONTACT_ID,
@@ -702,6 +708,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_END,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
         };
@@ -722,6 +729,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_END,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -744,6 +752,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_END + ", "
+                + TieUsContract.VectorTable.VIEW_VECTOR_NAME + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
@@ -761,8 +770,9 @@ public class ContactActionVectorEventDAO {
 
         int COL_ACTION_NAME_RESOURCE_ID = 13;
         int COL_TIME_START = 14;
-        int COL_VECTOR_DATA = 15;
-        int COL_VECTOR_MIMETYPE = 16;
+        int COL_VECTOR_NAME = 15;
+        int COL_VECTOR_DATA = 16;
+        int COL_VECTOR_MIMETYPE = 17;
 
         String[] PROJECTION = new String[]{
                 TieUsContract.EventTable.COLUMN_CONTACT_ID,
@@ -780,6 +790,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE
         };
@@ -800,6 +811,7 @@ public class ContactActionVectorEventDAO {
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
                 TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID,
                 TieUsContract.EventTable.COLUMN_TIME_START,
+                TieUsContract.VectorTable.VIEW_VECTOR_NAME,
                 TieUsContract.VectorTable.COLUMN_DATA,
                 TieUsContract.VectorTable.COLUMN_MIMETYPE,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -822,6 +834,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + ", "
                 + TieUsContract.ActionTable.VIEW_ACTION_NAME_RESOURCE_ID + ", "
                 + TieUsContract.EventTable.COLUMN_TIME_START + ", "
+                + TieUsContract.VectorTable.VIEW_VECTOR_NAME + ", "
                 + TieUsContract.VectorTable.COLUMN_DATA + ", "
                 + TieUsContract.VectorTable.COLUMN_MIMETYPE + " from ("
                 + JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ") where "
@@ -941,7 +954,7 @@ public class ContactActionVectorEventDAO {
         };
     }
 
-    public interface PeopleElligibleForFillInDelayAloneUpdateQuery extends PeopleQuery {
+    public interface PeopleElligibleForFillInTimeLimitAloneUpdateQuery extends PeopleQuery {
 
         String SELECT = "select "
                 + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
@@ -958,7 +971,7 @@ public class ContactActionVectorEventDAO {
                 + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + ", "
                 + TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN + ", "
                 + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " from ("
-                + PeopleThatNeedsToFillInDelayFeedbackQuery.SELECT + ") union select "
+                + PeopleThatNeedsToFillInTimeLimitResponseQuery.SELECT + ") union select "
                 + TieUsContract.ContactTable._ID + " as "
                 + TieUsContract.EventTable.COLUMN_CONTACT_ID + ", "
                 + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID + ", "
