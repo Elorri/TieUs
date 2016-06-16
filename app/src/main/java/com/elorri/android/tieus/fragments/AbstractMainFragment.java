@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +24,6 @@ import android.widget.TextView;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
-import com.elorri.android.tieus.data.BoardData;
 import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Status;
@@ -40,7 +37,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
         .LoaderCallbacks<Cursor>,
         MainAdapter.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    //TODO put this in the sync adapter
     public static final String ACTION_DATA_UPDATED = TieUsContract.CONTENT_AUTHORITY + ".ACTION_DATA_UPDATED";
 
     private static final String SELECTED_KEY = "selected_position";
@@ -51,8 +47,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
-    private Parcelable mListState;
-    private String LIST_STATE_KEY = "list_state_key";
 
 
     public AbstractMainFragment() {
@@ -62,8 +56,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO remove this when adding SyncAdapter
-        //syncContacts();
         setHasOptionsMenu(true);
     }
 
@@ -74,37 +66,23 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"recyclerView "+mRecyclerView);
         mSynchronising = (TextView) view.findViewById(R.id.synchronising);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        int choiceMode = (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) ?
-//                AbsListView.CHOICE_MODE_SINGLE : AbsListView.CHOICE_MODE_NONE;
-        int choiceMode = AbsListView.CHOICE_MODE_SINGLE;
-        mAdapter = new MainAdapter(null, this, choiceMode);
+        mAdapter = new MainAdapter(null, this, AbsListView.CHOICE_MODE_SINGLE);
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null) {
-            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "onRestoreInstanceState");
             mAdapter.onRestoreInstanceState(savedInstanceState);
-            mListState = savedInstanceState.getParcelable(LIST_STATE_KEY);
-            mLayoutManager.onRestoreInstanceState(mListState);
-        }
-
-        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
-            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            if (savedInstanceState.containsKey(SELECTED_KEY)) {
+                mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            }
         }
 
         return view;
     }
 
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.fragment_main, menu);
-//
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,8 +90,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
         if (id == R.id.action_sync) {
             TieUsSyncAdapter.syncImmediately(getContext());
-            //TODO is it necessary ?
-            //getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractMainFragment.this);
             return true;
         }
 
@@ -123,8 +99,9 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onResume() {
-        //getLoaderManager().initLoader(BoardData.LOADER_ID, null, this);
-        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, this);
+        //I had trouble with initLoader, so I use restartLoader here
+        //getLoaderManager().initLoader(MainData.LOADER_ID, null, this);
+        getLoaderManager().restartLoader(com.elorri.android.tieus.data.MainData.LOADER_ID, null, this);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
@@ -140,7 +117,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri uri = TieUsContract.BoardData.buildBoardUri(System.currentTimeMillis());
+        Uri uri = TieUsContract.MainData.buildBoardUri(System.currentTimeMillis());
 
         final String selection = TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " LIKE ? ";
 
@@ -177,29 +154,34 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
             mRecyclerView.smoothScrollToPosition(position);
             mPosition = position;
             mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                        @Override
-                        public boolean onPreDraw() {
-                            if (mRecyclerView.getChildCount() > 0) {
-                                // Since we know we're going to get items, we keep the listener around until
-                                // we see Children.
-                                mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                @Override
+                public boolean onPreDraw() {
+                    if (mRecyclerView.getChildCount() > 0) {
+                        // Since we know we're going to get items, we keep the listener around until
+                        // we see Children.
+                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
 
-                                //this method findViewHolderForAdapterPosition will always return null if we
-                                // call it after a swapCursor
-                                //(because it always return null after a notifyDataSetChanged) that's why we
-                                // call findViewHolderForAdapterPosition in the onPreDraw method
-                                RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
-                                if (null != vh) {
-                                    if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
-                                        mAdapter.selectView(vh);
-                                }else{
-                                    restartLoader();
-                                }
-                                return true;
-                            }
-                            return false;
+                        //this method findViewHolderForAdapterPosition will always return null if we
+                        // call it after a swapCursor
+                        //(because it always return null after a notifyDataSetChanged) that's why we
+                        // call findViewHolderForAdapterPosition in the onPreDraw method
+                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
+                        if (null != vh) {
+                            if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                                mAdapter.selectView(vh);
+                        } else {
+                            // I had trouble trouble getting a ViewHolder not null for views that
+                            // were first offscreens. See my post on forum :
+                            // https://discussions.udacity.com/t/viewholder-null-and-scrolltoposition
+                            // After several days of search i ended up restarting the loader. But
+                            // I know it's not the best solution.
+                            restartLoader();
                         }
-                    });
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
     }
 
@@ -209,7 +191,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
         for (int i = 0; i < data.getCount(); i++) {
             data.moveToPosition(i);
             if ((data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
-                    == ViewTypes.VIEW_UNMANAGED_PEOPLE)
+                    == ViewTypes.VIEW_UNSCHEDULED_PEOPLE)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
                     == ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
@@ -217,13 +199,13 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
                     == ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
-                    == ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK)
+                    == ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
-                    == ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY)
+                    == ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
-                    == ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
+                    == ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
-                    == ViewTypes.VIEW_DELAY_PEOPLE)
+                    == ViewTypes.VIEW_DELAYED_PEOPLE)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
                     == ViewTypes.VIEW_TODAY_PEOPLE)
                     || (data.getInt(data.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE))
@@ -240,7 +222,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.e("Communication", "" + Thread.currentThread().getStackTrace()[2] + "");
         mRecyclerView.setAdapter(null);
     }
 
@@ -258,7 +239,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void restartLoader() {
-        getLoaderManager().restartLoader(BoardData.LOADER_ID, null, AbstractMainFragment.this);
+        getLoaderManager().restartLoader(com.elorri.android.tieus.data.MainData.LOADER_ID, null, AbstractMainFragment.this);
     }
 
 
@@ -277,18 +258,11 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "");
-        //TODO see if we use this
-        //mPosition = mRecyclerView.getVerticalScrollbarPosition();
         if (mPosition != null) {
             outState.putInt(SELECTED_KEY, mPosition);
 
             // When tablets rotate, the currently selected list item needs to be saved.
             mAdapter.onSaveInstanceState(outState);
-
-            // Save list state
-            mListState = mLayoutManager.onSaveInstanceState();
-            outState.putParcelable(LIST_STATE_KEY, mListState);
         }
         super.onSaveInstanceState(outState);
     }

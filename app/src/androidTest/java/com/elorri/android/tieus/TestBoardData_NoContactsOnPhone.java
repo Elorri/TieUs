@@ -31,12 +31,12 @@ public class TestBoardData_NoContactsOnPhone extends AndroidTestCase {
         //mTestGivens.deleteAllRecordsFromDB();
         super.tearDown();
 
-        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
     }
 
     public void testNoContactRegisteredOnPhone() {
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
 
         String cursorString = "\n"
                 + "header |"

@@ -35,13 +35,6 @@ public class EventDAO {
     public interface EventQuery {
 
         int COL_ID = 0;
-        int COL_CONTACT_ID = 1;
-        int COL_ACTION_ID = 2;
-        int COL_VECTOR_ID = 2;
-        int COL_TIME_START = 3;
-        int COL_TIME_END = 4;
-
-        String SELECTION = TieUsContract.ContactTable._ID + "=?";
 
         String[] PROJECTION = {
                 TieUsContract.EventTable._ID,

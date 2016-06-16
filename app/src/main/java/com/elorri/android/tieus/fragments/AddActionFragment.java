@@ -12,7 +12,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,24 +50,23 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     private Map<String, String> actionSteps = new HashMap<>();
 
     private AddActionAdapter mAdapter;
-    public static final  String ZERO_STEP = "zero_step";
-    private static final  String ACTION_STEP = "action_step";
-    private static final  String VECTOR_STEP = "vector_step";
-    private static final  String DATE_STEP = "date_step";
-    private static final  String CURRENT_STEP="current_step";
+    public static final String ZERO_STEP = "zero_step";
+    private static final String ACTION_STEP = "action_step";
+    private static final String VECTOR_STEP = "vector_step";
+    private static final String DATE_STEP = "date_step";
+    private static final String CURRENT_STEP = "current_step";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2]);
         View view = inflater.inflate(R.layout.fragment_add_action, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager
                 .VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
-        if(actionSteps.get(CURRENT_STEP)==null){
-            actionSteps.put(CURRENT_STEP,ZERO_STEP);
+        if (actionSteps.get(CURRENT_STEP) == null) {
+            actionSteps.put(CURRENT_STEP, ZERO_STEP);
         }
 
         mAdapter = new AddActionAdapter(null, this, actionSteps.get(CURRENT_STEP));
@@ -107,8 +105,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d("Communication", "" + Thread.currentThread().getStackTrace()[2] + "data " + data
-                .getCount());
         mAdapter.swapCursor(data);
     }
 
@@ -130,7 +126,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
     public void setVectorId(String vectorId) {
         actionSteps.put(VECTOR_STEP, vectorId);
         actionSteps.put(CURRENT_STEP, VECTOR_STEP);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         final DateListener dateListener = new DateListener();
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -141,8 +136,8 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
         );
         dpd.setMinDate(Calendar.getInstance());//Set the min date to today
         dpd.setAccentColor(Color.parseColor(getResources().getString(R.string.accent)));
-        dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string
-                .due_date));
+        dpd.setTitle(getResources().getString(R.string.due_date));
+        dpd.show(getActivity().getFragmentManager(), getResources().getString(R.string.due_date));
         dpd.setOnDateSetListener(dateListener);
     }
 
@@ -167,10 +162,7 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
             startDateCal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             final long startDate = DateUtils.setZeroDay(startDateCal.getTimeInMillis());
             actionSteps.put(DATE_STEP, String.valueOf(startDate));
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + startDate);
 
-//            AddActionFragment.this.getLoaderManager().restartLoader(AddActionData.LOADER_ID,
-//                    null, AddActionFragment.this);
             String contactId = getArguments().getCharSequence(DetailFragment.CONTACT_ID).toString();
             AddActionTask addActionTask = new AddActionTask();
             addActionTask.execute(
@@ -182,7 +174,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
         @Override
         protected Void doInBackground(String... params) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + params[3]);
             getContext().getContentResolver().insert(
                     TieUsContract.EventTable.CONTENT_URI,
                     EventDAO.getContentValues(params[0], params[1], params[2], Long.valueOf
@@ -192,7 +183,6 @@ public class AddActionFragment extends DialogFragment implements LoaderManager
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            //getActivity().finish();
             getDialog().cancel();
             getActivity().getSupportFragmentManager().findFragmentByTag(DetailActivity.DETAIL_FRAGMENT).onResume();
             if (getContext().getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)

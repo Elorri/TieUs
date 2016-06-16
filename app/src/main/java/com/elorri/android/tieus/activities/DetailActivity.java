@@ -1,6 +1,5 @@
 package com.elorri.android.tieus.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -34,9 +33,4 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    public void startAddActions(String contactId) {
-        Intent intent=new Intent(this, AddActionActivity.class);
-        intent.putExtra(DetailFragment.CONTACT_ID, contactId);
-        startActivity(intent);
-    }
 }

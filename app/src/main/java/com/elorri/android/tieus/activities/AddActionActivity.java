@@ -19,7 +19,6 @@ public class AddActionActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-//            arguments.putParcelable(AddActionFragment.SELECT_ACTION_URI, getIntent().getData());
             arguments.putCharSequence(DetailFragment.CONTACT_ID, getIntent().getCharSequenceExtra
                     (DetailFragment.CONTACT_ID));
 

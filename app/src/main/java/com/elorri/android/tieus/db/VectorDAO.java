@@ -31,15 +31,10 @@ public class VectorDAO {
 
     public interface VectorQuery {
 
-        int LOADER_ID = 0;
-
         int COL_ID = 0;
         int COL_VECTOR_NAME = 1;
         int COL_DATA = 2;
         int COL_MIMETYPE = 3;
-        int COL_PROJECTION_TYPE = 4;
-
-        String SELECTION = TieUsContract.VectorTable._ID + "=?";
 
         String SORT_ORDER = TieUsContract.VectorTable.COLUMN_NAME + " asc";
 
@@ -70,39 +65,20 @@ public class VectorDAO {
     }
 
 
-    public static Cursor getWrappedCursor(Context context, int cursorType, SQLiteDatabase db) {
+    public static Cursor getCursor(Context context, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
         cursors.add(MatrixCursors.getOneLineCursor(
                 MatrixCursors.TitleQuery.PROJECTION,
                 MatrixCursors.TitleQuery.VALUES,
-                getCursorTitle(context, cursorType)));
-        cursors.add(getCursor(cursorType, db));
+                context.getResources().getString(R.string.select_vector)));
+        cursors.add(db.query(TieUsContract.VectorTable.NAME,
+                VectorQuery.PROJECTION_QUERY,
+                null,
+                null,
+                null,
+                null,
+                VectorQuery.SORT_ORDER));
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
-    private static String getCursorTitle(Context context, int cursorType) {
-        switch (cursorType) {
-            case ALL_VECTORS:
-                return context.getResources().getString(R.string.select_vector);
-            default:
-                return null;
-        }
-    }
-
-
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db) {
-        switch (cursorType) {
-            case ALL_VECTORS: {
-                return db.query(TieUsContract.VectorTable.NAME,
-                        VectorQuery.PROJECTION_QUERY,
-                        null,
-                        null,
-                        null,
-                        null,
-                        VectorQuery.SORT_ORDER);
-            }
-            default:
-                return null;
-        }
-    }
 }

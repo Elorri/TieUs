@@ -25,7 +25,6 @@ public class DynamicWidthGradientTopAvatarView extends FrameLayout implements Gr
         FrameLayout thumbnailContainer = (FrameLayout) findViewById(R.id.thumbnail_container);
         mThumbnailView = new AvatarView(getContext());
         thumbnailContainer.addView(mThumbnailView);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
     }
 
     @Override
@@ -43,7 +42,6 @@ public class DynamicWidthGradientTopAvatarView extends FrameLayout implements Gr
 
     @Override
     public void loadImage(String uri, int color) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2]+"");
         mThumbnailView.loadImage(uri, color);
     }
 

@@ -49,13 +49,13 @@ public class DateUtils {
         if (date >= todayStart && date < tomorrowStart)
             return context.getResources().getString(R.string.today);
         else
-            return fromLongToString(date, getFriendlyFormat(date), Tools.getMostSuitableLocale());
+            return fromLongToString(date, getFriendlyFormat(date), Locale.getDefault());
     }
 
     public static String getFriendlyDateTimeString(Context context, long date) {
         return context.getResources().getString(R.string.completed,
                 getFriendlyDateString(context, date),
-                fromLongToString(date, HOURS_MINUTES_FORMAT, Tools.getMostSuitableLocale()));
+                fromLongToString(date, HOURS_MINUTES_FORMAT, Locale.getDefault()));
     }
 
     public static long nextYearStart() {
@@ -97,9 +97,6 @@ public class DateUtils {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
-//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "ap " + fromLongToString
-//                (calendar.getTimeInMillis(),
-//                        TIMESTAMP_FORMAT, Tools.getMostSuitableLocale()));
         return calendar.getTimeInMillis();
     }
 
@@ -127,7 +124,4 @@ public class DateUtils {
         return addDay(1, todayStart());
     }
 
-    public static long yesterdayStart() {
-        return addDay(-1, todayStart());
-    }
 }

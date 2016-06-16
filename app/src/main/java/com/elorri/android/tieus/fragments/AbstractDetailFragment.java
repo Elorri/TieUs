@@ -132,8 +132,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
                 mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar_layout);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 mAvatar = (GradientTopAvatarView) view.findViewById(R.id.avatar);
-                //view_no_avatar.setBackgroundResource(mThumbnail);
-                //FrameLayout avatarBg = (FrameLayout) view.findViewById(R.id.avatar_bg);
                 break;
             case MainActivity.LAND:
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -181,16 +179,10 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
                             scrollRange = appBarLayout.getTotalScrollRange();
                         }
                         if (scrollRange + verticalOffset == 0 && mContactTitle != null) {
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                             mCollapsingToolbar.setTitle(mContactTitle);
                             mCollapsingToolbar.setContentScrimColor(getResources().getColor(R.color.primary));
-                            //TODO find a better solution to display real colorinstead of primary
-                            // mCollapsingToolbar.setContentScrimColor(mToolbarColor);
-                            // mToolbar.setBackgroundColor(mToolbarColor);
-                            // mToolbar.setBackgroundColor(Color.TRANSPARENT);
                             isCollapsed = true;
                         } else if (isCollapsed) {
-                            Log.e("FF", "" + Thread.currentThread().getStackTrace()[2] + "");
                             mCollapsingToolbar.setTitle("");
                             isCollapsed = false;
                         }
@@ -211,7 +203,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d("FF", "" + Thread.currentThread().getStackTrace()[2]);
         CursorLoader cursorLoader = null;
 
         Bundle arguments = getArguments();
@@ -231,7 +222,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d("FF", "" + Thread.currentThread().getStackTrace()[2]);
         if (data != null && data.moveToFirst()) {
             mData = data;
             mAdapter.swapCursor(data);
@@ -243,8 +233,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
                         ().getString(R.string.item_button), null, getContext().getResources().getString(R.string.item_action));
 
                 String contactId = TieUsContract.DetailData.getContactIdFromUri(mUri);
-                //((DetailActivity) getActivity()).startAddActions(contactId);
-
                 Bundle arguments = new Bundle();
                 arguments.putCharSequence(DetailFragment.CONTACT_ID, contactId);
                 AddActionFragment fragment = new AddActionFragment();
@@ -263,10 +251,8 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
     @Override
     public void setTitle(String title) {
         mContactTitle = title;
-        switch (getResources().getInteger(R.integer.orientation)) {
-            case MainActivity.W700dp_LAND:
-                mToolbar.setTitle(title);
-                break;
+        if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND) {
+            mToolbar.setTitle(title);
         }
     }
 
@@ -277,21 +263,9 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
                         .integer.orientation));
         switch (getResources().getInteger(R.integer.orientation)) {
             case MainActivity.PORT:
-//                mAvatar.loadImage(uri, color);
-//                break;
             case MainActivity.LAND:
-//                Log.e("FF", Thread.currentThread().getStackTrace()[2]+"mAvatar");
-//                mAvatar.loadImage(uri, color);
-//                break;
             case MainActivity.W600dp_PORT:
                 mAvatar.loadImage(uri, color);
-                break;
-            case MainActivity.W700dp_LAND:
-                //TODO find a better solution to display real color instead of primary
-//                //need this line only because in my test the - sign is mistakenly removed.
-//                color = color < 0 ? color : color * -1;
-//                mToolbar.setBackgroundColor(color);
-                break;
         }
     }
 
@@ -323,21 +297,16 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
     @Override
     public void startVector(Context context, String mimetype, String vectorData, String
             vectorName) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
         if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
             if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_meeting_24dp);
                 Toast.makeText(context, context.getResources().getString(
-                        R.string.outside_event, vectorName),
-                        Toast.LENGTH_SHORT).show();
+                        R.string.outside_event, vectorName), Toast.LENGTH_SHORT).show();
                 return;
             } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorData + " " + R.drawable.ic_textsms_black_24dp);
                 Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                smsIntent.setType("vnd.android-dir/mms-sms");
+                smsIntent.setType(context.getResources().getString(R.string.sms_intent_type));
                 //TODO add phone nummber
-//                smsIntent.putExtra("address", "0646632699");
+//                smsIntent.putExtra("address", "0123456789");
 //                smsIntent.putExtra("sms_body", "message");
                 context.startActivity(smsIntent);
             }
@@ -369,15 +338,11 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        //TODO save the last selected contact here
         super.onConfigurationChanged(newConfig);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         if (Tools.isTablet(newConfig) && (Tools.isLandscape(newConfig))) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             getActivity().finish();
         } else {
             getActivity().recreate();
         }
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation " + getResources().getInteger(R.integer.orientation));
     }
 }

@@ -40,7 +40,7 @@ public class TestBoardData extends AndroidTestCase {
         //mTestGivens.deleteAllRecordsFromDB();
         super.tearDown();
 
-        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
     }
 
 
@@ -52,31 +52,31 @@ public class TestBoardData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnscheduledPeopleQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" +
-                TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|"
-                + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|"
+                + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.delayed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -84,9 +84,10 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|"
-                + "" + R.string.action_name12 + "|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package"
-                + "|" + ViewTypes.VIEW_DELAY_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|"
+                + "" + R.string.action_name12 + "|" + TestGivens._4daysAgo_15may2016at12h40m52s
+                + "|Gmail|com.google.android.gm|package"
+                + "|" + ViewTypes.VIEW_DELAYED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.today) + "|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -94,7 +95,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |23|840|298i7.3552i264b0e968b8a42ff|françoise|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|"
                 + "" + R.string.action_name12 + "|" + TestGivens._in1second_19may2016at12h40m53s
                 + "|Gmail|com.google.android.gm|package"
                 + "|" + ViewTypes.VIEW_TODAY_PEOPLE + "|\n"
@@ -105,14 +106,16 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|"
-                + "" + R.string.action_name12 + "|" + TestGivens._in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|"
+                + "" + R.string.action_name12 + "|" + TestGivens._in2seconds_19may2016at12h40m54s
+                + "|Gmail|com.google.android.gm|package"
                 + "|" + ViewTypes.VIEW_TODAY_DONE_PEOPLE + "|\n"
-                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfolllowed|null|"
+                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|"
-                + "" + R.string.action_name12 + "|" + TestGivens._in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|"
+                + "" + R.string.action_name12 + "|" + TestGivens._in2seconds_19may2016at12h40m54s
+                + "|Gmail|com.google.android.gm|package"
                 + "|" + ViewTypes.VIEW_TODAY_DONE_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
@@ -121,48 +124,49 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|"
-                + "" + R.string.action_name12 + "|" + TestGivens.tomorrowStart_20may2016at00h00m00sStart + "|com.google.android.gm|package"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|"
+                + "" + R.string.action_name12 + "|" + TestGivens.tomorrowStart_20may2016at00h00m00sStart
+                + "|Gmail|com.google.android.gm|package"
                 + "|" + ViewTypes.VIEW_NEXT_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.unfollowed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnfollowedPeopleQuery.PROJECTION_WITH_VIEWTYPE)
-                + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfolllowed|null|"
+                + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |40|937|398i5.3552i264b0e968b8a46fv|denis_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |40|937|398i5.3552i264b0e968b8a46fv|denis_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |43|940|398i7.3552i264b0e968b8a42ff|françoise_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |43|940|398i7.3552i264b0e968b8a42ff|françoise_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |37|934|398i5.3552i264b0e968b8a42fl|jacques_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |37|934|398i5.3552i264b0e968b8a42fl|jacques_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611"
-                + "|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |38|935|398i5.3552i264b0e968b8a42fv|jeanne_unfolllowed|null|"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611"
+                + "|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |38|935|398i5.3552i264b0e968b8a42fv|jeanne_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |39|936|398i5.3552i264b0e968b8a42fd|mathieu_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |39|936|398i5.3552i264b0e968b8a42fd|mathieu_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |42|939|398i5.3552i274b0e968b8a47fv|mélissa_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |42|939|398i5.3552i274b0e968b8a47fv|mélissa_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |35|932|398i5.3552i264b0e968b8a42ff|paul_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |35|932|398i5.3552i264b0e968b8a42ff|paul_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |36|933|398i5.3552i264b0e968b8a42fk|pierre_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |36|933|398i5.3552i264b0e968b8a42fk|pierre_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n";
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n";
     }
 
 
@@ -174,29 +178,29 @@ public class TestBoardData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnscheduledPeopleQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|" +
                 TestGivens._30days + "|" + TestGivens.now_19may2016at12h40m52s + "|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNMANAGED_PEOPLE + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNSCHEDULED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.delayed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -204,7 +208,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|-4560696|"
                 + "" + R.string.action_name12 + "|" + TestGivens._4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package"
-                + "|" + ViewTypes.VIEW_DELAY_PEOPLE + "|\n"
+                + "|" + ViewTypes.VIEW_DELAYED_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.today) + "|" + ViewTypes.VIEW_TITLE + "|\n"
@@ -219,7 +223,8 @@ public class TestBoardData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.TodayDonePeopleQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|-4560696|"
-                + "" + R.string.action_name12 + "|" + TestGivens._in1second_19may2016at12h40m53s + "|com.google.android.gm|package"
+                + "" + R.string.action_name12 + "|" + TestGivens._in1second_19may2016at12h40m53s
+                + "|Gmail|com.google.android.gm|package"
                 + "|" + ViewTypes.VIEW_TODAY_DONE_PEOPLE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
@@ -234,49 +239,49 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |" + context.getResources().getString(R.string.unfollowed) + "|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.UnfollowedPeopleQuery
                 .PROJECTION_WITH_VIEWTYPE)
-                + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfolllowed|null|"
+                + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE
-                + "|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |40|937|398i5.3552i264b0e968b8a46fv|denis_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE
+                + "|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |40|937|398i5.3552i264b0e968b8a46fv|denis_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |43|940|398i7.3552i264b0e968b8a42ff|françoise_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |43|940|398i7.3552i264b0e968b8a42ff|françoise_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |37|934|398i5.3552i264b0e968b8a42fl|jacques_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |37|934|398i5.3552i264b0e968b8a42fl|jacques_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |38|935|398i5.3552i264b0e968b8a42fv|jeanne_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |38|935|398i5.3552i264b0e968b8a42fv|jeanne_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |39|936|398i5.3552i264b0e968b8a42fd|mathieu_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |39|936|398i5.3552i264b0e968b8a42fd|mathieu_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |42|939|398i5.3552i274b0e968b8a47fv|mélissa_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |42|939|398i5.3552i274b0e968b8a47fv|mélissa_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |35|932|398i5.3552i264b0e968b8a42ff|paul_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |35|932|398i5.3552i264b0e968b8a42ff|paul_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |36|933|398i5.3552i264b0e968b8a42fk|pierre_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |36|933|398i5.3552i264b0e968b8a42fk|pierre_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n"
-                + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_unfolllowed|null|"
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n"
+                + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNTRACKED_PEOPLE + "|\n";
+                + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_UNFOLLOWED_PEOPLE + "|\n";
 
     }
 
 
     public void testManagedUnmanagedPeopleMessage() {
-        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+        Status.setLastMessageIdxBg(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
 
 
         String cursorString = "\n"
@@ -287,7 +292,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.manage_unscheduled_contact_message, "8")
+                + mContext.getResources().getString(R.string.manage_unscheduled_contact_message, 8)
                 + "|"
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
@@ -303,7 +308,7 @@ public class TestBoardData extends AndroidTestCase {
         Status.setLastMessageIdxBg(mContext, Status.FILL_IN_DELAY_FEEDBACK);
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -312,7 +317,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.fill_in_time_limit_response_message, "2")
+                + mContext.getResources().getString(R.string.fill_in_time_limit_response_message, 2)
                 + "|"
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + "header |"
@@ -322,12 +327,12 @@ public class TestBoardData extends AndroidTestCase {
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|"
                 + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|"
                 + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
@@ -338,10 +343,10 @@ public class TestBoardData extends AndroidTestCase {
     }
 
     public void testUpdateMoodMessage() {
-        Status.setLastMessageIdxBg(mContext, Status.UPDATE_MOOD);
+        Status.setLastMessageIdxBg(mContext, Status.UPDATE_SATISFACTION);
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -355,11 +360,11 @@ public class TestBoardData extends AndroidTestCase {
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |"+mContext.getResources().getString(R.string.mood_to_update_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.satisfaction_to_update_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UPDATE_MOOD + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UPDATE_MOOD + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -371,7 +376,7 @@ public class TestBoardData extends AndroidTestCase {
         Status.setLastMessageIdxBg(mContext, Status.SET_UP_A_FREQUENCY_OF_CONTACT);
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -392,7 +397,7 @@ public class TestBoardData extends AndroidTestCase {
                 .PeopleThatNeedFrequencyQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|" + ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -405,7 +410,7 @@ public class TestBoardData extends AndroidTestCase {
 
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -426,7 +431,7 @@ public class TestBoardData extends AndroidTestCase {
                 .AskForFeedbackQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -438,7 +443,7 @@ public class TestBoardData extends AndroidTestCase {
         Status.setLastMessageIdxBg(mContext, Status.APPROCHING_DEAD_LINE);
 
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -453,13 +458,13 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getString(R.string.nearby_decreased_mood_title) + "|"
+                + mContext.getString(R.string.nearby_decreased_satisfaction_title) + "|"
                 + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString
                 (ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|" + TestGivens._30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|" + ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -474,7 +479,7 @@ public class TestBoardData extends AndroidTestCase {
 //
 //
 //        Cursor cursor = mContext.getContentResolver().query(
-//                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+//                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
 //
 //        String cursorString = "\n"
 //                + "header |"
@@ -488,7 +493,7 @@ public class TestBoardData extends AndroidTestCase {
 //                + "|"
 //                + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
 //                + "header |"
-//                + MatrixCursors.TitleQuery.COLUMN_TITLE_RESOURCE_ID + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
+//                + MatrixCursors.TitleQuery.COLUMN_TAG_TITLE_RESOURCE_ID + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
 //                + "row |"
 //                + mContext.getString(R.string.decreased_mood_title) + "|"
 //                + ViewTypes.VIEW_TITLE + "|\n"
@@ -497,8 +502,8 @@ public class TestBoardData extends AndroidTestCase {
 //                + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
 //                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|"
 //                + TestGivens._30days + "|"+TestGivens.now_19may2016at12h40m52s+"|"
-//                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE
-//                + "|" + ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY + "|\n"
+//                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE
+//                + "|" + ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY + "|\n"
 //                + getAlwaysDisplayedCursorMoodMelissaUpdated(mContext);
 //
 //        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -510,7 +515,7 @@ public class TestBoardData extends AndroidTestCase {
     public void testTakeTimeForFeedbackMessage() {
         Status.setLastMessageIdxBg(mContext, Status.NOTHING_TO_SAY);
         Cursor cursor = mContext.getContentResolver().query(
-                TieUsContract.BoardData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
+                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
         String cursorString = "\n"
                 + "header |"
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
@@ -534,7 +539,7 @@ public class TestBoardData extends AndroidTestCase {
 //
 //    public void test_getTopCursors() {
 //        assertEquals(Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK,
-//                BoardData.getTopCursors(mContext, Status.UPDATE_MOOD));
+//                MainData.getTopCursors(mContext, Status.UPDATE_SATISFACTION));
 //    }
 
 

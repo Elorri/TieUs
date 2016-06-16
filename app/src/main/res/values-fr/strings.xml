@@ -17,10 +17,10 @@
     <string name="select_vector" translatable="true">Selectinnez un vecteur</string>
     <string name="done_actions" translatable="true">Actions effectuées</string>
     <string name="fill_in_delay_feedback_title" translatable="true">Vous avez travaillé récemment pour</string>
-    <string name="mood_to_update_title" translatable="true">Etat de satisfaction à renseigner</string>
+    <string name="satisfaction_to_update_title" translatable="true">Etat de satisfaction à renseigner</string>
     <string name="fill_up_frequency_title" translatable="true">Frequence de contact à renseigner</string>
     <string name="ask_for_feedback_title" translatable="true">Contacts ne répondant pas</string>
-    <string name="nearby_decreased_mood_title" translatable="true">Contacts sur le point d\'être insatisfait !</string>
+    <string name="nearby_decreased_satisfaction_title" translatable="true">Contacts sur le point d\'être insatisfait !</string>
     <string name="decreased_mood_title" translatable="true">Ils ont diminué d\'humeur aujourd\'hui</string>
 
     <!-- options to choose -->
@@ -57,7 +57,7 @@
     <string name="every_6months" translatable="true">Tous les 6 mois</string>
     <string name="every_year" translatable="true">Tous les ans</string>
     <string name="sms" translatable="true">Texto</string>
-    <string name="meeting" translatable="true">Rencontre</string>
+    <string name="real_life_meeting" translatable="true">Rencontre réelle</string>
     <string name="shining" translatable="true">Rayonnant</string>
     <string name="slightly_cloudy" translatable="true">Un peu nuageux</string>
     <string name="cloudy" translatable="true">Nuageux</string>
@@ -71,25 +71,25 @@
     pour la supprimer</string>
     <string name="no_contacts_on_phone" translatable="true">Ajoutez des contacts sur votre
         téléphone pour voir fonctionner cette application</string>
-    <string name="manage_unscheduled_contact_message" translatable="true">Vous avez <xliff:g>%1$s</xliff:g> contacts sans actions programmées. Ajoutez des actions sur leur profils ou marquez les comme \'non suivi\'.</string>
+    <string name="manage_unscheduled_contact_message" translatable="true">Vous avez <xliff:g>%1$d</xliff:g> contacts sans actions programmées. Ajoutez des actions sur leur profils ou marquez les comme \'non suivi\'.</string>
     <string name="manage_unscheduled_person" translatable="true"><xliff:g>%1$s</xliff:g> n\'a pas d\'actions programmées. Ajoutez des actions sur son profil ou marquez le comme \'non suivi\'.</string>
     <string name="fill_in_time_limit_response_message" translatable="true">Vous avez recemment
-        travaillé pour <xliff:g>%1$s</xliff:g> contacts. Quand pensez vous recevoir une réponse
+        travaillé pour <xliff:g>%1$d</xliff:g> contacts. Quand pensez vous recevoir une réponse
         ? Remplisez le \'délai de réponse\' sur leur profil.</string>
     <string name="fill_in_time_limit_response_person" translatable="true">Vous avez recemment travaillé pour <xliff:g>%1$s</xliff:g>. Quand pensez vous recevoir une réponse ? Remplisez le \'délai de réponse\' sur son profil.</string>
-    <string name="update_satisfaction_face_message" translatable="true">Ces <xliff:g>%1$s</xliff:g>
+    <string name="update_satisfaction_face_message" translatable="true">Ces <xliff:g>%1$d</xliff:g>
         contacts sont ils satisfaits par vos actions ? </string>
     <string name="update_satisfaction_face_person" translatable="true"><xliff:g>%1$s</xliff:g> est il(elle)
         satisfait(e) par vos actions ?</string>
     <string name="fill_up_frequency_message" translatable="true">A quel rythme souhaitez vous
-        interagir avec ces <xliff:g>%1$s</xliff:g> contacts ? Renseignez la \'frequence de
+        interagir avec ces <xliff:g>%1$d</xliff:g> contacts ? Renseignez la \'frequence de
         contact\' sur leur profil.</string>
     <string name="fill_up_frequency_person" translatable="true">A quel rythme souhaitez vous interagir avec <xliff:g>%1$s</xliff:g> ? Renseignez la \'frequence de contact\' sur son profil.</string>
-    <string name="ask_for_feedback_message" translatable="true">Toujours pas de réponse de ces <xliff:g>%1$s</xliff:g> contacts ? Demandez leur s\'ils sont satisfait par vos actions ou marquez les comme \'non suivi\'.</string>
+    <string name="ask_for_feedback_message" translatable="true">Toujours pas de réponse de ces <xliff:g>%1$d</xliff:g> contacts ? Demandez leur s\'ils sont satisfait par vos actions ou marquez les comme \'non suivi\'.</string>
     <string name="ask_for_feedback_person" translatable="true">Toujours pas de réponse <xliff:g>%1$s</xliff:g> ? Demandez lui si il(elle) est satisfait(e) par vos actions ou marquez le(la) comme \'non suivi\'.</string>
-    <string name="nearby_decreased_mood_message" translatable="true">Vous avez <xliff:g>%1$s</xliff:g> contacts qui vont devenir moins satisfait si vous n\'interagissez pas. Agissez il est encore temps ! </string>
+    <string name="nearby_decreased_mood_message" translatable="true">Vous avez <xliff:g>%1$d</xliff:g> contacts qui vont devenir moins satisfait si vous n\'interagissez pas. Agissez il est encore temps ! </string>
     <string name="nearby_decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> va devenir moins satisfait(e) si vous n\'interagissez pas. Agissez il est encore temps !</string>
-    <string name="decreased_mood_message" translatable="true">Ces <xliff:g>%1$s</xliff:g>
+    <string name="decreased_mood_message" translatable="true">Ces <xliff:g>%1$d</xliff:g>
         contacts sont devenus moins satisfait aujoud\'hui.</string>
     <string name="decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> est devenu(e) moins satisfait(e) aujoud\'hui.</string>
     <string name="no_people_to_follow" translatable="true">Commencez à suivre des contacts

@@ -47,7 +47,7 @@ public class TestAddActionData extends AndroidTestCase {
                 null
         );
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(MatrixCursors.TitleQuery.PROJECTION)
@@ -93,7 +93,7 @@ public class TestAddActionData extends AndroidTestCase {
                 null
         );
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
                 + TestUtility.getCursorHeaderString(ActionDAO.ActionQuery.PROJECTION)
@@ -129,7 +129,7 @@ public class TestAddActionData extends AndroidTestCase {
                 null
         );
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         String cursorString = "\n"
                 + "header |"

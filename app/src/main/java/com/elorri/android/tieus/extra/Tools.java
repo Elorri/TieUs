@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -18,7 +17,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Looper;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -26,15 +24,9 @@ import android.widget.Toast;
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.data.TieUsContract;
 import com.elorri.android.tieus.db.MatrixCursors;
-import com.elorri.android.tieus.db.ViewTypes;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Elorri on 12/04/2016.
@@ -52,37 +44,6 @@ public class Tools {
     public static final long _6MONTHS = _1MONTH * 6;
     public static final long _1YEAR = DateUtils.addDay(365, NOW) - NOW;
 
-
-    /**
-     * Load a text file .cvs, .txt, ... and return a collection of its lines.
-     *
-     * @param resourceId located in the directory res and automatically referenced with an int
-     * @return a collection where each item is a String representing one line of a the file.
-     */
-    public static ArrayList<String> loadTextFile(Context context, int resourceId) {
-        // The InputStream opens the resourceId and sends it to the buffer
-        ArrayList<String> listOfLines = new ArrayList<String>();
-        //InputStream is = mainActivity.getResources().openRawResource(resourceId);
-        InputStream is = context.getResources().openRawResource(resourceId);
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        String line = null;
-
-        try {
-            // While the BufferedReader line is not null
-            while ((line = br.readLine()) != null) {
-                //Log.d("MealPlanner", line);
-                listOfLines.add(line);
-            }
-
-            // Close the InputStream and BufferedReader
-            is.close();
-            br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return listOfLines;
-    }
 
     public static String thread() {
         if (Looper.getMainLooper().getThread() == Thread.currentThread())
@@ -104,15 +65,6 @@ public class Tools {
 
     public static boolean hasHoneycomb() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-
-    public static void printArray(String[] array) {
-        String arrayString = "";
-        for (String item : array) {
-            arrayString += item + ",";
-        }
-        Log.e("Communication", "" + arrayString);
     }
 
 
@@ -144,16 +96,6 @@ public class Tools {
         return dp;
     }
 
-    public static Locale getMostSuitableLocale() {
-        if ((Locale.getDefault().getLanguage().equals("fr"))
-                && (Locale.getDefault().getCountry().equals("FR")))
-            return Locale.getDefault(); //In my list of chosen Locale
-        if ((Locale.getDefault().getLanguage().equals("fr"))
-                && (Locale.getDefault().getCountry().equals("CA")))
-            return new Locale("fr", "FR");
-        return new Locale("en", "US"); //only locale Java guarantees is always available. In my
-        // list of chosen Locale
-    }
 
     public static ContentValues getContentValues(String columnName, String value) {
         ContentValues values = new ContentValues();
@@ -177,13 +119,6 @@ public class Tools {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
-
-    public static List<ResolveInfo> getInstalledApps(PackageManager packageManager) {
-        final Intent intent = new Intent(Intent.ACTION_MAIN, null);
-        //intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.addCategory(Intent.CATEGORY_APP_MESSAGING);
-        return packageManager.queryIntentActivities(intent, 0);
-    }
 
     public static List<PackageInfo> getInstalledPackages(PackageManager packageManager) {
         return packageManager.getInstalledPackages(0);
@@ -214,28 +149,21 @@ public class Tools {
 
     public static void setVectorBackground(Context context, ImageView vectorLogo,
                                            String mimetype, String data) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
         if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             vectorLogo.setBackgroundResource(Integer.valueOf(data));
         } else
             try {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
-                vectorLogo.setBackground(context.getPackageManager().getApplicationIcon(
-                        data));
+                vectorLogo.setBackground(context.getPackageManager().getApplicationIcon(data));
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
     }
 
     public static void setWidgetVectorBackground(Context context, RemoteViews views, int viewId, String mimetype, String data) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mimetype" + mimetype + "data" + data);
         if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
             views.setImageViewResource(viewId, Integer.valueOf(data));
         } else
             try {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 Drawable drawable = context.getPackageManager().getApplicationIcon(data);
                 Bitmap bitmap = drawableToBitmap(drawable);
                 views.setImageViewBitmap(viewId, bitmap);
@@ -281,75 +209,34 @@ public class Tools {
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
-    public static int decreaseMood(int moodIcon) {
-        if (moodIcon == R.drawable.ic_sentiment_satisfied_black_48dp)
+    public static int decreaseSatisfaction(int satisfactionIcon) {
+        if (satisfactionIcon == R.drawable.ic_sentiment_satisfied_black_48dp)
             return R.drawable.ic_sentiment_neutral_black_48dp;
-        if (moodIcon == R.drawable.ic_sentiment_neutral_black_48dp)
+        if (satisfactionIcon == R.drawable.ic_sentiment_neutral_black_48dp)
             return R.drawable.ic_sentiment_dissatisfied_black_48dp;
         return R.drawable.ic_sentiment_dissatisfied_black_48dp;
     }
 
 
-    public static String getCursorString(Cursor cursor) {
-        cursor.moveToPosition(-1);
-        String cursorString = "\n";
-        if (cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE) != -1) {
-            if (cursor.moveToFirst()) {
-                int viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-                cursorString = cursorString + getCursorHeaderString(cursor);
-                cursor.moveToPosition(-1);
-                while (cursor.moveToNext()) {
-                    if (viewType != cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE)))
-                        cursorString = cursorString + getCursorHeaderString(cursor);
-                    cursorString = cursorString + getCursorRowString(cursor);
-                }
-            }
-        } else {
-            cursorString = cursorString + getCursorHeaderString(cursor);
-            while (cursor.moveToNext()) {
-                cursorString = cursorString + getCursorRowString(cursor);
-            }
-        }
-        return cursorString;
-    }
+    public static String getReadableTimeLimit(Context context, long timeLimit) {
 
-    public static String getCursorHeaderString(Cursor cursor) {
-        String header = "header |";
-        for (int i = 0; i < cursor.getColumnCount(); i++) {
-            header = header + cursor.getColumnName(i) + "|";
-        }
-        return header + "\n";
-    }
-
-    public static String getCursorRowString(Cursor cursor) {
-        String row = "row |";
-        String cell = null;
-        for (int i = 0; i < cursor.getColumnCount(); i++) {
-            cell = cursor.getString(i) == null ? "null" : cursor.getString(i);
-            row = row + cell + "|";
-        }
-        return row + "\n";
-    }
-
-    public static String getReadableDelay(Context context, long feedBackDelay) {
-
-        if (feedBackDelay == _24H)
+        if (timeLimit == _24H)
             return context.getResources().getString(R.string._24h);
-        if (feedBackDelay == _48H)
+        if (timeLimit == _48H)
             return context.getResources().getString(R.string._48h);
-        if (feedBackDelay == _4DAYS)
+        if (timeLimit == _4DAYS)
             return context.getResources().getString(R.string._4days);
-        if (feedBackDelay == _1WEEK)
+        if (timeLimit == _1WEEK)
             return context.getResources().getString(R.string._1week);
-        if (feedBackDelay == _2WEEKS)
+        if (timeLimit == _2WEEKS)
             return context.getResources().getString(R.string._2weeks);
-        if (feedBackDelay == _1MONTH)
+        if (timeLimit == _1MONTH)
             return context.getResources().getString(R.string._1month);
-        if (feedBackDelay == _3MONTHS)
+        if (timeLimit == _3MONTHS)
             return context.getResources().getString(R.string._3months);
-        if (feedBackDelay == _6MONTHS)
+        if (timeLimit == _6MONTHS)
             return context.getResources().getString(R.string._6months);
-        if (feedBackDelay == _1YEAR)
+        if (timeLimit == _1YEAR)
             return context.getResources().getString(R.string._1year);
         return null;
     }
@@ -388,7 +275,7 @@ public class Tools {
         views.setContentDescription(ressource_image, description);
     }
 
-    public static String getMoodDesciption(Context context, Integer mood) {
+    public static String getSatisfactionDesciption(Context context, Integer mood) {
         int moodDesc;
         switch (mood) {
             case R.drawable.ic_sentiment_satisfied_black_48dp:

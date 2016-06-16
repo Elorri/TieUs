@@ -8,7 +8,6 @@ import android.database.MergeCursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.elorri.android.tieus.db.MatrixCursors;
 import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Tools;
@@ -71,7 +70,6 @@ public class TestUtility extends AndroidTestCase {
         if (cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE) != -1) {
             if (cursor.moveToFirst()) {
                 int viewType = cursor.getInt(cursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + viewType);
                 cursorString = cursorString + getCursorHeaderString(cursor);
                 cursor.moveToPosition(-1);
                 while (cursor.moveToNext()) {
@@ -158,7 +156,7 @@ public class TestUtility extends AndroidTestCase {
                 + "row |1|data1|data2|2|\n";
 
         assertEquals(expected, getCursorString(mMergedCursor));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(mMergedCursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + getCursorString(mMergedCursor));
     }
 
     public void test_getCursorFromString() {
@@ -169,7 +167,7 @@ public class TestUtility extends AndroidTestCase {
                 + "header |_id|col1|col2|"+ViewTypes.COLUMN_VIEWTYPE+"|\n"
                 + "row |1|data1|data2|2|\n";
         Cursor cursor = getCursorFromString(cursorString);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorString, getCursorString(cursor));
     }
 
@@ -188,7 +186,7 @@ public class TestUtility extends AndroidTestCase {
             assertFalse("Column '" + columnName + "' not found. ", idx == -1);
             String expectedValue = entry.getValue() != null ? entry.getValue().toString() : null;
             String cursorValue = valueCursor.getString(idx);
-//            Log.e("FF", Thread.currentThread().getStackTrace()[2]
+//            Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2]
 //                    + "columnName " + columnName
 //                    + " expectedValue " + expectedValue
 //                    + " cursorValue " + cursorValue);
@@ -215,12 +213,12 @@ public class TestUtility extends AndroidTestCase {
         String cursorEmptyCursorStringWithoutMessageWithoutTitle = "\nheader |_id|col1|col2|\n";
         Cursor cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, false,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        //Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithoutMessageWithoutTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, false,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithoutTitle" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithoutTitle" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithoutMessageWithoutTitle, getCursorString(cursor));
 
 
@@ -230,12 +228,12 @@ public class TestUtility extends AndroidTestCase {
                 + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
         cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, true,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
+        //Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithMessageWithoutTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mEmptyCursor, false, aTitle, true,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithoutTitle" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithoutTitle" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithMessageWithoutTitle, getCursorString(cursor));
 
 
@@ -245,7 +243,7 @@ public class TestUtility extends AndroidTestCase {
                 + "row |" + aTitle + "|" + ViewTypes.VIEW_TITLE + "|\n";
         cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, false,
                 anEmptyCursorMessage, true);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitle" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitle" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithoutMessageWithTitle, getCursorString(cursor));
 
 
@@ -259,7 +257,7 @@ public class TestUtility extends AndroidTestCase {
                 + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
         cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, true,
                 anEmptyCursorMessage, true);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitle" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitle" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithMessageWithTitle, getCursorString(cursor));
 
 
@@ -267,7 +265,7 @@ public class TestUtility extends AndroidTestCase {
                 + "header |_id|col1|col2|\n";
         cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, false,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithoutMessageWithTitleDisplayTitleIfListEmptyFalse,
                 getCursorString(cursor));
 
@@ -279,7 +277,7 @@ public class TestUtility extends AndroidTestCase {
                 + "row |" + anEmptyCursorMessage + "|" + ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE + "|\n";
         cursor = Tools.addDisplayProperties(mEmptyCursor, true, aTitle, true,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse" + getCursorString(cursor));
         assertEquals(cursorEmptyCursorStringWithMessageWithTitleDisplayTitleIfListEmptyFalse, getCursorString(cursor));
 
 
@@ -291,22 +289,18 @@ public class TestUtility extends AndroidTestCase {
                 + "row |1|data1|data2|2|\n";
         cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, true,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, false,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, true,
                 anEmptyCursorMessage, false);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, true, aTitle, false,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorFullCursorStringWithTitle" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithTitle, getCursorString(cursor));
 
 
@@ -316,22 +310,19 @@ public class TestUtility extends AndroidTestCase {
 
         cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, true,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, false,
                 anEmptyCursorMessage, true);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, true,
                 anEmptyCursorMessage, false);
-        //Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
 
         cursor = Tools.addDisplayProperties(mCursor2, false, aTitle, false,
                 anEmptyCursorMessage, false);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursorFullCursorStringWithoutTitle" + getCursorString(cursor));
+        Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "cursorFullCursorStringWithoutTitle" + getCursorString(cursor));
         assertEquals(cursorFullCursorStringWithoutTitle, getCursorString(cursor));
 
 
@@ -339,26 +330,14 @@ public class TestUtility extends AndroidTestCase {
 
 
 
-    public void test_print_backgroundcolors() {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Color - " + ColorGenerator.MATERIAL.getRandomColor());
-    }
+
 
 
     public void test_print_installedPackages() {
         String packageName;
         for (PackageInfo pi : Tools.getInstalledPackages(mContext.getPackageManager())) {
             packageName = pi.applicationInfo.packageName;
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + packageName);
+            Log.e(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + packageName);
         }
     }
 

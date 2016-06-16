@@ -53,18 +53,17 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public ItemTouchHelper.SimpleCallback simpleItemTouchCallBack =
             new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
                 @Override
-                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                      RecyclerView.ViewHolder target) {
                     return false;
                 }
 
                 @Override
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     int position = viewHolder.getAdapterPosition();
                     int viewType = getItemViewType(position);
                     if ((viewType == ViewTypes.VIEW_NEXT_ACTION) || (viewType == ViewTypes
                             .VIEW_DONE_ACTION)) {
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                         mCursor.moveToPosition(position);
                         DeleteActionTask deleteActionTask = new DeleteActionTask();
                         deleteActionTask.execute(mCursor.getString(ContactActionVectorEventDAO
@@ -79,7 +78,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     return 0;
                 }
             };
-    private boolean isMoodUnknown;
+    private boolean isSatisfactionUnknown;
 
 
     interface Callback {
@@ -161,7 +160,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     divider = view.findViewById(R.id.divider);
                     title = (TextView) view.findViewById(R.id.title);
                     break;
@@ -223,14 +221,13 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openMoodDialog();
+                        openSatisfactionDialog();
                     }
                 });
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONTACT);
                 break;
             }
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_alone,
                         parent, false);
                 view.setOnClickListener(new View.OnClickListener() {
@@ -243,7 +240,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_frequency,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_FEEDBACK_FREQUENCY);
@@ -262,7 +258,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_TITLE);
@@ -386,16 +381,11 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mFeedBackFrequencyDialog.cancel();
             }
         });
-        //Must be done before mAlertDialog.show() Let you customize only the main
-        // content, not the title and button
-        //mAlertDialog.setView(listContainer);
         mFeedBackFrequencyDialog.show();
-        //Must be done after mAlertDialog.show() Let you customize everything including
-        // title and buttons.
         mFeedBackFrequencyDialog.setContentView(listContainer);
     }
 
-    private void openMoodDialog() {
+    private void openSatisfactionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mAlertEmoDialog = builder.create();
         LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.list_mood, null);
@@ -408,7 +398,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             public void onClick(View v) {
                 if (mEmoIconResource != R.drawable.ic_sentiment_satisfied_black_48dp
                         || (mEmoIconResource == R.drawable
-                        .ic_sentiment_satisfied_black_48dp && isMoodUnknown)) {
+                        .ic_sentiment_satisfied_black_48dp && isSatisfactionUnknown)) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_satisfied_black_48dp));
                     update(values);
@@ -423,7 +413,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (mEmoIconResource != R.drawable.ic_sentiment_neutral_black_48dp
-                        || mEmoIconResource == R.drawable.ic_sentiment_neutral_black_48dp && isMoodUnknown) {
+                        || mEmoIconResource == R.drawable.ic_sentiment_neutral_black_48dp && isSatisfactionUnknown) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_neutral_black_48dp));
                     update(values);
@@ -437,7 +427,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (mEmoIconResource != R.drawable.ic_sentiment_dissatisfied_black_48dp
-                        || mEmoIconResource == R.drawable.ic_sentiment_dissatisfied_black_48dp && isMoodUnknown) {
+                        || mEmoIconResource == R.drawable.ic_sentiment_dissatisfied_black_48dp && isSatisfactionUnknown) {
                     ContentValues values = getMoodContactValues(
                             String.valueOf(R.drawable.ic_sentiment_dissatisfied_black_48dp));
                     update(values);
@@ -451,7 +441,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 if (mEmoIconResource != R.drawable.ic_do_not_disturb_alt_black_48dp
-                        || mEmoIconResource == R.drawable.ic_do_not_disturb_alt_black_48dp && isMoodUnknown) {
+                        || mEmoIconResource == R.drawable.ic_do_not_disturb_alt_black_48dp && isSatisfactionUnknown) {
                     ContentValues values = getUntrackedContactValues(
                             String.valueOf(TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE));
                     update(values);
@@ -461,12 +451,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mAlertEmoDialog.cancel();
             }
         });
-        //Must be done before mAlertDialog.show() Let you customize only the main
-        // content, not the title and button
-        //mAlertDialog.setView(listContainer);
         mAlertEmoDialog.show();
-        //Must be done after mAlertDialog.show() Let you customize everything including
-        // title and buttons.
         mAlertEmoDialog.setContentView(listContainer);
     }
 
@@ -540,12 +525,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 mFeedbackDialog.cancel();
             }
         });
-        //Must be done before mAlertDialog.show() Let you customize only the main
-        // content, not the title and button
-        //mAlertDialog.setView(listContainer);
         mFeedbackDialog.show();
-        //Must be done after mAlertDialog.show() Let you customize everything including
-        // title and buttons.
         mFeedbackDialog.setContentView(listContainer);
     }
 
@@ -565,7 +545,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                         mCursor.getInt(ContactDAO.ContactQuery.COL_BACKGROUND_COLOR));
                 if (mContext.getResources().getInteger(R.integer.orientation) != MainActivity.W700dp_LAND)
                     mCallback.setAvatarContentDescription(contactName);
-                isMoodUnknown = mCursor.getInt(ContactDAO.ContactQuery.COL_MOOD_UNKNOWN) == 1;
+                isSatisfactionUnknown = mCursor.getInt(ContactDAO.ContactQuery.COL_SATISFACTION_UNKNOWN) == 1;
                 // Creates a contact lookup Uri from contact ID and lookup_key
                 final Uri androidContactUri = ContactsContract.Contacts.getLookupUri(
                         mCursor.getLong(ContactDAO.ContactQuery.COL_ANDROID_ID),
@@ -584,7 +564,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 }
                 boolean isMoodKnown = mCursor.getString(
                         ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
-                        TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                        TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE);
                 boolean isUntracked = mCursor.getString(
                         ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
                         TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE);
@@ -597,7 +577,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
                 String feedBackDelay = mCursor.getString(ContactActionVectorEventDAO
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mFeedBackDelay " + mFeedBackDelay);
                 if (feedBackDelay == null) {
                     holder.feedbackTitle.setVisibility(View.INVISIBLE);
                     holder.feedback.setVisibility(View.INVISIBLE);
@@ -608,16 +587,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     holder.feedback.setVisibility(View.VISIBLE);
                     holder.expectedFeedbackTitle.setVisibility(View.INVISIBLE);
                     mFeedBackDelay = Long.valueOf(feedBackDelay);
-                    holder.feedback.setText(Tools.getReadableDelay(mContext, mFeedBackDelay));
+                    holder.feedback.setText(Tools.getReadableTimeLimit(mContext, mFeedBackDelay));
                     holder.feedbackAloneView.setBackgroundColor(mContext.getResources().getColor(R.color.mdtp_white));
                 }
                 break;
             }
             case ViewTypes.VIEW_FEEDBACK_FREQUENCY: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 Long feedBackDelay = mCursor.getLong(ContactActionVectorEventDAO
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FEEDBACK_EXPECTED_DELAY);
-                holder.feedback.setText(Tools.getReadableDelay(mContext,
+                holder.feedback.setText(Tools.getReadableTimeLimit(mContext,
                         feedBackDelay));
                 String frequencyDelay = mCursor.getString(ContactActionVectorEventDAO
                         .PeopleElligibleForFrequencyUpdateQuery.COL_FREQUENCY_OF_CONTACT);
@@ -632,7 +610,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     holder.frequency.setVisibility(View.VISIBLE);
                     holder.expectedFrequencyTitle.setVisibility(View.GONE);
                     mFrequencyDelay = Long.valueOf(frequencyDelay);
-                    holder.frequency.setText(Tools.getReadableDelay(mContext, mFrequencyDelay));
+                    holder.frequency.setText(Tools.getReadableTimeLimit(mContext, mFrequencyDelay));
                     holder.frequencyView.setBackgroundColor(mContext.getResources().getColor(R.color
                             .mdtp_white));
                 }
@@ -640,7 +618,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
 
             case ViewTypes.VIEW_TITLE: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = (position == 1 || position == 2 || position == 3) ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
@@ -688,19 +665,19 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             case ViewTypes.VIEW_DONE_ACTION: {
                 bindActionCommonsViews((ViewHolderAction) holder);
                 long doneDateLong = mCursor.getLong(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_TIME_END);
-                final String mimetype = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE);
-                final String vectorData = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_DATA);
-                final String vectorName = mCursor.getString(ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_NAME);
+                final String mimetype = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_MIMETYPE);
+                final String vectorData = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_DATA);
+                final String vectorName = mCursor.getString(
+                        ContactActionVectorEventDAO.VectorActionByContactIdQuery.COL_VECTOR_NAME);
                 ((ViewHolderAction) holder).time.setText(DateUtils.getFriendlyDateTimeString(mContext, doneDateLong));
 
                 ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mCallback.startVector(mContext, mimetype, vectorData, vectorName);
-                        mCallback.sendToFirebase(
-                                mContext.getResources().getString(R.string.event_start),
-                                mContext.getResources().getString(R.string.item_vector),
-                                null, vectorName);
+                        mCallback.sendToFirebase(mContext.getResources().getString(R.string.event_start), mContext.getResources().getString(R.string.item_vector), null, vectorName);
                     }
                 });
 
@@ -791,9 +768,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private ContentValues getMoodContactValues(String value) {
         ContentValues values = new ContentValues();
         values.put(TieUsContract.ContactTable._ID, mContactId);
-        values.put(TieUsContract.ContactTable.COLUMN_MOOD, value);
-        values.put(TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE);
+        values.put(TieUsContract.ContactTable.COLUMN_SATISFACTION, value);
+        values.put(TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
+                TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE);
         values.put(TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE);
         return values;
@@ -835,16 +812,12 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                             values,
                             ContactDAO.ContactQuery.SELECTION,
                             new String[]{contactId});
-            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + ""
-                    + mContext.getResources().getString(R.string.action_title1));
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             mCallback.updateFragment();
-            Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + ""
-                    + mContext.getResources().getString(R.string.action_title1));
         }
     }
 
@@ -862,8 +835,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             );
 
             values = Tools.getContentValues(
-                    TieUsContract.ContactTable.COLUMN_MOOD_UNKNOWN,
-                    TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                    TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
+                    TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE);
             mContext.getContentResolver().update(
                     TieUsContract.ContactTable.CONTENT_URI,
                     values, TieUsContract.ContactTable._ID + "=?", new String[]{mContactId}

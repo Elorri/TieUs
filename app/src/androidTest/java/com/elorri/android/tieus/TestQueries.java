@@ -73,7 +73,7 @@ public class TestQueries extends AndroidTestCase {
     }
 
     public void test_joint_table_contact_action_vector_event() {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT);
         Cursor cursor = db.query("(" + ContactActionVectorEventDAO
                         .JOINT_TABLE_CONTACT_ACTION_VECTOR_EVENT + ")",
@@ -85,105 +85,105 @@ public class TestQueries extends AndroidTestCase {
                 + "|839|298i5.3552i274b0e968b8a47fv|" + "Mélissa|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _3days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n"
                 + "row |24|12|42|32|"+R.string.action_name12+"|" + _32daysAgo_17april2016at12h40m52s + "|" + _31daysAgo_18april2016at12h40m52s
-                + "|939|398i5.3552i274b0e968b8a47fv|Mélissa_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|939|398i5.3552i274b0e968b8a47fv|Mélissa_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _3days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n"
                 + "row |13|12|21|32|"+R.string.action_name12+"|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
                 + "|838|298i5.3552i264b0e968b8a47fv|Émilie|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n"
                 + "row |23|12|41|32|"+R.string.action_name12+"|" + _26daysAgo_23april2016at12h40m52s + "|" + _25daysAgo_24april2016at12h40m52s
-                + "|938|398i5.3552i264b0e968b8a47fv|Émilie_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|938|398i5.3552i264b0e968b8a47fv|Émilie_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n"
                 + "row |12|12|20|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|837|298i5.3552i264b0e968b8a46fv|Denis|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n"
                 + "row |22|12|40|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
-                + "|937|398i5.3552i264b0e968b8a46fv|Denis_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|937|398i5.3552i264b0e968b8a46fv|Denis_Unfollowed|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n"
                 + "row |9|12|17|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|834|298i5.3552i264b0e968b8a42fl|Jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n"
                 + "row |19|12|37|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
-                + "|934|398i5.3552i264b0e968b8a42fl|Jacques_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|934|398i5.3552i264b0e968b8a42fl|Jacques_Unfollowed|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n"
                 + "row |10|12|18|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|835|298i5.3552i264b0e968b8a42fv|Jeanne|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n"
                 + "row |20|12|38|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
-                + "|935|398i5.3552i264b0e968b8a42fv|Jeanne_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "|935|398i5.3552i264b0e968b8a42fv|Jeanne_Unfollowed|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n"
                 + "row |11|12|19|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
                 + "|836|298i5.3552i264b0e968b8a42fd|Mathieu|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |21|12|39|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|" + _3daysAgo_16may2016at12h40m52s
-                + "|936|398i5.3552i264b0e968b8a42fd|Mathieu_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp
+                + "|936|398i5.3552i264b0e968b8a42fd|Mathieu_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|Gmail|com.google.android.gm|package|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |8|12|16|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|833|298i5.3552i264b0e968b8a42fk|"
                 + "Pierre|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|\n"
                 + "row |18|12|36|32|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|null" +
                 "|933|398i5.3552i264b0e968b8a42fk|"
-                + "Pierre_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
+                + "Pierre_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|\n"
                 + "row |16|12|24|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
                 + "|850|288i7.3552i264b0e968b8a42ff|"
                 + "Emma|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |26|12|44|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|" + _in2seconds_19may2016at12h40m54s
                 + "|950|398i9.3552i264b0e968b8a42ff|"
-                + "Emma_Untracked|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
+                + "Emma_Unfollowed|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |15|12|23|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|null|840|298i7.3552i264b0e968b8a42ff|"
                 + "Françoise|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |25|12|43|32|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|null|940|398i7.3552i264b0e968b8a42ff|"
-                + "Françoise_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
+                + "Françoise_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |17|12|25|32|"+R.string.action_name12+"|" + tomorrowStart_20may2016at00h00m00sStart + "|null|851|290i5.3552i264b0e968b8a42fk|"
                 + "Bernard|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android.gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|\n"
                 + "row |27|12|45|32|"+R.string.action_name12+"|" + _in4days_23may2016at12h40m52s + "|null|951|390i5.3552i264b0e968b8a42fk|"
-                + "Bernard_Untracked|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
+                + "Bernard_Unfollowed|null|" + R.drawable.ic_sentiment_neutral_black_48dp + "|Gmail|com.google.android" +
                 ".gm|package|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|\n";
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
@@ -197,18 +197,18 @@ public class TestQueries extends AndroidTestCase {
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|\n"
                 + "row |23|840|298i7.3552i264b0e968b8a42ff|françoise|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|null|null|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -223,35 +223,35 @@ public class TestQueries extends AndroidTestCase {
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n"
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n"
                 + "row |15|832|298i5.3552i264b0e968b8a42ff|paul|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n";
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -261,7 +261,7 @@ public class TestQueries extends AndroidTestCase {
         Cursor cursor = db.rawQuery(ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.SELECT, null);
         assertEquals(2, cursor.getCount());
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + ""
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + ""
                 + ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.SELECT);
 
         String cursorString = "\n"
@@ -269,13 +269,13 @@ public class TestQueries extends AndroidTestCase {
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -289,7 +289,7 @@ public class TestQueries extends AndroidTestCase {
                         + ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_AFTER_BIND, null);
         assertEquals(1, cursor.getCount());
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" +
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" +
                 ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_BEFORE_BIND
                 + now_19may2016at12h40m52s
                 + ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_AFTER_BIND);
@@ -299,9 +299,9 @@ public class TestQueries extends AndroidTestCase {
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -318,9 +318,9 @@ public class TestQueries extends AndroidTestCase {
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -339,10 +339,10 @@ public class TestQueries extends AndroidTestCase {
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n";
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -356,7 +356,7 @@ public class TestQueries extends AndroidTestCase {
                         + now_19may2016at12h40m52s + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery
                         .SELECT_AFTER_BIND, null);
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "now_19may2016at12h40m52s " + now_19may2016at12h40m52s + "- "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "now_19may2016at12h40m52s " + now_19may2016at12h40m52s + "- "
                 + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_BEFORE_BIND
                 + now_19may2016at12h40m52s + ContactActionVectorEventDAO.PeopleApprochingFrequencyQuery.SELECT_AFTER_BIND);
 
@@ -367,9 +367,9 @@ public class TestQueries extends AndroidTestCase {
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -403,9 +403,9 @@ public class TestQueries extends AndroidTestCase {
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|"
                 + now_19may2016at12h40m52s + "|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -417,7 +417,7 @@ public class TestQueries extends AndroidTestCase {
                 ContactActionVectorEventDAO.DelayedPeopleQuery.SELECT,
                 new String[]{String.valueOf(now_19may2016at12h40m52s)});
 
-        Log.e("FF", ContactActionVectorEventDAO.DelayedPeopleQuery.SELECT + " - "
+        Log.d(TestGivens.LOG_TAG, ContactActionVectorEventDAO.DelayedPeopleQuery.SELECT + " - "
                 + String.valueOf(now_19may2016at12h40m52s));
 
         assertEquals(1, cursor.getCount());
@@ -427,10 +427,11 @@ public class TestQueries extends AndroidTestCase {
                 + "row |16|833|298i5.3552i264b0e968b8a42fk|pierre|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696"
-                + "|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|com.google.android.gm|package" + "|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696"
+                + "|"+R.string.action_name12+"|" + _4daysAgo_15may2016at12h40m52s + "|Gmail|com" +
+                ".google.android.gm|package" + "|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -442,7 +443,7 @@ public class TestQueries extends AndroidTestCase {
                 ContactActionVectorEventDAO.TodayPeopleQuery.SELECT,
                 new String[]{String.valueOf(todayStart_19may2016at00h00m00s), String.valueOf(tomorrowStart_20may2016at00h00m00sStart)});
 
-        Log.e("FF", ContactActionVectorEventDAO.TodayPeopleQuery.SELECT + " - "
+        Log.d(TestGivens.LOG_TAG, ContactActionVectorEventDAO.TodayPeopleQuery.SELECT + " - "
                 + now_19may2016at12h40m52s + " - " + tomorrowStart_20may2016at00h00m00sStart);
 
         assertEquals(1, cursor.getCount());
@@ -452,11 +453,11 @@ public class TestQueries extends AndroidTestCase {
                 + "row |23|840|298i7.3552i264b0e968b8a42ff|françoise|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917"
                 + "|"+R.string.action_name12+"|" + _in1second_19may2016at12h40m53s + "|Gmail|com.google.android" +
                 ".gm|package|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -467,7 +468,7 @@ public class TestQueries extends AndroidTestCase {
                 ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT,
                 new String[]{String.valueOf(todayStart_19may2016at00h00m00s), String.valueOf(tomorrowStart_20may2016at00h00m00sStart)});
 
-        Log.e("FF", ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT + " - "
+        Log.d(TestGivens.LOG_TAG, ContactActionVectorEventDAO.TodayDonePeopleQuery.SELECT + " - "
                 + now_19may2016at12h40m52s + "" + tomorrowStart_20may2016at00h00m00sStart);
 
         assertEquals(2, cursor.getCount());
@@ -477,16 +478,17 @@ public class TestQueries extends AndroidTestCase {
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696"
-                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696"
+                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|Gmail|com" +
+                ".google.android.gm|package|\n"
                 + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696"
-                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|com.google.android.gm|package|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696"
+                + "|"+R.string.action_name12+"|" + _in2seconds_19may2016at12h40m54s + "|Gmail|com.google.android.gm|package|\n";
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -497,7 +499,7 @@ public class TestQueries extends AndroidTestCase {
                 ContactActionVectorEventDAO.NextPeopleQuery.SELECT,
                 new String[]{String.valueOf(tomorrowStart_20may2016at00h00m00sStart)});
 
-        Log.e("FF", ContactActionVectorEventDAO.NextPeopleQuery.SELECT + " - "
+        Log.d(TestGivens.LOG_TAG, ContactActionVectorEventDAO.NextPeopleQuery.SELECT + " - "
                 + tomorrowStart_20may2016at00h00m00sStart);
 
         assertEquals(1, cursor.getCount());
@@ -507,16 +509,17 @@ public class TestQueries extends AndroidTestCase {
                 + "row |25|851|290i5.3552i264b0e968b8a42fk|bernard|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611"
-                + "|"+R.string.action_name12+"|" + tomorrowStart_20may2016at00h00m00sStart + "|com.google.android.gm|package|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611"
+                + "|"+R.string.action_name12+"|" + tomorrowStart_20may2016at00h00m00sStart +
+                "|Gmail|com.google.android.gm|package|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
     }
 
-    public void test_untracked_people() {
+    public void test_unfollowed_people() {
 
         Cursor cursor = db.rawQuery(
                 ContactActionVectorEventDAO.UnfollowedPeopleQuery.SELECT, null);
@@ -528,49 +531,49 @@ public class TestQueries extends AndroidTestCase {
                 + "row |45|951|390i5.3552i264b0e968b8a42fk|bernard_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-18611|\n"
                 + "row |40|937|398i5.3552i264b0e968b8a46fv|denis_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n"
                 + "row |44|950|398i9.3552i264b0e968b8a42ff|emma_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |43|940|398i7.3552i264b0e968b8a42ff|françoise_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |37|934|398i5.3552i264b0e968b8a42fl|jacques_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n"
                 + "row |38|935|398i5.3552i264b0e968b8a42fv|jeanne_unfollowed|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n"
                 + "row |39|936|398i5.3552i264b0e968b8a42fd|mathieu_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |42|939|398i5.3552i274b0e968b8a47fv|mélissa_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n"
                 + "row |35|932|398i5.3552i264b0e968b8a42ff|paul_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-1739917|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-1739917|\n"
                 + "row |36|933|398i5.3552i264b0e968b8a42fk|pierre_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-4560696|\n"
                 + "row |41|938|398i5.3552i264b0e968b8a47fv|émilie_unfollowed|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n";
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -591,22 +594,22 @@ public class TestQueries extends AndroidTestCase {
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-6190977|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|\n"
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-4560696|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-18611|\n"
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|\n"
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
-                + TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE + "|-30107|\n";
+                + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|\n";
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -625,16 +628,16 @@ public class TestQueries extends AndroidTestCase {
                 ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery.PROJECTION)
                 + "row |19|836|298i5.3552i264b0e968b8a42fd|mathieu|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11677471|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11677471|\n"
                 + "row |21|838|298i5.3552i264b0e968b8a47fv|émilie|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _4days + "|" + _30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-10177034|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-10177034|\n"
                 + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
                 + R.drawable.ic_sentiment_neutral_black_48dp + "|" + _2days + "|" + _3days + "|" + _30days + "|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE + "|-11549705|\n";
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE + "|-11549705|\n";
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
 
         assertEquals(cursorString, TestUtility.getCursorString(cursor));
         cursor.close();
@@ -642,107 +645,106 @@ public class TestQueries extends AndroidTestCase {
     }
 
     public static String getFriendlyDateTimeString(Context context, long date) {
-        return DateUtils.fromLongToString(date, DateUtils.TIMESTAMP_FORMAT, Tools
-                .getMostSuitableLocale());
+        return DateUtils.fromLongToString(date, DateUtils.TIMESTAMP_FORMAT, Locale.getDefault());
     }
 
     public void test_print_dates() {
         long now_19may2016at12h40m52s = System.currentTimeMillis();
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Now - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "Now - "
                 + getFriendlyDateTimeString(mContext, now_19may2016at12h40m52s) + " : " + now_19may2016at12h40m52s);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Today start - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "Today start - "
                 + getFriendlyDateTimeString(mContext, DateUtils.setZeroDay(now_19may2016at12h40m52s))
                 + " : " + DateUtils.setZeroDay(now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "Tomorrow start - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "Tomorrow start - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(1, DateUtils.setZeroDay(now_19may2016at12h40m52s)))
                 + " : " + DateUtils.addDay(1, DateUtils.setZeroDay(now_19may2016at12h40m52s)));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 32 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 32 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-32, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-32, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 31 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 31 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-31, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-31, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 30 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 30 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-30, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-30, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 26 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 26 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-26, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-26, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 25 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 25 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-25, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-25, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 4 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 4 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-4, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-4, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 3 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 3 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-3, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-3, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "There is 2 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[2] + "There is 2 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-2, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-2, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "There is 1 day - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "There is 1 day - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(-1, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(-1, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "In one second - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "In one second - "
                 + getFriendlyDateTimeString(mContext, now_19may2016at12h40m52s + 1000) + " : " + (now_19may2016at12h40m52s + 1000));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "In 2 seconds - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "In 2 seconds - "
                 + getFriendlyDateTimeString(mContext, now_19may2016at12h40m52s + 2000) + " : " + (now_19may2016at12h40m52s + 2000));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "In 1 day - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "In 1 day - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(1, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(1, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "In 2 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "In 2 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(2, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(2, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "In 4 days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "In 4 days - "
                 + getFriendlyDateTimeString(mContext, DateUtils.addDay(4, now_19may2016at12h40m52s)) + " : "
                 + DateUtils.addDay(4, now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_1days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_1days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(1, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(1, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_2days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_2days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(2, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(2, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_3days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_3days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(3, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(3, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_4days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_4days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(4, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(4, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_10days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_10days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(10, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(10, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_20days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_20days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(20, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(20, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_23days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_23days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(23, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(23, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_24days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_24days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(24, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(24, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_30days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_30days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(30, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(30, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_29days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_29days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(29, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(29, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "_50days - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "_50days - "
                 + getFriendlyDateTimeString(mContext,
                 DateUtils.addDay(50, now_19may2016at12h40m52s) - now_19may2016at12h40m52s) + " : "
                 + (DateUtils.addDay(50, now_19may2016at12h40m52s) - now_19may2016at12h40m52s));
 
 
-        Log.e("FF", Thread.currentThread().getStackTrace()[1] + "DateUtils.nextYearStart() - "
+        Log.d(TestGivens.LOG_TAG, Thread.currentThread().getStackTrace()[1] + "DateUtils.nextYearStart() - "
                 + DateUtils.fromLongToString(DateUtils.nextYearStart(), DateUtils
                 .TIMESTAMP_FORMAT, Locale.getDefault()));
     }

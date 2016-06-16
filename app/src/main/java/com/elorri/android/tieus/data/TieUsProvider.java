@@ -11,28 +11,30 @@ import android.util.Log;
 
 import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.extra.DateUtils;
-import com.elorri.android.tieus.extra.Tools;
 
 /**
  * Created by Elorri on 12/04/2016.
  */
 public class TieUsProvider extends ContentProvider {
 
-    static final int DATA_WIDGET = 50; //content://com.elorri.android.tieus/widget/
-    static final int DATA_BOARD = 100; //content://com.elorri.android.tieus/board/
-    static final int DATA_DETAIL = 101; //content://com.elorri.android.tieus/detail/15
-    static final int DATA_ADD_ACTION_SELECT_ACTION = 102; //content://com.elorri.android.tieus/add_action/
-    static final int DATA_ADD_ACTION_SELECT_VECTOR = 103; //content://com.elorri.android.tieus/add_action/12
-    static final int DATA_ADD_ACTION_VALIDATE = 105; //content://com.elorri.android.tieus/add_action/12/15/1464472800000
+    // Uris for getting data directly taken from a table
+    private static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.tieus/contact/
+    private static final int TABLE_ACTION = 501; //will match content://com.elorri.android.tieus/action/
+    private static final int TABLE_EVENT = 502; //will match content://com.elorri.android.tieus/event/
+    private static final int TABLE_VECTOR = 503; //will match content://com.elorri.android.tieus/vector/
 
-    static final int TABLE_CONTACT = 500; //will match content://com.elorri.android.tieus/contact/
-    static final int TABLE_ACTION = 501; //will match content://com.elorri.android.tieus/action/
-    static final int TABLE_EVENT = 502; //will match content://com.elorri.android.tieus/event/
-    static final int TABLE_VECTOR = 503; //will match content://com.elorri.android.tieus/vector/
-    static final int TABLE_CONTACT_VECTORS = 504; //will match content://com.elorri.android.tieus/contact_vectors/
+    // Uris for getting data that is a combinaison of data taken in different tables, and
+    // organised in 1 cursor.
+    private static final int DATA_WIDGET = 50; //content://com.elorri.android.tieus/widget/
+    private static final int DATA_MAIN = 100; //content://com.elorri.android.tieus/main/
+    private static final int DATA_DETAIL = 101; //content://com.elorri.android.tieus/detail/15
+    private static final int DATA_ADD_ACTION_SELECT_ACTION = 102; //content://com.elorri.android.tieus/add_action/
+    private static final int DATA_ADD_ACTION_SELECT_VECTOR = 103; //content://com.elorri.android.tieus/add_action/12
+    private static final int DATA_ADD_ACTION_VALIDATE = 105; //content://com.elorri.android.tieus/add_action/12/15/1464472800000
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private static final String LOG_TAG = TieUsProvider.class.getSimpleName();
 
     private TieUsDbHelper mOpenHelper;
 
@@ -44,7 +46,7 @@ public class TieUsProvider extends ContentProvider {
         matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
                 TieUsContract.WidgetData.PATH_WIDGET + "/#", DATA_WIDGET);
         matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
-                TieUsContract.BoardData.PATH_BOARD + "/#", DATA_BOARD);
+                TieUsContract.MainData.PATH_MAIN + "/#", DATA_MAIN);
         matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
                 TieUsContract.DetailData.PATH_DETAIL + "/#", DATA_DETAIL);
         matcher.addURI(TieUsContract.CONTENT_AUTHORITY,
@@ -62,8 +64,6 @@ public class TieUsProvider extends ContentProvider {
                 .PATH_EVENT, TABLE_EVENT);
         matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract.VectorTable
                 .PATH_VECTOR, TABLE_VECTOR);
-        matcher.addURI(TieUsContract.CONTENT_AUTHORITY, TieUsContract
-                .ContactVectorsTable.PATH_CONTACT_VECTORS, TABLE_CONTACT_VECTORS);
         return matcher;
     }
 
@@ -76,15 +76,12 @@ public class TieUsProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "thread " + Tools
-                .thread());
         Cursor cursor = null;
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         switch (sUriMatcher.match(uri)) {
-            case DATA_WIDGET:{
-                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_WIDGET " +
-                        "uri " + uri);
-                long now= TieUsContract.WidgetData.getTimeFromUri(uri);
+            case DATA_WIDGET: {
+                Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_WIDGET uri " + uri);
+                long now = TieUsContract.WidgetData.getTimeFromUri(uri);
                 String todayStart = String.valueOf(DateUtils.setZeroDay(now));
                 String tomorrowStart = String.valueOf(DateUtils.addDay(1, DateUtils.setZeroDay(now)));
                 cursor = db.query("(" + ContactActionVectorEventDAO.TodayPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
@@ -94,43 +91,44 @@ public class TieUsProvider extends ContentProvider {
                         null,
                         null,
                         null);
-                break;}
-            case DATA_BOARD:{
-                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_BOARD " +
-                        "uri " + uri);
-                long now= TieUsContract.BoardData.getTimeFromUri(uri);
-                cursor = BoardData.getCursor(getContext(), db, now, selection, selectionArgs);
-                break;}
+                break;
+            }
+            case DATA_MAIN: {
+                Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_MAIN uri " + uri);
+                long now = TieUsContract.MainData.getTimeFromUri(uri);
+                cursor = com.elorri.android.tieus.data.MainData.getCursor(getContext(), db, now, selection, selectionArgs);
+                break;
+            }
             case DATA_DETAIL:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_DETAIL uri " + uri);
                 String contactId = TieUsContract.DetailData.getContactIdFromUri(uri);
                 cursor = DetailData.getCursor(getContext(), db, contactId);
                 break;
             case DATA_ADD_ACTION_SELECT_ACTION:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_ACTION uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_ACTION uri " + uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_ACTION,
-                        null, null,  null);
+                        null, null, null);
                 break;
             case DATA_ADD_ACTION_SELECT_VECTOR: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_VECTOR uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_SELECT_VECTOR uri " + uri);
                 String actionId = TieUsContract.AddActionData.getActionIdFromSelectVectorUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_SELECT_VECTOR,
-                        actionId, null,  null);
+                        actionId, null, null);
             }
             break;
             case DATA_ADD_ACTION_VALIDATE: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_VALIDATE uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "DATA_ADD_ACTION_VALIDATE uri " + uri);
                 String actionId = TieUsContract.AddActionData.getActionIdFromSelectValidateUri(uri);
                 String vectorId = TieUsContract.AddActionData.getVectorIdFromSelectValidateUri(uri);
                 String timeStart = TieUsContract.AddActionData.getTimeStartIdFromSelectValidateUri(uri);
                 cursor = AddActionData.getCursor(getContext(), db, AddActionData.ACTION_VALIDATE,
                         actionId, vectorId, timeStart);
                 Log.e("FF", Thread.currentThread().getStackTrace()[2] + "cursor.getCount()"
-                        +cursor.getCount());
+                        + cursor.getCount());
             }
             break;
             case TABLE_CONTACT:
-                Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
+                Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "TABLE_CONTACT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         TieUsContract.ContactTable.NAME,
                         projection,
@@ -142,7 +140,7 @@ public class TieUsProvider extends ContentProvider {
                 );
                 break;
             case TABLE_ACTION:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_ACTION uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "TABLE_ACTION uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         TieUsContract.ActionTable.NAME,
                         projection,
@@ -154,7 +152,7 @@ public class TieUsProvider extends ContentProvider {
                 );
                 break;
             case TABLE_VECTOR:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_VECTOR uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "TABLE_VECTOR uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         TieUsContract.VectorTable.NAME,
                         projection,
@@ -166,7 +164,7 @@ public class TieUsProvider extends ContentProvider {
                 );
                 break;
             case TABLE_EVENT:
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "TABLE_EVENT uri " + uri);
+                Log.e(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "TABLE_EVENT uri " + uri);
                 cursor = mOpenHelper.getReadableDatabase().query(
                         TieUsContract.EventTable.NAME,
                         projection,
@@ -201,7 +199,7 @@ public class TieUsProvider extends ContentProvider {
                 long _id = db.insert(TieUsContract.ContactTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = TieUsContract.ContactTable.buildContactUri(_id);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
+                    Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -210,7 +208,7 @@ public class TieUsProvider extends ContentProvider {
                 long _id = db.insert(TieUsContract.EventTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = TieUsContract.EventTable.buildEventUri(_id);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
+                    Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -219,7 +217,7 @@ public class TieUsProvider extends ContentProvider {
                 long _id = db.insert(TieUsContract.ActionTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = TieUsContract.ActionTable.buildActionUri(_id);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
+                    Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_EVENT " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -228,16 +226,7 @@ public class TieUsProvider extends ContentProvider {
                 long _id = db.insert(TieUsContract.VectorTable.NAME, null, values);
                 if (_id > 0) {
                     returnUri = TieUsContract.VectorTable.buildVectorUri(_id);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_VECTORS " + _id);
-                } else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
-                break;
-            }
-            case TABLE_CONTACT_VECTORS: {
-                long _id = db.insert(TieUsContract.ContactVectorsTable.NAME, null, values);
-                if (_id > 0) {
-                    returnUri = TieUsContract.ContactVectorsTable.buildContactVectorsUri(_id);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_CONTACT_VECTORS " + _id);
+                    Log.d(LOG_TAG, Thread.currentThread().getStackTrace()[2] + "insert _id TABLE_VECTORS " + _id);
                 } else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -262,10 +251,6 @@ public class TieUsProvider extends ContentProvider {
                 break;
             case TABLE_VECTOR:
                 rowsDeleted = db.delete(TieUsContract.VectorTable.NAME, selection, selectionArgs);
-                break;
-            case TABLE_CONTACT_VECTORS:
-                rowsDeleted = db.delete(TieUsContract.ContactVectorsTable.NAME, selection,
-                        selectionArgs);
                 break;
             case TABLE_EVENT:
                 rowsDeleted = db.delete(TieUsContract.EventTable.NAME, selection, selectionArgs);
@@ -331,7 +316,7 @@ public class TieUsProvider extends ContentProvider {
                 return super.bulkInsert(uri, values);
         }
         getContext().getContentResolver().notifyChange(uri, null);
-        Log.d("TieUs", returnCount+ "rows inserted in " + uri);
+        Log.d("TieUs", returnCount + "rows inserted in " + uri);
         return returnCount;
     }
 

@@ -3,7 +3,6 @@ package com.elorri.android.tieus.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +71,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
 
             switch (viewType) {
                 case VIEW_ACTION_RECAP: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     vectorLogo = (ImageView) view.findViewById(R.id.vector_logo);
                     clock = (ImageView) view.findViewById(R.id.clock);
                     action = (TextView) view.findViewById(R.id.action);
@@ -80,18 +78,15 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                     break;
                 }
                 case ViewTypes.VIEW_TITLE: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     divider = view.findViewById(R.id.divider);
                     title = (TextView) view.findViewById(R.id.title);
                     break;
                 }
                 case VIEW_ACTION_ITEM: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     textView = (TextView) view.findViewById(R.id.textview);
                     break;
                 }
                 case ViewTypes.VIEW_VECTOR_ITEM: {
-                    Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                     imageView = (ImageView) view.findViewById(R.id.imageview);
                     label = (TextView) view.findViewById(R.id.label);
                     break;
@@ -103,33 +98,28 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     @Override
     public AddActionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
         ViewHolder viewHolder = null;
         View view;
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action_recap,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION_RECAP);
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_title,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_TITLE);
                 break;
             }
             case VIEW_ACTION_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_textview,
                         parent, false);
                 viewHolder = new ViewHolder(view, VIEW_ACTION_ITEM);
                 break;
             }
             case ViewTypes.VIEW_VECTOR_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simple_imageview_label,
                         parent, false);
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_VECTOR_ITEM);
@@ -145,21 +135,14 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
         int viewType = getItemViewType(position);
         switch (viewType) {
             case VIEW_ACTION_RECAP: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int vectorIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_DATA);
                 int actionIdx = mCursor.getColumnIndex(TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID);
-                int timeStartIdx = mCursor.getColumnIndex(TieUsContract.EventTable.COLUMN_TIME_START);
                 String actionName;
-                long timeStartLong;
                 if (actionIdx != -1) {
                     actionName = mContext.getResources().getString(mCursor.getInt(actionIdx));
                     holder.action.setText(actionName);
                     if (vectorIdx != -1) {
                         int mimetypeIdx = mCursor.getColumnIndex(TieUsContract.VectorTable.COLUMN_MIMETYPE);
-
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" +
-                                mCursor.getString(mimetypeIdx) +
-                                " " + mCursor.getString(vectorIdx));
                         holder.vectorLogo.setVisibility(View.VISIBLE);
                         Tools.setVectorBackground(mContext, holder.vectorLogo,
                                 mCursor.getString(mimetypeIdx),
@@ -169,14 +152,12 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 break;
             }
             case ViewTypes.VIEW_TITLE: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 int visibility = position == 0 ? View.INVISIBLE : View.VISIBLE;
                 holder.divider.setVisibility(visibility);
                 holder.title.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
             }
             case VIEW_ACTION_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.textView.setText(mContext.getString(mCursor.getInt(ActionDAO.ActionQuery.COL_ACTION_NAME_RESOURCE_ID)));
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -194,7 +175,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                 break;
             }
             case ViewTypes.VIEW_VECTOR_ITEM: {
-                Log.e("FF", Thread.currentThread().getStackTrace()[2] + "");
                 holder.imageView.setBackground(null);
                 Tools.setVectorBackground(mContext, holder.imageView, mCursor.getString(
                         VectorDAO.VectorQuery.COL_MIMETYPE),
@@ -209,10 +189,9 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
                         mCursor.moveToPosition(adapterPosition);
                         final String vectorId = mCursor.getString(VectorDAO.VectorQuery.COL_ID);
                         final String vectorName = mCursor.getString(VectorDAO.VectorQuery.COL_VECTOR_NAME);
-                        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + vectorId);
                         final String contentTypeVector = mContext.getResources().getString(R.string.item_vector);
                         mCallback.setVectorId(vectorId);
-                        mCallback.sendToFirebase(contentTypeVector,vectorId, vectorName);
+                        mCallback.sendToFirebase(contentTypeVector, vectorId, vectorName);
                     }
                 });
                 break;
@@ -228,7 +207,6 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     }
 
     public void swapCursor(Cursor data) {
-        Log.d("Communication", Thread.currentThread().getStackTrace()[2] + "");
         mCursor = data;
         notifyDataSetChanged();
     }
@@ -237,13 +215,8 @@ public class AddActionAdapter extends RecyclerView.Adapter<AddActionAdapter.View
     public int getItemViewType(int position) {
         mCursor.moveToPosition(position);
         int viewtype = mCursor.getInt(mCursor.getColumnIndex(ViewTypes.COLUMN_VIEWTYPE));
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "position " + position);
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
         if (viewtype == ViewTypes.VIEW_ACTION) {
-            viewtype = (mCurrentStep.equals(AddActionFragment.ZERO_STEP)) ? VIEW_ACTION_ITEM :
-                    VIEW_ACTION_RECAP;
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "mCurrentStep " + mCurrentStep);
-            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "viewtype " + viewtype);
+            viewtype = (mCurrentStep.equals(AddActionFragment.ZERO_STEP)) ? VIEW_ACTION_ITEM : VIEW_ACTION_RECAP;
         }
         return viewtype;
     }

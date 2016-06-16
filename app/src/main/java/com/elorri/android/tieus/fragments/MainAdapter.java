@@ -33,7 +33,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private Context mContext;
     private int mPosition = RecyclerView.NO_POSITION;
     private ItemChoiceManager mItemChoiceManager;
-    private String ADAPTER_POSITION = "adapter_position";
 
 
     public MainAdapter(Cursor cursor, Callback callback, int choiceMode) {
@@ -121,7 +120,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     divider = view.findViewById(R.id.divider);
                     break;
                 }
-                case ViewTypes.VIEW_DELAY_PEOPLE: {
+                case ViewTypes.VIEW_DELAYED_PEOPLE: {
                     action = (TextView) view.findViewById(R.id.action);
                     dueDate = (TextView) view.findViewById(R.id.due_date);
                     vectorIcon = (ImageView) view.findViewById(R.id.vectorIcon);
@@ -177,9 +176,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_TITLE);
                 break;
             }
-            case ViewTypes.VIEW_UNMANAGED_PEOPLE: {
+            case ViewTypes.VIEW_UNSCHEDULED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNMANAGED_PEOPLE);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNSCHEDULED_PEOPLE);
                 break;
             }
             case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
@@ -197,19 +196,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT);
                 break;
             }
-            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK: {
+            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED);
                 break;
             }
-            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
+            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT);
                 break;
             }
-            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY: {
+            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY);
                 break;
             }
             case ViewTypes.VIEW_CONFIRM_MESSAGE: {
@@ -217,9 +216,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_CONFIRM_MESSAGE);
                 break;
             }
-            case ViewTypes.VIEW_DELAY_PEOPLE: {
+            case ViewTypes.VIEW_DELAYED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_undone_event, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_DELAY_PEOPLE);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_DELAYED_PEOPLE);
                 break;
             }
             case ViewTypes.VIEW_TODAY_PEOPLE: {
@@ -237,9 +236,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_NEXT_PEOPLE);
                 break;
             }
-            case ViewTypes.VIEW_UNTRACKED_PEOPLE: {
+            case ViewTypes.VIEW_UNFOLLOWED_PEOPLE: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNTRACKED_PEOPLE);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNFOLLOWED_PEOPLE);
                 break;
             }
             default:
@@ -276,7 +275,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 holder.contactName.setText(mCursor.getString(MatrixCursors.TitleQuery.COL_TITLE));
                 break;
             }
-            case ViewTypes.VIEW_UNMANAGED_PEOPLE: {
+            case ViewTypes.VIEW_UNSCHEDULED_PEOPLE: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
@@ -296,17 +295,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK: {
+            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_DELAY: {
+            case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY: {
+            case ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
@@ -323,13 +322,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                         else if (Status.getLastMessageIdx(mContext) == Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
                             Status.setLastMessageIdxUI(mContext, Status.NOTHING_TO_SAY);
                         else
-                            Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNMANAGED_PEOPLE);
+                            Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
                         mCallback.restartLoader();
                     }
                 });
                 break;
             }
-            case ViewTypes.VIEW_DELAY_PEOPLE: {
+            case ViewTypes.VIEW_DELAYED_PEOPLE: {
                 bindCommonViews(holder);
                 Tools.setVectorBackground(mContext, holder.vectorIcon,
                         mCursor.getString(ContactActionVectorEventDAO.DelayedPeopleQuery.COL_VECTOR_MIMETYPE),
@@ -386,7 +385,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_UNTRACKED_PEOPLE: {
+            case ViewTypes.VIEW_UNFOLLOWED_PEOPLE: {
                 bindCommonViews(holder, R.drawable.ic_do_not_disturb_alt_black_48dp);
                 setOnClickListener(holder);
                 break;
@@ -406,10 +405,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
         holder.moodIcon.setBackgroundResource(moodResId);
-        holder.moodIcon.setContentDescription(Tools.getMoodDesciption(mContext, moodResId));
+        holder.moodIcon.setContentDescription(Tools.getSatisfactionDesciption(mContext, moodResId));
         boolean isMoodKnown = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
-                TieUsContract.ContactTable.MOOD_UNKNOWN_ON_VALUE);
+                TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE);
         boolean isUntracked = mCursor.getString(
                 ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
                 TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE);

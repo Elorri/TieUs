@@ -19,6 +19,7 @@
     <string name="pref_sync_status_key" translatable="false">sync_status_key</string>
     <string name="tag_fragment_board" translatable="false">board_fragment</string>
     <string name="keep" translatable="false">keep</string>
+    <string name="sms_intent_type">vnd.android-dir/mms-sms</string>
 
     <!-- use for internal purpose, not display on ui, used for firebase logs -->
     <string name="pref_sync_stat_contact_added_key" translatable="false">pref_sync_stat_contact_added_key</string>
@@ -42,10 +43,10 @@
     <string name="select_vector" translatable="true">Select a vector</string>
     <string name="done_actions" translatable="true">Done actions</string>
     <string name="fill_in_delay_feedback_title" translatable="true">People recently worked for</string>
-    <string name="mood_to_update_title" translatable="true">Satisfaction face to update</string>
+    <string name="satisfaction_to_update_title" translatable="true">Satisfaction face to update</string>
     <string name="fill_up_frequency_title" translatable="true">Frequency of contact to set up</string>
     <string name="ask_for_feedback_title" translatable="true">Unanswering people</string>
-    <string name="nearby_decreased_mood_title" translatable="true">They are soon to turn unsatisfied !</string>
+    <string name="nearby_decreased_satisfaction_title" translatable="true">They are soon to turn unsatisfied !</string>
     <string name="decreased_mood_title" translatable="true">They decreased their satisfaction state today!</string>
 
     <!-- options to choose -->
@@ -53,7 +54,7 @@
     <string name="neutral" translatable="true">Neutral</string>
     <string name="unsatisfied" translatable="true">Dissatisfied</string>
     <string name="unfollowed" translatable="true">Unfollowed</string>
-    <string name="meeting" translatable="true">Meeting</string>
+    <string name="real_life_meeting" translatable="true">Real life meeting</string>
 
     <!-- ui elements -->
     <string name="due_date" translatable="true">Due date</string>
@@ -104,21 +105,21 @@
     <string name="how_to_done_action" translatable="true">Long press the action to mark it as complete or uncomplete</string>
     <string name="how_to_delete_action" translatable="true">Swipe action to the right to delete it</string>
     <string name="no_contacts_on_phone" translatable="true">Start adding contact on your phone to make the most of this app</string>
-    <string name="manage_unscheduled_contact_message" translatable="true">You have <xliff:g>%1$s</xliff:g> contacts with no actions registered. Add actions on their profile or mark them as unfollowed.</string>
+    <string name="manage_unscheduled_contact_message" translatable="true">You have <xliff:g>%1$d</xliff:g> contacts with no actions registered. Add actions on their profile or mark them as unfollowed.</string>
     <string name="manage_unscheduled_person" translatable="true"><xliff:g>%1$s</xliff:g> has no actions registered. Add actions or mark her/him profile as unfollowed.</string>
-    <string name="fill_in_time_limit_response_message" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> contacts. When do you expect to see them answering ? Fill the answer time limit on their profile.</string>
+    <string name="fill_in_time_limit_response_message" translatable="true">You recently worked for <xliff:g>%1$d</xliff:g> contacts. When do you expect to see them answering ? Fill the answer time limit on their profile.</string>
     <string name="fill_in_time_limit_response_person" translatable="true">You recently worked for <xliff:g>%1$s</xliff:g> When do you expect to see her/him answering ? Fill the answer time limit on her/his profile.</string>
-    <string name="update_satisfaction_face_message" translatable="true">Are those <xliff:g>%1$s</xliff:g>
+    <string name="update_satisfaction_face_message" translatable="true">Are those <xliff:g>%1$d</xliff:g>
         contacts satisfied by your actions ? </string>
     <string name="update_satisfaction_face_person" translatable="true">How is <xliff:g>%1$s</xliff:g> going ? </string>
     <string name="fill_up_frequency_message" translatable="true">How often would you like to
-        interact with those  <xliff:g>%1$s</xliff:g> contacts ? Fill up frequency on their profile.</string>
+        interact with those  <xliff:g>%1$d</xliff:g> contacts ? Fill up frequency on their profile.</string>
     <string name="fill_up_frequency_person" translatable="true">How often would you like to hear from  <xliff:g>%1$s</xliff:g> ? Fill up frequency on her/his profile.</string>
-    <string name="ask_for_feedback_message" translatable="true">Still no answer from those <xliff:g>%1$s</xliff:g> contacts ? Ask them for feedback or move them to unfollowed.</string>
+    <string name="ask_for_feedback_message" translatable="true">Still no answer from those <xliff:g>%1$d</xliff:g> contacts ? Ask them for feedback or move them to unfollowed.</string>
     <string name="ask_for_feedback_person" translatable="true">Still no answer from <xliff:g>%1$s</xliff:g> ? Ask him/her for feedback or move him/her to unfollowed.</string>
-    <string name="nearby_decreased_mood_message" translatable="true">You have <xliff:g>%1$s</xliff:g>  contacts that may turn unsatisfied if you don\'t interact with them. Take action, it\'s still time ! </string>
+    <string name="nearby_decreased_mood_message" translatable="true">You have <xliff:g>%1$d</xliff:g>  contacts that may turn unsatisfied if you don\'t interact with them. Take action, it\'s still time ! </string>
     <string name="nearby_decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> may turn unsatisfied if you don\'t interact with her/him. Take action, it\'s still time ! </string>
-    <string name="decreased_mood_message" translatable="true">Those <xliff:g>%1$s</xliff:g>
+    <string name="decreased_mood_message" translatable="true">Those <xliff:g>%1$d</xliff:g>
         contacts decreased their satisfaction state today.</string>
     <string name="decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> decreased his/her satisfaction state today.</string>
     <string name="no_people_to_follow" translatable="true">Start following contacts by choosing a

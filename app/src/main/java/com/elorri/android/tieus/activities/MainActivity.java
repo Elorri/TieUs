@@ -22,8 +22,9 @@ import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.TieUsApplication;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
-import com.elorri.android.tieus.fragments.MainFragment;
 import com.elorri.android.tieus.fragments.DetailFragment;
+import com.elorri.android.tieus.fragments.MainFragment;
+import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mForecastToolbarImageView;
     private SearchView mSearchView;
     private static final String QUERY = "query";
-    private String mQuery;
     private MainFragment mBoardFragment;
     private String DETAIL_FRAGMENT_TAG = "detail_fragment";
     private boolean mTwoPane = false;
@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
         setOthersViews(savedInstanceState);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(QUERY)) {
-            mQuery = savedInstanceState.getString(QUERY);
-            mSearchView.setQuery(mQuery, true);
+            String query = savedInstanceState.getString(QUERY);
+            mSearchView.setQuery(query, true);
             mBoardFragment.setSearchString(mSearchView.getQuery().toString());
         }
 
         //This will launch a synchronisation with the user device contacts at first install and
         // then every 3 days.
-        //TieUsSyncAdapter.initializeSyncAdapter(this);
+        TieUsSyncAdapter.initializeSyncAdapter(this);
 
         if (!Status.getFirebaseStatsSent(this)) {
             Bundle bundle = new Bundle();

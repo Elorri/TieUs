@@ -44,8 +44,7 @@ public class WidgetListRemoteViewsService extends RemoteViewsService {
                 // data. Therefore we need to clear (and finally restore) the calling identity so
                 // that calls use our process and permission
                 final long identityToken = Binder.clearCallingIdentity();
-                Uri uri = TieUsContract.WidgetData.buildWidgetUri(System.currentTimeMillis
-                        ());
+                Uri uri = TieUsContract.WidgetData.buildWidgetUri(System.currentTimeMillis());
                 data = getContentResolver().query(
                         uri,
                         null,
@@ -76,37 +75,25 @@ public class WidgetListRemoteViewsService extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_item);
 
-                //TODO remove all those ugly comments
                 // Extract the data from the Cursor
                 Context context = getApplicationContext();
                 String contact = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_CONTACT_NAME);
-                //String action = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_ACTION_NAME_RESOURCE_ID);
-                //Integer contactThumbnail = data.getInt(ContactActionVectorEventDAO.TodayPeopleQuery.COL_THUMBNAIL);
                 String vectorMimeType = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_MIMETYPE);
                 String vector = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_DATA);
                 String vectorName = data.getString(ContactActionVectorEventDAO.TodayPeopleQuery.COL_VECTOR_NAME);
-//                Integer mood = data.getInt(ContactActionVectorEventDAO.TodayPeopleQuery.COL_MOOD_ID);
-//                String moodName = Tools.getMoodDesciption(context, mood);
 
                 // Add the data to the RemoteViews
                 Tools.setWidgetVectorBackground(context, views, R.id.vectorIcon, vectorMimeType, vector);
-//                views.setImageViewResource(R.id.vectorIcon, vector);
-//                views.setImageViewResource(R.id.moodIcon, mood);
                 views.setTextViewText(R.id.contact, contact);
-//                views.setTextViewText(R.id.action, action);
-
 
                 //Add content description for images
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-//                    Tools.setRemoteContentDescription(views, R.id.avatar, contact);
+                    Tools.setRemoteContentDescription(views, R.id.avatar, contact);
                     Tools.setRemoteContentDescription(views, R.id.vectorIcon, vectorName);
-//                    Tools.setRemoteContentDescription(views, R.id.moodIcon, moodName);
-                }
+                    }
 
                 // Create an Intent to launch MainActivity
                 Intent launchIntent = new Intent(context, MainActivity.class);
-                //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,                         launchIntent, 0);
-                //views.setOnClickPendingIntent(R.id.widget_list, pendingIntent);
                 views.setOnClickFillInIntent(R.id.widget_item, launchIntent);
                 return views;
             }

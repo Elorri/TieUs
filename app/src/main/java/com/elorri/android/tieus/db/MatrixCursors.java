@@ -5,15 +5,9 @@ import android.database.MatrixCursor;
 
 /**
  * Created by Elorri on 10/05/2016.
+ * Useful class to create cursor without having to question db
  */
 public class MatrixCursors {
-
-
-    public static Cursor getOneLineCursor(String[] projection, String[] values) {
-        MatrixCursor cursor = new MatrixCursor(projection);
-        cursor.addRow(values);
-        return cursor;
-    }
 
     public static Cursor getOneLineCursor(String[] projection, String[] values, String firstValue) {
         MatrixCursor cursor = new MatrixCursor(projection);

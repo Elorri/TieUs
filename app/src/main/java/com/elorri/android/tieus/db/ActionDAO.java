@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.MergeCursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.data.TieUsContract;
@@ -18,27 +17,35 @@ import java.util.ArrayList;
  */
 public class ActionDAO {
 
-    public static final int ALL_ACTIONS = 0;
     public static final int ACTION_BY_ID = 1;
-    public static final int ACTIONS_TITLES = 2;
+    private static final int ACTIONS_TITLES = 2;
 
     public static final String CREATE = "CREATE TABLE "
             + TieUsContract.ActionTable.NAME +
             "(" + TieUsContract.ActionTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + " INTEGER NOT NULL, "
+            + TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID + " INTEGER NOT NULL, "
             + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + " INTEGER NOT NULL, "
             + TieUsContract.ActionTable.COLUMN_SORT_ORDER + " INTEGER NOT NULL, "
-            + "UNIQUE (" + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + ", "
+            + "UNIQUE (" + TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID + ", "
             + TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID + ") ON CONFLICT REPLACE)";
 
 
-    public static Cursor getCursorActionsWithTitle(Context context, SQLiteDatabase db) {
+    /**
+     * This method return a cursor composed of a row with a tag name, followed rows reprensenting
+     * the actions related to this tag, followed by another tag and its actions and so on
+     * @param context
+     * @param db
+     * @return a MergeCursor
+     */
+    public static Cursor getCursorActionsWithTagName(Context context, SQLiteDatabase db) {
         ArrayList<Cursor> cursors = new ArrayList();
 
+        //Get a list of distinct action tags titles
         Cursor cursorTitles = db.query(true, TieUsContract.ActionTable.NAME,
                 DistinctActionTitleQuery.PROJECTION,
                 null, null, null, null, DistinctActionTitleQuery.SORT_ORDER, null);
         try {
+            //for each titles get the corresponding actions
             while (cursorTitles.moveToNext()) {
                 int title = cursorTitles.getInt(DistinctActionTitleQuery.COL_ACTION_TITLE_RESOURCE_ID);
                 cursors.add(MatrixCursors.getOneLineCursor(
@@ -61,13 +68,13 @@ public class ActionDAO {
 
 
         String SELECTION_BY_ACTION_ID = TieUsContract.ActionTable._ID + "=?";
-        String SELECTION_BY_TITLE = TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + "=?";
+        String SELECTION_BY_TITLE = TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID + "=?";
 
         String SORT_ORDER = TieUsContract.ActionTable.COLUMN_SORT_ORDER + " asc";
 
         String[] PROJECTION = {
                 TieUsContract.ActionTable._ID,
-                TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID,
+                TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER,
                 ViewTypes.COLUMN_VIEWTYPE
@@ -75,7 +82,7 @@ public class ActionDAO {
 
         String[] PROJECTION_QUERY = {
                 TieUsContract.ActionTable._ID,
-                TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID,
+                TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID,
                 TieUsContract.ActionTable.COLUMN_SORT_ORDER,
                 ViewTypes.VIEW_ACTION + " as " + ViewTypes.COLUMN_VIEWTYPE
@@ -83,51 +90,18 @@ public class ActionDAO {
 
     }
 
-    public interface DistinctActionTitleQuery {
+    interface DistinctActionTitleQuery {
 
         int COL_ACTION_TITLE_RESOURCE_ID = 0;
-
-        String[] PROJECTION = {TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID};
-
-        String SELECTION = TieUsContract.ActionTable._ID + "=?";
-
+        String[] PROJECTION = {TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID};
         String SORT_ORDER = TieUsContract.ActionTable.COLUMN_SORT_ORDER + " asc";
 
-        String SELECT_TITLE = "select distinct"
-                + TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID + " from "
-                + TieUsContract.ActionTable.NAME;
-
     }
 
-
-    private static String getCursorTitle(Context context, int cursorType) {
-        switch (cursorType) {
-            case ALL_ACTIONS:
-                return context.getResources().getString(R.string.select_action);
-            default:
-                return null;
-        }
-    }
-
-    //TODO virer toutes les methodes getCursorWithViewTypes CursorUtils.setViewType est plus
-    // explicite
-
-
-    public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId, String
+        public static Cursor getCursor(int cursorType, SQLiteDatabase db, String actionId, String
             title) {
         switch (cursorType) {
-            case ALL_ACTIONS: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ALL_ACTIONS");
-                return db.query(TieUsContract.ActionTable.NAME,
-                        ActionQuery.PROJECTION_QUERY,
-                        null,
-                        null,
-                        null,
-                        null,
-                        ActionQuery.SORT_ORDER);
-            }
             case ACTION_BY_ID: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(TieUsContract.ActionTable.NAME,
                         ActionQuery.PROJECTION_QUERY,
                         ActionQuery.SELECTION_BY_ACTION_ID,
@@ -137,7 +111,6 @@ public class ActionDAO {
                         ActionQuery.SORT_ORDER);
             }
             case ACTIONS_TITLES: {
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] + "QUERY ACTION_BY_ID");
                 return db.query(TieUsContract.ActionTable.NAME,
                         ActionQuery.PROJECTION_QUERY,
                         ActionQuery.SELECTION_BY_TITLE,
@@ -154,7 +127,7 @@ public class ActionDAO {
 
     private static ContentValues getLine(int titleResource, int nameResource, int sortOrder) {
         ContentValues contentValue = new ContentValues();
-        contentValue.put(TieUsContract.ActionTable.COLUMN_TITLE_RESOURCE_ID, titleResource);
+        contentValue.put(TieUsContract.ActionTable.COLUMN_TAG_TITLE_RESOURCE_ID, titleResource);
         contentValue.put(TieUsContract.ActionTable.COLUMN_NAME_RESOURCE_ID, nameResource);
         contentValue.put(TieUsContract.ActionTable.COLUMN_SORT_ORDER, sortOrder);
         return contentValue;

@@ -18,15 +18,34 @@ import java.util.ArrayList;
 /**
  * Created by Elorri on 13/04/2016.
  */
-public abstract class BoardData {
+public abstract class MainData {
 
     public static final int LOADER_ID = 0;
-    private static boolean onlyUntrackedPeople = false;
 
-    public static Cursor getCursor(Context context, SQLiteDatabase db, long now, String
+    /**
+     * Create the cursor that will be displayed on Main Screen. It is a MergeCursor that is
+     * compose of 2 main parts:
+     * - a top (displayed if necessary) cursor : that will gives appropriates advices to users
+     * depending on the situation of their contact list
+     * - a second (always displayed) cursor : that will display the contact list with priorities:
+     * - first : people unfollowed (if there is some)
+     * - second : people delayed (if there is some)
+     * - third : today people (if there is some)
+     * - fourth : next people (if there is some)
+     * Note : if no contacts were found on the user phone, a one row cursor is returned with a
+     * message advicing the user to add contacts on his phone.
+     * @param context
+     * @param db
+     * @param now
+     * @param selection
+     * @param selectionArgs
+     * @return a cursor
+     */
+    static Cursor getCursor(Context context, SQLiteDatabase db, long now, String
             selection, String[] selectionArgs) {
+        boolean onlyUnfollowedPeople = false;
 
-        //If our query already uses bind arguments we will concatenate selectionArgs to them.
+        //If our query uses selectionArgs we will add them to those we want
         String[] args;
 
         //If there is no contact on phone tell it to the user
@@ -45,9 +64,9 @@ public abstract class BoardData {
                         .COLUMN_UNFOLLOWED + "=?", new String[]{TieUsContract.ContactTable
                         .UNFOLLOWED_ON_VALUE}, null);
                 if (cursor.getCount() == contactsCount)
-                    onlyUntrackedPeople = true;
+                    onlyUnfollowedPeople = true;
                 else
-                    onlyUntrackedPeople=false;
+                    onlyUnfollowedPeople =false;
             }
         } finally {
             cursor.close();
@@ -60,7 +79,7 @@ public abstract class BoardData {
 
         cursors.add(db.query("(" + ContactDAO.RatioQuery.SELECT_WITH_VIEWTYPE + ")", null, null,
                 null, null, null, null));
-        if (onlyUntrackedPeople)
+        if (onlyUnfollowedPeople)
             cursor = MatrixCursors.getOneLineCursor(
                     MatrixCursors.MessageQuery.PROJECTION,
                     MatrixCursors.MessageQuery.VALUES,
@@ -74,7 +93,7 @@ public abstract class BoardData {
         cursor = db.query("(" + ContactActionVectorEventDAO.UnscheduledPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                 null, selection, selectionArgs, null, null, null);
         cursors.add(Tools.addDisplayProperties(cursor, true,
-                context.getResources().getString(R.string.unscheduled_people, cursor.getCount()), false, null, false));
+                context.getResources().getString(R.string.unscheduled_people), false, null, false));
 
         args = selectionArgs == null ? new String[]{todayStart} : new String[]{todayStart, selectionArgs[0]};
         cursor = db.query("(" + ContactActionVectorEventDAO.DelayedPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
@@ -103,13 +122,31 @@ public abstract class BoardData {
         return new MergeCursor(Tools.convertToArrayCursors(cursors));
     }
 
+
+    /**
+     * The top Cursor is composed of 2 parts :
+     * - A message advicing the user of taking actions with some contacts
+     * - A cursor displaying the contact concerned
+     * This method is organised so that only one message at a time is displayed to the user. Once
+     * the conditions for displaying the message are no longer met (means the user have taken
+     * action), we move to the next possible message and see if the conditions are met, if yes we
+     * display it, if no we check the next message type, and so on until we have nothing to say
+     * and return an empty top cursor.
+     * @param context
+     * @param db
+     * @param messageIdx
+     * @param now
+     * @param selection
+     * @param selectionArgs
+     * @return
+     */
     private static Cursor getTopCursors(Context context, SQLiteDatabase db, int messageIdx, long
             now, String selection, String[] selectionArgs) {
         ArrayList<Cursor> cursors = new ArrayList();
         Cursor cursor;
         String message = "";
         switch (messageIdx) {
-            case Status.MANAGE_UNMANAGED_PEOPLE:
+            case Status.MANAGE_UNSCHEDULED_PEOPLE:
                 cursor = db.query("(" + ContactActionVectorEventDAO.UnscheduledPeopleQuery.SELECT_WITH_VIEWTYPE + ")",
                         null, selection, selectionArgs, null, null, null);
                 if (cursor.getCount() > 0) {
@@ -150,9 +187,9 @@ public abstract class BoardData {
                                     .fill_in_delay_feedback_title), false, null,
                             false));
                 } else
-                    return getTopCursors(context, db, Status.UPDATE_MOOD, now, selection, selectionArgs);
+                    return getTopCursors(context, db, Status.UPDATE_SATISFACTION, now, selection, selectionArgs);
                 break;
-            case Status.UPDATE_MOOD:
+            case Status.UPDATE_SATISFACTION:
                 cursor = db.query("(" +
                         ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
                         + now
@@ -173,7 +210,7 @@ public abstract class BoardData {
                             MatrixCursors.MessageQuery.VALUES,
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.mood_to_update_title), false, null,
+                            context.getResources().getString(R.string.satisfaction_to_update_title), false, null,
                             false));
                 } else
                     return getTopCursors(context, db, Status.SET_UP_A_FREQUENCY_OF_CONTACT, now, selection, selectionArgs);
@@ -249,7 +286,7 @@ public abstract class BoardData {
                             MatrixCursors.ConfirmMessageQuery.VALUES,
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.nearby_decreased_mood_title), false, null,
+                            context.getResources().getString(R.string.nearby_decreased_satisfaction_title), false, null,
                             false));
                 } else
                     return getTopCursors(context, db, Status
@@ -279,7 +316,7 @@ public abstract class BoardData {
                         int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_MOOD_ID);
                         db.update(TieUsContract.ContactTable.NAME,
                                 Tools.getContentValues(TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                                        String.valueOf(Tools.decreaseMood(moodIcon))),
+                                        String.valueOf(Tools.decreaseSatisfaction(moodIcon))),
                                 TieUsContract.ContactTable._ID + "=?",
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_ID)}
                         );
@@ -306,13 +343,7 @@ public abstract class BoardData {
                     return getTopCursors(context, db, Status.NOTHING_TO_SAY, now, selection, selectionArgs);
                 break;
             case Status.NOTHING_TO_SAY:
-//                cursors.add(MatrixCursors.getOneLineCursor(
-//                        MatrixCursors.ConfirmMessageQuery.PROJECTION,
-//                        MatrixCursors.ConfirmMessageQuery.VALUES,
-//                        context.getResources().getString(R.string.take_time_for_feedback_message)));
-                Status.setLastMessageIdxBg(context, Status.MANAGE_UNMANAGED_PEOPLE);
-                //when clicked on ok.
-                //Status.setLastMessageIdxBg(context, Status.MANAGE_UNMANAGED_PEOPLE);
+                Status.setLastMessageIdxBg(context, Status.MANAGE_UNSCHEDULED_PEOPLE);
                 return null;
         }
         Status.setLastMessageIdxBg(context, messageIdx);

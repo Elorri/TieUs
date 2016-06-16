@@ -20,12 +20,11 @@ public class TieUsDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     static final String DATABASE_NAME = "tieus.db";
-    private final Context mContext;
+
 
 
     public TieUsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
     }
 
 
@@ -43,7 +42,6 @@ public class TieUsDbHelper extends SQLiteOpenHelper {
     }
 
     private void bulkInsert(SQLiteDatabase db, ContentValues[] startData) {
-        Log.d("TieUs", "" + Thread.currentThread().getStackTrace()[2]);
         for (ContentValues values : startData) {
             db.insert(TieUsContract.ActionTable.NAME, null, values);
         }
@@ -63,7 +61,6 @@ public class TieUsDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.EventTable.NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TieUsContract.VectorTable.NAME);
         onCreate(sqLiteDatabase);
-        Log.d("TieUs", "" + Thread.currentThread().getStackTrace()[2]);
     }
 
 

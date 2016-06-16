@@ -8,6 +8,7 @@ import com.elorri.android.tieus.R;
 
 /**
  * Created by Elorri on 03/05/2016.
+ * This class contains methods to get and set data in the user SharedPreferences file
  */
 public class Status {
 
@@ -74,9 +75,9 @@ public class Status {
      * @param context Context used to get the SharedPreferences
      * @return the index of the last message the user have seen, could be the one on the screen.
      */
-    public static final int MANAGE_UNMANAGED_PEOPLE = 0;
+    public static final int MANAGE_UNSCHEDULED_PEOPLE = 0;
     public static final int FILL_IN_DELAY_FEEDBACK = 1;
-    public static final int UPDATE_MOOD = 2;
+    public static final int UPDATE_SATISFACTION = 2;
     public static final int SET_UP_A_FREQUENCY_OF_CONTACT = 3;
     public static final int ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 4;
     public static final int APPROCHING_DEAD_LINE = 5;
@@ -86,7 +87,7 @@ public class Status {
     public static int getLastMessageIdx(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getInt(context.getString(R.string.pref_message_idx_status_key),
-                MANAGE_UNMANAGED_PEOPLE);
+                MANAGE_UNSCHEDULED_PEOPLE);
     }
 
     /**

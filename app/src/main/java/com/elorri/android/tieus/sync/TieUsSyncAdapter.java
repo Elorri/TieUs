@@ -94,8 +94,6 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 appContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 androidContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_ID);
                 androidLookUpKey = appCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_LOOKUP_KEY);
-                Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                        "" + androidContactId + " " + androidLookUpKey);
 
                 try {
                     //Query 2 : Select android database contacts and compare them with those given by
@@ -156,8 +154,6 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 while (androidCursor.moveToNext()) {
                     androidContactId = androidCursor.getString(AndroidDAO.ContactQuery.COL_ID);
                     androidLookUpKey = androidCursor.getString(AndroidDAO.ContactQuery.COL_LOOKUP_KEY);
-                    Log.e("Communication", Thread.currentThread().getStackTrace()[2] +
-                            "" + androidContactId + " " + androidLookUpKey);
 
                     try {
                         //Query 2 : Select app stored contact and compare them with those given by
@@ -173,11 +169,10 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
                         //Our local database doesn't know this contact, let's add it up
                         if (localCursor.getCount() == 0) {
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "insert");
-                            ContentValues values = ContactDAO.getContentValues(androidCursor,
+                             ContentValues values = ContactDAO.getContentValues(androidCursor,
                                     R.drawable.ic_sentiment_neutral_black_48dp,
                                     TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE,
-                                    TieUsContract.ContactTable.MOOD_UNKNOWN_OFF_VALUE,
+                                    TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE,
                                     ColorGenerator.MATERIAL.getRandomColor());
 
                             getContext().getContentResolver().insert(
@@ -186,7 +181,6 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                         } else { //Our local database know this contact, but in case the contact
                             // name has been updated, we update the whole contact but keep our local
                             // data like the moodId
-                            Log.e("FF", Thread.currentThread().getStackTrace()[2] + "update");
                             localCursor.moveToFirst();
                             String contactId = localCursor.getString(ContactDAO.ContactQuery.COL_ID);
                             getContext().getContentResolver().update(
@@ -251,7 +245,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
         //Add meeting vector
         eventVectorValues = VectorDAO.getContentValues(
-                getContext().getResources().getString(R.string.meeting),
+                getContext().getResources().getString(R.string.real_life_meeting),
                 String.valueOf(R.drawable.ic_meeting_24dp),
                 TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE);
         getContext().getContentResolver().insert(
@@ -281,33 +275,29 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void notifyUserSyncDone() {
         Context context = getContext();
-        //checking the last update and notify if it' the first of the day
+        //checking the last update
         long lastSync = Status.getLastNotificationTimestamp(getContext());
 
         if (System.currentTimeMillis() - lastSync >= _3DAYS_IN_MILLIS) {
-            // Last sync was more than 1 day ago, let's send a notification with the TieUs
+            // Last sync was more than 3 days ago, let's send a notification with the TieUs
             // for today
 
-            // NotificationCompatBuilder is a very convenient way to build backward-compatible
-            // notifications.  Just throw in some data.
+            // Build a notification
             Resources resources = context.getResources();
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(getContext())
                             .setColor(resources.getColor(R.color.primaryDark))
-//                            .setSmallIcon(R.mipmap.ic_launcher)
                             .setLargeIcon(BitmapFactory.decodeResource(context
                                     .getResources(), R.mipmap.ic_launcher))
                             .setContentTitle(context.getString(R.string.app_name))
                             .setContentText(context.getString(R.string.sync_contact_done));
 
-            // Make something interesting happen when the user clicks on the notification.
-            // In this case, opening the app is sufficient.
+            // Opening the app when the user clicks on the notification.
             Intent resultIntent = new Intent(context, MainActivity.class);
 
             // The stack builder object will contain an artificial back stack for the
-            // started Activity.
-            // This ensures that navigating backward from the Activity leads out of
-            // your application to the Home screen.
+            // started Activity. This ensures that navigating backward from the Activity leads out of
+            // the application to the Home screen.
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             stackBuilder.addNextIntent(resultIntent);
             PendingIntent resultPendingIntent =
