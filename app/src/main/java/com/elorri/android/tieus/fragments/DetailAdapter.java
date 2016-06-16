@@ -402,7 +402,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
-        RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.untracked_item);
+        RelativeLayout untrackedItem = (RelativeLayout) listContainer.findViewById(R.id.unfollowed_item);
         happyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

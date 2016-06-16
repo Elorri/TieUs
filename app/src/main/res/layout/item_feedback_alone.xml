@@ -23,6 +23,7 @@
         android:layout_toEndOf="@id/feedback_title"
         android:layout_toRightOf="@id/feedback_title"
         android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:layout_marginStart="@dimen/spacing_xsmall"
         android:gravity="center"
         android:textSize="@dimen/text_size_medium"
         tools:text="next 24h"/>

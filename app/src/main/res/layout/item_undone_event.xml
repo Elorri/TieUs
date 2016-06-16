@@ -15,6 +15,7 @@
         android:layout_width="@dimen/avatar_bg_width"
         android:layout_height="@dimen/avatar_bg_height"
         android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_centerVertical="true"
         tools:background="@color/secondaryLight"
         android:transitionName="@string/keep"/>
@@ -23,9 +24,11 @@
         android:id="@+id/vectorIcon"
         android:layout_width="@dimen/emo_icon_width"
         android:layout_height="@dimen/emo_icon_height"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/vector_icon_margin_left"
+        android:layout_marginStart="@dimen/vector_icon_margin_left"
+        android:layout_marginTop="@dimen/vector_icon_margin_top_undone_event"
+        android:layout_marginRight="@dimen/vector_icon_margin_right"
+        android:layout_marginEnd="@dimen/vector_icon_margin_right"
         tools:background="@color/secondaryLight"/>
 
     <ImageView
@@ -33,7 +36,9 @@
         android:layout_width="@dimen/emo_icon_width"
         android:layout_height="@dimen/emo_icon_height"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginRight="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/secondary_dark_text"
         tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
@@ -42,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/unknown_mood_margin_top_done_event"
         android:gravity="center"
         android:textStyle="bold"
@@ -63,7 +69,7 @@
         android:textAppearance="?android:textAppearanceLarge"
         android:textColor="@color/primary_dark_text"
         android:textSize="@dimen/text_size_xlarge"
-        tools:text="Franck Lepage"/>
+        tools:text="@string/bernard"/>
 
     <TextView
         android:id="@+id/action"
@@ -78,7 +84,7 @@
         android:fontFamily="sans-serif-condensed"
         android:maxLines="1"
         android:textAppearance="?android:textAppearanceMedium"
-        tools:text="24h thank you note"/>
+        tools:text="@string/action_name3"/>
 
     <ImageView
         android:id="@+id/clock"
@@ -97,8 +103,9 @@
         android:layout_alignBottom="@id/clock"
         android:layout_below="@id/action"
         android:layout_marginEnd="@dimen/emo_icon_width"
-        android:layout_marginLeft="@dimen/spacing_small"
         android:layout_marginRight="@dimen/emo_icon_width"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_toEndOf="@id/clock"
         android:layout_toRightOf="@id/clock"
         android:ellipsize="end"
@@ -106,6 +113,9 @@
         android:gravity="bottom"
         android:maxLines="1"
         android:paddingLeft="@dimen/spacing_small"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingRight="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
         android:textAppearance="?android:textAppearanceMedium"
-        tools:text="30 sept."/>
+        tools:text="@string/_30_sept"/>
 </RelativeLayout>

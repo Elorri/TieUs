@@ -16,6 +16,7 @@
         android:layout_height="@dimen/emo_icon_height"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         tools:background="@color/secondaryLight"/>
 
 

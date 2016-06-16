@@ -16,6 +16,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/spacing_normal"
         android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:src="@drawable/ic_done_white_24dp"
         android:contentDescription="@string/action_add"
         app:elevation="@dimen/fab_elevation"

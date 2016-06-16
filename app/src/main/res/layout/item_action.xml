@@ -13,6 +13,7 @@
         android:scaleType="centerCrop"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         tools:src="@drawable/ic_mail_outline_black_24dp"
         tools:tint="@color/secondary_dark_text"
         />
@@ -23,7 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
         android:layout_toRightOf="@id/action_vector"
+        android:layout_toEndOf="@id/action_vector"
         android:fontFamily="sans-serif-condensed"
         android:ellipsize="end"
         android:maxLines="10"
@@ -37,7 +40,9 @@
         android:layout_below="@id/action"
         android:src="@drawable/ic_schedule_black_24dp"
         android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
         android:layout_toRightOf="@id/action_vector"
+        android:layout_toEndOf="@id/action_vector"
         android:tint="@color/secondary_dark_text"/>
 
     <TextView
@@ -48,6 +53,7 @@
         android:layout_below="@id/action"
         android:layout_marginEnd="@dimen/emo_icon_width"
         android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginRight="@dimen/emo_icon_width"
         android:layout_toEndOf="@id/clock"
         android:layout_toRightOf="@id/clock"

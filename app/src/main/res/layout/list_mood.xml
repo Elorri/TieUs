@@ -9,23 +9,25 @@
         android:id="@+id/happy_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal">
+        android:paddingRight="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <android.support.v4.widget.Space
             android:id="@+id/happy_center"
             android:layout_width="0dp"
             android:layout_height="0dp"
-           android:layout_centerHorizontal="true"  />
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/happy"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_toLeftOf="@id/happy_center"
+            android:layout_width="@dimen/emo_icon_large_size"
+            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
+            android:layout_toLeftOf="@id/happy_center"
+            android:layout_toStartOf="@id/happy_center"
             android:background="@drawable/ic_sentiment_satisfied_black_48dp"
             android:scaleType="centerCrop"/>
         <TextView
@@ -33,32 +35,36 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@id/happy"
             android:layout_toRightOf="@id/happy"
             android:text="@string/satisfied"
-            android:textAppearance="?android:textAppearanceLarge"           />
+            android:textAppearance="?android:textAppearanceLarge"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/neutral_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal">
+        android:paddingRight="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <android.support.v4.widget.Space
             android:id="@+id/neutral_center"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true"  />
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/neutral"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_toLeftOf="@id/neutral_center"
+            android:layout_width="@dimen/emo_icon_large_size"
+            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
+            android:layout_toLeftOf="@id/neutral_center"
+            android:layout_toStartOf="@id/neutral_center"
             android:background="@drawable/ic_sentiment_neutral_black_48dp"
             android:scaleType="centerCrop"/>
         <TextView
@@ -66,31 +72,35 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@id/neutral"
             android:layout_toRightOf="@id/neutral"
             android:text="@string/neutral"
-            android:textAppearance="?android:textAppearanceLarge"           />
+            android:textAppearance="?android:textAppearanceLarge"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/dissatisfied_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal">
+        android:paddingRight="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <android.support.v4.widget.Space
             android:id="@+id/dissatisfied_center"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true"  />
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/dissatisfied"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_toLeftOf="@id/dissatisfied_center"
+            android:layout_width="@dimen/emo_icon_large_size"
+            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
+            android:layout_toLeftOf="@id/dissatisfied_center"
+            android:layout_toStartOf="@id/dissatisfied_center"
             android:background="@drawable/ic_sentiment_dissatisfied_black_48dp"
             android:scaleType="centerCrop"/>
         <TextView
@@ -98,31 +108,35 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@id/dissatisfied"
             android:layout_toRightOf="@id/dissatisfied"
             android:text="@string/unsatisfied"
-            android:textAppearance="?android:textAppearanceLarge"           />
+            android:textAppearance="?android:textAppearanceLarge"/>
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/untracked_item"
+        android:id="@+id/unfollowed_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal">
+        android:paddingRight="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_small">
 
         <android.support.v4.widget.Space
-            android:id="@+id/untracked_center"
+            android:id="@+id/unfollowed_center"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true"  />
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
-            android:id="@+id/untracked"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_toLeftOf="@id/untracked_center"
+            android:id="@+id/unfollowed"
+            android:layout_width="@dimen/emo_icon_large_size"
+            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
+            android:layout_toLeftOf="@id/unfollowed_center"
+            android:layout_toStartOf="@id/unfollowed_center"
             android:background="@drawable/ic_do_not_disturb_alt_black_48dp"
             android:scaleType="centerCrop"/>
         <TextView
@@ -130,9 +144,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_toRightOf="@id/untracked"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@id/unfollowed"
+            android:layout_toRightOf="@id/unfollowed"
             android:text="@string/unfollowed"
-            android:textAppearance="?android:textAppearanceLarge"           />
+            android:textAppearance="?android:textAppearanceLarge"/>
     </RelativeLayout>
 
 </LinearLayout>

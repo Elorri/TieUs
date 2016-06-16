@@ -9,4 +9,4 @@
     android:gravity="center"
     android:padding="@dimen/spacing_normal"
     android:textSize="@dimen/text_size_medium"
-    tools:text="What people may she like ?"/>
+    tools:text="@string/select_action"/>

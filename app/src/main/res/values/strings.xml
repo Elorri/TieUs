@@ -92,6 +92,12 @@
     <string name="rainy" translatable="true">Rainy</string>
     <string name="unknown_mood_interrogation_mark" translatable="false">\?</string>
 
+    <!-- only used during developpment, used in layout with 'tool:' attribute -->
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="terminated" translatable="false">terminated at 11:00</string>
+    <string name="bernard">Bernard Lepage</string>
+    <string name="_30_sept">30 sept.</string>
+
 
     <!-- guidance messages -->
     <string name="select_action" translatable="true">Add actions to start following this contact</string>
@@ -208,6 +214,7 @@
     <string name="event_contact_added" translatable="false">contact_added</string>
     <string name="event_contact_updated" translatable="false">contact_updated</string>
     <string name="event_contact_deleted" translatable="false">contact_deleted</string>
+
 
 
 </resources>

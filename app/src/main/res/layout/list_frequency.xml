@@ -18,7 +18,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
 
         <TextView
@@ -31,7 +31,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
 
         <TextView
@@ -44,7 +44,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
         <TextView
             android:id="@+id/every_months"
@@ -56,7 +56,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
         <TextView
             android:id="@+id/every_3months"
@@ -68,7 +68,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
         <TextView
             android:id="@+id/every_6months"
@@ -80,7 +80,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@color/secondaryLight"/>
         <TextView
             android:id="@+id/every_year"

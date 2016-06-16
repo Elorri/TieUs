@@ -6,30 +6,30 @@
     android:background="@android:color/white">
     <ImageView
         android:id="@+id/moodIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/ic_sentiment_satisfied_black_48dp"
-        android:orientation="vertical"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_width="@dimen/emo_icon_large_size"
+        android:layout_height="@dimen/emo_icon_large_size"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginLeft="@dimen/spacing_normal"
         android:layout_marginRight="@dimen/spacing_normal"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:layout_gravity="center"/>
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:background="@drawable/ic_sentiment_satisfied_black_48dp"
+        android:orientation="vertical"
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/unknown_mood"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_normal"
         android:gravity="right|bottom"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_xxxlarge"
+        android:text="@string/unknown_mood_interrogation_mark"
         android:textAppearance="?android:textAppearanceLarge"
-        android:text="\?"
+        android:textSize="@dimen/text_size_xxxlarge"
+        android:textStyle="bold"
         android:visibility="invisible"
-        />
+    />
 </FrameLayout>

@@ -11,6 +11,7 @@
         android:layout_width="@dimen/ok_width"
         android:layout_height="@dimen/ok_width"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="@android:color/white"
