@@ -148,12 +148,12 @@ public class Status {
         spe.commit();
     }
 
-    public static final String SYNC_UNKNOWWN="sync_unknown";
+    public static final String SYNC_NO_INTERNET ="no_internet";
     public static final String SYNC_START="sync_start";
     public static final String SYNC_DONE="sync_done";
     public static String getSyncStatus(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString(context.getString(R.string.pref_sync_status_key), SYNC_UNKNOWWN);
+        return sp.getString(context.getString(R.string.pref_sync_status_key), SYNC_NO_INTERNET);
     }
 
 
@@ -212,5 +212,6 @@ public class Status {
         spe.putBoolean(context.getString(R.string.pref_firebase_stat_send_key), status);
         spe.commit();
     }
+
 
 }

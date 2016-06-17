@@ -27,9 +27,10 @@ public class VectorDAO {
             + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_NAME + ") ON CONFLICT REPLACE,"
             + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE, "
             + "CONSTRAINT " + TieUsContract.VectorTable.MIMETYPE_CONSTRAINT + " check  ("
-            + TieUsContract.VectorTable.COLUMN_MIMETYPE + " in ("
-            + TieUsContract.VectorTable.MIMETYPE_VALUE_PACKAGE + ", "
-            + TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE + ")))";
+            + TieUsContract.VectorTable.COLUMN_MIMETYPE + " = '"
+            + TieUsContract.VectorTable.MIMETYPE_VALUE_PACKAGE + "' or ("
+            + TieUsContract.VectorTable.COLUMN_MIMETYPE + " = '"
+            + TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE + "')))";
 
 
     public interface VectorQuery {

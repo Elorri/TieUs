@@ -105,6 +105,8 @@
     <string name="no_contacts_app" translatable="true">Vous n\'avez pas d\'applications pouvant
         éditer les contacts sur votre materiel.</string>
     <string name="synchronising" translatable="true">Synchronisation en cours…</string>
+    <string name="no_internet"  translatable="true">Internet est nécessaire pour
+        synchroniser les contacts</string>
 
 
     <!-- actions messages -->

@@ -42,7 +42,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
     // Interval at which to sync with the Tmdb network, in seconds.
     // 60 seconds (1 minute) * 60 * 24 * 3= 24 hours - will sync once every 3 days
     public static final int SYNC_INTERVAL = 60 * 60 * 24 * 3;
-    // public static final int SYNC_INTERVAL = 60; //for testing
+     //public static final int SYNC_INTERVAL = 60; //for testing
 
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
     private static final long _3DAYS_IN_MILLIS = 1000 * 60 * 60 * 24 * 3;
@@ -55,18 +55,30 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+        Context context=getContext();
+        boolean isInternetOn = Tools.isNetworkAvailable(context);
+        if (!isInternetOn) {
+            Status.setSyncStatus(getContext(), Status.SYNC_NO_INTERNET);
+            return;
+        }
+        Status.setSyncStatus(getContext(), Status.SYNC_START);
         syncContacts();
         notifyUserSyncDone();
+        Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
 
 
+
+
+    /**
+     * This method check the android device user contact list, and update our locale database by
+     * add, deleting or removing contacts.
+     */
     private void syncContacts() {
-        Status.setSyncStatus(getContext(), Status.SYNC_START);
         addOrUpdateAppContactsAccordingToAndroidContacts();
         removeAppContactsAccordingToAndroidContacts();
         addOrRemoveVectorsAccordingToAndroidAppsInstalled();
         Status.setFirebaseStatsSent(getContext(), false);
-        Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
 
 
@@ -213,7 +225,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 null,
                 null);
 
-        //We won't add it because we will use most popular email services
+        //We won't add it because we will make sure the app uses most popular email services instead
         //Add email vector
 //        ContentValues emailVectorValues = VectorDAO.getContentValues(
 //                getResources().getString(R.string.mail),

@@ -43,7 +43,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     private MainAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private TextView mSynchronising;
+    private TextView mEmptyListView;
     private Integer mPosition;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
@@ -66,7 +66,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        mSynchronising = (TextView) view.findViewById(R.id.synchronising);
+        mEmptyListView = (TextView) view.findViewById(R.id.empty_list_view);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MainAdapter(null, this, AbsListView.CHOICE_MODE_SINGLE);
@@ -81,7 +81,6 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
         return view;
     }
-
 
 
     @Override
@@ -142,7 +141,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
-        updateSynchronisingView();
+        updateEmptyView();
         if (Status.getSyncStatus(getContext()).equals(Status.SYNC_DONE)) {
             mAdapter.swapCursor(data);
             updateWidget();
@@ -271,19 +270,26 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_sync_status_key))) {
-            updateSynchronisingView();
+            updateEmptyView();
             restartLoader();
         }
     }
 
-    private void updateSynchronisingView() {
-        if (mRecyclerView != null && mSynchronising != null) {
-            if (Status.getSyncStatus(getContext()).equals(Status.SYNC_START)) {
+    private void updateEmptyView() {
+        if (mRecyclerView != null && mEmptyListView != null) {
+            if (Status.getSyncStatus(getContext()).equals(Status.SYNC_NO_INTERNET)) {
                 mRecyclerView.setVisibility(View.INVISIBLE);
-                mSynchronising.setVisibility(View.VISIBLE);
+                mEmptyListView.setVisibility(View.VISIBLE);
+                mEmptyListView.setText(getContext().getResources().getString(R.string
+                        .no_internet));
+            } else if (Status.getSyncStatus(getContext()).equals(Status.SYNC_START)) {
+                mRecyclerView.setVisibility(View.INVISIBLE);
+                mEmptyListView.setVisibility(View.VISIBLE);
+                mEmptyListView.setText(getContext().getResources().getString(R.string
+                        .synchronising));
             } else {
                 mRecyclerView.setVisibility(View.VISIBLE);
-                mSynchronising.setVisibility(View.INVISIBLE);
+                mEmptyListView.setVisibility(View.INVISIBLE);
             }
         }
     }

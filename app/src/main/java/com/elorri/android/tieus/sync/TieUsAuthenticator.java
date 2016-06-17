@@ -51,7 +51,7 @@ public class TieUsAuthenticator extends AbstractAccountAuthenticator {
             AccountAuthenticatorResponse r,
             Account account,
             Bundle bundle) throws NetworkErrorException {
-        return null;
+         return null;
     }
 
     // Getting an authentication token is not supported

@@ -61,8 +61,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //This will launch a synchronisation with the user device contacts at first install and
-        // then every 3 days.
-        TieUsSyncAdapter.initializeSyncAdapter(this);
+        // then every 3 days. Although our app doesn't grap data from
+        // the network ( it grab data from the local android device) we use a SyncAdapter because
+        // it's convenient for updating data at regular intervals. That means that without
+        // internet on, sync won't work, because SyncAdapter synchronise only if internet is on.
+            TieUsSyncAdapter.initializeSyncAdapter(this);
 
         if (!Status.getFirebaseStatsSent(this)) {
             Bundle bundle = new Bundle();

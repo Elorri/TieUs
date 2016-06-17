@@ -18,6 +18,7 @@
         pref_last_user_satisfactions_confirm_key</string>
     <string name="pref_last_notification_key" translatable="false">last_notification</string>
     <string name="pref_sync_status_key" translatable="false">sync_status_key</string>
+    <string name="pref_network_status_key" translatable="false">network_status</string>
     <string name="tag_fragment_board" translatable="false">board_fragment</string>
     <string name="keep" translatable="false">keep</string>
     <string name="sms_intent_type">vnd.android-dir/mms-sms</string>
@@ -134,6 +135,7 @@
     <string name="app_not_installed" translatable="true">App <xliff:g>%1$s</xliff:g> is not installed on your device</string>
     <string name="no_contacts_app" translatable="true">You don\'t have any installed app for editing contacts on your device.</string>
     <string name="synchronising" translatable="true">Synchronising…</string>
+    <string name="no_internet"  translatable="true">Need internet connection to synchronise contact list</string>
 
 
 
