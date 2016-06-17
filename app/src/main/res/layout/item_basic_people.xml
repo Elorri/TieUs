@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/moodIcon"
-        android:layout_width="@dimen/emo_icon_width"
-        android:layout_height="@dimen/emo_icon_height"
+        android:layout_width="@dimen/satisfaction_icon_width"
+        android:layout_height="@dimen/satisfaction_icon_height"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
@@ -53,8 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/emo_icon_width"
-        android:layout_marginRight="@dimen/emo_icon_width"
+        android:layout_marginEnd="@dimen/satisfaction_icon_width"
+        android:layout_marginRight="@dimen/satisfaction_icon_width"
         android:layout_toEndOf="@id/avatar"
         android:layout_toRightOf="@id/avatar"
         android:ellipsize="end"

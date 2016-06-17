@@ -34,8 +34,8 @@
 
         <ImageView
             android:id="@+id/vectorIcon"
-            android:layout_width="@dimen/emo_icon_width"
-            android:layout_height="@dimen/emo_icon_height"
+            android:layout_width="@dimen/satisfaction_icon_width"
+            android:layout_height="@dimen/satisfaction_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/spacing_normal"
             tools:background="@color/secondaryLight"/>
@@ -64,8 +64,8 @@
 
         <ImageView
             android:id="@+id/vectorIcon1"
-            android:layout_width="@dimen/emo_icon_width"
-            android:layout_height="@dimen/emo_icon_height"
+            android:layout_width="@dimen/satisfaction_icon_width"
+            android:layout_height="@dimen/satisfaction_icon_height"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/spacing_normal"
             tools:background="@color/secondaryLight"/>

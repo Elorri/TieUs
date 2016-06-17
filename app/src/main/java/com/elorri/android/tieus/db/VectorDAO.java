@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public class VectorDAO {
 
-    public static final int ALL_VECTORS = 0;
 
     public static final String CREATE = "CREATE TABLE "
             + TieUsContract.VectorTable.NAME +
@@ -26,7 +25,11 @@ public class VectorDAO {
             + TieUsContract.VectorTable.COLUMN_DATA + " TEXT NOT NULL, "
             + TieUsContract.VectorTable.COLUMN_MIMETYPE + " TEXT NOT NULL, "
             + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_NAME + ") ON CONFLICT REPLACE,"
-            + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE)";
+            + "UNIQUE (" + TieUsContract.VectorTable.COLUMN_DATA + ") ON CONFLICT REPLACE, "
+            + "CONSTRAINT " + TieUsContract.VectorTable.MIMETYPE_CONSTRAINT + " check  ("
+            + TieUsContract.VectorTable.COLUMN_MIMETYPE + " in ("
+            + TieUsContract.VectorTable.MIMETYPE_VALUE_PACKAGE + ", "
+            + TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE + ")))";
 
 
     public interface VectorQuery {

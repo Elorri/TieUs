@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/vectorIcon"
-        android:layout_width="@dimen/emo_icon_width"
-        android:layout_height="@dimen/emo_icon_height"
+        android:layout_width="@dimen/satisfaction_icon_width"
+        android:layout_height="@dimen/satisfaction_icon_height"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"

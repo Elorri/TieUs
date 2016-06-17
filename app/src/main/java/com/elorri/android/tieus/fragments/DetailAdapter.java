@@ -9,7 +9,6 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -216,7 +215,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         View view;
         switch (viewType) {
             case ViewTypes.VIEW_CONTACT: {
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_emoicon,
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_satisfaction,
                         parent, false);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override

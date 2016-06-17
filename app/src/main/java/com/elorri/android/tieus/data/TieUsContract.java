@@ -163,6 +163,9 @@ public class TieUsContract {
         public static final String COLUMN_TAG_TITLE_RESOURCE_ID = "title";
         public static final String COLUMN_NAME_RESOURCE_ID = "name";
         public static final String COLUMN_SORT_ORDER = "sort_order";
+
+        //When joining a this table with another, we'll use VIEW_ACTION_ID instead of _ID in
+        // query to help sqlite distinguish between ActionTable _ID and the other table _ID
         public static final String VIEW_ACTION_ID = "action_id";
         public static final String VIEW_ACTION_NAME_RESOURCE_ID = "action_name";
 
@@ -199,14 +202,15 @@ public class TieUsContract {
 
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DATA = "data";
-
         //This column will contain the ressourceId or the package name
         public static final String COLUMN_MIMETYPE = "mimetype";
 
         static final String VIEW_VECTOR_ID = "vector_id";
         public static final String VIEW_VECTOR_NAME = "vector_name";
+
         public static final String MIMETYPE_VALUE_RESSOURCE = "ressourceId";
         public static final String MIMETYPE_VALUE_PACKAGE = "package";
+        public static final String MIMETYPE_CONSTRAINT = "mimetype_ck";
 
 
         static Uri buildVectorUri(long id) {
