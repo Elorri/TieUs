@@ -43,7 +43,7 @@
 
     <!-- Translations -->
     <dimen name="fab_translation_z">12dp</dimen>
-    <dimen name="small_emo_icon_width">20dp</dimen>
+    <dimen name="small_satisfaction_icon_width">20dp</dimen>
     <dimen name="vector_size">50dp</dimen>
     <dimen name="ok_width">50dp</dimen>
 
@@ -55,9 +55,9 @@
     <dimen name="toolbar_forcast_size">50dp</dimen>
     <dimen name="half_toolbar_height">40dp</dimen>
     <dimen name="colored_view_height">180dp</dimen>
-    <dimen name="unknown_mood_margin_top">25dp</dimen>
-    <dimen name="unknown_mood_margin_top_done_event">36dp</dimen>
-    <dimen name="emo_icon_large_size">100dp</dimen>
+    <dimen name="unknown_satisfaction_margin_top">25dp</dimen>
+    <dimen name="unknown_satisfaction_margin_top_done_event">36dp</dimen>
+    <dimen name="satisfaction_icon_large_size">100dp</dimen>
     <dimen name="vector_icon_margin_top_undone_event">40dp</dimen>
     <dimen name="vector_icon_margin_right">16dp</dimen>
 

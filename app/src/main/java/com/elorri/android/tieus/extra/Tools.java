@@ -244,25 +244,25 @@ public class Tools {
         views.setContentDescription(ressource_image, description);
     }
 
-    public static String getSatisfactionDesciption(Context context, Integer mood) {
-        int moodDesc;
-        switch (mood) {
+    public static String getSatisfactionDesciption(Context context, Integer satisfaction) {
+        int satisfactionDesc;
+        switch (satisfaction) {
             case R.drawable.ic_sentiment_satisfied_black_48dp:
-                moodDesc = R.string.satisfied;
+                satisfactionDesc = R.string.satisfied;
                 break;
             case R.drawable.ic_sentiment_neutral_black_48dp:
-                moodDesc = R.string.neutral;
+                satisfactionDesc = R.string.neutral;
                 break;
             case R.drawable.ic_sentiment_dissatisfied_black_48dp:
-                moodDesc = R.string.unsatisfied;
+                satisfactionDesc = R.string.unsatisfied;
                 break;
             case R.drawable.ic_do_not_disturb_alt_black_48dp:
-                moodDesc = R.string.unfollowed;
+                satisfactionDesc = R.string.unfollowed;
                 break;
             default:
                 return null;
         }
-        return context.getResources().getString(moodDesc);
+        return context.getResources().getString(satisfactionDesc);
     }
 
 

@@ -85,8 +85,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public TextView dueDate;
         public TextView doneDate;
         public ImageView vectorIcon;
-        public ImageView moodIcon;
-        public TextView moodUnknown;
+        public ImageView satisfactionIcon;
+        public TextView satisfactionUnknown;
         public TextView message;
         public TextView emptyCursorMessage;
         public TextView ok;
@@ -99,8 +99,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             this.mView = view;
             avatar = (AvatarView) view.findViewById(R.id.avatar);
             contactName = (TextView) view.findViewById(R.id.title);
-            moodIcon = (ImageView) view.findViewById(R.id.moodIcon);
-            moodUnknown = (TextView) view.findViewById(R.id.unknown_mood);
+            satisfactionIcon = (ImageView) view.findViewById(R.id.satisfactionIcon);
+            satisfactionUnknown = (TextView) view.findViewById(R.id.unknown_satisfaction);
 
             switch (viewType) {
                 case ViewTypes.VIEW_EMPTY_CURSOR_MESSAGE: {
@@ -181,14 +181,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_UNSCHEDULED_PEOPLE);
                 break;
             }
-            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+            case ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT);
                 break;
             }
-            case ViewTypes.VIEW_UPDATE_MOOD: {
+            case ViewTypes.VIEW_UPDATE_SATISFACTION: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UPDATE_MOOD);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_UPDATE_SATISFACTION);
                 break;
             }
             case ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT: {
@@ -196,9 +196,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(view, ViewTypes.VIEW_SET_UP_A_FREQUENCY_OF_CONTACT);
                 break;
             }
-            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED: {
+            case ViewTypes.VIEW_ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED: {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_basic_people, parent, false);
-                viewHolder = new ViewHolder(view, ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED);
+                viewHolder = new ViewHolder(view, ViewTypes.VIEW_ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED);
                 break;
             }
             case ViewTypes.VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT: {
@@ -280,12 +280,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK: {
+            case ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_UPDATE_MOOD: {
+            case ViewTypes.VIEW_UPDATE_SATISFACTION: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
@@ -295,7 +295,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 setOnClickListener(holder);
                 break;
             }
-            case ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED: {
+            case ViewTypes.VIEW_ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED: {
                 bindCommonViews(holder);
                 setOnClickListener(holder);
                 break;
@@ -315,11 +315,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 holder.ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Status.getLastMessageIdx(mContext) == Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK)
+                        if (Status.getLastMessageIdx(mContext) == Status.ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED)
                             Status.setLastMessageIdxUI(mContext, Status.APPROCHING_DEAD_LINE);
                         else if (Status.getLastMessageIdx(mContext) == Status.APPROCHING_DEAD_LINE)
-                            Status.setLastMessageIdxUI(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
-                        else if (Status.getLastMessageIdx(mContext) == Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY)
+                            Status.setLastMessageIdxUI(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY);
+                        else if (Status.getLastMessageIdx(mContext) == Status.NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY)
                             Status.setLastMessageIdxUI(mContext, Status.NOTHING_TO_SAY);
                         else
                             Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
@@ -395,27 +395,27 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private void bindCommonViews(ViewHolder holder) {
         bindCommonViews(holder, mCursor.getInt(ContactActionVectorEventDAO
-                .PeopleQuery.COL_MOOD_ID));
+                .PeopleQuery.COL_SATISFACTION_ID));
     }
 
-    private void bindCommonViews(ViewHolder holder, int moodResId) {
+    private void bindCommonViews(ViewHolder holder, int satisfactionResId) {
         holder.avatar.loadImage(
                 mCursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_THUMBNAIL),
                 mCursor.getInt(ContactActionVectorEventDAO.PeopleQuery.COL_BACKGROUND_COLOR));
         holder.contactName.setText(Tools.toProperCase(mCursor.getString(ContactActionVectorEventDAO
                 .PeopleQuery.COL_CONTACT_NAME)));
-        holder.moodIcon.setBackgroundResource(moodResId);
-        holder.moodIcon.setContentDescription(Tools.getSatisfactionDesciption(mContext, moodResId));
-        boolean isMoodKnown = mCursor.getString(
-                ContactActionVectorEventDAO.PeopleQuery.COL_MOOD_UNKNOWN).equals(
+        holder.satisfactionIcon.setBackgroundResource(satisfactionResId);
+        holder.satisfactionIcon.setContentDescription(Tools.getSatisfactionDesciption(mContext, satisfactionResId));
+        boolean isSatisfactionKnown = mCursor.getString(
+                ContactActionVectorEventDAO.PeopleQuery.COL_SATISFACTION_UNKNOWN).equals(
                 TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE);
-        boolean isUntracked = mCursor.getString(
-                ContactActionVectorEventDAO.PeopleQuery.COL_UNTRACKED).equals(
+        boolean isUnfollowed = mCursor.getString(
+                ContactActionVectorEventDAO.PeopleQuery.COL_UNFOLLOWED).equals(
                 TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE);
-        if (isMoodKnown && !isUntracked)
-            holder.moodUnknown.setVisibility(View.VISIBLE);
+        if (isSatisfactionKnown && !isUnfollowed)
+            holder.satisfactionUnknown.setVisibility(View.VISIBLE);
         else
-            holder.moodUnknown.setVisibility(View.INVISIBLE);
+            holder.satisfactionUnknown.setVisibility(View.INVISIBLE);
         mItemChoiceManager.onBindViewHolder(holder, holder.getAdapterPosition());
     }
 

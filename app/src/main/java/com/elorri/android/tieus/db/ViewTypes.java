@@ -17,13 +17,13 @@ public class ViewTypes {
     public static final int VIEW_TODAY_DONE_PEOPLE = 5;
     public static final int VIEW_NEXT_PEOPLE = 6;
     public static final int VIEW_UNFOLLOWED_PEOPLE = 7;
-    public static final int VIEW_FILL_IN_DELAY_FEEDBACK = 8;
-    public static final int VIEW_UPDATE_MOOD = 9;
+    public static final int VIEW_FILL_IN_RESPONSE_TIME_LIMIT = 8;
+    public static final int VIEW_UPDATE_SATISFACTION = 9;
     public static final int VIEW_SET_UP_A_FREQUENCY_OF_CONTACT = 10;
-    public static final int VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED = 11;
+    public static final int VIEW_ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED = 11;
     public static final int VIEW_APPROCHING_END_OF_MOST_SUITABLE_CONTACT_TIME_LIMIT = 12;
     public static final int VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY = 13;
-    public static final int VIEW_FEEDBACK_FREQUENCY = 24;
+    public static final int VIEW_RESPONSE_FREQUENCY = 24;
     public static final int VIEW_CONTACT = 14;
     public static final int VIEW_ALL_ACTION = 15;
     public static final int VIEW_NEXT_ACTION = 16;

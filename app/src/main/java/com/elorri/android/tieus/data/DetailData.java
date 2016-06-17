@@ -26,14 +26,15 @@ public class DetailData {
         ArrayList<Cursor> cursors = new ArrayList();
         Cursor cursor = null;
 
-        //Query necessary to display the moodIcon
+        //Query necessary to display the satisfactionIcon
         cursors.add(db.query(
                 TieUsContract.ContactTable.NAME,
                 ContactDAO.ContactQuery.PROJECTION_WITH_VIEWTYPE_QUERY,
                 ContactDAO.ContactQuery.SELECTION,
                 new String[]{contactId}, null, null, null));
 
-        //If user is eligible for filling response delay or if response delay alone already filled
+        //If user is eligible for filling response time limit or if response time limit alone
+        // already filled
         cursor = db.query(
                 "(" + ContactActionVectorEventDAO.PeopleElligibleForFillInTimeLimitAloneUpdateQuery
                         .SELECT_WITH_VIEWTYPE + ")",

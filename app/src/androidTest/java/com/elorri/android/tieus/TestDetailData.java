@@ -152,7 +152,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE
-                + "|-18611|" + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
+                + "|-18611|" + ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT + "|\n"
                 + "header |"
                 + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"+mContext.getResources().getString(R.string.how_to_done_action)+"|" + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
@@ -199,7 +199,7 @@ public class TestDetailData extends AndroidTestCase {
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|" + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE
                 + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|"
-                + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
+                + ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"+mContext.getResources().getString(R.string.next_actions)+"|" + ViewTypes.VIEW_TITLE + "|\n"

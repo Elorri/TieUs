@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
     <ImageView
-        android:id="@+id/moodIcon"
-        android:layout_width="@dimen/emo_icon_large_size"
-        android:layout_height="@dimen/emo_icon_large_size"
+        android:id="@+id/satisfactionIcon"
+        android:layout_width="@dimen/satisfaction_icon_large_size"
+        android:layout_height="@dimen/satisfaction_icon_large_size"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginLeft="@dimen/spacing_normal"
@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:scaleType="centerCrop"/>
     <TextView
-        android:id="@+id/unknown_mood"
+        android:id="@+id/unknown_satisfaction"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/spacing_normal"
         android:gravity="right|bottom"
-        android:text="@string/unknown_mood_interrogation_mark"
+        android:text="@string/unknown_satisfaction_interrogation_mark"
         android:textAppearance="?android:textAppearanceLarge"
         android:textSize="@dimen/text_size_xxxlarge"
         android:textStyle="bold"

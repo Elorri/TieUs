@@ -180,7 +180,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                             addedContact++;
                         } else { //Our local database know this contact, but in case the contact
                             // name has been updated, we update the whole contact but keep our local
-                            // data like the moodId
+                            // data like the satisfactionId
                             localCursor.moveToFirst();
                             String contactId = localCursor.getString(ContactDAO.ContactQuery.COL_ID);
                             getContext().getContentResolver().update(

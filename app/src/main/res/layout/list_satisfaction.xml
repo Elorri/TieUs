@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/happy"
-            android:layout_width="@dimen/emo_icon_large_size"
-            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_width="@dimen/satisfaction_icon_large_size"
+            android:layout_height="@dimen/satisfaction_icon_large_size"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
             android:layout_toLeftOf="@id/happy_center"
@@ -59,8 +59,8 @@
 
         <ImageView
             android:id="@+id/neutral"
-            android:layout_width="@dimen/emo_icon_large_size"
-            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_width="@dimen/satisfaction_icon_large_size"
+            android:layout_height="@dimen/satisfaction_icon_large_size"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
             android:layout_toLeftOf="@id/neutral_center"
@@ -95,8 +95,8 @@
 
         <ImageView
             android:id="@+id/dissatisfied"
-            android:layout_width="@dimen/emo_icon_large_size"
-            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_width="@dimen/satisfaction_icon_large_size"
+            android:layout_height="@dimen/satisfaction_icon_large_size"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
             android:layout_toLeftOf="@id/dissatisfied_center"
@@ -131,8 +131,8 @@
 
         <ImageView
             android:id="@+id/unfollowed"
-            android:layout_width="@dimen/emo_icon_large_size"
-            android:layout_height="@dimen/emo_icon_large_size"
+            android:layout_width="@dimen/satisfaction_icon_large_size"
+            android:layout_height="@dimen/satisfaction_icon_large_size"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
             android:layout_toLeftOf="@id/unfollowed_center"

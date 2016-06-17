@@ -29,7 +29,7 @@ public class TestOnlyNewContacts extends AndroidTestCase {
         Status.setDoneActionsAware(mContext, false);
         Status.setDeleteActionsAware(mContext, false);
         Status.setLastMessageIdxUI(mContext, Status.MANAGE_UNSCHEDULED_PEOPLE);
-        Status.setLastUserMoodsConfirmAware(mContext, 0l);
+        Status.setLastUserSatisfactionsConfirmAware(mContext, 0l);
         Status.setSyncStatus(mContext, Status.SYNC_DONE);
 
     }

@@ -21,7 +21,7 @@
         android:transitionName="@string/keep"/>
 
     <ImageView
-        android:id="@+id/moodIcon"
+        android:id="@+id/satisfactionIcon"
         android:layout_width="@dimen/satisfaction_icon_width"
         android:layout_height="@dimen/satisfaction_icon_height"
         android:layout_alignParentRight="true"
@@ -34,17 +34,17 @@
         tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
 
     <TextView
-        android:id="@+id/unknown_mood"
+        android:id="@+id/unknown_satisfaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/unknown_mood_margin_top"
+        android:layout_marginTop="@dimen/unknown_satisfaction_margin_top"
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="@dimen/text_size_small"
         android:textAppearance="?android:textAppearanceLarge"
-        android:text="@string/unknown_mood_interrogation_mark"
+        android:text="@string/unknown_satisfaction_interrogation_mark"
         android:visibility="invisible"
         />
 

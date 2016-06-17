@@ -69,7 +69,7 @@ public class TestQueries extends AndroidTestCase {
         mTestGivens.test_fillEventTable();
 
         db = new TieUsDbHelper(mContext).getReadableDatabase();
-        Status.setLastUserMoodsConfirmAware(mContext, 0l);
+        Status.setLastUserSatisfactionsConfirmAware(mContext, 0l);
     }
 
     public void test_joint_table_contact_action_vector_event() {
@@ -282,7 +282,7 @@ public class TestQueries extends AndroidTestCase {
 
     }
 
-    public void test_people_that_needs_mood_update() {
+    public void test_people_that_needs_satisfaction_update() {
         Cursor cursor = db.rawQuery(
                 ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.SELECT_BEFORE_BIND
                         + now_19may2016at12h40m52s
@@ -326,16 +326,16 @@ public class TestQueries extends AndroidTestCase {
         cursor.close();
     }
 
-    public void test_people_that_need_to_be_asked_for_feedback_or_moved_to_unfollowed() {
+    public void test_people_that_need_to_be_asked_for_response_or_moved_to_unfollowed() {
         Cursor cursor = db.rawQuery(
-                ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_BEFORE_BIND
+                ContactActionVectorEventDAO.AskForResponseQuery.SELECT_BEFORE_BIND
                         + now_19may2016at12h40m52s
-                        + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_AFTER_BIND,
+                        + ContactActionVectorEventDAO.AskForResponseQuery.SELECT_AFTER_BIND,
                 null);
         assertEquals(1, cursor.getCount());
 
         String cursorString = "\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.AskForFeedbackQuery.PROJECTION)
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.AskForResponseQuery.PROJECTION)
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + _1day + "|" + _2days + "|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
@@ -375,11 +375,11 @@ public class TestQueries extends AndroidTestCase {
         cursor.close();
     }
 
-    public void test_people_who_decreased_mood_today() {
+    public void test_people_who_decreased_satisfaction_today() {
 
         int updatedRows = db.update(TieUsContract.ContactTable.NAME,
                 Tools.getContentValues(TieUsContract.ContactTable
-                        .COLUMN_LAST_MOOD_DECREASED, String.valueOf(now_19may2016at12h40m52s)),
+                        .COLUMN_LAST_SATISFACTION_DECREASED, String.valueOf(now_19may2016at12h40m52s)),
                 ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.UPDATE_BEFORE_BIND
                         + now_19may2016at12h40m52s
                         + ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.UPDATE_AFTER_BIND,
@@ -392,7 +392,7 @@ public class TestQueries extends AndroidTestCase {
                         + ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.SELECT + ")",
                 null,
                 null,
-                new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(mContext))},
+                new String[]{String.valueOf(Status.getLastUserSatisfactionsConfirmAware(mContext))},
                 null, null, null);
 
         assertEquals(1, cursor.getCount());

@@ -16,12 +16,12 @@
     <string name="next_actions" translatable="true">Prochaines actions</string>
     <string name="select_vector" translatable="true">Selectinnez un vecteur</string>
     <string name="done_actions" translatable="true">Actions effectuées</string>
-    <string name="fill_in_delay_feedback_title" translatable="true">Vous avez travaillé récemment pour</string>
+    <string name="fill_in_response_time_limit_title" translatable="true">Vous avez travaillé récemment pour</string>
     <string name="satisfaction_to_update_title" translatable="true">Etat de satisfaction à renseigner</string>
     <string name="fill_up_frequency_title" translatable="true">Frequence de contact à renseigner</string>
-    <string name="ask_for_feedback_title" translatable="true">Contacts ne répondant pas</string>
+    <string name="ask_for_response_title" translatable="true">Contacts ne répondant pas</string>
     <string name="nearby_decreased_satisfaction_title" translatable="true">Contacts sur le point d\'être insatisfait !</string>
-    <string name="decreased_mood_title" translatable="true">Ils ont diminué d\'humeur aujourd\'hui</string>
+    <string name="decreased_satisfaction_title" translatable="true">Ils ont diminué d\'humeur aujourd\'hui</string>
 
     <!-- options to choose -->
     <string name="satisfied" translatable="true">Satisfait</string>
@@ -32,10 +32,10 @@
     <!-- ui elements -->
     <string name="due_date" translatable="true">Echéance</string>
     <string name="ok" translatable="true">Ok</string>
-    <string name="feedback" translatable="true">Réponse : </string>
-    <string name="feedback2" translatable="true">Réponse</string>
+    <string name="response" translatable="true">Réponse : </string>
+    <string name="response2" translatable="true">Réponse</string>
     <string name="frequency" translatable="true">Frequence</string>
-    <string name="expected_feedback" translatable="true">Réponse attendue ?</string>
+    <string name="expected_response" translatable="true">Réponse attendue ?</string>
     <string name="_4days" translatable="true">4 jours</string>
     <string name="_1week" translatable="true">1 semaine</string>
     <string name="_2weeks" translatable="true">2 semaines</string>
@@ -85,13 +85,13 @@
         interagir avec ces <xliff:g>%1$d</xliff:g> contacts ? Renseignez la \'frequence de
         contact\' sur leur profil.</string>
     <string name="fill_up_frequency_person" translatable="true">A quel rythme souhaitez vous interagir avec <xliff:g>%1$s</xliff:g> ? Renseignez la \'frequence de contact\' sur son profil.</string>
-    <string name="ask_for_feedback_message" translatable="true">Toujours pas de réponse de ces <xliff:g>%1$d</xliff:g> contacts ? Demandez leur s\'ils sont satisfait par vos actions ou marquez les comme \'non suivi\'.</string>
-    <string name="ask_for_feedback_person" translatable="true">Toujours pas de réponse <xliff:g>%1$s</xliff:g> ? Demandez lui si il(elle) est satisfait(e) par vos actions ou marquez le(la) comme \'non suivi\'.</string>
-    <string name="nearby_decreased_mood_message" translatable="true">Vous avez <xliff:g>%1$d</xliff:g> contacts qui vont devenir moins satisfait si vous n\'interagissez pas. Agissez il est encore temps ! </string>
-    <string name="nearby_decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> va devenir moins satisfait(e) si vous n\'interagissez pas. Agissez il est encore temps !</string>
-    <string name="decreased_mood_message" translatable="true">Ces <xliff:g>%1$d</xliff:g>
+    <string name="ask_for_response_message" translatable="true">Toujours pas de réponse de ces <xliff:g>%1$d</xliff:g> contacts ? Demandez leur s\'ils sont satisfaits par vos actions ou marquez les comme \'non  suivi\'.</string>
+    <string name="ask_for_response_person" translatable="true">Toujours pas de réponse <xliff:g>%1$s</xliff:g> ? Demandez lui si il(elle) est satisfait(e) par vos actions ou marquez le(la) comme \'non suivi\'.</string>
+    <string name="nearby_decreased_satisfaction_message" translatable="true">Vous avez <xliff:g>%1$d</xliff:g> contacts qui vont devenir moins satisfait si vous n\'interagissez pas. Agissez il est encore temps ! </string>
+    <string name="nearby_decreased_satisfaction_person" translatable="true"><xliff:g>%1$s</xliff:g> va devenir moins satisfait(e) si vous n\'interagissez pas. Agissez il est encore temps !</string>
+    <string name="decreased_satisfaction_message" translatable="true">Ces <xliff:g>%1$d</xliff:g>
         contacts sont devenus moins satisfait aujoud\'hui.</string>
-    <string name="decreased_mood_person" translatable="true"><xliff:g>%1$s</xliff:g> est devenu(e) moins satisfait(e) aujoud\'hui.</string>
+    <string name="decreased_satisfaction_person" translatable="true"><xliff:g>%1$s</xliff:g> est devenu(e) moins satisfait(e) aujoud\'hui.</string>
     <string name="no_people_to_follow" translatable="true">Commencez à suivre des contacts
         en remplissant leur \'état de satisfaction\' sur leur profil</string>
 

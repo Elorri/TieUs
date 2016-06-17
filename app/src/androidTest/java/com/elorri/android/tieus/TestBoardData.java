@@ -170,7 +170,7 @@ public class TestBoardData extends AndroidTestCase {
     }
 
 
-    private static String getAlwaysDisplayedCursorMoodMelissaUpdated(Context context) {
+    private static String getAlwaysDisplayedCursorSatisfactionMelissaUpdated(Context context) {
         return "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |" + context.getResources().getString(R.string.unscheduled_people)
@@ -304,8 +304,8 @@ public class TestBoardData extends AndroidTestCase {
 
     }
 
-    public void testFillInDelayFeedbackMessage() {
-        Status.setLastMessageIdxBg(mContext, Status.FILL_IN_DELAY_FEEDBACK);
+    public void testFillInResponseTimeLimitMessage() {
+        Status.setLastMessageIdxBg(mContext, Status.FILL_IN_RESPONSE_TIME_LIMIT);
 
         Cursor cursor = mContext.getContentResolver().query(
                 TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -322,18 +322,18 @@ public class TestBoardData extends AndroidTestCase {
                 + ViewTypes.VIEW_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-                + "row |"+mContext.getResources().getString(R.string.fill_in_delay_feedback_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
+                + "row |"+mContext.getResources().getString(R.string.fill_in_response_time_limit_title)+"|" + ViewTypes.VIEW_TITLE + "|\n"
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |24|850|288i7.3552i264b0e968b8a42ff|emma|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp
                 + "|null|null|null|null|" + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-4560696|"
-                + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
+                + ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT + "|\n"
                 + "row |17|834|298i5.3552i264b0e968b8a42fl|jacques|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|null|null|null|null|"
                 + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|"
                 + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-18611|"
-                + ViewTypes.VIEW_FILL_IN_DELAY_FEEDBACK + "|\n"
+                + ViewTypes.VIEW_FILL_IN_RESPONSE_TIME_LIMIT + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -342,7 +342,7 @@ public class TestBoardData extends AndroidTestCase {
 
     }
 
-    public void testUpdateMoodMessage() {
+    public void testUpdateSatisfactionMessage() {
         Status.setLastMessageIdxBg(mContext, Status.UPDATE_SATISFACTION);
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -364,7 +364,7 @@ public class TestBoardData extends AndroidTestCase {
                 + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.PeopleThatNeedSatisfactionUpdateQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |18|835|298i5.3552i264b0e968b8a42fv|jeanne|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._4days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UPDATE_MOOD + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-30107|" + ViewTypes.VIEW_UPDATE_SATISFACTION + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -405,8 +405,8 @@ public class TestBoardData extends AndroidTestCase {
         cursor.close();
     }
 
-    public void testAskForFeedbackOrMoveToUntrackMessage() {
-        Status.setLastMessageIdxBg(mContext, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK);
+    public void testAskForResponseOrMoveToUnfollowedMessage() {
+        Status.setLastMessageIdxBg(mContext, Status.ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED);
 
 
         Cursor cursor = mContext.getContentResolver().query(
@@ -419,19 +419,18 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.ask_for_feedback_person, "Denis")
+                + mContext.getResources().getString(R.string.ask_for_response_person, "Denis")
                 + "|"
                 + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + "header |"
                 + MatrixCursors.TitleQuery.COLUMN_TITLE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getString(R.string.ask_for_feedback_title) + "|"
+                + mContext.getString(R.string.ask_for_response_title) + "|"
                 + ViewTypes.VIEW_TITLE + "|\n"
-                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO
-                .AskForFeedbackQuery.PROJECTION_WITH_VIEWTYPE)
+                + TestUtility.getCursorHeaderString(ContactActionVectorEventDAO.AskForResponseQuery.PROJECTION_WITH_VIEWTYPE)
                 + "row |20|837|298i5.3552i264b0e968b8a46fv|denis|null|"
                 + R.drawable.ic_sentiment_satisfied_black_48dp + "|" + TestGivens._1day + "|" + TestGivens._2days + "|null|null|"
-                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_ASK_FOR_FEEDBACK_OR_MOVE_TO_UNFOLLOWED + "|\n"
+                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_ON_VALUE + "|-6190977|" + ViewTypes.VIEW_ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -452,7 +451,7 @@ public class TestBoardData extends AndroidTestCase {
                 + "header |"
                 + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
                 + "row |"
-                + mContext.getResources().getString(R.string.nearby_decreased_mood_person, "Émilie")
+                + mContext.getResources().getString(R.string.nearby_decreased_satisfaction_person, "Émilie")
                 + "|"
                 + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + "header |"
@@ -472,47 +471,7 @@ public class TestBoardData extends AndroidTestCase {
         cursor.close();
     }
 
-    //TODO I still don't get why putting 2130837598 instead of now_etc in getAlwaysDisplayedCursorMoodMelissaUpdated(mContext)
-    // make work this test.
-//        public void testNotePeopleWhoDecreasedMoodMessage() {
-//        Status.setLastMessageIdxBg(mContext, Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY);
-//
-//
-//        Cursor cursor = mContext.getContentResolver().query(
-//                TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
-//
-//        String cursorString = "\n"
-//                + "header |"
-//                + ContactDAO.RatioQuery.PROJECTION[0] + "|"
-//                + ContactDAO.RatioQuery.PROJECTION[1] + "|\n"
-//                + "row |0.363636|" + ViewTypes.VIEW_FORECAST + "|\n"
-//                + "header |"
-//                + MatrixCursors.ConfirmMessageQuery.COLUMN_CONFIRM_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-//                + "row |"
-//                + mContext.getResources().getString(R.string.decreased_mood_message, 1)
-//                + "|"
-//                + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
-//                + "header |"
-//                + MatrixCursors.TitleQuery.COLUMN_TAG_TITLE_RESOURCE_ID + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-//                + "row |"
-//                + mContext.getString(R.string.decreased_mood_title) + "|"
-//                + ViewTypes.VIEW_TITLE + "|\n"
-//                + TestUtility.getCursorHeaderString
-//                (ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.PROJECTION_WITH_VIEWTYPE)
-//                + "row |22|839|298i5.3552i274b0e968b8a47fv|mélissa|null|"
-//                + R.drawable.ic_sentiment_neutral_black_48dp + "|" + TestGivens._2days + "|" + TestGivens._3days + "|"
-//                + TestGivens._30days + "|"+TestGivens.now_19may2016at12h40m52s+"|"
-//                + TieUsContract.ContactTable.UNFOLLOWED_OFF_VALUE + "|" + TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE
-//                + "|" + ViewTypes.VIEW_NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY + "|\n"
-//                + getAlwaysDisplayedCursorMoodMelissaUpdated(mContext);
-//
-//        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
-//        assertEquals(cursorString, TestUtility.getCursorString(cursor));
-//        cursor.close();
-//    }
-
-
-    public void testTakeTimeForFeedbackMessage() {
+    public void testNothingToSayMessage() {
         Status.setLastMessageIdxBg(mContext, Status.NOTHING_TO_SAY);
         Cursor cursor = mContext.getContentResolver().query(
                 TieUsContract.MainData.buildBoardUri(TestGivens.now_19may2016at12h40m52s), null, null, null, null);
@@ -521,12 +480,6 @@ public class TestBoardData extends AndroidTestCase {
                 + ContactDAO.RatioQuery.PROJECTION[0] + "|"
                 + ContactDAO.RatioQuery.PROJECTION[1] + "|\n"
                 + "row |0.363636|" + ViewTypes.VIEW_FORECAST + "|\n"
-//                + "header |"
-//                + MatrixCursors.MessageQuery.COLUMN_MESSAGE + "|" + ViewTypes.COLUMN_VIEWTYPE + "|\n"
-//                + "row |"
-//                + mContext.getResources().getString(R.string.take_time_for_feedback_message, 1)
-//                + "|"
-//                + ViewTypes.VIEW_CONFIRM_MESSAGE + "|\n"
                 + getAlwaysDisplayedCursor(mContext);
 
         Log.e("FF", Thread.currentThread().getStackTrace()[2] + "" + TestUtility.getCursorString(cursor));
@@ -536,11 +489,6 @@ public class TestBoardData extends AndroidTestCase {
     }
 
 
-//
-//    public void test_getTopCursors() {
-//        assertEquals(Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK,
-//                MainData.getTopCursors(mContext, Status.UPDATE_SATISFACTION));
-//    }
 
 
 }

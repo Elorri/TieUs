@@ -128,10 +128,10 @@ public class TieUsContract {
         public static final String COLUMN_ANDROID_CONTACT_NAME = "contact_name";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
         public static final String COLUMN_SATISFACTION = "satisfaction";
-        public static final String COLUMN_FEEDBACK_EXPECTED_DELAY = "expected_delay_feedback";
-        public static final String COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY = "increased_expected_delay_feedback";
+        public static final String COLUMN_RESPONSE_EXPECTED_TIME_LIMIT = "expected_response_time_limit";
+        public static final String COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT = "increased_expected_response_time_limit";
         public static final String COLUMN_FREQUENCY_OF_CONTACT = "frequency_of_contact";
-        public static final String COLUMN_LAST_MOOD_DECREASED = "last_mood_update";
+        public static final String COLUMN_LAST_SATISFACTION_DECREASED = "last_satisfaction_update";
         public static final String COLUMN_UNFOLLOWED = "unfollowed";
         public static final String COLUMN_SATISFACTION_UNKNOWN = "satisfaction_unknown";
         public static final String COLUMN_BACKGROUND_COLOR = "background_color";

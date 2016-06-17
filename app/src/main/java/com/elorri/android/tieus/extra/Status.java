@@ -76,12 +76,12 @@ public class Status {
      * @return the index of the last message the user have seen, could be the one on the screen.
      */
     public static final int MANAGE_UNSCHEDULED_PEOPLE = 0;
-    public static final int FILL_IN_DELAY_FEEDBACK = 1;
+    public static final int FILL_IN_RESPONSE_TIME_LIMIT = 1;
     public static final int UPDATE_SATISFACTION = 2;
     public static final int SET_UP_A_FREQUENCY_OF_CONTACT = 3;
-    public static final int ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK = 4;
+    public static final int ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED = 4;
     public static final int APPROCHING_DEAD_LINE = 5;
-    public static final int NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY = 6;
+    public static final int NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY = 6;
     public static final int NOTHING_TO_SAY = 7;
 
     public static int getLastMessageIdx(Context context) {
@@ -120,16 +120,16 @@ public class Status {
     }
 
 
-    public static long getLastUserMoodsConfirmAware(Context context) {
+    public static long getLastUserSatisfactionsConfirmAware(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getLong(context.getString(R.string.pref_last_user_moods_confirm_key),0);
+        return sp.getLong(context.getString(R.string.pref_last_user_satisfactions_confirm_key),0);
     }
 
 
-    public static void setLastUserMoodsConfirmAware(Context context, long timestamp) {
+    public static void setLastUserSatisfactionsConfirmAware(Context context, long timestamp) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spe = sp.edit();
-        spe.putLong(context.getString(R.string.pref_last_user_moods_confirm_key), timestamp);
+        spe.putLong(context.getString(R.string.pref_last_user_satisfactions_confirm_key), timestamp);
         spe.commit();
     }
 

@@ -20,10 +20,10 @@ public class ContactDAO {
             + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME + " TEXT NOT NULL,"
             + TieUsContract.ContactTable.COLUMN_THUMBNAIL + " TEXT,"
             + TieUsContract.ContactTable.COLUMN_SATISFACTION + " TEXT NOT NULL, "
-            + TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY + " INTEGER, "
-            + TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_RESPONSE_EXPECTED_TIME_LIMIT + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT + " INTEGER, "
             + TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT + " INTEGER, "
-            + TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED + " INTEGER, "
+            + TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED + " INTEGER, "
             + TieUsContract.ContactTable.COLUMN_UNFOLLOWED + " INTEGER NOT NULL, "
             + TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN + " INTEGER NOT NULL, "
             + TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR + " INTEGER NOT NULL, "
@@ -47,8 +47,8 @@ public class ContactDAO {
         int COL_ANDROID_LOOKUP_KEY = 2;
         int COL_ANDROID_CONTACT_NAME = 3;
         int COL_THUMBNAIL = 4;
-        int COL_MOOD_ID = 5;
-        int COL_UNTRACKED = 10;
+        int COL_SATISFACTION_ID = 5;
+        int COL_UNFOLLOWED = 10;
         int COL_SATISFACTION_UNKNOWN = 11;
         int COL_BACKGROUND_COLOR = 12;
 
@@ -63,10 +63,10 @@ public class ContactDAO {
                 TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_EXPECTED_TIME_LIMIT,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
@@ -81,10 +81,10 @@ public class ContactDAO {
                 TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_EXPECTED_TIME_LIMIT,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
@@ -100,10 +100,10 @@ public class ContactDAO {
                         + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_EXPECTED_TIME_LIMIT,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR
@@ -118,10 +118,10 @@ public class ContactDAO {
                         + TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_NAME,
                 TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_EXPECTED_DELAY,
-                TieUsContract.ContactTable.COLUMN_FEEDBACK_INCREASED_EXPECTED_DELAY,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_EXPECTED_TIME_LIMIT,
+                TieUsContract.ContactTable.COLUMN_RESPONSE_INCREASED_EXPECTED_TIME_LIMIT,
                 TieUsContract.ContactTable.COLUMN_FREQUENCY_OF_CONTACT,
-                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
                 TieUsContract.ContactTable.COLUMN_UNFOLLOWED,
                 TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN,
                 TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR,
@@ -159,9 +159,9 @@ public class ContactDAO {
     }
 
     public static ContentValues getContentValues(Cursor androidContactCursor,
-                                                 int moodId,
-                                                 String untrackedValue,
-                                                 String moodUnknownValue,
+                                                 int satisfactionId,
+                                                 String unfollowedValue,
+                                                 String satisfactionUnknownValue,
                                                  int backgroundColorValue) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TieUsContract.ContactTable.COLUMN_ANDROID_CONTACT_ID,
@@ -172,9 +172,9 @@ public class ContactDAO {
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_CONTACT_NAME));
         contentValues.put(TieUsContract.ContactTable.COLUMN_THUMBNAIL,
                 androidContactCursor.getString(AndroidDAO.ContactQuery.COL_THUMBNAIL));
-        contentValues.put(TieUsContract.ContactTable.COLUMN_SATISFACTION, moodId);
-        contentValues.put(TieUsContract.ContactTable.COLUMN_UNFOLLOWED, untrackedValue);
-        contentValues.put(TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN, moodUnknownValue);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_SATISFACTION, satisfactionId);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_UNFOLLOWED, unfollowedValue);
+        contentValues.put(TieUsContract.ContactTable.COLUMN_SATISFACTION_UNKNOWN, satisfactionUnknownValue);
         contentValues.put(TieUsContract.ContactTable.COLUMN_BACKGROUND_COLOR, backgroundColorValue);
         return contentValues;
     }

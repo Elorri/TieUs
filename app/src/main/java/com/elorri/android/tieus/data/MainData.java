@@ -164,9 +164,9 @@ public abstract class MainData {
                             MatrixCursors.MessageQuery.VALUES,
                             message));
                 } else
-                    return getTopCursors(context, db, Status.FILL_IN_DELAY_FEEDBACK, now, selection, selectionArgs);
+                    return getTopCursors(context, db, Status.FILL_IN_RESPONSE_TIME_LIMIT, now, selection, selectionArgs);
                 break;
-            case Status.FILL_IN_DELAY_FEEDBACK:
+            case Status.FILL_IN_RESPONSE_TIME_LIMIT:
                 cursor = db.query("(" + ContactActionVectorEventDAO.PeopleThatNeedsToFillInTimeLimitResponseQuery.SELECT_WITH_VIEWTYPE + ")", null, selection, selectionArgs, null, null, null);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
@@ -184,7 +184,7 @@ public abstract class MainData {
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
                             context.getResources().getString(R.string
-                                    .fill_in_delay_feedback_title), false, null,
+                                    .fill_in_response_time_limit_title), false, null,
                             false));
                 } else
                     return getTopCursors(context, db, Status.UPDATE_SATISFACTION, now, selection, selectionArgs);
@@ -236,31 +236,31 @@ public abstract class MainData {
                             context.getResources().getString(R.string.fill_up_frequency_title), false, null,
                             false));
                 } else
-                    return getTopCursors(context, db, Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK,
+                    return getTopCursors(context, db, Status.ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED,
                             now, selection, selectionArgs);
                 break;
-            case Status.ASK_FOR_FEEDBACK_OR_MOVE_TO_UNTRACK:
+            case Status.ASK_FOR_RESPONSE_OR_MOVE_TO_UNFOLLOWED:
                 cursor = db.query("(" +
-                                ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
+                                ContactActionVectorEventDAO.AskForResponseQuery.SELECT_BEFORE_BIND_WITH_VIEWTYPE
                                 + now
-                                + ContactActionVectorEventDAO.AskForFeedbackQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE + ")",
+                                + ContactActionVectorEventDAO.AskForResponseQuery.SELECT_AFTER_BIND_WITH_VIEWTYPE + ")",
                         null, selection, selectionArgs, null, null, null);
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.ask_for_feedback_person,
+                        message = context.getResources().getString(R.string.ask_for_response_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.ask_for_feedback_message,
+                        message = context.getResources().getString(R.string.ask_for_response_message,
                                 cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.ConfirmMessageQuery.PROJECTION,
                             MatrixCursors.ConfirmMessageQuery.VALUES,
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.ask_for_feedback_title), false, null,
+                            context.getResources().getString(R.string.ask_for_response_title), false, null,
                             false));
                 } else
                     return getTopCursors(context, db, Status.APPROCHING_DEAD_LINE, now, selection, selectionArgs);
@@ -274,12 +274,12 @@ public abstract class MainData {
                 if (cursor.getCount() > 0) {
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.nearby_decreased_mood_person,
+                        message = context.getResources().getString(R.string.nearby_decreased_satisfaction_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.nearby_decreased_mood_message,
+                        message = context.getResources().getString(R.string.nearby_decreased_satisfaction_message,
                                 cursor.getCount());
                     cursors.add(MatrixCursors.getOneLineCursor(
                             MatrixCursors.ConfirmMessageQuery.PROJECTION,
@@ -290,13 +290,13 @@ public abstract class MainData {
                             false));
                 } else
                     return getTopCursors(context, db, Status
-                            .NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY, now, selection, selectionArgs);
+                            .NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY, now, selection, selectionArgs);
                 break;
-            case Status.NOTE_PEOPLE_WHO_DECREASED_MOOD_TODAY:
+            case Status.NOTE_PEOPLE_WHO_DECREASED_SATISFACTION_TODAY:
 
                 db.update(TieUsContract.ContactTable.NAME,
                         Tools.getContentValues(
-                                TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
+                                TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
                                 String.valueOf(now)),
                         ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.UPDATE_BEFORE_BIND
                                 + now
@@ -304,31 +304,31 @@ public abstract class MainData {
                                 .UPDATE_AFTER_BIND, null);
 
                 String[] args = selectionArgs == null ?
-                        new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context))} :
-                        new String[]{String.valueOf(Status.getLastUserMoodsConfirmAware(context)), selectionArgs[0]};
+                        new String[]{String.valueOf(Status.getLastUserSatisfactionsConfirmAware(context))} :
+                        new String[]{String.valueOf(Status.getLastUserSatisfactionsConfirmAware(context)), selectionArgs[0]};
                 cursor = db.query("(" +
                         ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery
                                 .SELECT_WITH_VIEWTYPE + ")", null, selection, args, null, null, null);
 
                 if (cursor.getCount() > 0) {
-                    //They decreased their mood, lets change their moodIcon
+                    //They decreased their satisfaction, lets change their satisfactionIcon
                     while (cursor.moveToNext()) {
-                        int moodIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_MOOD_ID);
+                        int satisfactionIcon = cursor.getInt(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_SATISFACTION_ID);
                         db.update(TieUsContract.ContactTable.NAME,
-                                Tools.getContentValues(TieUsContract.ContactTable.COLUMN_LAST_MOOD_DECREASED,
-                                        String.valueOf(Tools.decreaseSatisfaction(moodIcon))),
+                                Tools.getContentValues(TieUsContract.ContactTable.COLUMN_LAST_SATISFACTION_DECREASED,
+                                        String.valueOf(Tools.decreaseSatisfaction(satisfactionIcon))),
                                 TieUsContract.ContactTable._ID + "=?",
                                 new String[]{cursor.getString(ContactActionVectorEventDAO.PeopleWhoDecreasedSatisfactionQuery.COL_ID)}
                         );
                     }
                     if (cursor.getCount() == 1) {
                         cursor.moveToFirst();
-                        message = context.getResources().getString(R.string.decreased_mood_person,
+                        message = context.getResources().getString(R.string.decreased_satisfaction_person,
                                 Tools.toProperCase(
                                         cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_CONTACT_NAME)));
                         cursor.moveToPosition(-1);
                     } else
-                        message = context.getResources().getString(R.string.decreased_mood_message,
+                        message = context.getResources().getString(R.string.decreased_satisfaction_message,
                                 cursor.getCount());
                     cursor.moveToPosition(-1);
                     cursors.add(MatrixCursors.getOneLineCursor(
@@ -336,7 +336,7 @@ public abstract class MainData {
                             MatrixCursors.ConfirmMessageQuery.VALUES,
                             message));
                     cursors.add(Tools.addDisplayProperties(cursor, true,
-                            context.getResources().getString(R.string.decreased_mood_title), false, null,
+                            context.getResources().getString(R.string.decreased_satisfaction_title), false, null,
                             false));
 
                 } else
