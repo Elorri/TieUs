@@ -1,4 +1,4 @@
-# Popular Movies 
+# Tie Us
 
 This repository contains the app "Tie Us", which is the last project of the Android Developer Nanodegree program (Capstone_Stage2)
 
