@@ -1,4 +1,28 @@
+/*
+ * The MIT License (MIT)
+
+ Copyright (c) 2016 ETCHEMENDY ELORRI
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package com.elorri.android.tieus.activities;
+
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -11,6 +35,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +51,10 @@ import com.elorri.android.tieus.fragments.MainFragment;
 import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-
+/**
+ * Created by Elorri on 11/04/2016.
+ * First activity launched by the app.
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final int PORT = 1;
@@ -45,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -65,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         // the network ( it grab data from the local android device) we use a SyncAdapter because
         // it's convenient for updating data at regular intervals. That means that without
         // internet on, sync won't work, because SyncAdapter synchronise only if internet is on.
-            TieUsSyncAdapter.initializeSyncAdapter(this);
+        TieUsSyncAdapter.initializeSyncAdapter(this);
 
         if (!Status.getFirebaseStatsSent(this)) {
             Bundle bundle = new Bundle();

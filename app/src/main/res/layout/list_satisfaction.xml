@@ -1,154 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!-- 	The MIT License (MIT)
+
+Copyright (c) 2016 ETCHEMENDY ELORRI
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:id="@+id/happy_item"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v4.widget.Space
-            android:id="@+id/happy_center"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"/>
-
-        <ImageView
-            android:id="@+id/happy"
-            android:layout_width="@dimen/satisfaction_icon_large_size"
-            android:layout_height="@dimen/satisfaction_icon_large_size"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_toLeftOf="@id/happy_center"
-            android:layout_toStartOf="@id/happy_center"
-            android:background="@drawable/ic_sentiment_satisfied_black_48dp"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/happy_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_toEndOf="@id/happy"
-            android:layout_toRightOf="@id/happy"
-            android:text="@string/satisfied"
-            android:textAppearance="?android:textAppearanceLarge"/>
-    </RelativeLayout>
+            android:paddingBottom="@dimen/spacing_small"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_small">
 
-    <RelativeLayout
-        android:id="@+id/neutral_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small">
+            <android.support.v4.widget.Space
+                android:id="@+id/happy_center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
 
-        <android.support.v4.widget.Space
-            android:id="@+id/neutral_center"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"/>
+            <ImageView
+                android:id="@+id/happy"
+                android:layout_width="@dimen/satisfaction_icon_large_size"
+                android:layout_height="@dimen/satisfaction_icon_large_size"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_toLeftOf="@id/happy_center"
+                android:layout_toStartOf="@id/happy_center"
+                android:background="@drawable/ic_sentiment_satisfied_black_48dp"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_toEndOf="@id/happy"
+                android:layout_toRightOf="@id/happy"
+                android:text="@string/satisfied"
+                android:textAppearance="?android:textAppearanceLarge"/>
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/neutral"
-            android:layout_width="@dimen/satisfaction_icon_large_size"
-            android:layout_height="@dimen/satisfaction_icon_large_size"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_toLeftOf="@id/neutral_center"
-            android:layout_toStartOf="@id/neutral_center"
-            android:background="@drawable/ic_sentiment_neutral_black_48dp"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/neutral_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_toEndOf="@id/neutral"
-            android:layout_toRightOf="@id/neutral"
-            android:text="@string/neutral"
-            android:textAppearance="?android:textAppearanceLarge"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/dissatisfied_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small">
+            android:paddingBottom="@dimen/spacing_small"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_small">
 
-        <android.support.v4.widget.Space
-            android:id="@+id/dissatisfied_center"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"/>
+            <android.support.v4.widget.Space
+                android:id="@+id/neutral_center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
 
-        <ImageView
-            android:id="@+id/dissatisfied"
-            android:layout_width="@dimen/satisfaction_icon_large_size"
-            android:layout_height="@dimen/satisfaction_icon_large_size"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_toLeftOf="@id/dissatisfied_center"
-            android:layout_toStartOf="@id/dissatisfied_center"
-            android:background="@drawable/ic_sentiment_dissatisfied_black_48dp"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/neutral"
+                android:layout_width="@dimen/satisfaction_icon_large_size"
+                android:layout_height="@dimen/satisfaction_icon_large_size"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_toLeftOf="@id/neutral_center"
+                android:layout_toStartOf="@id/neutral_center"
+                android:background="@drawable/ic_sentiment_neutral_black_48dp"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_toEndOf="@id/neutral"
+                android:layout_toRightOf="@id/neutral"
+                android:text="@string/neutral"
+                android:textAppearance="?android:textAppearanceLarge"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/dissatisfied_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_toEndOf="@id/dissatisfied"
-            android:layout_toRightOf="@id/dissatisfied"
-            android:text="@string/unsatisfied"
-            android:textAppearance="?android:textAppearanceLarge"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/unfollowed_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/spacing_small"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_small">
+            android:paddingBottom="@dimen/spacing_small"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_small">
 
-        <android.support.v4.widget.Space
-            android:id="@+id/unfollowed_center"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"/>
+            <android.support.v4.widget.Space
+                android:id="@+id/dissatisfied_center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
 
-        <ImageView
-            android:id="@+id/unfollowed"
-            android:layout_width="@dimen/satisfaction_icon_large_size"
-            android:layout_height="@dimen/satisfaction_icon_large_size"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_toLeftOf="@id/unfollowed_center"
-            android:layout_toStartOf="@id/unfollowed_center"
-            android:background="@drawable/ic_do_not_disturb_alt_black_48dp"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/dissatisfied"
+                android:layout_width="@dimen/satisfaction_icon_large_size"
+                android:layout_height="@dimen/satisfaction_icon_large_size"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_toLeftOf="@id/dissatisfied_center"
+                android:layout_toStartOf="@id/dissatisfied_center"
+                android:background="@drawable/ic_sentiment_dissatisfied_black_48dp"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_toEndOf="@id/dissatisfied"
+                android:layout_toRightOf="@id/dissatisfied"
+                android:text="@string/unsatisfied"
+                android:textAppearance="?android:textAppearanceLarge"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/unfollowed_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_toEndOf="@id/unfollowed"
-            android:layout_toRightOf="@id/unfollowed"
-            android:text="@string/unfollowed"
-            android:textAppearance="?android:textAppearanceLarge"/>
-    </RelativeLayout>
+            android:paddingBottom="@dimen/spacing_small"
+            android:paddingLeft="@dimen/spacing_normal"
+            android:paddingRight="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_small">
 
-</LinearLayout>
+            <android.support.v4.widget.Space
+                android:id="@+id/unfollowed_center"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:id="@+id/unfollowed"
+                android:layout_width="@dimen/satisfaction_icon_large_size"
+                android:layout_height="@dimen/satisfaction_icon_large_size"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_toLeftOf="@id/unfollowed_center"
+                android:layout_toStartOf="@id/unfollowed_center"
+                android:background="@drawable/ic_do_not_disturb_alt_black_48dp"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_toEndOf="@id/unfollowed"
+                android:layout_toRightOf="@id/unfollowed"
+                android:text="@string/unfollowed"
+                android:textAppearance="?android:textAppearanceLarge"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+
+ Copyright (c) 2016 ETCHEMENDY ELORRI
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package com.elorri.android.tieus.fragments;
 
 import android.content.ContentValues;
@@ -387,7 +410,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openSatisfactionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mAlertEmoDialog = builder.create();
-        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.list_satisfaction, null);
+        ScrollView listContainer = (ScrollView) View.inflate(mContext, R.layout.list_satisfaction,
+                null);
         RelativeLayout happyItem = (RelativeLayout) listContainer.findViewById(R.id.happy_item);
         RelativeLayout neutralItem = (RelativeLayout) listContainer.findViewById(R.id.neutral_item);
         RelativeLayout dissatisfiedItem = (RelativeLayout) listContainer.findViewById(R.id.dissatisfied_item);
@@ -457,7 +481,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private void openResponseDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         mResponseDialog = builder.create();
-        LinearLayout listContainer = (LinearLayout) View.inflate(mContext, R.layout.list_response, null);
+        ScrollView listContainer = (ScrollView) View.inflate(mContext, R.layout.list_response, null);
         TextView _24h = (TextView) listContainer.findViewById(R.id._24h);
         TextView _48h = (TextView) listContainer.findViewById(R.id._48h);
         TextView _4days = (TextView) listContainer.findViewById(R.id._4days);

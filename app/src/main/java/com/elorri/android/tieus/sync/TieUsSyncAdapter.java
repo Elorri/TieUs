@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+
+ Copyright (c) 2016 ETCHEMENDY ELORRI
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package com.elorri.android.tieus.sync;
 
 import android.accounts.Account;
@@ -42,7 +65,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
     // Interval at which to sync with the Tmdb network, in seconds.
     // 60 seconds (1 minute) * 60 * 24 * 3= 24 hours - will sync once every 3 days
     public static final int SYNC_INTERVAL = 60 * 60 * 24 * 3;
-     //public static final int SYNC_INTERVAL = 60; //for testing
+    //public static final int SYNC_INTERVAL = 60; //for testing
 
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
     private static final long _3DAYS_IN_MILLIS = 1000 * 60 * 60 * 24 * 3;
@@ -55,7 +78,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Context context=getContext();
+        Context context = getContext();
         boolean isInternetOn = Tools.isNetworkAvailable(context);
         if (!isInternetOn) {
             Status.setSyncStatus(getContext(), Status.SYNC_NO_INTERNET);
@@ -66,8 +89,6 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
         notifyUserSyncDone();
         Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
-
-
 
 
     /**
@@ -97,11 +118,16 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 null
         );
 
+        if (appCursor == null) {
+            return;
+        }
+
         String appContactId;
         String androidContactId;
         String androidLookUpKey;
         Cursor androidCursor = null;
         try {
+
             while (appCursor.moveToNext()) {
                 appContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ID);
                 androidContactId = appCursor.getString(ContactDAO.ContactQuery.COL_ANDROID_ID);
@@ -158,6 +184,8 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 AndroidDAO.ContactQuery.SORT_ORDER
         );
 
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "" + androidCursor);
+
         String androidContactId;
         String androidLookUpKey;
         Cursor localCursor = null;
@@ -181,7 +209,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
                         //Our local database doesn't know this contact, let's add it up
                         if (localCursor.getCount() == 0) {
-                             ContentValues values = ContactDAO.getContentValues(androidCursor,
+                            ContentValues values = ContactDAO.getContentValues(androidCursor,
                                     R.drawable.ic_sentiment_neutral_black_48dp,
                                     TieUsContract.ContactTable.UNFOLLOWED_ON_VALUE,
                                     TieUsContract.ContactTable.SATISFACTION_UNKNOWN_OFF_VALUE,
@@ -341,6 +369,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
      * @return a fake account.
      */
     public static Account getSyncAccount(Context context) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "");
         // Get an instance of the Android account manager
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
@@ -393,6 +422,7 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
      * Helper method to schedule the sync adapter periodic execution
      */
     public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "");
         Account account = getSyncAccount(context);
         String authority = context.getString(R.string.content_authority);
 

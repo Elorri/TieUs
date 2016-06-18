@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+
+ Copyright (c) 2016 ETCHEMENDY ELORRI
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package com.elorri.android.tieus;
 
 import android.test.AndroidTestCase;
@@ -7,7 +30,10 @@ import com.elorri.android.tieus.extra.Status;
 /**
  * Created by Elorri on 20/05/2016.
  * This class create a set of contact with actions registered in the near past and future.
- * It is meant to be used as a demo.
+ * The value of today, tomorrow etc table from TestGivens are updated each
+ * time we run the test to reflect the real value of today, tomorrow ...
+ * It is meant to be used as a demo. In case we want to play with app that already contains
+ * contacts.
  */
 public class TestToday extends AndroidTestCase {
 
