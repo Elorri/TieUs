@@ -79,6 +79,7 @@ SOFTWARE.
     <string name="every_6months" translatable="true">Tous les 6 mois</string>
     <string name="every_year" translatable="true">Tous les ans</string>
     <string name="sms" translatable="true">Texto</string>
+    <string name="outside_event" translatable="true"><xliff:g>%1$s</xliff:g> est un évènement extérieur</string>
     <string name="real_life_meeting" translatable="true">Rencontre réelle</string>
     <string name="shining" translatable="true">Rayonnant</string>
     <string name="slightly_cloudy" translatable="true">Un peu nuageux</string>

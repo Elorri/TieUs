@@ -49,7 +49,7 @@ Detail screen is composed of 3 parts and a floating action button :
 
 On tablet landscape
 
-![screen](../master/screenshot/Screenshot_contact_detail_screen.png "Contact list and contact detail side by side")
+![screen](../master/screenshot/Screenshot_tablet_contact_detail_screen.png "Contact list and contact detail side by side")
 
 
 Select action screen
@@ -116,6 +116,10 @@ Here is a few examples :
 * [Google Service AdMob] (https://www.google.com/admob/) 
 * [Google Service Firebase] (https://firebase.google.com/) 
 	used for getting Analytics
+	
+
+## Installation
+An apk realease can be found under the app directory. Just download it on your phone.
 	
 
 

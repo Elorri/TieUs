@@ -43,7 +43,7 @@ SOFTWARE.
     <string name="pref_network_status_key" translatable="false">network_status</string>
     <string name="tag_fragment_board" translatable="false">board_fragment</string>
     <string name="keep" translatable="false">keep</string>
-    <string name="sms_intent_type">vnd.android-dir/mms-sms</string>
+    <string name="sms_intent_type" translatable="false">vnd.android-dir/mms-sms</string>
 
     <!-- use for internal purpose, not display on ui, used for firebase logs -->
     <string name="pref_sync_stat_contact_added_key" translatable="false">pref_sync_stat_contact_added_key</string>
@@ -87,8 +87,8 @@ SOFTWARE.
     <string name="response2" translatable="true">Answer</string>
     <string name="frequency" translatable="true">Frequency</string>
     <string name="expected_response" translatable="true">Expected answer ?</string>
-    <string name="_24h" translatable="true">24h</string>
-    <string name="_48h" translatable="true">48h</string>
+    <string name="_24h" translatable="false">24h</string>
+    <string name="_48h" translatable="false">48h</string>
     <string name="_4days" translatable="true">4 days</string>
     <string name="_1week" translatable="true">1 week</string>
     <string name="_2weeks" translatable="true">2 weeks</string>
@@ -120,8 +120,8 @@ SOFTWARE.
     <!-- only used during developpment, used in layout with 'tool:' attribute -->
     <string name="facebook" translatable="false">Facebook</string>
     <string name="terminated" translatable="false">terminated at 11:00</string>
-    <string name="bernard">Bernard Lepage</string>
-    <string name="_30_sept">30 sept.</string>
+    <string name="bernard" translatable="false">Bernard Lepage</string>
+    <string name="_30_sept" translatable="false">30 sept.</string>
 
 
     <!-- guidance messages -->
@@ -223,8 +223,8 @@ SOFTWARE.
 
 
     <!-- Only used in free flavor -->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
 
 
     <!-- used for google analytics app items naming -->
