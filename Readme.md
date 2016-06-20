@@ -18,11 +18,10 @@ People who want to increase their network and keep track of each action done.
 
 ## Features
 
-Show list of contacts ordered with priorities
-
-	- People that should have already be contacted
-	- People to contact today
-	- People to contact in the future
+Show list of contacts ordered with priorities : 
+- People that should have already be contacted
+- People to contact today
+- People to contact in the future
 Save the degree of satisfaction of each contact
 
 Plan future actions
@@ -70,6 +69,7 @@ It is organise in 4 parts :
 - Inform
 - Make an offer
 - Give feedback
+
 Each of these parts contains a list of relevant actions like : 
 - Get to know what the contact is looking for (in Introduce)
 - Give your expertise (in Inform)
