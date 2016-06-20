@@ -282,9 +282,6 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
     @Override
     public void setThumbnail(String uri, int color) {
-        Log.e("FF", Thread.currentThread().getStackTrace()[2] + "orientation" + getResources()
-                .getInteger(R
-                        .integer.orientation));
         switch (getResources().getInteger(R.integer.orientation)) {
             case MainActivity.PORT:
             case MainActivity.LAND:
@@ -300,7 +297,14 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
     @Override
     public void updateFragment() {
-        getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
+        try {
+            getLoaderManager().restartLoader(DetailData.LOADER_ID, null, this);
+
+            if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
+                ((MainActivity) getActivity()).getMainFragment().restartLoader();
+        } catch (Exception e) {
+            Log.e("TieUs", e.getStackTrace().toString());
+        }
     }
 
     @Override
@@ -347,7 +351,8 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
 
 
     @Override
-    public void sendToFirebase(String event, String contentType, String itemId, String itemName) {
+    public void sendToFirebase(String event, String contentType, String itemId, String
+            itemName) {
         Bundle bundle = new Bundle();
         if (itemId != null)
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
@@ -355,8 +360,12 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
         if (contentType != null)
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
-        ((TieUsApplication) getActivity().getApplication())
-                .getFirebaseAnalytics().logEvent(event, bundle);
+
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "getActivity() " +
+                "" + getActivity());
+        //TODO improve this to make him send firebase correctly
+        if (getActivity() != null)
+            ((TieUsApplication) getActivity().getApplication()).getFirebaseAnalytics().logEvent(event, bundle);
     }
 
 

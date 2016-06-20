@@ -37,6 +37,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,7 @@ import android.widget.TextView;
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.activities.MainActivity;
 import com.elorri.android.tieus.data.TieUsContract;
+import com.elorri.android.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.tieus.db.ViewTypes;
 import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.sync.TieUsSyncAdapter;
@@ -63,12 +65,12 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     public static final String ACTION_DATA_UPDATED = TieUsContract.CONTENT_AUTHORITY + ".ACTION_DATA_UPDATED";
 
-    private static final String SELECTED_KEY = "selected_position";
+    private static final String SELECTED_CONTACT_KEY = "selected_contact_key";
 
     private MainAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private TextView mEmptyListView;
-    private Integer mPosition;
+    private Integer mContactId;
     private String mSearchString;
     private LinearLayoutManager mLayoutManager;
 
@@ -98,8 +100,8 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
         if (savedInstanceState != null) {
             mAdapter.onRestoreInstanceState(savedInstanceState);
-            if (savedInstanceState.containsKey(SELECTED_KEY)) {
-                mPosition = savedInstanceState.getInt(SELECTED_KEY);
+            if (savedInstanceState.containsKey(SELECTED_CONTACT_KEY)) {
+                mContactId = savedInstanceState.getInt(SELECTED_CONTACT_KEY);
             }
         }
 
@@ -122,6 +124,7 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onResume() {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
         //I had trouble with initLoader, so I use restartLoader here
         //getLoaderManager().initLoader(MainData.LOADER_ID, null, this);
         getLoaderManager().restartLoader(com.elorri.android.tieus.data.MainData.LOADER_ID, null, this);
@@ -165,18 +168,24 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"mContactId : "+mContactId);
 
         updateEmptyView();
         if (Status.getSyncStatus(getContext()).equals(Status.SYNC_DONE)) {
             mAdapter.swapCursor(data);
             updateWidget();
 
-            int position = mAdapter.getSelectedItemPosition();
-            if (position == RecyclerView.NO_POSITION) {
-                position = mPosition == null ? getFirstContactPosition(mAdapter) : mPosition;
-            }
+            //int position = mAdapter.getSelectedItemPosition();
+            //Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"position : "+position);
+            //if (position == RecyclerView.NO_POSITION) {
+             int   position = mContactId == null ?
+                        getFirstContactPosition(mAdapter) : getContactFirstPosition(data,
+                        String.valueOf(mContactId));
+                Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"mContactId : "+mContactId);
+                Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"position : "+position);
+           // }
             mRecyclerView.smoothScrollToPosition(position);
-            mPosition = position;
+            final int finalPosition = position;
             mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
@@ -189,7 +198,9 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
                         // call it after a swapCursor
                         //(because it always return null after a notifyDataSetChanged) that's why we
                         // call findViewHolderForAdapterPosition in the onPreDraw method
-                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(mPosition);
+                        RecyclerView.ViewHolder vh =
+                                mRecyclerView.findViewHolderForAdapterPosition(finalPosition);
+                        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"finalPosition : "+finalPosition);
                         if (null != vh) {
                             if (getResources().getInteger(R.integer.orientation) == MainActivity.W700dp_LAND)
                                 mAdapter.selectView(vh);
@@ -244,7 +255,17 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
     }
 
 
-
+    private int getContactFirstPosition(Cursor cursor, String contactId) {
+        String cursorContactId;
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            cursorContactId =
+                    cursor.getString(ContactActionVectorEventDAO.PeopleQuery.COL_ID);
+            if (null != cursorContactId && cursorContactId.equals(contactId))
+                return i;
+        }
+        return 0;
+    }
 
 
     @Override
@@ -255,6 +276,8 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
     @Override
     public void onContactClicked(Uri uri, View v) {
         ((MainActivity) getActivity()).onContactClicked(uri, v);
+        mContactId=Integer.valueOf(TieUsContract.DetailData.getContactIdFromUri(uri));
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"mContactId : "+mContactId);
     }
 
 
@@ -285,8 +308,8 @@ public abstract class AbstractMainFragment extends Fragment implements LoaderMan
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (mPosition != null) {
-            outState.putInt(SELECTED_KEY, mPosition);
+        if (mContactId != null) {
+            outState.putInt(SELECTED_CONTACT_KEY, mContactId);
 
             // When tablets rotate, the currently selected list item needs to be saved.
             mAdapter.onSaveInstanceState(outState);

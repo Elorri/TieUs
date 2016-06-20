@@ -78,16 +78,27 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Context context = getContext();
-        boolean isInternetOn = Tools.isNetworkAvailable(context);
-        if (!isInternetOn) {
-            Status.setSyncStatus(getContext(), Status.SYNC_NO_INTERNET);
-            return;
+        try {
+            Context context = getContext();
+            boolean isInternetOn = Tools.isNetworkAvailable(context);
+            if (!isInternetOn) {
+                Status.setSyncStatus(getContext(), Status.SYNC_NO_INTERNET);
+                return;
+            }
+            Status.setSyncStatus(getContext(), Status.SYNC_START);
+            syncContacts();
+            notifyUserSyncDone();
+            Status.setSyncStatus(getContext(), Status.SYNC_DONE);
+        }catch (Exception exception){
+            Status.setSyncStatus(getContext(), Status.SYNC_DONE);
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
+        }catch (Error exception){
+            Status.setSyncStatus(getContext(), Status.SYNC_DONE);
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
+        }finally {
+            Status.setSyncStatus(getContext(), Status.SYNC_DONE);
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
         }
-        Status.setSyncStatus(getContext(), Status.SYNC_START);
-        syncContacts();
-        notifyUserSyncDone();
-        Status.setSyncStatus(getContext(), Status.SYNC_DONE);
     }
 
 
@@ -184,7 +195,6 @@ public class TieUsSyncAdapter extends AbstractThreadedSyncAdapter {
                 AndroidDAO.ContactQuery.SORT_ORDER
         );
 
-        Log.e("TieUs", Thread.currentThread().getStackTrace()[2] + "" + androidCursor);
 
         String androidContactId;
         String androidLookUpKey;

@@ -48,7 +48,6 @@ import com.elorri.android.tieus.extra.Status;
 import com.elorri.android.tieus.extra.Tools;
 import com.elorri.android.tieus.fragments.DetailFragment;
 import com.elorri.android.tieus.fragments.MainFragment;
-import com.elorri.android.tieus.sync.TieUsSyncAdapter;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         // the network ( it grab data from the local android device) we use a SyncAdapter because
         // it's convenient for updating data at regular intervals. That means that without
         // internet on, sync won't work, because SyncAdapter synchronise only if internet is on.
-        TieUsSyncAdapter.initializeSyncAdapter(this);
+        //TieUsSyncAdapter.initializeSyncAdapter(this);
 
         if (!Status.getFirebaseStatsSent(this)) {
             Bundle bundle = new Bundle();
@@ -117,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     private void setCommonViews() {
         Typeface courgette = Typeface.createFromAsset(getAssets(), "courgette-regular.ttf");

@@ -23,8 +23,10 @@
  */
 package com.elorri.android.tieus.activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.elorri.android.tieus.R;
 import com.elorri.android.tieus.fragments.DetailFragment;
@@ -40,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
@@ -57,4 +60,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
+        super.onAttachFragment(fragment);
+    }
+
+    @Override
+    public void onAttachFragment(android.support.v4.app.Fragment fragment) {
+        Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
+        super.onAttachFragment(fragment);
+    }
 }
