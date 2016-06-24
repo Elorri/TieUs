@@ -118,7 +118,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
         void setAvatarContentDescription(String contactName);
 
-        void startVector(Context mContext, String mimetype, String vectorData, String vectorName);
+        void startVector(String mimetype, String vectorData, String vectorName);
 
         void sendToFirebase(String event, String contentType, String itemId, String itemName);
     }
@@ -661,7 +661,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mCallback.startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.startVector(mimetype, vectorData, vectorName);
                         mCallback.sendToFirebase(
                                 mContext.getResources().getString(R.string.event_start),
                                 mContext.getResources().getString(R.string.item_vector),
@@ -699,7 +699,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 ((ViewHolderAction) holder).mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mCallback.startVector(mContext, mimetype, vectorData, vectorName);
+                        mCallback.startVector(mimetype, vectorData, vectorName);
                         mCallback.sendToFirebase(mContext.getResources().getString(R.string.event_start), mContext.getResources().getString(R.string.item_vector), null, vectorName);
                     }
                 });

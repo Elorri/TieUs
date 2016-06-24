@@ -5,6 +5,9 @@
     <!-- needed to read android device contacts -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
+    <!-- this should'nt be needed -->
+    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
+
     <!-- SyncAdapter related -->
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>

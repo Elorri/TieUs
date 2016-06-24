@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'elorri'
-            keyPassword 'elorri'
-            storeFile file('$rootdir/keystore.jks')
-            storePassword 'elorri'
-        }
-    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
@@ -22,17 +14,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
     productFlavors {
         free {
             applicationId = "com.elorri.android.tieus.free"
-            signingConfig signingConfigs.config
         }
         paid {
             applicationId = "com.elorri.android.tieus.paid"
-            signingConfig signingConfigs.config
         }
     }
 }

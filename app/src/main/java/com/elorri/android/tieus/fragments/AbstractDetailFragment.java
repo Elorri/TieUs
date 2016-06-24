@@ -23,14 +23,15 @@
  */
 package com.elorri.android.tieus.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -323,30 +324,64 @@ public abstract class AbstractDetailFragment extends Fragment implements LoaderM
     }
 
     @Override
-    public void startVector(Context context, String mimetype, String vectorData, String
+    public void startVector(String mimetype, String vectorData, String
             vectorName) {
-        if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
-            if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
-                Toast.makeText(context, context.getResources().getString(
-                        R.string.outside_event, vectorName), Toast.LENGTH_SHORT).show();
-                return;
-            } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
-                Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                smsIntent.setType(context.getResources().getString(R.string.sms_intent_type));
-                //TODO add phone nummber
-//                smsIntent.putExtra("address", "0123456789");
-//                smsIntent.putExtra("sms_body", "message");
-                context.startActivity(smsIntent);
+        try {
+            if (mimetype.equals(TieUsContract.VectorTable.MIMETYPE_VALUE_RESSOURCE)) {
+                if (Long.valueOf(vectorData) == R.drawable.ic_meeting_24dp) {
+                    Toast.makeText(getContext(), getContext().getResources().getString(
+                            R.string.outside_event, vectorName), Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (Long.valueOf(vectorData) == R.drawable.ic_textsms_black_24dp) {
+                    startSmsApp();
+                }
+            } else if (vectorData.equals(getContext().getResources().getString(
+                    R.string.vector_package_phone))) {
+                startPhoneApp();
+            } else {
+                Tools.launchExternalApp(getContext(), vectorData, vectorName);
             }
-        } else if (vectorData.equals(context.getResources().getString(R.string.vector_package_phone))) {
-            Intent phoneIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            //TODO add real phone number here
-//            Intent callIntent = new Intent(Intent.ACTION_CALL);
-//            callIntent.setData(Uri.parse("tel:0377778888"));
-            context.startActivity(phoneIntent);
-        } else {
-            Tools.launchExternalApp(context, vectorData, vectorName);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), getContext().getResources().getString(R.string.app_not_installed), Toast.LENGTH_SHORT)
+                    .show();
         }
+    }
+
+
+    private void startSmsApp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//At least KitKat
+            //Need to change the build to API 19
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(getContext()); //Need to
+
+            Log.e("TieUs", Thread.currentThread().getStackTrace()[2]+"");
+
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            //sendIntent.putExtra(Intent.EXTRA_TEXT, smsText);
+
+            //Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+            if (defaultSmsPackageName != null) {
+                sendIntent.setPackage(defaultSmsPackageName);
+            }
+            getContext().startActivity(sendIntent);
+
+        } else {//For early versions, do what worked for you before.
+        Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+        smsIntent.setType(
+                getContext().getResources().getString(R.string.sms_intent_type));//or smsIntent.setData(Uri.parse("sms:"))
+        //TODO add phone nummber
+        //smsIntent.putExtra("address", "0123456789");
+        //smsIntent.putExtra("sms_body", "message");
+        getContext().startActivity(smsIntent);
+        }
+    }
+
+    private void startPhoneApp() {
+        Intent phoneIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        //TODO add real phone number here
+        //Intent callIntent = new Intent(Intent.ACTION_CALL);
+        //callIntent.setData(Uri.parse("tel:0377778888"));
+        getContext().startActivity(phoneIntent);
     }
 
 

@@ -4,7 +4,7 @@ This repository contains the app "Tie Us", which is the last project of the Andr
 
 ## Description
 
-The app change your “dead” contact list into an alive one by classifying your contacts iinto lists with priorities. It basically answer one question “Who should I contact today ?” and make sure all the contacts you decide to follow will see you or hear from you before they turn unsatisfied. 
+The app change your “dead” contact list into an alive one by classifying your contacts into lists with priorities. It basically answer one question “Who should I contact today ?” and make sure all the contacts you decide to follow will see you or hear from you before they turn unsatisfied. 
 To achieve this, the app encourages you to always think and plan the next appropriate action to take.
 
 Aside from that, the app encourages you to evaluate each interaction you had and associate the contact with a satisfaction face. This is then used to evaluate all your relationships and resume them under one single general info : the forecast (sunny, slightly cloudy, cloudy, rainy).

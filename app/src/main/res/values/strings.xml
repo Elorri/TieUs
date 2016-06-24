@@ -155,7 +155,8 @@ SOFTWARE.
     <string name="action_deleted" translatable="true">Action deleted</string>
     <string name="completed" translatable="true"><xliff:g>%1$s</xliff:g> at <xliff:g>%2$s</xliff:g></string>
     <string name="app_not_installed" translatable="true">App <xliff:g>%1$s</xliff:g> is not installed on your device</string>
-    <string name="no_contacts_app" translatable="true">You don\'t have any installed app for editing contacts on your device.</string>
+    <string name="no_contacts_app" translatable="true">No app found for editing contacts on your device.</string>
+    <string name="no_sms_app" translatable="true">No app found for writing text messages on your device.</string>
     <string name="synchronising" translatable="true">Synchronising…</string>
     <string name="no_internet"  translatable="true">Need internet connection to synchronise contact list</string>
 

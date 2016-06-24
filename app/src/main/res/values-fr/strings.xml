@@ -125,8 +125,10 @@ SOFTWARE.
     <string name="completed" translatable="true"><xliff:g>%1$s</xliff:g> à <xliff:g>%2$s</xliff:g></string>
     <string name="app_not_installed" translatable="true">App <xliff:g>%1$s</xliff:g> n\'est
         pas installée sur votre matériel</string>
-    <string name="no_contacts_app" translatable="true">Vous n\'avez pas d\'applications pouvant
-        éditer les contacts sur votre materiel.</string>
+    <string name="no_contacts_app" translatable="true">Pas d\'application trouvée pour
+        éditer vos contacts sur votre materiel.</string>
+    <string name="no_sms_app" translatable="true">Pas d\'application trouvée pour ecrire des sms
+        sur votre materiel.</string>
     <string name="synchronising" translatable="true">Synchronisation en cours…</string>
     <string name="no_internet"  translatable="true">Internet est nécessaire pour
         synchroniser les contacts</string>
