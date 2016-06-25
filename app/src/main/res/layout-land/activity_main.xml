@@ -88,7 +88,7 @@ SOFTWARE.
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.elorri.android.tieus.fragments.MainFragment"
+        android:name="com.elorri.android.capstone.tieus.fragments.MainFragment"
         android:layout_width="@dimen/layout_width"
         android:layout_height="match_parent"
         android:tag="@string/tag_fragment_board"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.elorri.android.tieus"
+<manifest package="com.elorri.android.capstone.tieus"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- needed to read android device contacts -->
@@ -21,7 +21,7 @@
                android:value="@integer/google_play_services_version"/>
 
     <application
-        android:name=".TieUsApplication"
+        android:name="com.elorri.android.capstone.tieus.TieUsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.elorri.android.tieus.activities.MainActivity"
+            android:name="com.elorri.android.capstone.tieus.activities.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Board">
             <intent-filter>
@@ -43,43 +43,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.elorri.android.tieus.activities.DetailActivity"
+            android:name="com.elorri.android.capstone.tieus.activities.DetailActivity"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName="com.elorri.android.tieus.activities.MainActivity"
+            android:parentActivityName="com.elorri.android.capstone.tieus.activities.MainActivity"
             android:theme="@style/AppTheme.Details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.elorri.android.tieus.activities.MainActivity"/>
+                android:value="com.elorri.android.capstone.tieus.activities.MainActivity"/>
         </activity>
         <activity
-            android:name="com.elorri.android.tieus.activities.AddActionActivity"
-            android:parentActivityName="com.elorri.android.tieus.activities.DetailActivity">
+            android:name="com.elorri.android.capstone.tieus.activities.AddActionActivity"
+            android:parentActivityName="com.elorri.android.capstone.tieus.activities.DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.elorri.android.tieus.activities.DetailActivity"/>
+                android:value="com.elorri.android.capstone.tieus.activities.DetailActivity"/>
         </activity>
         <provider
-            android:name=".data.TieUsProvider"
-            android:authorities="com.elorri.android.tieus"
+            android:name="com.elorri.android.capstone.tieus.data.TieUsProvider"
+            android:authorities="com.elorri.android.capstone.tieus"
             android:exported="false"/>
         <receiver
-            android:name=".widget.WidgetListProvider"
+            android:name="com.elorri.android.capstone.tieus.widget.WidgetListProvider"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.elorri.android.tieus.ACTION_DATA_UPDATED"/>
+                <action android:name="com.elorri.android.capstone.tieus.ACTION_DATA_UPDATED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/widget_provider_list_info"/>
         </receiver>
         <service
-            android:name=".widget.WidgetListRemoteViewsService"
+            android:name="com.elorri.android.capstone.tieus.widget.WidgetListRemoteViewsService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
 
         <!-- SyncAdapter's dummy authentication service -->
-        <service android:name=".sync.TieUsAuthenticatorService">
+        <service android:name="com.elorri.android.capstone.tieus.sync.TieUsAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -90,7 +90,7 @@
 
         <!-- The SyncAdapter service -->
         <service
-            android:name=".sync.TieUsService"
+            android:name="com.elorri.android.capstone.tieus.sync.TieUsService"
             android:exported="true"
             >
             <intent-filter>

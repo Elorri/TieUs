@@ -34,7 +34,7 @@ SOFTWARE.
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <com.elorri.android.tieus.ui.DynamicWidthGradientTopAvatarView
+            <com.elorri.android.capstone.tieus.ui.DynamicWidthGradientTopAvatarView
                 android:id="@+id/avatar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

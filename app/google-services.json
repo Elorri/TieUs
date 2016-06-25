@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "324574698367",
-    "firebase_url": "https://project-6114689125141687349.firebaseio.com",
-    "project_id": "project-6114689125141687349",
-    "storage_bucket": "project-6114689125141687349.appspot.com"
+    "project_number": "419845801216",
+    "firebase_url": "https://tie-us.firebaseio.com",
+    "project_id": "tie-us",
+    "storage_bucket": "tie-us.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324574698367:android:efac233a7f398c01",
+        "mobilesdk_app_id": "1:419845801216:android:ef16d84068fbd9bb",
         "android_client_info": {
-          "package_name": "com.elorri.android.tieus"
+          "package_name": "com.elorri.android.capstone.tieus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_id": "419845801216-j45sm0rherfnh1svj5dk88lq0ffgfnff.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+          "current_key": "AIzaSyCdkmFTcbDQ_KKKi4JUW1NiOOCKQbj_EmU"
         }
       ],
       "services": {
@@ -39,20 +39,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324574698367:android:c9bb4768c8334ae2",
+        "mobilesdk_app_id": "1:419845801216:android:651871ecabef3e08",
         "android_client_info": {
-          "package_name": "com.elorri.android.tieus.free"
+          "package_name": "com.elorri.android.capstone.tieus.free"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_id": "419845801216-j45sm0rherfnh1svj5dk88lq0ffgfnff.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+          "current_key": "AIzaSyCdkmFTcbDQ_KKKi4JUW1NiOOCKQbj_EmU"
         }
       ],
       "services": {
@@ -70,20 +70,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:324574698367:android:76a3fd6ba1236f93",
+        "mobilesdk_app_id": "1:419845801216:android:75db9670239b8437",
         "android_client_info": {
-          "package_name": "com.elorri.android.tieus.paid"
+          "package_name": "com.elorri.android.capstone.tieus.paid"
         }
       },
       "oauth_client": [
         {
-          "client_id": "324574698367-1mruq6i384v6ar9obhgl01h657r808hs.apps.googleusercontent.com",
+          "client_id": "419845801216-j45sm0rherfnh1svj5dk88lq0ffgfnff.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDq8xsv9QFtPZU9pXXinlWmZ8CMwRdWnqc"
+          "current_key": "AIzaSyCdkmFTcbDQ_KKKi4JUW1NiOOCKQbj_EmU"
         }
       ],
       "services": {

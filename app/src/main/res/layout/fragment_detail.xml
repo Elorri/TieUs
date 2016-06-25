@@ -41,7 +41,7 @@ SOFTWARE.
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-            <com.elorri.android.tieus.ui.DynamicHeightGradientTopAvatarView
+            <com.elorri.android.capstone.tieus.ui.DynamicHeightGradientTopAvatarView
                 android:id="@+id/avatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

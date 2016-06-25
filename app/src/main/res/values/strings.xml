@@ -215,10 +215,10 @@ SOFTWARE.
 
     <!-- SyncAdapter related -->
     <!-- that the account is specific to our TieUsApp-->
-    <string name="sync_account_type" translatable="false">tieus.android.elorri.com</string>
+    <string name="sync_account_type" translatable="false">tieus.capstone.android.elorri.com</string>
     <string name="sync_contact_done" translatable="true">Contacts synchronisation accomplished</string>
     <!-- the content_authority is also define in TieUsContract, a change here should be followed by a change there -->
-    <string name="content_authority" translatable="false">com.elorri.android.tieus</string>
+    <string name="content_authority" translatable="false">com.elorri.android.capstone.tieus</string>
 
 
 

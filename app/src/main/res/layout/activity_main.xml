@@ -119,7 +119,7 @@ SOFTWARE.
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.elorri.android.tieus.fragments.MainFragment"
+        android:name="com.elorri.android.capstone.tieus.fragments.MainFragment"
         android:tag="@string/tag_fragment_board"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

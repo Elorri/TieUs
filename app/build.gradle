@@ -4,7 +4,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        applicationId "com.elorri.android.tieus"
+        applicationId "com.elorri.capstone.android.tieus"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -18,10 +18,10 @@ android {
     }
     productFlavors {
         free {
-            applicationId = "com.elorri.android.tieus.free"
+            applicationId = "com.elorri.android.capstone.tieus.free"
         }
         paid {
-            applicationId = "com.elorri.android.tieus.paid"
+            applicationId = "com.elorri.android.capstone.tieus.paid"
         }
     }
 }
