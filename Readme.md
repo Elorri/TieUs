@@ -128,6 +128,7 @@ Here is a few examples :
 
 ## Installation
 An apk realease can be found under the app directory. Just download it on your phone.
+App can also be downloaded from [google play] (https://play.google.com/store/apps/details?id=com.elorri.android.capstone.tieus.paid&hl=en) 
 	
 
 
