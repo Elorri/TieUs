@@ -32,7 +32,6 @@ import com.elorri.android.capstone.tieus.data.TieUsContract;
 import com.elorri.android.capstone.tieus.db.MatrixCursors;
 import com.elorri.android.capstone.tieus.db.ViewTypes;
 import com.elorri.android.capstone.tieus.extra.Status;
-import com.elorri.android.tieus.R;
 
 /**
  * Created by Elorri on 20/05/2016.

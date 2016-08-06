@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/fragment_detail_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -44,9 +45,9 @@ SOFTWARE.
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:background="@android:color/transparent"
-                android:layout_alignRight="@id/avatar"
                 android:layout_alignEnd="@id/avatar"
+                android:layout_alignRight="@id/avatar"
+                android:background="@android:color/transparent"
                 android:elevation="@dimen/appbar_elevation"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentInsetStart="@dimen/spacing_xxxlarge"
@@ -58,8 +59,8 @@ SOFTWARE.
             android:id="@+id/recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/left_view"
-            android:layout_toEndOf="@id/left_view"/>
+            android:layout_toEndOf="@id/left_view"
+            android:layout_toRightOf="@id/left_view"/>
 
     </RelativeLayout>
 
@@ -70,8 +71,8 @@ SOFTWARE.
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/spacing_normal"
-        android:layout_marginRight="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
         android:contentDescription="@string/action_add"
         android:src="@drawable/ic_add_white_24dp"
         app:elevation="@dimen/fab_elevation"

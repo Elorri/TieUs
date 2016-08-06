@@ -31,7 +31,6 @@ import android.util.Log;
 import com.elorri.android.capstone.tieus.data.TieUsContract;
 import com.elorri.android.capstone.tieus.db.ContactDAO;
 import com.elorri.android.capstone.tieus.extra.Status;
-import com.elorri.android.tieus.R;
 
 /**
  * Created by Elorri on 23/05/2016.

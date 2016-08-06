@@ -34,7 +34,6 @@ import com.elorri.android.capstone.tieus.db.ActionDAO;
 import com.elorri.android.capstone.tieus.db.MatrixCursors;
 import com.elorri.android.capstone.tieus.db.VectorDAO;
 import com.elorri.android.capstone.tieus.db.ViewTypes;
-import com.elorri.android.tieus.R;
 
 /**
  * Created by Elorri on 07/05/2016.

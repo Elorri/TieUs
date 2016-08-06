@@ -35,7 +35,6 @@ import com.elorri.android.capstone.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.capstone.tieus.extra.DateUtils;
 import com.elorri.android.capstone.tieus.extra.Status;
 import com.elorri.android.capstone.tieus.extra.Tools;
-import com.elorri.android.tieus.R;
 
 import java.util.Locale;
 

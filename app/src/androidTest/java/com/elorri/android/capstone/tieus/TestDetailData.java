@@ -33,7 +33,6 @@ import com.elorri.android.capstone.tieus.db.ContactActionVectorEventDAO;
 import com.elorri.android.capstone.tieus.db.ContactDAO;
 import com.elorri.android.capstone.tieus.db.MatrixCursors;
 import com.elorri.android.capstone.tieus.db.ViewTypes;
-import com.elorri.android.tieus.R;
 
 /**
  * Created by Elorri on 04/05/2016.

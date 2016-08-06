@@ -22,25 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+    android:id="@+id/item"
     style="@style/ItemClickStyle"
-                android:paddingBottom="@dimen/spacing_small"
-                android:paddingLeft="@dimen/spacing_normal"
-                android:paddingRight="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_small">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingLeft="@dimen/spacing_normal"
+    android:paddingRight="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_small">
 
     <com.elorri.android.capstone.tieus.ui.AvatarView
         android:id="@+id/avatar"
         android:layout_width="@dimen/avatar_bg_width"
         android:layout_height="@dimen/avatar_bg_height"
-        android:layout_marginRight="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_centerVertical="true"
-        tools:background="@color/secondaryLight"
-        android:transitionName="@string/keep"/>
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:transitionName="@string/keep"
+        tools:background="@color/secondaryLight"/>
 
     <ImageView
         android:id="@+id/vectorIcon"
@@ -55,26 +56,26 @@ SOFTWARE.
         android:id="@+id/satisfactionIcon"
         android:layout_width="@dimen/satisfaction_icon_width"
         android:layout_height="@dimen/satisfaction_icon_height"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="@dimen/spacing_xsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginRight="@dimen/spacing_xsmall"
         android:backgroundTint="@color/secondary_dark_text"
         tools:background="@drawable/ic_sentiment_satisfied_black_48dp"/>
     <TextView
         android:id="@+id/unknown_satisfaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/unknown_satisfaction_margin_top_done_event"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_small"
-        android:textAppearance="?android:textAppearanceLarge"
         android:text="@string/unknown_satisfaction_interrogation_mark"
-        />
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+    />
 
     <TextView
         android:id="@+id/title"
@@ -123,8 +124,8 @@ SOFTWARE.
         android:layout_alignBottom="@id/clock"
         android:layout_below="@id/action"
         android:layout_marginEnd="@dimen/satisfaction_icon_width"
-        android:layout_marginRight="@dimen/satisfaction_icon_width"
         android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/satisfaction_icon_width"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_toEndOf="@id/clock"
         android:layout_toRightOf="@id/clock"
